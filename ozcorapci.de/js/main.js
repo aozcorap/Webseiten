@@ -1,23 +1,17 @@
 (function () {
-  var navToggle = document.getElementById('navToggle');
-  var navLinks = document.getElementById('navLinks');
+  var sidebarToggle = document.getElementById('sidebarToggle');
+  var sidebarCollapsible = document.getElementById('sidebarCollapsible');
+  var navLinks = document.querySelector('.sidebar-nav');
 
-  navToggle.addEventListener('click', function () {
-    var isOpen = navLinks.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-    navToggle.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
-  });
-
-  navLinks.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', function () {
-      navLinks.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      navToggle.setAttribute('aria-label', 'Menü öffnen');
+  if (sidebarToggle && sidebarCollapsible) {
+    sidebarToggle.addEventListener('click', function () {
+      var isOpen = sidebarCollapsible.classList.toggle('open');
+      sidebarToggle.setAttribute('aria-expanded', String(isOpen));
     });
-  });
+  }
 
   var sections = document.querySelectorAll('main section[id]');
-  var navAnchors = navLinks.querySelectorAll('a');
+  var navAnchors = navLinks ? navLinks.querySelectorAll('a') : [];
 
   if ('IntersectionObserver' in window && sections.length) {
     var observer = new IntersectionObserver(function (entries) {

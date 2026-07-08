@@ -15,198 +15,184 @@
 <body>
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
-  <header class="site-header">
-    <nav class="nav container" aria-label="Hauptnavigation">
-      <a class="nav-brand" href="#top">Ahmet Özcorapci</a>
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Menü öffnen">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about">Über mich</a></li>
-        <li><a href="#experience">Werdegang</a></li>
-        <li><a href="#project">Projekt</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Kontakt</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="page">
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-label="Profil und Navigation">
+        <img class="sidebar-photo" src="assets/img/profilbild.jpg" alt="Porträtfoto von Ahmet Özcorapci" width="96" height="96">
+        <h1>Ahmet Özcorapci</h1>
+        <p class="sidebar-role">Senior Program Manager — IT Infrastructure Transformation</p>
+        <div class="badges">
+          <span class="badge">Program Management</span>
+          <span class="badge">Cloud &amp; Infrastructure</span>
+          <span class="badge">AI / Python</span>
+        </div>
 
-  <main id="main">
-    <!-- Hero -->
-    <section id="top" class="hero container">
-      <div class="hero-grid">
-        <div>
-          <span class="eyebrow">Program Management × Technologie</span>
-          <h1>Ahmet Özcorapci</h1>
-          <p class="hero-role">Senior Program Manager – IT Infrastructure Transformation. Ich steuere komplexe Enterprise-Transformationen — und baue nebenbei eigene KI-gestützte Software, um zu verstehen, was ich steuere.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#project">Projekt ansehen</a>
-            <a class="btn btn-secondary" href="#contact">Kontakt aufnehmen</a>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-expanded="false" aria-controls="sidebarCollapsible">
+          Menü &amp; Kontakt
+        </button>
+
+        <div class="sidebar-collapsible" id="sidebarCollapsible">
+          <nav class="sidebar-nav" aria-label="Hauptnavigation">
+            <a href="#about">Über mich</a>
+            <a href="#experience">Werdegang</a>
+            <a href="#skills">Skills</a>
+            <a href="#project">Projekt</a>
+            <a href="#contact">Kontakt</a>
+          </nav>
+
+          <dl class="contact-list">
+            <div>
+              <dt>E-Mail</dt>
+              <dd><a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a></dd>
+            </div>
+            <div>
+              <dt>LinkedIn</dt>
+              <dd><a href="https://www.linkedin.com/in/ahmet-özcorapci/" target="_blank" rel="noopener noreferrer">/in/ahmet-özcorapci</a></dd>
+            </div>
+            <div>
+              <dt>Sprachen</dt>
+              <dd>Deutsch, Englisch, Türkisch</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <main id="main" class="content">
+        <section id="about" class="card">
+          <h2>Über mich</h2>
+          <p>Seit über zwei Jahrzehnten begleite ich IT-Infrastruktur- und Transformationsprojekte im Enterprise-Umfeld — von der Planung bis zur Stabilisierung im laufenden Betrieb. Aktuell verantworte ich bei dormakaba ein globales Infrastruktur- und Cloud-Transformationsprogramm mit klarer Steuerung, Entscheidungsfindung und Risikomanagement, ohne die operative Umsetzung selbst zu übernehmen. Meine Stärke liegt darin, komplexe Transformationen in einen stabilen, skalierbaren Betrieb unter realen Enterprise-Bedingungen zu überführen. Parallel dazu vertiefe ich mein technisches Verständnis praktisch: mit einem selbst entwickelten, KI-gestützten Softwareprojekt.</p>
+          <p>Dipl. Informatiker (Technische Hochschule Mittelhessen, 1990) · ITIL Foundation · PRINCE2 Foundation</p>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-num">1.600+</div>
+              <div class="stat-label">Server</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">&gt;90</div>
+              <div class="stat-label">Standorte</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">~3 Mio. €</div>
+              <div class="stat-label">Budget</div>
+            </div>
           </div>
-        </div>
-        <div class="hero-photo">
-          <img src="assets/img/profilbild.jpg" alt="Porträtfoto von Ahmet Özcorapci" width="200" height="200">
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- About -->
-    <section id="about" class="container">
-      <div class="section-header">
-        <h2>Über mich</h2>
-        <p>Seit über zwei Jahrzehnten begleite ich IT-Infrastruktur- und Transformationsprojekte im Enterprise-Umfeld — von der Planung bis zur Stabilisierung im laufenden Betrieb. Aktuell verantworte ich bei dormakaba ein globales Infrastruktur- und Cloud-Transformationsprogramm mit klarer Steuerung, Entscheidungsfindung und Risikomanagement, ohne die operative Umsetzung selbst zu übernehmen. Meine Stärke liegt darin, komplexe Transformationen in einen stabilen, skalierbaren Betrieb unter realen Enterprise-Bedingungen zu überführen. Parallel dazu vertiefe ich mein technisches Verständnis praktisch: mit einem selbst entwickelten, KI-gestützten Softwareprojekt.</p>
-      </div>
-      <div class="about-grid">
-        <div class="fact-card">
-          <h3>Ausbildung</h3>
-          <p>Dipl. Informatiker, Technische Hochschule Mittelhessen (1990)</p>
-        </div>
-        <div class="fact-card">
-          <h3>Zertifikate</h3>
-          <p>ITIL Foundation, PRINCE2 Foundation</p>
-        </div>
-        <div class="fact-card">
-          <h3>Sprachen</h3>
-          <p>Deutsch (Muttersprache), Englisch (fließend), Türkisch (fließend)</p>
-        </div>
-      </div>
-    </section>
+        <section id="experience" class="card">
+          <h2>Werdegang</h2>
+          <p>Über 20 Jahre Erfahrung in Infrastruktur-, Plattform- und Transformationsprojekten — vom operativen Projektmanagement bis zur globalen Programmverantwortung.</p>
+          <ul class="timeline">
+            <li class="timeline-item current">
+              <div class="timeline-period">09/2020 – heute</div>
+              <h3>dormakaba</h3>
+              <div class="timeline-role">Senior Program Manager – IT Infrastructure Transformation</div>
+              <div class="timeline-stats">
+                <span class="stat-pill">1.600+ Server</span>
+                <span class="stat-pill">&gt;90 Standorte</span>
+                <span class="stat-pill">~3 Mio. € Budget</span>
+              </div>
+              <p>Gesamtverantwortung für ein globales Infrastruktur- und Cloud-Transformationsprogramm: Migration von Legacy-Infrastrukturen in Azure- und Hybrid-Architekturen, Steuerung internationaler Infrastruktur-, Netzwerk- und Cloud-Teams sowie Provider, technische Deep Dives zur Risikoanalyse, Aufbau von Governance- und Reportingstrukturen, direkte Zusammenarbeit mit CIO und Senior Management.</p>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-period">2017 – 2020</div>
+              <h3>Vorwerk</h3>
+              <div class="timeline-role">Senior IT Project Manager</div>
+              <p>Steuerung eines europaweiten IT-Programms (Dokumentenmanagement), Leitung komplexer IT-Projekte in Konzernumgebung.</p>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-period">2014 – 2017</div>
+              <h3>ewocon GmbH</h3>
+              <div class="timeline-role">Associated Senior Project Manager</div>
+              <p>Umsetzung von Portfolio- und Projektmanagementlösungen, Analyse- und Solution-Design-Workshops.</p>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-period">2013 – 2014</div>
+              <h3>Braas Monier</h3>
+              <div class="timeline-role">IT Shared Service Manager</div>
+              <p>Steuerung von IT-Services und SLAs, Service Transition und Betriebsstabilisierung.</p>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-period">2012</div>
+              <h3>Hewlett Packard</h3>
+              <div class="timeline-role">Infrastructure Project Manager</div>
+              <p>Leitung von Infrastruktur- und Migrationsprojekten.</p>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-period">2000 – 2012</div>
+              <h3>Vodafone Umfeld</h3>
+              <div class="timeline-role">Project Manager</div>
+              <p>Infrastruktur-, Plattform- und Transformationsprojekte in Enterprise-Umgebungen.</p>
+            </li>
+          </ul>
+        </section>
 
-    <!-- Experience -->
-    <section id="experience" class="container">
-      <div class="section-header">
-        <h2>Werdegang</h2>
-        <p>Über 20 Jahre Erfahrung in Infrastruktur-, Plattform- und Transformationsprojekten — vom operativen Projektmanagement bis zur globalen Programmverantwortung.</p>
-      </div>
-      <ul class="timeline">
-        <li class="timeline-item current">
-          <div class="timeline-period">09/2020 – heute</div>
-          <h3>dormakaba</h3>
-          <div class="timeline-role">Senior Program Manager – IT Infrastructure Transformation</div>
-          <div class="timeline-stats">
-            <span class="stat-pill">1.600+ Server</span>
-            <span class="stat-pill">&gt;90 Standorte</span>
-            <span class="stat-pill">~3 Mio. € Budget</span>
+        <section id="skills" class="card">
+          <h2>Skills</h2>
+          <p>Kombination aus Programmleitungs-Kompetenz und technischem Steuerungswissen.</p>
+          <div class="icon-grid">
+            <div class="icon-card">
+              <div class="glyph">PM</div>
+              <h3>Programm- &amp; Projektmanagement</h3>
+              <p>Enterprise Scale, IT Governance, Risk &amp; Escalation Management, Service Transition &amp; Operations Stabilization, Vendor &amp; Provider Management</p>
+            </div>
+            <div class="icon-card">
+              <div class="glyph">IT</div>
+              <h3>IT-Infrastruktur</h3>
+              <p>Cloud &amp; Infrastructure Transformation (Azure / Hybrid IT), Netzwerk &amp; Connectivity, Unified Communications &amp; Plattformmigration</p>
+            </div>
+            <div class="icon-card">
+              <div class="glyph">AI</div>
+              <h3>Technisch &amp; AI</h3>
+              <p>Python, Claude Code / Anthropic API, Grundlagen moderner Daten- und KI-Use-Cases im Cloud-Kontext</p>
+            </div>
+            <div class="icon-card">
+              <div class="glyph">CIO</div>
+              <h3>Stakeholder</h3>
+              <p>CIO Advisory &amp; Stakeholder Management, direkte Zusammenarbeit mit Senior Management</p>
+            </div>
           </div>
-          <p>Gesamtverantwortung für ein globales Infrastruktur- und Cloud-Transformationsprogramm: Migration von Legacy-Infrastrukturen in Azure- und Hybrid-Architekturen, Steuerung internationaler Infrastruktur-, Netzwerk- und Cloud-Teams sowie Provider, technische Deep Dives zur Risikoanalyse, Aufbau von Governance- und Reportingstrukturen, direkte Zusammenarbeit mit CIO und Senior Management.</p>
-        </li>
-        <li class="timeline-item">
-          <div class="timeline-period">2017 – 2020</div>
-          <h3>Vorwerk</h3>
-          <div class="timeline-role">Senior IT Project Manager</div>
-          <p>Steuerung eines europaweiten IT-Programms (Dokumentenmanagement), Leitung komplexer IT-Projekte in Konzernumgebung.</p>
-        </li>
-        <li class="timeline-item">
-          <div class="timeline-period">2014 – 2017</div>
-          <h3>ewocon GmbH</h3>
-          <div class="timeline-role">Associated Senior Project Manager</div>
-          <p>Umsetzung von Portfolio- und Projektmanagementlösungen, Analyse- und Solution-Design-Workshops.</p>
-        </li>
-        <li class="timeline-item">
-          <div class="timeline-period">2013 – 2014</div>
-          <h3>Braas Monier</h3>
-          <div class="timeline-role">IT Shared Service Manager</div>
-          <p>Steuerung von IT-Services und SLAs, Service Transition und Betriebsstabilisierung.</p>
-        </li>
-        <li class="timeline-item">
-          <div class="timeline-period">2012</div>
-          <h3>Hewlett Packard</h3>
-          <div class="timeline-role">Infrastructure Project Manager</div>
-          <p>Leitung von Infrastruktur- und Migrationsprojekten.</p>
-        </li>
-        <li class="timeline-item">
-          <div class="timeline-period">2000 – 2012</div>
-          <h3>Vodafone Umfeld</h3>
-          <div class="timeline-role">Project Manager</div>
-          <p>Infrastruktur-, Plattform- und Transformationsprojekte in Enterprise-Umgebungen.</p>
-        </li>
-      </ul>
-    </section>
+        </section>
 
-    <!-- Project: Trading Bot -->
-    <section id="project" class="section-project">
-      <div class="container">
-        <span class="eyebrow">Persönliches Projekt</span>
-        <h2>Automatisierter Trading-Bot</h2>
-        <p>Neben der Programmleitung bei dormakaba entwickle ich in Eigenregie einen automatisierten Trading-Bot — ein praktisches Projekt, um KI-gestützte Softwareentwicklung nicht nur zu steuern, sondern selbst zu betreiben.</p>
-        <div class="project-card">
-          <h3>Ansatz</h3>
-          <p>Umsetzung mit Claude Code und der Anthropic API in Python. Das Projekt ist der Ort, an dem ich Automatisierung, Datenverarbeitung und KI-gestützte Entwicklungs-Workflows praktisch erprobe — als direkte Ergänzung zu meiner steuernden Rolle in Cloud- und Infrastrukturprogrammen.</p>
-          <div class="project-meta">
-            <span class="tag">Python</span>
-            <span class="tag">Claude Code</span>
-            <span class="tag">Anthropic API</span>
+        <section id="project" class="card">
+          <h2>Persönliches Projekt: Trading-Bot</h2>
+          <p>Neben der Programmleitung bei dormakaba entwickle ich in Eigenregie einen automatisierten Trading-Bot — ein praktisches Projekt, um KI-gestützte Softwareentwicklung nicht nur zu steuern, sondern selbst zu betreiben.</p>
+          <div class="project-inner">
+            <h3>Ansatz</h3>
+            <p>Umsetzung mit Claude Code und der Anthropic API in Python. Das Projekt ist der Ort, an dem ich Automatisierung, Datenverarbeitung und KI-gestützte Entwicklungs-Workflows praktisch erprobe — als direkte Ergänzung zu meiner steuernden Rolle in Cloud- und Infrastrukturprogrammen.</p>
+            <div class="tag-row">
+              <span class="tag">Python</span>
+              <span class="tag">Claude Code</span>
+              <span class="tag">Anthropic API</span>
+            </div>
+            <p class="project-note">Weitere Details zu Architektur und Ergebnissen folgen in Kürze.</p>
           </div>
-          <p class="project-note">Weitere Details zu Architektur und Ergebnissen folgen in Kürze.</p>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Skills -->
-    <section id="skills" class="container">
-      <div class="section-header">
-        <h2>Skills</h2>
-        <p>Kombination aus Programmleitungs-Kompetenz und technischem Steuerungswissen.</p>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <h3>Programm- &amp; Projektmanagement</h3>
-          <ul class="skill-list">
-            <li>Program &amp; Multi-Project Management (Enterprise Scale)</li>
-            <li>IT Governance, Risk &amp; Escalation Management</li>
-            <li>Service Transition &amp; Operations Stabilization</li>
-            <li>Vendor &amp; Provider Management</li>
-            <li>CIO Advisory &amp; Stakeholder Management</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>IT-Infrastruktur</h3>
-          <ul class="skill-list">
-            <li>Cloud &amp; Infrastructure Transformation (Azure / Hybrid IT)</li>
-            <li>Netzwerk &amp; Connectivity (LAN/WAN, Latenz, Abhängigkeiten)</li>
-            <li>Unified Communications &amp; Plattformmigration</li>
-            <li>Infrastruktur-Standardisierung im Enterprise-Umfeld</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>Technisch &amp; AI</h3>
-          <ul class="skill-list">
-            <li>Python</li>
-            <li>Claude Code / Anthropic API</li>
-            <li>Grundlagen moderner Daten- und KI-Use-Cases im Cloud-Kontext</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        <section id="contact" class="card">
+          <h2>Kontakt</h2>
+          <p>Interessiert an einem Austausch zu Programmleitung, IT-Transformation oder dem Trading-Bot-Projekt? Ich freue mich auf eine Nachricht.</p>
+          <div class="contact-links">
+            <a class="btn btn-primary" href="mailto:ahmet@ozcorapci.de">E-Mail schreiben</a>
+            <a class="btn btn-secondary" href="https://www.linkedin.com/in/ahmet-özcorapci/" target="_blank" rel="noopener noreferrer">LinkedIn-Profil</a>
+            <a class="btn btn-secondary" href="assets/docs/CV_Ahmet_Oezcorapci.pdf" download>CV herunterladen</a>
+          </div>
+          <p class="privacy-note">Hinweise zum Datenschutz finden Sie in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+        </section>
 
-    <!-- Contact -->
-    <section id="contact" class="container">
-      <div class="contact-card">
-        <h2>Kontakt</h2>
-        <p>Interessiert an einem Austausch zu Programmleitung, IT-Transformation oder dem Trading-Bot-Projekt? Ich freue mich auf eine Nachricht.</p>
-        <div class="contact-links">
-          <a class="btn btn-primary" href="mailto:ahmet@ozcorapci.de">E-Mail schreiben</a>
-          <a class="btn btn-secondary" href="https://www.linkedin.com/in/ahmet-özcorapci/" target="_blank" rel="noopener noreferrer">LinkedIn-Profil</a>
-          <a class="btn btn-secondary" href="assets/docs/CV_Ahmet_Oezcorapci.pdf" download>CV herunterladen</a>
-        </div>
-        <p class="privacy-note">Hinweise zum Datenschutz finden Sie in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-row">
-      <span>© 2026 Ahmet Özcorapci</span>
-      <ul class="footer-links">
-        <li><a href="impressum.html">Impressum</a></li>
-        <li><a href="datenschutz.html">Datenschutz</a></li>
-      </ul>
+        <footer class="site-footer">
+          <div class="footer-row">
+            <span>© 2026 Ahmet Özcorapci</span>
+            <ul class="footer-links">
+              <li><a href="impressum.html">Impressum</a></li>
+              <li><a href="datenschutz.html">Datenschutz</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
     </div>
-  </footer>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
