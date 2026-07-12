@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boxring Wetterau e.V. – Fitness- und Amateurboxen in Friedberg</title>
+<meta name="description" content="Boxring Wetterau e.V. seit 1983 – Fitness- und Amateurboxen für Mann und Frau in Friedberg. Kostenloses Probetraining, Anfänger und Fortgeschrittene willkommen.">
+<style>
+  :root {
+    --bg: #0c0a09;
+    --bg-2: #151210;
+    --card: #1a1613;
+    --card-2: #201b17;
+    --line: #322b25;
+    --text: #f5f1ec;
+    --text-dim: #b7ada1;
+    --text-faint: #7d7368;
+    --red: #d42c34;
+    --red-dim: #a3232a;
+    --gold: #c9992f;
+    --gold-dim: #a17c26;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  .display {
+    font-family: 'Arial Narrow', 'Roboto Condensed', 'Oswald', sans-serif;
+    font-stretch: condensed;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  .eyebrow {
+    font-size: 0.74rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    z-index: 40;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px clamp(20px, 5vw, 56px);
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border: 2px solid var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial Narrow', sans-serif;
+    font-stretch: condensed;
+    font-weight: 900;
+    color: var(--red);
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .brand-text strong { font-size: 1rem; letter-spacing: 0.01em; color: var(--text); }
+  .brand-text span { font-size: 0.68rem; color: var(--text-faint); letter-spacing: 0.05em; }
+
+  nav { display: none; gap: clamp(18px, 3vw, 34px); font-size: 0.88rem; font-weight: 600; }
+  @media (min-width: 860px) { nav { display: flex; } }
+
+  nav a {
+    text-decoration: none;
+    color: var(--text-dim);
+    padding: 6px 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  nav a:hover, nav a:focus-visible { color: var(--text); border-color: var(--gold-dim); }
+
+  .nav-cta { display: none; }
+  @media (min-width: 720px) { .nav-cta { display: inline-flex; } }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 13px 24px;
+    border-radius: 3px;
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--red) 60%, black);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .btn:hover, .btn:focus-visible { background: #ef3944; transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--text) 30%, transparent);
+    color: var(--text);
+  }
+  .btn-outline:hover, .btn-outline:focus-visible {
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+    border-color: var(--text);
+  }
+
+  /* ===== HERO — Vollbild dunkel ===== */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(0deg, var(--bg) 0%, rgba(12,10,9,0.55) 45%, rgba(12,10,9,0.25) 75%),
+      linear-gradient(90deg, rgba(12,10,9,0.55) 0%, transparent 55%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    padding: clamp(100px, 16vw, 160px) 0 clamp(48px, 7vw, 72px);
+    width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    line-height: 1.02;
+    margin: 18px 0 0;
+    color: var(--text);
+    max-width: 14ch;
+  }
+  .hero h1 .accent { color: var(--red); }
+
+  .hero-lede {
+    margin: 22px 0 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 46ch;
+  }
+
+  .hero-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: clamp(28px, 5vw, 56px);
+    margin-top: 52px;
+    padding-top: 28px;
+    border-top: 1px solid color-mix(in srgb, var(--text) 15%, transparent);
+    max-width: 620px;
+  }
+
+  .stat b {
+    display: block;
+    font-family: 'Arial Narrow', sans-serif;
+    font-stretch: condensed;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .stat span {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ===== SECTION shared ===== */
+  section { padding: clamp(56px, 9vw, 104px) 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 44px;
+    max-width: 62ch;
+  }
+  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; align-items: center; }
+
+  .section-head h2 {
+    font-size: clamp(2rem, 4.2vw, 2.8rem);
+    margin: 0;
+    line-height: 1.02;
+    color: var(--text);
+  }
+  .section-head p { color: var(--text-dim); margin: 0; line-height: 1.6; }
+
+  /* ===== UEBER UNS ===== */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: center;
+  }
+  @media (min-width: 900px) { .about { grid-template-columns: 1fr 1fr; gap: 64px; } }
+
+  .about-photo {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+  }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .about-photo-badge {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+  .about-photo-badge b {
+    display: block;
+    font-family: 'Arial Narrow', sans-serif;
+    font-stretch: condensed;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--gold);
+  }
+  .about-photo-badge span { font-size: 0.72rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .about-points {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .about-points li { display: flex; gap: 16px; align-items: flex-start; }
+  .about-points .dot {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--red) 16%, var(--bg));
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    margin-top: 2px;
+    font-weight: 700;
+  }
+  .about-points strong { display: block; font-size: 1.05rem; margin-bottom: 3px; color: var(--text); }
+  .about-points p { margin: 0; color: var(--text-dim); font-size: 0.94rem; line-height: 1.55; }
+
+  /* ===== TRAINING (Fightcard mit Bild) ===== */
+  .fightcard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .round {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .round:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+
+  .round-photo { aspect-ratio: 16/10; overflow: hidden; }
+  .round-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .round-body { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+
+  .round .rn {
+    font-family: 'Arial Narrow', sans-serif;
+    font-stretch: condensed;
+    font-weight: 900;
+    color: var(--red);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+  .round h4 { margin: 0; font-size: 1.35rem; color: var(--text); }
+  .round .days { font-size: 0.86rem; color: var(--text-dim); }
+
+  .round .times {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.92rem;
+  }
+  .round .times div { display: flex; justify-content: space-between; color: var(--text-dim); }
+  .round .times span:last-child { color: var(--gold); font-weight: 700; }
+
+  /* ===== BEITRÄGE ===== */
+  .fees {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 28px;
+  }
+
+  .fee-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px;
+  }
+  .fee-card .eyebrow { margin-bottom: 12px; }
+  .fee-price {
+    font-family: 'Arial Narrow', sans-serif;
+    font-stretch: condensed;
+    font-weight: 900;
+    font-size: 2.9rem;
+    color: var(--text);
+    line-height: 1;
+    margin: 8px 0 4px;
+  }
+  .fee-price sup { font-size: 1rem; color: var(--text-faint); font-weight: 400; }
+  .fee-card p { color: var(--text-dim); font-size: 0.9rem; margin: 14px 0 0; line-height: 1.5; }
+
+  .trial-banner {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--red) 22%, var(--card)), var(--card));
+    border: 1px solid color-mix(in srgb, var(--red) 40%, var(--line));
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .trial-banner strong { font-size: 1.08rem; display: block; color: var(--text); }
+  .trial-banner span { color: var(--text-dim); font-size: 0.88rem; }
+
+  /* ===== STANDORT ===== */
+  .location {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  @media (min-width: 800px) { .location { grid-template-columns: 1fr 1fr; } }
+
+  .location-map {
+    background:
+      linear-gradient(0deg, rgba(12,10,9,0.6), rgba(12,10,9,0.25)),
+      url("https://tile.openstreetmap.org/15/17253/11149.png") center/cover no-repeat,
+      var(--card-2);
+    min-height: 280px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: saturate(0.4) contrast(1.1);
+  }
+  .pin {
+    width: 22px;
+    height: 22px;
+    background: var(--red);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--red) 25%, transparent);
+  }
+
+  .location-info { padding: 34px; display: flex; flex-direction: column; gap: 18px; justify-content: center; background: var(--card); }
+  .location-info h3 { margin: 0; font-size: 1.35rem; color: var(--text); }
+  .location-info address { font-style: normal; color: var(--text-dim); line-height: 1.6; }
+  .location-info .note { font-size: 0.85rem; color: var(--text-faint); border-left: 2px solid var(--gold-dim); padding-left: 12px; }
+
+  /* ===== VORSTAND ===== */
+  .board { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .member { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .member .initial {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--card-2); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: var(--gold);
+  }
+  .member .role { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); }
+  .member .name { font-weight: 700; font-size: 1.02rem; color: var(--text); }
+  .member .badge { margin-top: auto; font-size: 0.72rem; color: var(--red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* ===== GALERIE ===== */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 160px;
+    gap: 12px;
+  }
+  @media (max-width: 760px) { .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; } }
+
+  .gallery-tile {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .gallery-tile:hover img { transform: scale(1.06); }
+  .gallery-tile.wide { grid-column: span 2; }
+  .gallery-tile.tall { grid-row: span 2; }
+
+  .gallery-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(12,10,9,0.75) 100%);
+  }
+  .gallery-tile span {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    z-index: 1;
+    font-size: 0.74rem;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* ===== INSTAGRAM EMBEDS ===== */
+  /* Instagram-Reel-iframe: Player-UI oben/unten abschneiden, nur Video zeigen */
+  .ig-frame-wrap {
+    position: relative;
+    aspect-ratio: 9 / 14;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+  }
+  .ig-frame {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 142%;
+    top: -6%;
+    border: 0;
+  }
+
+  .round-photo-embed {
+    aspect-ratio: auto;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    height: 380px;
+  }
+  .round-photo-embed .ig-frame {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 142%;
+    top: -6%;
+    border: 0;
+  }
+
+  .gallery-embeds {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .gallery-embeds { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .gallery-embeds { grid-template-columns: 1fr; } }
+
+  /* ===== BILD-PLATZHALTER (bis echte Fotos geliefert werden) ===== */
+  .placeholder {
+    background:
+      repeating-linear-gradient(135deg, var(--card-2) 0 10px, var(--card) 10px 20px);
+    border: 1px dashed var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .placeholder::after { content: none; }
+  .placeholder-label {
+    position: static;
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    padding: 6px 12px;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    border-radius: 4px;
+  }
+  .round-photo.placeholder { aspect-ratio: 16/10; }
+
+  .insta-cta {
+    margin-top: 22px;
+    text-align: center;
+  }
+  .insta-cta a {
+    font-size: 0.9rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .insta-cta a:hover { color: var(--text); }
+
+  /* ===== CTA FINAL ===== */
+  .cta-final {
+    position: relative;
+    text-align: center;
+    padding: clamp(64px, 10vw, 108px) 0;
+    overflow: hidden;
+  }
+  .cta-final-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .cta-final-bg img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.3); }
+  .cta-final-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--bg) 5%, rgba(12,10,9,0.88) 100%);
+  }
+  .cta-final .wrap { position: relative; z-index: 1; }
+
+  .cta-final h2 { font-size: clamp(2.2rem, 5.2vw, 3.6rem); margin: 0 auto 16px; max-width: 16ch; color: var(--text); }
+  .cta-final p { color: var(--text-dim); max-width: 48ch; margin: 0 auto 32px; }
+  .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+  /* ===== FOOTER ===== */
+  footer { border-top: 1px solid var(--line); padding: 40px 0; }
+  .footer-inner {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; align-items: center;
+    font-size: 0.82rem; color: var(--text-faint);
+  }
+  .footer-inner a { text-decoration: none; color: var(--text-faint); }
+  .footer-inner a:hover { color: var(--text-dim); }
+  .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">BW</span>
+      <span class="brand-text">
+        <strong>Boxring Wetterau</strong>
+        <span>e.V. · seit 1983</span>
+      </span>
+    </a>
+    <nav>
+      <a href="#ueber-uns">Über uns</a>
+      <a href="#training">Training</a>
+      <a href="#beitraege">Beiträge</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#standort">Standort</a>
+      <a href="#verein">Verein</a>
+    </nav>
+    <a class="btn nav-cta" href="#training">Probetraining</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="assets/img/bandagen.jpg" alt="Boxer bandagiert sich die Hände vor dem Training" loading="eager">
+    </div>
+    <div class="hero-content wrap">
+      <span class="eyebrow">Fitness- &amp; Amateurboxen · Friedberg</span>
+      <h1 class="display">Trainiere deinen Körper.<br>Werde <span class="accent">stärker</span> als gestern.</h1>
+      <p class="hero-lede">Der Boxring Wetterau trainiert seit über 40&nbsp;Jahren Anfänger und Fortgeschrittene zwischen 12 und 88&nbsp;Jahren. Sportsachen mitbringen, sofort mitmachen.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#training">Kostenloses Probetraining</a>
+        <a class="btn btn-outline" href="#verein">Verein kennenlernen</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>1983</b><span>Gegründet</span></div>
+        <div class="stat"><b>12–88</b><span>Jahre willkommen</span></div>
+        <div class="stat"><b>4×</b><span>Training / Woche</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ueber-uns">
+    <div class="wrap about">
+      <div class="about-photo">
+        <img src="assets/img/bandagen.jpg" alt="Boxer bandagiert sich die Hände vor dem Training">
+        <div class="about-photo-badge">
+          <b>40+</b>
+          <span>Jahre Vereinsgeschichte</span>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Über uns</span>
+        <h2 class="section-head" style="margin:14px 0 16px;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--text);border:none;padding:0;">Euer verlässlicher Verein für Amateurboxen in der Wetterau</h2>
+        <p style="color:var(--text-dim);line-height:1.6;margin:0;max-width:52ch;">Seit 1983 bilden wir Anfänger und Fortgeschrittene aus – mit Fokus auf Disziplin, Technik und Fairness. Ob Fitnessboxen oder Wettkampfvorbereitung: bei uns ist jeder willkommen.</p>
+        <ul class="about-points">
+          <li>
+            <span class="dot">✓</span>
+            <div><strong>Training für alle Level</strong><p>Getrennte Gruppen für Anfänger und Fortgeschrittene, betreut von erfahrenen Trainern.</p></div>
+          </li>
+          <li>
+            <span class="dot">✓</span>
+            <div><strong>Mitglied im HABV</strong><p>Offiziell anerkannt im Hessischen Amateur-Boxverband e.V.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="training">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Trainingsplan</span>
+        <h2 class="display">Zwei Level, vier Termine.</h2>
+        <p>Anfänger und Fortgeschrittene trainieren getrennt – jede Einheit in der ehemaligen Montessori-Schule in Friedberg.</p>
+      </div>
+      <div class="fightcard">
+        <div class="round">
+          <div class="round-photo round-photo-embed">
+            <iframe class="ig-frame" src="https://www.instagram.com/reel/C3C7DPjNAL2/embed" allowfullscreen loading="lazy" title="Instagram Reel: Anfängertraining"></iframe>
+          </div>
+          <div class="round-body">
+            <span class="rn">Einstieg</span>
+            <h4>Anfänger</h4>
+            <div class="days">Grundlagen, Technik, Kondition</div>
+            <div class="times">
+              <div><span>Dienstag</span><span>19:00–20:30</span></div>
+              <div><span>Donnerstag</span><span>19:00–20:30</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="round">
+          <div class="round-photo placeholder" data-placeholder-note="Sparring / Fortgeschrittene">
+            <span class="placeholder-label">Foto: Sparring</span>
+          </div>
+          <div class="round-body">
+            <span class="rn">Leistung</span>
+            <h4>Fortgeschrittene</h4>
+            <div class="days">Sparring, Wettkampfvorbereitung</div>
+            <div class="times">
+              <div><span>Montag</span><span>20:00–22:00</span></div>
+              <div><span>Dienstag</span><span>20:30–22:00</span></div>
+              <div><span>Donnerstag</span><span>20:30–22:00</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="round">
+          <div class="round-photo">
+            <img src="assets/img/bandagen.jpg" alt="Probetraining im Boxring Wetterau">
+          </div>
+          <div class="round-body">
+            <span class="rn">Für alle</span>
+            <h4>Probetraining</h4>
+            <div class="days">3–4 Wochen kostenlos schnuppern</div>
+            <div class="times">
+              <div><span>Anmeldung</span><span>vor Ort</span></div>
+              <div><span>Ausrüstung</span><span>wird gestellt</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="beitraege">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Mitgliedschaft</span>
+        <h2 class="display">Jahresbeitrag, keine versteckten Kosten.</h2>
+        <p>Ob Jugendliche oder Erwachsene – beide Altersgruppen trainieren in Aufbau- und Leistungsgruppen.</p>
+      </div>
+      <div class="fees">
+        <div class="fee-card">
+          <span class="eyebrow">12–18 Jahre</span>
+          <div class="fee-price">75<sup> € / Jahr</sup></div>
+          <p>Aufbau- und Leistungsgruppen für Jugendliche.</p>
+        </div>
+        <div class="fee-card">
+          <span class="eyebrow">Ab 18 Jahren</span>
+          <div class="fee-price">100<sup> € / Jahr</sup></div>
+          <p>Aufbau- und Leistungsgruppen für Erwachsene.</p>
+        </div>
+      </div>
+      <div class="trial-banner">
+        <div>
+          <strong>Erst testen, dann entscheiden.</strong>
+          <span>3–4 Wochen kostenloses Probetraining für alle Neueinsteiger.</span>
+        </div>
+        <a class="btn" href="#top">Jetzt anmelden</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="galerie">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Aus dem Training</span>
+        <h2 class="display">Einblicke in den Ring.</h2>
+        <p>Sparring, Grundlagentraining und Wettkampf – so sieht unser Vereinsalltag aus.</p>
+      </div>
+      <div class="gallery-embeds">
+        <div class="ig-frame-wrap"><iframe class="ig-frame" src="https://www.instagram.com/reel/DZj5kkmOTyI/embed" allowfullscreen loading="lazy" title="Instagram Reel"></iframe></div>
+        <div class="ig-frame-wrap"><iframe class="ig-frame" src="https://www.instagram.com/reel/DTpjD1rjPgM/embed" allowfullscreen loading="lazy" title="Instagram Reel"></iframe></div>
+        <div class="ig-frame-wrap"><iframe class="ig-frame" src="https://www.instagram.com/reel/DPJ6LhrjA43/embed" allowfullscreen loading="lazy" title="Instagram Reel"></iframe></div>
+        <div class="ig-frame-wrap"><iframe class="ig-frame" src="https://www.instagram.com/reel/Cz3DLmPNtgX/embed" allowfullscreen loading="lazy" title="Instagram Reel"></iframe></div>
+      </div>
+      <div class="insta-cta">
+        <a href="https://www.instagram.com/boxringwetterau/" target="_blank" rel="noopener noreferrer">Mehr auf Instagram ansehen →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="standort">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Standort</span>
+        <h2 class="display">Trainiert wird in Friedberg.</h2>
+      </div>
+      <div class="location">
+        <div class="location-map" role="img" aria-label="Kartenausschnitt Maria-Montessori-Weg 2, Friedberg">
+          <div class="pin"></div>
+        </div>
+        <div class="location-info">
+          <h3>Ehemalige Montessori-Schule</h3>
+          <address>Maria-Montessori-Weg 2<br>61169 Friedberg</address>
+          <p class="note">Mitglied im HABV – Hessischer Amateur-Boxverband e.V.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="verein">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Der Vorstand</span>
+        <h2 class="display">Ehrenamtlich im Einsatz.</h2>
+      </div>
+      <div class="board">
+        <div class="member">
+          <div class="initial">AÖ</div>
+          <span class="role">1. Vorsitzender</span>
+          <span class="name">Ahmet Özcorapci</span>
+          <span class="badge">Vorstand</span>
+        </div>
+        <div class="member">
+          <div class="initial">DS</div>
+          <span class="role">2. Vorsitzender</span>
+          <span class="name">Dennis Stork</span>
+          <span class="badge">Vorstand</span>
+        </div>
+        <div class="member">
+          <div class="initial">LH</div>
+          <span class="role">Kassenwart</span>
+          <span class="name">Leif Hahlbohm</span>
+        </div>
+        <div class="member">
+          <div class="initial">GK</div>
+          <span class="role">Schriftführer</span>
+          <span class="name">Georgis Kamarianakis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="cta-final-bg">
+      <img src="assets/img/bandagen.jpg" alt="">
+    </div>
+    <div class="wrap">
+      <h2 class="display">Sportsachen mitbringen. Sofort mitmachen.</h2>
+      <p>Kein Vertrag, keine Vorkenntnisse nötig – nur der Wille, im Ring zu lernen.</p>
+      <div class="cta-actions">
+        <a class="btn" href="#training">Zum Probetraining</a>
+        <a class="btn btn-outline" href="#standort">Anfahrt</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 1983–2026 Boxring Wetterau e.V.</span>
+    <div class="footer-links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

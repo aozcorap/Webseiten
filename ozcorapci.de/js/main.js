@@ -29,4 +29,24 @@
       observer.observe(section);
     });
   }
+
+  var cards = document.querySelectorAll('.card');
+  if ('IntersectionObserver' in window && cards.length) {
+    var fadeObserver = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+    cards.forEach(function (card) {
+      fadeObserver.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) {
+      card.classList.add('in-view');
+    });
+  }
 })();

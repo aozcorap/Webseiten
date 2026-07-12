@@ -283,6 +283,16 @@ a:hover { color: var(--color-accent-hover); }
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   scroll-margin-top: var(--space-3);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card { opacity: 1; transform: none; }
 }
 
 /* ============================================================
@@ -338,6 +348,11 @@ a:hover { color: var(--color-accent-hover); }
   border-radius: var(--radius-md);
   padding: var(--space-2);
   text-align: center;
+  transition: border-color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+.stat:hover {
+  border-color: var(--color-accent-border);
+  transform: translateY(-2px);
 }
 .stat .stat-num { font-size: 1.4rem; font-weight: 700; color: var(--color-accent); }
 .stat .stat-label { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 4px; }
@@ -365,8 +380,13 @@ a:hover { color: var(--color-accent-hover); }
   height: 10px;
   border-radius: 50%;
   background: var(--color-border);
+  transition: background var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
 }
 .timeline-item.current::before {
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-bg);
+}
+.timeline-item:hover::before {
   background: var(--color-accent);
 }
 .timeline-period {
@@ -411,18 +431,29 @@ a:hover { color: var(--color-accent-hover); }
   border-radius: var(--radius-md);
   padding: var(--space-2);
 }
+.icon-card {
+  transition: border-color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+.icon-card:hover {
+  border-color: var(--color-accent-border);
+  transform: translateY(-2px);
+}
 .icon-card .glyph {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   background: var(--color-accent-bg);
   color: var(--color-accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 0.8rem;
   margin-bottom: var(--space-1);
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+.icon-card .glyph svg { width: 20px; height: 20px; }
+.icon-card:hover .glyph {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
 }
 .icon-card h3 { font-size: 0.92rem; margin-bottom: 4px; }
 .icon-card p { font-size: 0.82rem; margin: 0; }
