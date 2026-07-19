@@ -25,8 +25,7 @@ jobs:
           mkdir -p _site
           cp -r ozcorapci.de _site/
           mkdir -p _site/boxring-wetterau.de
-          cp boxring-wetterau.de/index.html _site/boxring-wetterau.de/index.html
-          cp -r boxring-wetterau.de/assets _site/boxring-wetterau.de/assets
+          cp -r boxring-wetterau.de/. _site/boxring-wetterau.de/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
