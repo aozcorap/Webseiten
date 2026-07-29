@@ -477,31 +477,32 @@ class Component extends DCLogic {
 
 <script>
 (function(){
-  function init(){
-    var toggle = document.getElementById('bwNavToggle');
+  // Event-Delegation auf document: das dc-runtime-Framework ersetzt Header/Button
+  // bei jedem Re-Render durch neue DOM-Knoten, wodurch direkt angehaengte Listener
+  // verloren gehen. document selbst wird nie ersetzt, daher hier anhaengen.
+  function closeMenu(){
     var nav = document.getElementById('bwMobileNav');
-    if (!toggle || !nav) return;
-    function closeMenu(){
-      nav.classList.remove('open');
-      toggle.setAttribute('aria-expanded','false');
-    }
-    toggle.addEventListener('click', function(){
+    var toggle = document.getElementById('bwNavToggle');
+    if (nav) nav.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e){
+    var toggleBtn = e.target.closest('#bwNavToggle');
+    if (toggleBtn) {
+      var nav = document.getElementById('bwMobileNav');
+      if (!nav) return;
       var isOpen = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    nav.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', closeMenu);
-    });
-    var mq = window.matchMedia('(min-width: 861px)');
-    function handleBreakpointChange(e){ if (e.matches) closeMenu(); }
-    if (mq.addEventListener) mq.addEventListener('change', handleBreakpointChange);
-    else mq.addListener(handleBreakpointChange);
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      return;
+    }
+    if (e.target.closest('.bw-mobile-nav a')) {
+      closeMenu();
+    }
+  });
+  var mq = window.matchMedia('(min-width: 861px)');
+  function handleBreakpointChange(e){ if (e.matches) closeMenu(); }
+  if (mq.addEventListener) mq.addEventListener('change', handleBreakpointChange);
+  else mq.addListener(handleBreakpointChange);
 })();
 </script>
 </body>
