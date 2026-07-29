@@ -111,11 +111,17 @@
     "postalCode": "61169",
     "addressCountry": "DE"
   },
+  "telephone": "+49-173-2609937",
+  "priceRange": "75€–150€ / Jahr",
   "sameAs": [
     "https://www.instagram.com/boxringwetterau"
   ],
   "foundingDate": "1983",
-  "areaServed": "DE",
+  "areaServed": [
+    "Friedberg (Hessen)", "Bad Nauheim", "Karben", "Rosbach v. d. Höhe",
+    "Butzbach", "Ober-Mörlen", "Wölfersheim", "Florstadt", "Reichelsheim (Wetterau)",
+    "Münzenberg", "Wöllstadt", "Rockenberg", "Wetteraukreis"
+  ],
   "sport": "Boxing",
   "openingHoursSpecification": [
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "19:00", "closes": "20:30", "description": "Anfänger" },
@@ -123,6 +129,39 @@
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "20:00", "closes": "22:00", "description": "Fortgeschrittene" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "20:30", "closes": "22:00", "description": "Fortgeschrittene" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "20:30", "closes": "22:00", "description": "Fortgeschrittene" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wo kann ich in Friedberg und der Wetterau boxen lernen?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Beim Boxring Wetterau e.V. in Friedberg, Maria-Montessori-Weg 2, 61169 Friedberg. Der Verein bildet seit 1983 Anfänger und Fortgeschrittene aus und ist die zentrale Anlaufstelle für Amateur- und Fitnessboxen für Sportler aus Friedberg, Bad Nauheim, Karben, Butzbach, Rosbach v. d. Höhe und der gesamten Wetterau." }
+    },
+    {
+      "@type": "Question",
+      "name": "Gibt es ein kostenloses Probetraining?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja, Neueinsteiger können 3–4 Wochen kostenlos zum Probetraining kommen, bevor sie sich für eine Mitgliedschaft entscheiden." }
+    },
+    {
+      "@type": "Question",
+      "name": "Ab welchem Alter kann man beim Boxring Wetterau trainieren?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Training ist ab 12 Jahren möglich, in getrennten Gruppen für Anfänger und Fortgeschrittene." }
+    },
+    {
+      "@type": "Question",
+      "name": "Was kostet die Mitgliedschaft beim Boxring Wetterau?",
+      "acceptedAnswer": { "@type": "Answer", "text": "75 € pro Jahr für 12- bis 18-Jährige und 150 € pro Jahr ab 18 Jahren, jeweils ohne versteckte Kosten." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wann finden die Trainingseinheiten statt?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Anfänger trainieren dienstags und donnerstags von 19:00 bis 20:30 Uhr. Fortgeschrittene trainieren montags 20:00–22:00 Uhr sowie dienstags und donnerstags 20:30–22:00 Uhr." }
+    }
   ]
 }
 </script>
@@ -156,7 +195,8 @@
   </nav>
 
   <section style="position:relative;padding:120px 48px 90px;overflow:hidden;">
-    <div style="position:absolute;inset:0;z-index:0;background-image:url('./assets/hero-boxer.jpeg');background-size:cover;background-position:center;">
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="./assets/hero-boxer.jpeg" alt="Boxtraining beim Boxring Wetterau e.V. in Friedberg" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
       <div style="position:absolute;inset:0;background:linear-gradient(90deg,#111110 20%,rgba(17,17,16,0.85) 55%,rgba(17,17,16,0.4) 100%);pointer-events:none;"></div>
     </div>
     <div style="position:relative;z-index:1;max-width:1200px;margin:0 auto;">
@@ -263,7 +303,7 @@
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
         <sc-for list="{{ gallery }}" as="item" hint-placeholder-count="4">
           <div style="aspect-ratio:4/5;border-radius:16px;overflow:hidden;position:relative;border:1px solid rgba(242,237,232,0.06);background:#1c1b19;">
-            <iframe src="{{ item.embed }}" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" scrolling="no" allowtransparency="true"></iframe>
+            <iframe src="{{ item.embed }}" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" scrolling="no" allowtransparency="true" loading="lazy" title="Instagram Beitrag von @boxringwetterau"></iframe>
           </div>
         </sc-for>
       </div>
@@ -279,7 +319,9 @@
       <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 24px;">Trainiert wird in Friedberg.</h2>
       <div style="font-weight:700;font-size:17px;margin-bottom:8px;">Ehemalige Montessori-Schule</div>
       <div style="color:#c4bdb5;font-size:16px;line-height:1.6;margin-bottom:20px;">Maria-Montessori-Weg 2<br>61169 Friedberg</div>
-      <div style="font-size:14px;color:#8f887f;">Mitglied im HABV – Hessischer Amateur-Boxverband e.V.</div>
+      <div style="color:#c4bdb5;font-size:16px;line-height:1.6;margin-bottom:20px;">Telefon: <a href="tel:+491732609937">0173 2609937</a></div>
+      <div style="font-size:14px;color:#8f887f;margin-bottom:20px;">Mitglied im HABV – Hessischer Amateur-Boxverband e.V.</div>
+      <p style="font-size:14px;color:#8f887f;line-height:1.6;max-width:420px;">Unsere Mitglieder kommen aus Friedberg und der gesamten Wetterau – u.a. aus Bad Nauheim, Karben, Rosbach v. d. Höhe, Butzbach, Ober-Mörlen, Wölfersheim, Florstadt, Reichelsheim, Münzenberg, Wöllstadt und Rockenberg.</p>
     </div>
     <div style="aspect-ratio:4/3;border-radius:20px;overflow:hidden;border:1px solid rgba(242,237,232,0.06);filter:grayscale(1) invert(0.92) contrast(0.9);">
       <iframe src="https://www.google.com/maps?q=Maria-Montessori-Weg+2,+61169+Friedberg&output=embed" style="width:100%;height:100%;border:0;" loading="lazy"></iframe>
@@ -357,6 +399,73 @@ class Component extends DCLogic {
 
 </script>
 </x-dc>
+
+<noscript>
+  <div style="background:#111110;color:#f2ede8;font-family:sans-serif;max-width:800px;margin:0 auto;padding:40px 24px;line-height:1.6;">
+    <h2>Boxring Wetterau e.V. – Amateur- und Fitnessboxen in Friedberg</h2>
+    <p>Seit 1983 bilden wir Anfänger und Fortgeschrittene ab 12 Jahren aus. Mitglied im HABV – Hessischer Amateur-Boxverband e.V.</p>
+    <h3>Trainingszeiten</h3>
+    <ul>
+      <li>Anfänger: Dienstag 19:00–20:30 Uhr, Donnerstag 19:00–20:30 Uhr</li>
+      <li>Fortgeschrittene: Montag 20:00–22:00 Uhr, Dienstag 20:30–22:00 Uhr, Donnerstag 20:30–22:00 Uhr</li>
+      <li>Probetraining: 3–4 Wochen kostenlos, Anmeldung vor Ort</li>
+    </ul>
+    <h3>Mitgliedsbeiträge</h3>
+    <ul>
+      <li>12–18 Jahre: 75 € / Jahr</li>
+      <li>Ab 18 Jahren: 150 € / Jahr</li>
+    </ul>
+    <h3>Standort & Kontakt</h3>
+    <p>Maria-Montessori-Weg 2, 61169 Friedberg<br>Telefon: 0173 2609937</p>
+    <h3>Vorstand</h3>
+    <ul>
+      <li>Ahmet Özcorapci – 1. Vorsitzender, Head Coach</li>
+      <li>Dennis Stork – 2. Vorsitzender, Co-Trainer</li>
+      <li>Leif Hahlbohm – Kassenwart</li>
+      <li>Georgis Kamarianakis – Schriftführer</li>
+    </ul>
+  </div>
+</noscript>
+
+<section id="faq" style="padding:100px 48px;background:#111110;color:#f2ede8;font-family:'Inter',sans-serif;">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Häufige Fragen</div>
+    <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 40px;">Boxen in Friedberg &amp; der Wetterau.</h2>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="background:#191817;border-radius:16px;padding:24px 28px;border:1px solid rgba(242,237,232,0.06);">
+        <h3 style="font-size:17px;margin:0 0 8px;">Wo kann ich in Friedberg und der Wetterau boxen lernen?</h3>
+        <p style="font-size:15px;color:#c4bdb5;margin:0;">Beim Boxring Wetterau e.V. in Friedberg, Maria-Montessori-Weg 2, 61169 Friedberg. Wir sind die zentrale Anlaufstelle für Amateur- und Fitnessboxen für Sportler aus Friedberg, Bad Nauheim, Karben, Butzbach, Rosbach v. d. Höhe und der gesamten Wetterau.</p>
+      </div>
+      <div style="background:#191817;border-radius:16px;padding:24px 28px;border:1px solid rgba(242,237,232,0.06);">
+        <h3 style="font-size:17px;margin:0 0 8px;">Gibt es ein kostenloses Probetraining?</h3>
+        <p style="font-size:15px;color:#c4bdb5;margin:0;">Ja, Neueinsteiger können 3–4 Wochen kostenlos zum Probetraining kommen, bevor sie sich für eine Mitgliedschaft entscheiden.</p>
+      </div>
+      <div style="background:#191817;border-radius:16px;padding:24px 28px;border:1px solid rgba(242,237,232,0.06);">
+        <h3 style="font-size:17px;margin:0 0 8px;">Ab welchem Alter kann man beim Boxring Wetterau trainieren?</h3>
+        <p style="font-size:15px;color:#c4bdb5;margin:0;">Training ist ab 12 Jahren möglich, in getrennten Gruppen für Anfänger und Fortgeschrittene.</p>
+      </div>
+      <div style="background:#191817;border-radius:16px;padding:24px 28px;border:1px solid rgba(242,237,232,0.06);">
+        <h3 style="font-size:17px;margin:0 0 8px;">Was kostet die Mitgliedschaft beim Boxring Wetterau?</h3>
+        <p style="font-size:15px;color:#c4bdb5;margin:0;">75 € pro Jahr für 12- bis 18-Jährige und 150 € pro Jahr ab 18 Jahren, jeweils ohne versteckte Kosten.</p>
+      </div>
+      <div style="background:#191817;border-radius:16px;padding:24px 28px;border:1px solid rgba(242,237,232,0.06);">
+        <h3 style="font-size:17px;margin:0 0 8px;">Wann finden die Trainingseinheiten statt?</h3>
+        <p style="font-size:15px;color:#c4bdb5;margin:0;">Anfänger trainieren dienstags und donnerstags von 19:00 bis 20:30 Uhr. Fortgeschrittene trainieren montags 20:00–22:00 Uhr sowie dienstags und donnerstags 20:30–22:00 Uhr.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#161514;color:#8f887f;font-family:'Inter',sans-serif;padding:40px 48px;border-top:1px solid rgba(242,237,232,0.08);">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;font-size:14px;">
+    <div>Boxring Wetterau e.V. · Maria-Montessori-Weg 2, 61169 Friedberg · Telefon: <a href="tel:+491732609937" style="color:#f2ede8;">0173 2609937</a></div>
+    <div style="display:flex;gap:24px;">
+      <a href="./impressum.html" style="color:#f2ede8;font-weight:600;">Impressum</a>
+      <a href="./datenschutz.html" style="color:#f2ede8;font-weight:600;">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
 <script>
 (function(){
   function init(){
