@@ -26,8 +26,8 @@ jobs:
           cp -r ozcorapci.de _site/
           mkdir -p _site/boxring-wetterau.de
           cp -r boxring-wetterau.de/. _site/boxring-wetterau.de/
-          mkdir -p _site/everlast-ai-v2
-          cp -r everlast-ai-v2/. _site/everlast-ai-v2/
+          mkdir -p _site/buerokollege-ai
+          cp -r buerokollege-ai/. _site/buerokollege-ai/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

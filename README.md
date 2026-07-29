@@ -19,6 +19,17 @@ Vereins-Website Boxring Wetterau e.V., Rot/Gold-Farbschema.
   - Trainingsplan-Karten (Sparring/Grundlagen) und ein Teil der Galerie sind noch **Platzhalter** — echte Trainingsfotos fehlen noch
   - Instagram-Einbindung (`@boxringwetterau`) ungelöst: offizielle Embeds zeigen zwingend Instagram-Rahmen (Like/Kommentar-Leiste), lassen sich nicht auf reines Video reduzieren. Nächster Versuch: Videos selbst hosten statt einbetten — offen für nächste Session.
 
+### [buerokollege-ai](buerokollege-ai/index.html)
+Landingpage "BüroKollege.AI" — 30 Tage kostenlos testen, digitaler Kollege für Handwerksbetriebe (KI-Agent für Postfach/WhatsApp/Rechnungen).
+
+- **Aktuell gültige Version** — dunkles Design mit Farbverlauf (dunkel bei Problem-Sektion → hell bei Lösung/Formular), Chat-Demo im Hero (Sprachnachricht → Angebots-PDF, als Beispiel gekennzeichnet)
+- Formular sendet noch nicht (kein Endpunkt angeschlossen, zeigt Fallback-E-Mail)
+- Impressum/Datenschutz fehlen noch
+- Wettbewerber: kiwerk.ai (echtes Produkt, echte Kundenstimmen, offene Preise) — eigene Positionierung dagegen noch offen
+
+### [everlast-entwuerfe](everlast-entwuerfe/) & [everlast-ai-landingpage](everlast-ai-landingpage/)
+Vorstufen zu buerokollege-ai: drei Design-Entwürfe (dunkel/hell/kräftig) sowie eine erste, verworfene Überarbeitung. Nicht mehr aktiv gepflegt, siehe [.claude/STATE.md](.claude/STATE.md) für Details.
+
 ## Offene Punkte (boxring-wetterau.de v2)
 
 - [ ] Trainingsplan-Fotos (Sparring, Grundlagentraining) besorgen
