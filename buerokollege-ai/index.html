@@ -313,8 +313,8 @@
   .shead p{color:var(--muted-now); font-size:17.5px; line-height:1.6;}
 
   /* PAIN */
-  .pain{display:grid; grid-template-columns:1.3fr 0.85fr; gap:40px; align-items:center;}
-  @media(max-width:940px){ .pain{grid-template-columns:1fr; gap:40px;} }
+  .pain{display:grid; grid-template-columns:0.85fr 1.15fr; gap:40px; align-items:center;}
+  @media(max-width:940px){ .pain{grid-template-columns:1fr; gap:32px;} }
   .pain-photo{position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--line-now); aspect-ratio:4/2.2;}
   @media(max-width:940px){ .pain-photo{aspect-ratio:4/2.6;} }
   .pain-photo img{width:100%; height:100%; object-fit:cover;}
@@ -322,6 +322,10 @@
   .pain-photo .stamp{position:absolute; left:22px; bottom:22px; right:22px; z-index:1;}
   .pain-photo .stamp .t{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--amber); letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px;}
   .pain-photo .stamp p{font-size:17px; font-weight:500; letter-spacing:-0.015em; line-height:1.4;}
+  .pain-photo-ai{aspect-ratio:4/3.4;}
+  @media(max-width:940px){ .pain-photo-ai{aspect-ratio:4/2.6;} }
+  .pain-photo-ai img{filter:brightness(0.85) saturate(0.85) contrast(1.02);}
+  .pain-photo-ai::after{background:linear-gradient(160deg, rgba(7,9,13,0.15), rgba(7,9,13,0.4)), linear-gradient(0deg, rgba(196,248,42,0.1), transparent 55%);}
   .quotes{display:flex; flex-direction:column; gap:16px;}
   .quote{border:1px solid var(--line-now); border-left:2px solid var(--amber); border-radius:0 14px 14px 0; padding:22px 24px; background:rgba(255,255,255,0.02); transition:border-color .2s, background .2s;}
   .quote:hover{background:rgba(255,255,255,0.035);}
@@ -332,9 +336,13 @@
   .split-bar{margin-top:var(--s5); border:1px solid var(--line-now); border-radius:18px; padding:34px; background:var(--bg-2);}
   @media(max-width:640px){ .split-bar{padding:24px 20px;} }
 
-  /* ===== COMPACT SOLUTION (3 Kernpunkte statt 3 Sektionen) ===== */
-  .compact-solution{margin-top:var(--s4); display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  /* ===== COMPACT SOLUTION (3 Kernpunkte) ===== */
+  .compact-solution{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
   @media(max-width:820px){ .compact-solution{grid-template-columns:1fr; gap:14px;} }
+  .pain .compact-solution{grid-template-columns:1fr; gap:14px;}
+  .cs-groups{display:flex; flex-direction:column; gap:34px;}
+  .cs-group-h{font-size:clamp(19px,2.2vw,23px); font-weight:700; letter-spacing:-0.02em; margin-bottom:16px; color:var(--text-now); display:flex; align-items:center; gap:11px;}
+  .cs-group-h::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--lime); flex-shrink:0; box-shadow:0 0 0 4px var(--lime-dim);}
   .cs-item{border:1px solid var(--line-now); border-radius:14px; padding:22px 24px; background:var(--card-now);}
   .cs-tag{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--lime); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; font-weight:600;}
   .cs-item p{font-size:14.8px; line-height:1.6; color:var(--text-now);}
@@ -440,13 +448,20 @@
   .pstep p{color:var(--muted-now); font-size:14.5px; line-height:1.6;}
 
   /* ERGEBNIS */
-  .result{display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center;}
-  @media(max-width:940px){ .result{grid-template-columns:1fr; gap:34px;} }
-  .result-img{border-radius:22px; overflow:hidden; aspect-ratio:4/5; box-shadow:0 30px 60px -30px rgba(11,16,23,0.4);}
-  @media(max-width:940px){ .result-img{aspect-ratio:4/3.4;} }
-  .result-img img{width:100%; height:100%; object-fit:cover;}
-  .result-txt h2{font-size:clamp(26px,3.8vw,42px); margin-bottom:16px;}
-  .result-txt > p{color:var(--muted-now); font-size:17px; line-height:1.65; margin-bottom:32px;}
+  .result-hero{position:relative; padding:var(--s7) 0; overflow:hidden;}
+  @media(max-width:820px){ .result-hero{padding:var(--s6) 0;} }
+  .result-hero.stage-2 .result-hero-bg{position:absolute !important; inset:0; z-index:0;}
+  .result-hero-bg img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 25%;
+    filter:brightness(0.55) saturate(0.85);}
+  .result-hero-scrim{position:absolute; inset:0;
+    background:linear-gradient(90deg, var(--bg-now) 0%, rgba(14,20,28,0.85) 26%, rgba(14,20,28,0.45) 55%, rgba(14,20,28,0.25) 100%),
+      linear-gradient(0deg, rgba(14,20,28,0.55) 0%, transparent 35%);}
+  @media(max-width:820px){
+    .result-hero-scrim{background:linear-gradient(0deg, var(--bg-now) 0%, var(--bg-now) 10%, rgba(14,20,28,0.7) 38%, rgba(14,20,28,0.4) 65%, rgba(14,20,28,0.4) 100%);}
+  }
+  .result-hero-inner{position:relative; z-index:1; max-width:600px;}
+  .result-hero-inner h2{font-size:clamp(26px,3.8vw,42px); margin-bottom:16px;}
+  .result-hero-inner > p{color:var(--muted-now); font-size:17px; line-height:1.65; margin-bottom:32px;}
   .result-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   @media(max-width:520px){ .result-stats{grid-template-columns:1fr; gap:14px;} }
   .result-stats > div{border-left:2px solid var(--lime); padding-left:15px;}
@@ -560,7 +575,7 @@
         <b>KOSTENLOS</b>
         <span>60 Tage testen · keine Zahlungsdaten · keine Kündigung</span>
       </div>
-      <h1>Ich baue dir einen <span class="accent">digitalen Mitarbeiter</span>, der sich um deine lästigen Büroarbeiten kümmert — für 60 Tage kostenlos.</h1>
+      <h1>Genervt von vollem Postfach, WhatsApp-Nachrichten, Angeboten, Rechnungen?<br>Ich schenke dir einen <span class="accent">digitalen Mitarbeiter</span>, der sich um deine lästigen Büroarbeiten kümmert — 60 Tage kostenlos.</h1>
       <p class="lead">Kein Risiko, keine Haken, keine Ösen. Versprochen.</p>
       <div class="actions">
         <a href="#test" class="btn">
@@ -589,52 +604,52 @@
   <!-- PROBLEM + LÖSUNG -->
   <section id="problem" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Kennst du das?</span>
-      <h2>Du bist Handwerker. Kein Sachbearbeiter.</h2>
-      <p>Trotzdem geht der halbe Tag für Papierkram drauf — Mails, Angebote, Rechnungen. Der Stapel wird nie kleiner.</p>
+      <span class="kick">Wie es funktioniert</span>
+      <h2>Darf ich vorstellen? Dein neuer digitaler Mitarbeiter.</h2>
+      <p>Dein digitaler Mitarbeiter übernimmt die Vorbereitung von E-Mails, Angeboten und Rechnungen.</p>
     </div>
 
     <div class="pain">
-      <div class="pain-photo" data-rev>
-        <img src="./assets/papierkram-neu.jpg" alt="Taschenrechner auf einem Stapel handschriftlicher Rechnungen und Belege" loading="lazy" width="1600" height="2133">
-        <div class="stamp">
-          <div class="t">Jeden Abend das Gleiche</div>
-          <p>Angebote, Rechnungen, Mails. Und morgen früh geht es wieder auf die Baustelle.</p>
-        </div>
+      <div class="pain-photo pain-photo-ai" data-rev>
+        <img src="./assets/ki-mitarbeiter.jpg" alt="Humanoider Roboter übergibt einem Mann im Büro Unterlagen" loading="lazy" width="847" height="565">
       </div>
 
-      <div class="quotes" data-revs>
-        <div class="quote">
-          <p>Das Postfach wird erst nach Feierabend abgearbeitet — Angebote schreibst du, wenn andere längst zuhause sind.</p>
-          <cite>Elektro · Sanitär · Heizung</cite>
+      <div class="cs-groups" data-revs>
+        <div class="cs-group">
+          <h3 class="cs-group-h">Darum kümmert sich dein digitaler Mitarbeiter</h3>
+          <div class="compact-solution">
+            <div class="cs-item">
+              <div class="cs-tag">Postfach &amp; WhatsApp</div>
+              <p>Er liest Anfragen, sucht Preise heraus und legt dir fertige Antworten in die Entwürfe.</p>
+            </div>
+            <div class="cs-item">
+              <div class="cs-tag">Angebote &amp; Rechnungen</div>
+              <p>Er bereitet Angebote vor, hakt bei offenen Anfragen nach und erstellt Zahlungserinnerungen.</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="compact-solution" data-revs>
-      <div class="cs-item">
-        <div class="cs-tag">Postfach &amp; WhatsApp</div>
-        <p>Er liest Anfragen, sucht Preise heraus und legt dir fertige Antworten in die Entwürfe.</p>
-      </div>
-      <div class="cs-item">
-        <div class="cs-tag">Angebote &amp; Rechnungen</div>
-        <p>Hakt bei offenen Angeboten nach und erinnert säumige Zahler — freundlich, automatisch.</p>
-      </div>
-      <div class="cs-item">
-        <div class="cs-tag">Deine Kontrolle</div>
-        <p>Nichts geht raus ohne dich. Er bereitet vor, du prüfst kurz und drückst auf Senden.</p>
+        <div class="cs-group">
+          <h3 class="cs-group-h">Darum kümmerst du dich</h3>
+          <div class="compact-solution">
+            <div class="cs-item">
+              <div class="cs-tag">Deine Kontrolle</div>
+              <p>Nichts geht raus ohne dich. Er bereitet vor, du prüfst kurz und drückst auf Senden.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-
+</div>
 
   <!-- ERGEBNIS -->
-  <section id="ergebnis" class="stage-7" style="padding-bottom:0;">
-    <div class="result" data-rev>
-      <div class="result-img">
-        <img src="./assets/ergebnis-familie.jpg" alt="Vater umarmt lachend sein Kind zuhause" loading="lazy" width="1800" height="2700">
-      </div>
-      <div class="result-txt">
+  <section id="ergebnis" class="result-hero stage-2">
+    <div class="result-hero-bg">
+      <img src="./assets/ergebnis-familie-neu.webp" alt="Handwerker in Arbeitskleidung wird nach Feierabend von seinen Kindern in der Haustür freudig begrüßt" loading="lazy" width="1408" height="768">
+      <div class="result-hero-scrim"></div>
+    </div>
+    <div class="wrap">
+      <div class="result-hero-inner" data-rev>
         <span class="kick">Das Ergebnis</span>
         <h2>Wieder Zeit für die, die zuhause warten.</h2>
         <p>Der Papierkram ist nicht weg — er macht nur nicht mehr deinen Abend kaputt. Du prüfst kurz, gibst frei, und der Feierabend gehört wieder deiner Familie.</p>
@@ -647,8 +662,9 @@
     </div>
   </section>
 
+<div class="wrap">
   <!-- TEST / FORMULAR -->
-  <section id="test" class="stage-7">
+  <section id="test" class="stage-1">
     <div class="form-wrap">
       <div class="fside" data-rev>
         <span class="kick">Dein kostenloser Test</span>
@@ -704,7 +720,7 @@
   </section>
 </div>
 
-<footer class="stage-7">
+<footer class="stage-1">
   <div class="wrap foot">
     <p>BüroKollege.AI — Digitale Kollegen für Handwerk und Mittelstand</p>
     <div class="foot-links">
@@ -808,25 +824,6 @@
       status.scrollIntoView({ block:'center', behavior:'smooth' });
     }, 600);
   });
-})();
-
-// Navigation hell schalten, sobald der helle Bereich die Leiste erreicht.
-// Direkt gegen die Position geprueft, damit es auch beim Sprung per Link stimmt.
-(function(){
-  var nav = document.querySelector('nav');
-  var light = document.getElementById('ergebnis');
-  if (!nav || !light) return;
-  var ticking = false;
-  function update(){
-    ticking = false;
-    nav.classList.toggle('light', light.getBoundingClientRect().top <= nav.offsetHeight);
-  }
-  function onScroll(){
-    if (!ticking){ ticking = true; requestAnimationFrame(update); }
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  window.addEventListener('resize', onScroll);
-  update();
 })();
 
 // Chat-Demo: Nachrichten nacheinander zeigen, sobald sie sichtbar wird.
