@@ -39,12 +39,13 @@
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
       und vom Nutzer verschickt)
-- [ ] Google Business Profil weiter optimieren:
-      - Kategorie ergänzen (z. B. "Boxsportverein"/"Sportverein" + "Fitnessstudio")
-      - Mehr Fotos hochladen (Halle, Training, Vorstand, Logo – aktuell nur 1 Foto)
-      - Rezensionen aktiv einsammeln (aktuell nur 1 Rezension, größter Ranking-Hebel;
-        Text für Rezensions-Anfrage wurde bereits formuliert)
-      - Unternehmensbeschreibung einfügen (Text wurde bereits formuliert)
+- [ ] Rezensionen aktiv einsammeln (letzter offener GBP-Punkt, größter noch
+      ungenutzter Ranking-Hebel für die Umkreissuche/Local Pack): Text für
+      Rezensions-Anfrage wurde formuliert (WhatsApp-Vorlage), Zielgruppe
+      bewusst auf Eltern + erwachsene Mitglieder (Masterboxen etc.)
+      fokussiert statt breit auf Jugendliche, da diese kaum Google nutzen.
+      Empfehlung: 5–10 Bewertungen über 2–3 Wochen verteilt einholen statt
+      alle auf einmal (wirkt organischer)
 - [ ] NAP-Einträge (Name/Adresse/Telefon) in weiteren Verzeichnissen ergänzen:
       HABV-Verbandsseite, DOSB-Vereinssuche, LSB Hessen Vereinsverzeichnis
       (Stadt Friedberg Vereinsverzeichnis bereits erledigt, siehe unten;
@@ -57,6 +58,18 @@
       bereitstellen
 
 ## Bereits erledigt
+- [x] Google Business Profil Schritt für Schritt durchgegangen und optimiert:
+      - Kategorien bereits korrekt gesetzt (Sportverein primär + Fitness-
+        studio, Boxclub, Boxklub, Boxring als Zusatzkategorien) – Punkt war
+        in Wirklichkeit schon erledigt, alte Notiz war veraltet
+      - Unternehmensbeschreibung war ebenfalls schon vorhanden und gut
+      - Titelbild ergänzt (hero-boxer.jpeg), weitere Fotos hochgeladen
+        (membership-photo.jpg + mehrere Erfolge-Fotos) – vorher nur 1 Foto
+      - Einzugsgebiet von 9 auf 18 Orte erweitert, konsistent mit Website-
+        areaServed: Florstadt (61197), Reichelsheim/Wetterau (61203),
+        Münzenberg (35516), Wöllstadt (61206), Nidda (63667), Altenstadt/
+        Hessen (63674), Ranstadt (63691), Niddatal (61130), Echzell (61209)
+        neu ergänzt
 - [x] SEO-Analyse Umkreissuche (30 km um Friedberg) durchgeführt und
       Verbesserungen umgesetzt: GeoCoordinates (50.3369, 8.7561) + GeoCircle
       (geoRadius 30000m) ins SportsClub-JSON-LD ergänzt. areaServed erweitert
