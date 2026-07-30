@@ -23,8 +23,6 @@
           auf "Erfolge" umbenennen/umbiegen oder entfernen; den reinen
           "@boxringwetterau ansehen"-Link (Social-Proof, kein Iframe) ggf. klein
           im Header oder Footer erhalten, nur die große Iframe-Galerie entfällt
-- [ ] Vereinsregisternummer + zuständiges Amtsgericht für impressum.html nachreichen
-      (wird auch für die Anfrage an Strothmann IT bzgl. boxring-woelfersheim.de gebraucht)
 - [ ] Antwort von Strothmann IT abwarten: Domain-Tausch anfragen –
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
@@ -44,6 +42,9 @@
       fonts.googleapis.com laden
 
 ## Bereits erledigt
+- [x] Vereinsregisternummer + Amtsgericht ermittelt (VR 1020, Amtsgericht Friedberg)
+      und in impressum.html eingetragen – auch für Anfrage an Strothmann IT
+      bzgl. boxring-woelfersheim.de verwendbar
 - [x] Impressum + Datenschutzerklärung erstellt
 - [x] Telefonnummer + JSON-LD (telephone, priceRange, areaServed) ergänzt
 - [x] FAQ-Sektion + FAQPage-Schema
