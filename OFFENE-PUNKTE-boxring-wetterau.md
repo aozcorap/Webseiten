@@ -34,8 +34,8 @@
         Text für Rezensions-Anfrage wurde bereits formuliert)
       - Unternehmensbeschreibung einfügen (Text wurde bereits formuliert)
 - [ ] NAP-Einträge (Name/Adresse/Telefon) in weiteren Verzeichnissen ergänzen:
-      HABV-Verbandsseite, DOSB-Vereinssuche, Stadt Friedberg Vereinsverzeichnis,
-      Das Örtliche, Gelbe Seiten
+      HABV-Verbandsseite, DOSB-Vereinssuche, Das Örtliche, Gelbe Seiten
+      (Stadt Friedberg Vereinsverzeichnis bereits erledigt, siehe unten)
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 - [ ] (optional, DSGVO-Absicherung) Google Fonts selbst hosten statt live von
@@ -62,6 +62,9 @@
       da Framework Header bei Re-Render neu erzeugt (PR #4)
 - [x] Alle Deploys laufen manuell per FTP (kein Auto-Deploy) – ZIP-Dateien
       wurden jeweils bereitgestellt
+- [x] Verein im Vereinsverzeichnis der Stadt Friedberg angemeldet (Name,
+      Beschreibung, Logo als Bild inkl. Alt-Text und Copyright, Adresse
+      Trainingshalle, Telefon, Website eingetragen)
 
 ## Hinweis für Claude (Workflow)
 - Nach jeder vom Nutzer genehmigten Code-Änderung (commit + push erfolgt):
