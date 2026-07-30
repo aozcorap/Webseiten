@@ -1,7 +1,7 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
 
 ## Offen
-- [ ] Deployment des 2. Erfolge-Batches (5 neue Erfolge, siehe "Bereits
+- [ ] Deployment des 3. Erfolge-Batches (5 neue Erfolge, siehe "Bereits
       erledigt"): Nutzer muss noch die 5 Bilddateien per Plesk hochladen,
       danach neue ZIP bereitstellen und hochladen lassen
 - [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
@@ -77,6 +77,23 @@
       - erfolge-2021-11-21-moskoglo-dm-teilnahme.jpg (Trainer erwähnt)
       - erfolge-2021-12-21-moskoglo-deutscher-meister.jpg (Trainer erwähnt)
       - erfolge-2022-02-27-moskoglo-duelle-champions.jpg
+      Deployment abgeschlossen (inkl. Fix object-position:top gegen
+      abgeschnittene Köpfe bei Hochformat-Fotos), live bestätigt
+- [x] 3. Batch mit 5 weiteren Erfolgen in erfolge.html + Startseiten-Teaser
+      eingebaut, chronologisch neuester zuerst. Neue Teaser-4 auf Startseite:
+      Guirguis-KO, Özcorapci-Masterboxen-DM, Leonid-Hessenmeister, U17-DM-
+      Bronze. Bisherige Teaser-Einträge (Duelle der Champions, Moskoglo-DM,
+      DM-Teilnahme, Worms) rutschen auf die Unterseite. Bild-Dateinamen
+      (noch vom Nutzer per Plesk hochzuladen):
+      - erfolge-2022-04-29-moskoglo-dm-bronze.jpg (Trainer erwähnt)
+      - erfolge-2022-05-07-moskoglo-wolff-tko.jpg
+      - erfolge-2022-06-06-moskoglo-hessenmeister.jpg (Trainer erwähnt)
+      - erfolge-2023-01-30-oezcorapci-deutscher-meister-masterboxen.jpg
+        (Ahmet Özcorapci selbst als Athlet, nicht nur als Trainer erwähnt)
+      - erfolge-2023-11-18-guirguis-masterboxen-ko.jpg (1. Vorsitzender
+        Philipp Guirguis, kein großes Turnier daher kein Trainer-Verweis;
+        Katja Insenbiel aus dem Originaltext bewusst weggelassen, da sie
+        nicht auf dem Foto zu sehen ist)
       Noch offen: Deployment (siehe "Offen")
 - [x] Vereinsregisternummer + Amtsgericht ermittelt (VR 1020, Amtsgericht Friedberg)
       und in impressum.html eingetragen – auch für Anfrage an Strothmann IT
