@@ -1,8 +1,20 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
 
 ## Offen
-- [ ] Deployment der neuen Erfolge-Seite: ZIP erstellen und Nutzer per FTP
-      hochladen lassen, sobald final geprüft (siehe "Bereits erledigt" für Details)
+- [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
+      vom Nutzer kommen. Ablauf (siehe auch "Hintergrund-Infos"):
+      1. Nutzer schickt Screenshot (Bild + Text) im Chat + Datum
+      2. Claude schlägt Dateinamen vor (Schema erfolge-JJJJ-MM-TT-kurzname.jpg)
+         und einen leicht optimierten Kurztext
+      3. Nutzer lädt Original-Foto (ohne Instagram-UI) selbst per Plesk-File-
+         Manager in assets/ hoch (Chat-Bilder sind für Claude nicht als Datei
+         zugänglich, siehe Hintergrund-Infos)
+      4. Neuer Erfolg wird in erfolge.html ergänzt (chronologisch, neuester
+         zuerst) und ggf. in den Startseiten-Teaser aufgenommen, falls er
+         unter die neuesten 4 fällt (ältester Teaser-Eintrag rutscht dann
+         auf die Unterseite)
+      5. Erst wenn der Nutzer sagt "jetzt deployen": neue ZIP bauen +
+         bereitstellen
 - [ ] Antwort von Strothmann IT abwarten: Domain-Tausch anfragen –
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
@@ -41,7 +53,8 @@
       - erfolge-2021-07-03-moscoglo-brueder.jpg
       - erfolge-2021-09-15-gutmann-mezhidov.jpg
       - erfolge-2021-09-25-mezhidov-vizehessenmeister.jpg
-      Noch offen: Deployment (ZIP + FTP-Upload, siehe "Offen")
+      Deployment abgeschlossen: ZIP wurde bereitgestellt, Nutzer hat per FTP
+      hochgeladen und live bestätigt (30.7.2026)
 - [x] Vereinsregisternummer + Amtsgericht ermittelt (VR 1020, Amtsgericht Friedberg)
       und in impressum.html eingetragen – auch für Anfrage an Strothmann IT
       bzgl. boxring-woelfersheim.de verwendbar
@@ -79,6 +92,12 @@
   crawlbar sein soll, MUSS innerhalb von <x-dc>...</x-dc> stehen (String-
   Grenze, kein DOM-Parsing) – sonst wird es beim zweiten JS-Render-Durchlauf
   rausgefiltert.
+- Wichtige technische Einschränkung: Bilder, die der Nutzer im Chat einfügt,
+  sind für Claude NICHT als Datei zugänglich (nur visuell sichtbar). Für neue
+  Erfolge-Fotos muss der Nutzer sie selbst per Plesk-File-Manager in
+  boxring-woelfersheim.de/httpdocs/assets/ hochladen (aktuelle Hauptdomain,
+  Domain-Tausch zu boxring-wetterau.de steht noch aus); Claude referenziert
+  sie dann per Dateiname im Code.
 - Telefonnummer: 0173-2609937
 - Adresse Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg
 - Impressum-Anschrift: Ahmet Özcorapci, Hospitalgasse 36d, 61169 Friedberg
