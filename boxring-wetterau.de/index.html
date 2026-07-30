@@ -180,7 +180,7 @@
     </a>
     <nav style="display:flex;align-items:center;gap:36px;">
       <a href="#training" style="font-size:15px;font-weight:600;">Training</a>
-      <a href="#instagram" style="font-size:15px;font-weight:600;">Instagram</a>
+      <a href="#erfolge" style="font-size:15px;font-weight:600;">Erfolge</a>
       <a href="#ueber-uns" style="font-size:15px;font-weight:600;">Über uns</a>
       <a href="#standort" style="font-size:15px;font-weight:600;">Kontakt</a>
       <a href="#training" style="background:#e8394f;color:#fff;padding:12px 24px;border-radius:999px;font-weight:700;font-size:15px;" style-hover="background:#c92e42;">Probetraining</a>
@@ -189,7 +189,7 @@
   </header>
   <nav class="bw-mobile-nav" id="bwMobileNav">
     <a href="#training">Training</a>
-    <a href="#instagram">Instagram</a>
+    <a href="#erfolge">Erfolge</a>
     <a href="#ueber-uns">Über uns</a>
     <a href="#standort">Kontakt</a>
     <a href="#training" class="bw-mobile-cta" style="display:flex;">Probetraining</a>
@@ -297,19 +297,27 @@
     </div>
   </section>
 
-  <section id="instagram" style="padding:100px 48px;background:#161514;">
+  <section id="erfolge" style="padding:100px 48px;background:#161514;">
     <div style="max-width:1200px;margin:0 auto;">
-      <div style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">@boxringwetterau</div>
-      <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 56px;max-width:600px;">Direkt aus dem Training.</h2>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
-        <sc-for list="{{ gallery }}" as="item" hint-placeholder-count="4">
-          <div style="aspect-ratio:4/5;border-radius:16px;overflow:hidden;position:relative;border:1px solid rgba(242,237,232,0.06);background:#1c1b19;">
-            <iframe src="{{ item.embed }}" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" scrolling="no" allowtransparency="true" loading="lazy" title="Instagram Beitrag von @boxringwetterau"></iframe>
+      <div style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Erfolge</div>
+      <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 56px;max-width:600px;">Unsere Athletinnen und Athleten im Ring.</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:stretch;">
+        <sc-for list="{{ erfolgeTeaser }}" as="e" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;height:100%;background:#1c1b19;border-radius:16px;overflow:hidden;border:1px solid rgba(242,237,232,0.06);">
+            <div style="aspect-ratio:4/3;overflow:hidden;flex-shrink:0;">
+              <img src="{{ e.image }}" alt="{{ e.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+            <div style="padding:20px;display:flex;flex-direction:column;flex:1;">
+              <div style="font-size:13px;color:#e8394f;font-weight:700;margin-bottom:8px;">{{ e.date }}</div>
+              <div style="font-weight:700;font-size:16px;margin-bottom:10px;">{{ e.title }}</div>
+              <p style="font-size:14px;color:#a8a29e;line-height:1.6;margin:0 0 16px;">{{ e.excerpt }}</p>
+              <div style="margin-top:auto;"></div>
+            </div>
           </div>
         </sc-for>
       </div>
       <div style="text-align:center;margin-top:40px;">
-        <a href="https://www.instagram.com/boxringwetterau/" style="font-weight:700;font-size:15px;">Mehr auf Instagram ansehen →</a>
+        <a href="./erfolge.html" style="font-weight:700;font-size:15px;">Alle Erfolge ansehen →</a>
       </div>
     </div>
   </section>
@@ -456,11 +464,35 @@ class Component extends DCLogic {
         { age: '12–18 Jahre', price: '75 € / Jahr', desc: 'Aufbau- und Leistungsgruppen für Jugendliche.' },
         { age: 'Ab 18 Jahren', price: '150 € / Jahr', desc: 'Aufbau- und Leistungsgruppen für Erwachsene.' },
       ],
-      gallery: [
-        { id: 'reel-1', link: 'https://www.instagram.com/reel/DZj5kkmOTyI/', embed: 'https://www.instagram.com/reel/DZj5kkmOTyI/embed' },
-        { id: 'reel-2', link: 'https://www.instagram.com/reel/DTpjD1rjPgM/', embed: 'https://www.instagram.com/reel/DTpjD1rjPgM/embed' },
-        { id: 'reel-3', link: 'https://www.instagram.com/reel/DPJ6LhrjA43/', embed: 'https://www.instagram.com/reel/DPJ6LhrjA43/embed' },
-        { id: 'reel-4', link: 'https://www.instagram.com/reel/Cz3DLmPNtgX/', embed: 'https://www.instagram.com/reel/Cz3DLmPNtgX/embed' },
+      erfolgeTeaser: [
+        {
+          date: '25. September 2021',
+          title: 'Mezhidov wird Vize-Hessenmeister',
+          excerpt: 'Mansur Mezhidov erkämpft sich bei der Hessenmeisterschaft nach starker Leistung den 2. Platz.',
+          image: './assets/erfolge-2021-09-25-mezhidov-vizehessenmeister.jpg',
+          alt: 'Mansur Mezhidov mit Urkunde als Vize-Hessenmeister, Boxring Wetterau',
+        },
+        {
+          date: '15. September 2021',
+          title: 'Starke Auftritte bei der Wiesecker Boxing Night',
+          excerpt: 'Mansur Mezhidov und David Gutmann zeigen gegen erfahrene Gegner beeindruckende Leistungen.',
+          image: './assets/erfolge-2021-09-15-gutmann-mezhidov.jpg',
+          alt: 'David Gutmann und Mansur Mezhidov mit Trainerteam nach der Wiesecker Boxing Night, Boxring Wetterau',
+        },
+        {
+          date: '3. Juli 2021',
+          title: 'Moscoglo-Brüder überzeugen erneut',
+          excerpt: 'Leonid gewinnt vorzeitig durch Aufgabe, Vadim wird nach starkem Sparring als A-Klasse-Boxer eingestuft.',
+          image: './assets/erfolge-2021-07-03-moscoglo-brueder.jpg',
+          alt: 'Vadim und Leonid Moscoglo nach ihrem Wettkampfsparring, Boxring Wetterau',
+        },
+        {
+          date: '15. August 2020',
+          title: 'Training zur Deutschen Meisterschaft 2021',
+          excerpt: 'Intensive Trainingseinheiten und starke Unterstützer bringen uns dem großen Ziel näher.',
+          image: './assets/erfolge-2020-08-15-training-dm2021.jpg',
+          alt: 'Boxtraining im Freien zur Vorbereitung auf die Deutsche Meisterschaft 2021, Boxring Wetterau',
+        },
       ],
       vorstand: [
         { initials: 'AÖ', name: 'Ahmet Özcorapci', role: '' },

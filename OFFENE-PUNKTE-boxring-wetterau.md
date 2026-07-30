@@ -1,28 +1,8 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
 
 ## Offen
-- [ ] Instagram-Bilder + Original-Texte (chronologisch) vom Nutzer erhalten
-      → daraus neue "Erfolge"-Sektion bauen, echte <img>-Bilder (kein Iframe),
-        SEO-Alt-Texte, leicht optimierte Texte. Konzept (vom Nutzer festgelegt):
-        - Startseite: Sektion "Erfolge" zeigt nur die letzten 4 Erfolge (Teaser)
-        - Neue Unterseite (z. B. erfolge.html): alle Erfolge vollständig,
-          chronologisch aufgelistet
-        - Startseite-Teaser verlinkt auf die Unterseite ("Alle Erfolge ansehen")
-        - Unterseite in sitemap.xml aufnehmen, intern von der Startseite verlinken
-        - Design-Vorgabe: Bilder liegen teils im Hoch-, teils im Querformat vor;
-          auf Desktop müssen alle Karten (Bild + Text) trotzdem horizontal
-          ausgerichtet sein, auch bei unterschiedlich langen Texten
-          → Umsetzung: Bild-Container mit fester Höhe/Aspect-Ratio + object-fit:cover
-          (normalisiert Hoch-/Querformat), Karten per Flexbox/Grid auf gleiche
-          Höhe (align-items:stretch), Datum/Ort ggf. unten in der Karte fixiert
-          (mt:auto), damit unterschiedliche Textlängen die Ausrichtung nicht sprengen
-        - Nutzer-Entscheidung: die bestehende "Instagram"-Sektion (Iframe-Galerie,
-          4 Reels) wird durch die neue "Erfolge"-Sektion ERSETZT (nicht zusätzlich
-          eingefügt) – Grund: Iframes bringen kein SEO, Erfolge-Bilder schon.
-          Zu klären/umsetzen: Nav-Link "Instagram" (#instagram Anchor) entweder
-          auf "Erfolge" umbenennen/umbiegen oder entfernen; den reinen
-          "@boxringwetterau ansehen"-Link (Social-Proof, kein Iframe) ggf. klein
-          im Header oder Footer erhalten, nur die große Iframe-Galerie entfällt
+- [ ] Deployment der neuen Erfolge-Seite: ZIP erstellen und Nutzer per FTP
+      hochladen lassen, sobald final geprüft (siehe "Bereits erledigt" für Details)
 - [ ] Antwort von Strothmann IT abwarten: Domain-Tausch anfragen –
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
@@ -44,6 +24,24 @@
       fonts.googleapis.com laden
 
 ## Bereits erledigt
+- [x] "Erfolge"-Sektion umgesetzt: Instagram-Iframe-Galerie auf der Startseite
+      durch echte <img>-Karten ersetzt (5 Erfolge chronologisch von Nutzer
+      erhalten, Bilder via Plesk-Upload auf boxring-woelfersheim.de/assets/
+      + Weiterleitung an Claude, da Chat-Uploads nicht als Datei zugänglich waren).
+      Neueste 4 als Teaser auf Startseite (#erfolge, Nav-Link "Instagram" →
+      "Erfolge"), alle 5 vollständig + neuestes zuerst auf neuer Unterseite
+      erfolge.html (in sitemap.xml aufgenommen). Reiner Profil-Link
+      "@boxringwetterau" im Hero-Bereich bewusst erhalten (kein Iframe mehr).
+      Datenschutzerklärung angepasst: Absatz zu Instagram-Einbettungen entfernt,
+      da keine Iframes mehr geladen werden.
+      Bild-Dateinamen (liegen als JPEG unter assets/, Schema
+      erfolge-JJJJ-MM-TT-kurzname.jpg):
+      - erfolge-2020-03-08-moscoglo.jpg (nur auf Unterseite)
+      - erfolge-2020-08-15-training-dm2021.jpg
+      - erfolge-2021-07-03-moscoglo-brueder.jpg
+      - erfolge-2021-09-15-gutmann-mezhidov.jpg
+      - erfolge-2021-09-25-mezhidov-vizehessenmeister.jpg
+      Noch offen: Deployment (ZIP + FTP-Upload, siehe "Offen")
 - [x] Vereinsregisternummer + Amtsgericht ermittelt (VR 1020, Amtsgericht Friedberg)
       und in impressum.html eingetragen – auch für Anfrage an Strothmann IT
       bzgl. boxring-woelfersheim.de verwendbar
