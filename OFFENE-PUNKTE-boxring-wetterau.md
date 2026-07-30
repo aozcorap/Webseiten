@@ -15,6 +15,14 @@
          auf die Unterseite)
       5. Erst wenn der Nutzer sagt "jetzt deployen": neue ZIP bauen +
          bereitstellen
+      Feste Redaktionsregel: Trainer Ahmet Özcorapci (Head Coach) wird im
+      Erfolge-Text NUR bei großen Turnieren namentlich erwähnt (Deutsche
+      Meisterschaft, Hessenmeisterschaft, Stadtmeisterschaft o. ä.) – auch
+      wenn dort nicht der 1. Platz erreicht wurde. Bei normalen Turnieren/
+      Wettkampfsparrings bleibt der Fokus auf dem Athleten, kein Trainer-
+      Name. Rückwirkend bereits ergänzt bei Eintrag Mezhidov/Hessenmeister-
+      schaft (25.9.2021) und beim neuen Eintrag zur ersten DM-Teilnahme
+      (21.11.2021).
 - [ ] Antwort von Strothmann IT abwarten: Domain-Tausch anfragen –
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
