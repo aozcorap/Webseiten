@@ -1,6 +1,9 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
 
 ## Offen
+- [ ] Deployment des 2. Erfolge-Batches (5 neue Erfolge, siehe "Bereits
+      erledigt"): Nutzer muss noch die 5 Bilddateien per Plesk hochladen,
+      danach neue ZIP bereitstellen und hochladen lassen
 - [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
       vom Nutzer kommen. Ablauf (siehe auch "Hintergrund-Infos"):
       1. Nutzer schickt Screenshot (Bild + Text) im Chat + Datum
@@ -63,6 +66,18 @@
       - erfolge-2021-09-25-mezhidov-vizehessenmeister.jpg
       Deployment abgeschlossen: ZIP wurde bereitgestellt, Nutzer hat per FTP
       hochgeladen und live bestätigt (30.7.2026)
+- [x] 2. Batch mit 5 weiteren Erfolgen (Vadim Moskoglo) in erfolge.html +
+      Startseiten-Teaser eingebaut, chronologisch neuester zuerst. Neue
+      Teaser-4 auf Startseite: Duelle der Champions, Deutscher Meister,
+      DM-Teilnahme, Worms (bisheriger Teaser-Eintrag Hessenmeisterschaft/
+      Mezhidov rutscht auf die Unterseite). Bild-Dateinamen (noch vom Nutzer
+      per Plesk hochzuladen):
+      - erfolge-2021-10-09-moskoglo-nrwcup.jpg
+      - erfolge-2021-11-14-moskoglo-worms.jpg
+      - erfolge-2021-11-21-moskoglo-dm-teilnahme.jpg (Trainer erwähnt)
+      - erfolge-2021-12-21-moskoglo-deutscher-meister.jpg (Trainer erwähnt)
+      - erfolge-2022-02-27-moskoglo-duelle-champions.jpg
+      Noch offen: Deployment (siehe "Offen")
 - [x] Vereinsregisternummer + Amtsgericht ermittelt (VR 1020, Amtsgericht Friedberg)
       und in impressum.html eingetragen – auch für Anfrage an Strothmann IT
       bzgl. boxring-woelfersheim.de verwendbar
