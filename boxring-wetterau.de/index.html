@@ -93,6 +93,9 @@
     [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr !important; }
     [style*="grid-template-columns: repeat(3"],
     [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+
+    /* Erfolge-Teaser: auf dem Handy nur die 2 neuesten zeigen (sonst zu lang) */
+    #erfolge [style*="grid-template-columns"] > *:nth-child(n+3) { display: none !important; }
   }
 </style>
 <script type="application/ld+json">
