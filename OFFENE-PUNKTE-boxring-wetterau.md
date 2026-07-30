@@ -26,6 +26,14 @@
       Name. Rückwirkend bereits ergänzt bei Eintrag Mezhidov/Hessenmeister-
       schaft (25.9.2021) und beim neuen Eintrag zur ersten DM-Teilnahme
       (21.11.2021).
+      Weitere Redaktionsregel: Bei mehrtägigen Turnierserien mit Tages-Posts
+      pro Kampfrunde (z. B. Deutsche Meisterschaft mit täglichem "nächste
+      Runde erreicht"-Post) NICHT jeden Tagespost als eigenen Erfolg
+      übernehmen, sondern zu EINEM zusammenfassenden Eintrag mit Endergebnis
+      verdichten (Turnierverlauf ggf. kurz erwähnen, z. B. "im Achtelfinale
+      gegen X, im Halbfinale gegen Y"). Aktueller Stand: Nutzer pausiert das
+      Nachliefern weiterer Erfolge vorerst, liefert bei Gelegenheit neue
+      nach – aktuell 15 Erfolge insgesamt eingepflegt.
 - [ ] Antwort von Strothmann IT abwarten: Domain-Tausch anfragen –
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
