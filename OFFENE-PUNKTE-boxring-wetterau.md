@@ -1,9 +1,10 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
 
 ## Offen
-- [ ] Deployment des 3. Erfolge-Batches (5 neue Erfolge, siehe "Bereits
-      erledigt"): Nutzer muss noch die 5 Bilddateien per Plesk hochladen,
-      danach neue ZIP bereitstellen und hochladen lassen
+- [ ] Deployment ausstehender Änderungen (3. Erfolge-Batch + Google-Fonts-
+      Self-Hosting + Umkreissuche-SEO-Erweiterung): Nutzer muss noch die
+      5 Erfolge-Bilddateien + assets/fonts/ per Plesk hochladen, danach
+      finale ZIP bereitstellen und hochladen lassen
 - [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
       vom Nutzer kommen. Ablauf (siehe auch "Hintergrund-Infos"):
       1. Nutzer schickt Screenshot (Bild + Text) im Chat + Datum
@@ -56,6 +57,20 @@
       bereitstellen
 
 ## Bereits erledigt
+- [x] SEO-Analyse Umkreissuche (30 km um Friedberg) durchgeführt und
+      Verbesserungen umgesetzt: GeoCoordinates (50.3369, 8.7561) + GeoCircle
+      (geoRadius 30000m) ins SportsClub-JSON-LD ergänzt. areaServed erweitert
+      um Kernorte (Nidda, Altenstadt, Hungen, Ranstadt, Niddatal, Echzell –
+      durch Instagram-Hashtags als reale Reichweite belegt) im sichtbaren
+      Fließtext (Standort-Sektion + FAQ) UND um Randorte (Limeshain,
+      Glauburg, Ortenberg, Büdingen, Gedern, Kefenrod, Nidderau, Gießen,
+      Bad Vilbel, Pohlheim, Lich, Grünberg) NUR im unsichtbaren JSON-LD, um
+      Keyword-Stuffing im sichtbaren Text zu vermeiden.
+      Analyse-Ergebnis: Local Pack/Google Maps wird primär durchs Google
+      Business Profil entschieden (Kategorie, Fotos, Rezensionen –
+      wichtigster noch offener Hebel, siehe GBP-Punkt), Website-Content
+      betrifft eher die organische Websuche.
+      Noch offen: Deployment (siehe "Offen")
 - [x] Google Fonts selbst gehostet statt live von fonts.googleapis.com/
       fonts.gstatic.com geladen (DSGVO-Absicherung, kein IP-Transfer an
       Google mehr beim Seitenaufruf). Anton (400) + Inter (Variable Font,
