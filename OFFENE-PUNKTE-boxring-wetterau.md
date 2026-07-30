@@ -63,6 +63,10 @@
 - [x] Alle Deploys laufen manuell per FTP (kein Auto-Deploy) – ZIP-Dateien
       wurden jeweils bereitgestellt
 
+## Hinweis für Claude (Workflow)
+- Nach jeder vom Nutzer genehmigten Code-Änderung (commit + push erfolgt):
+  immer automatisch eine Pull Request erstellen, ohne extra nachzufragen.
+
 ## Hintergrund-Infos für nächste Session
 - Deploy-Workflow: Code lebt im GitHub-Repo aozcorap/Webseiten, Branch master.
   Live-Seite läuft NICHT über GitHub Pages, sondern eigenes Hosting
