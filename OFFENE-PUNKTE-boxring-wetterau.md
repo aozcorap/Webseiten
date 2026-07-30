@@ -48,9 +48,9 @@
       da keine Iframes mehr geladen werden.
       Bild-Dateinamen (liegen als JPEG unter assets/, Schema
       erfolge-JJJJ-MM-TT-kurzname.jpg):
-      - erfolge-2020-03-08-moscoglo.jpg (nur auf Unterseite)
+      - erfolge-2020-03-08-moskoglo.jpg (nur auf Unterseite)
       - erfolge-2020-08-15-training-dm2021.jpg
-      - erfolge-2021-07-03-moscoglo-brueder.jpg
+      - erfolge-2021-07-03-moskoglo-brueder.jpg
       - erfolge-2021-09-15-gutmann-mezhidov.jpg
       - erfolge-2021-09-25-mezhidov-vizehessenmeister.jpg
       Deployment abgeschlossen: ZIP wurde bereitgestellt, Nutzer hat per FTP
