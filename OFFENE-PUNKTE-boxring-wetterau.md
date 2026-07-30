@@ -51,10 +51,20 @@
       für einen Verein wenig SEO-Nutzen)
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
-- [ ] (optional, DSGVO-Absicherung) Google Fonts selbst hosten statt live von
-      fonts.googleapis.com laden
+- [ ] Deployment des Google-Fonts-Self-Hosting-Fixes (siehe "Bereits
+      erledigt"): Nutzer muss noch assets/fonts/ hochladen, danach neue ZIP
+      bereitstellen
 
 ## Bereits erledigt
+- [x] Google Fonts selbst gehostet statt live von fonts.googleapis.com/
+      fonts.gstatic.com geladen (DSGVO-Absicherung, kein IP-Transfer an
+      Google mehr beim Seitenaufruf). Anton (400) + Inter (Variable Font,
+      deckt 400–800 in einer Datei ab) als woff2 heruntergeladen, liegen
+      unter assets/fonts/ (anton-latin-400.woff2, inter-latin-variable.woff2).
+      @font-face lokal in index.html + erfolge.html eingebunden, Google-
+      Fonts-<link>-Tags entfernt. Datenschutzerklärung angepasst: Absatz zu
+      Google Fonts entfernt (nur noch Google Maps als externe Einbindung
+      genannt). Nutzer muss assets/fonts/ noch per FTP hochladen.
 - [x] "Erfolge"-Sektion umgesetzt: Instagram-Iframe-Galerie auf der Startseite
       durch echte <img>-Karten ersetzt (5 Erfolge chronologisch von Nutzer
       erhalten, Bilder via Plesk-Upload auf boxring-woelfersheim.de/assets/
