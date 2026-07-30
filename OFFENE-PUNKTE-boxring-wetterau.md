@@ -1,0 +1,76 @@
+# Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
+
+## Offen
+- [ ] Instagram-Bilder + Original-Texte (chronologisch) vom Nutzer erhalten
+      → daraus neue "Erfolge"-Sektion bauen, echte <img>-Bilder (kein Iframe),
+        SEO-Alt-Texte, leicht optimierte Texte. Konzept (vom Nutzer festgelegt):
+        - Startseite: Sektion "Erfolge" zeigt nur die letzten 4 Erfolge (Teaser)
+        - Neue Unterseite (z. B. erfolge.html): alle Erfolge vollständig,
+          chronologisch aufgelistet
+        - Startseite-Teaser verlinkt auf die Unterseite ("Alle Erfolge ansehen")
+        - Unterseite in sitemap.xml aufnehmen, intern von der Startseite verlinken
+        - Design-Vorgabe: Bilder liegen teils im Hoch-, teils im Querformat vor;
+          auf Desktop müssen alle Karten (Bild + Text) trotzdem horizontal
+          ausgerichtet sein, auch bei unterschiedlich langen Texten
+          → Umsetzung: Bild-Container mit fester Höhe/Aspect-Ratio + object-fit:cover
+          (normalisiert Hoch-/Querformat), Karten per Flexbox/Grid auf gleiche
+          Höhe (align-items:stretch), Datum/Ort ggf. unten in der Karte fixiert
+          (mt:auto), damit unterschiedliche Textlängen die Ausrichtung nicht sprengen
+        - Nutzer-Entscheidung: die bestehende "Instagram"-Sektion (Iframe-Galerie,
+          4 Reels) wird durch die neue "Erfolge"-Sektion ERSETZT (nicht zusätzlich
+          eingefügt) – Grund: Iframes bringen kein SEO, Erfolge-Bilder schon.
+          Zu klären/umsetzen: Nav-Link "Instagram" (#instagram Anchor) entweder
+          auf "Erfolge" umbenennen/umbiegen oder entfernen; den reinen
+          "@boxringwetterau ansehen"-Link (Social-Proof, kein Iframe) ggf. klein
+          im Header oder Footer erhalten, nur die große Iframe-Galerie entfällt
+- [ ] Vereinsregisternummer + zuständiges Amtsgericht für impressum.html nachreichen
+      (wird auch für die Anfrage an Strothmann IT bzgl. boxring-woelfersheim.de gebraucht)
+- [ ] Antwort von Strothmann IT abwarten: Domain-Tausch anfragen –
+      boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
+      wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
+      und vom Nutzer verschickt)
+- [ ] Google Business Profil weiter optimieren:
+      - Kategorie ergänzen (z. B. "Boxsportverein"/"Sportverein" + "Fitnessstudio")
+      - Mehr Fotos hochladen (Halle, Training, Vorstand, Logo – aktuell nur 1 Foto)
+      - Rezensionen aktiv einsammeln (aktuell nur 1 Rezension, größter Ranking-Hebel;
+        Text für Rezensions-Anfrage wurde bereits formuliert)
+      - Unternehmensbeschreibung einfügen (Text wurde bereits formuliert)
+- [ ] NAP-Einträge (Name/Adresse/Telefon) in weiteren Verzeichnissen ergänzen:
+      HABV-Verbandsseite, DOSB-Vereinssuche, Stadt Friedberg Vereinsverzeichnis,
+      Das Örtliche, Gelbe Seiten
+- [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
+      danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
+- [ ] (optional, DSGVO-Absicherung) Google Fonts selbst hosten statt live von
+      fonts.googleapis.com laden
+
+## Bereits erledigt
+- [x] Impressum + Datenschutzerklärung erstellt
+- [x] Telefonnummer + JSON-LD (telephone, priceRange, areaServed) ergänzt
+- [x] FAQ-Sektion + FAQPage-Schema
+- [x] Noscript-Fallback für nicht-JS-Crawler
+- [x] Hero-Bild als echtes <img> mit Alt-Text, Instagram-Iframes lazy geladen
+- [x] Footer mit NAP-Daten + Fix: Footer/Impressum lag zunächst außerhalb des
+      vom Framework geladenen Templates → behoben (PR #2)
+- [x] Vereinsname konsistent auf "Boxring Wetterau 1983 e.V." korrigiert,
+      Website + GBP abgeglichen (PR #3)
+- [x] GBP-Unternehmensbeschreibung + Rezensions-Anfrage-Text formuliert
+- [x] Domain-Problem erkannt: boxring-wetterau.de lief nur als Alias unter
+      boxring-woelfersheim.de (Duplicate-Content-Risiko) → Nachricht an Hoster
+      formuliert und verschickt (Domain-Tausch)
+- [x] Mobiles Burger-Menü Fix: Event-Delegation statt direktem Listener,
+      da Framework Header bei Re-Render neu erzeugt (PR #4)
+- [x] Alle Deploys laufen manuell per FTP (kein Auto-Deploy) – ZIP-Dateien
+      wurden jeweils bereitgestellt
+
+## Hintergrund-Infos für nächste Session
+- Deploy-Workflow: Code lebt im GitHub-Repo aozcorap/Webseiten, Branch master.
+  Live-Seite läuft NICHT über GitHub Pages, sondern eigenes Hosting
+  (Strothmann IT, Plesk) – Uploads erfolgen manuell per FTP durch den Nutzer.
+- Framework-Eigenheit: Seite nutzt ein React-basiertes "dc-runtime"-Template-
+  System (x-dc/sc-for/sc-if in support.js). Alles, was on-page sichtbar/
+  crawlbar sein soll, MUSS innerhalb von <x-dc>...</x-dc> stehen (String-
+  Grenze, kein DOM-Parsing) – sonst wird es beim zweiten JS-Render-Durchlauf
+  rausgefiltert.
+- Telefonnummer: 0173-2609937
+- Adresse Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg
+- Impressum-Anschrift: Ahmet Özcorapci, Hospitalgasse 36d, 61169 Friedberg
