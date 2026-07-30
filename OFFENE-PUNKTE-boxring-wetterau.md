@@ -34,8 +34,10 @@
         Text für Rezensions-Anfrage wurde bereits formuliert)
       - Unternehmensbeschreibung einfügen (Text wurde bereits formuliert)
 - [ ] NAP-Einträge (Name/Adresse/Telefon) in weiteren Verzeichnissen ergänzen:
-      HABV-Verbandsseite, DOSB-Vereinssuche, Das Örtliche, Gelbe Seiten
-      (Stadt Friedberg Vereinsverzeichnis bereits erledigt, siehe unten)
+      HABV-Verbandsseite, DOSB-Vereinssuche, LSB Hessen Vereinsverzeichnis
+      (Stadt Friedberg Vereinsverzeichnis bereits erledigt, siehe unten;
+      Das Örtliche/Gelbe Seiten bewusst rausgenommen – primär Firmenverzeichnisse,
+      für einen Verein wenig SEO-Nutzen)
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 - [ ] (optional, DSGVO-Absicherung) Google Fonts selbst hosten statt live von
