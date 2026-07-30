@@ -1,10 +1,6 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
 
 ## Offen
-- [ ] Deployment ausstehender Änderungen (3. Erfolge-Batch + Google-Fonts-
-      Self-Hosting + Umkreissuche-SEO-Erweiterung): Nutzer muss noch die
-      5 Erfolge-Bilddateien + assets/fonts/ per Plesk hochladen, danach
-      finale ZIP bereitstellen und hochladen lassen
 - [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
       vom Nutzer kommen. Ablauf (siehe auch "Hintergrund-Infos"):
       1. Nutzer schickt Screenshot (Bild + Text) im Chat + Datum
@@ -53,9 +49,6 @@
       für einen Verein wenig SEO-Nutzen)
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
-- [ ] Deployment des Google-Fonts-Self-Hosting-Fixes (siehe "Bereits
-      erledigt"): Nutzer muss noch assets/fonts/ hochladen, danach neue ZIP
-      bereitstellen
 
 ## Bereits erledigt
 - [x] Google Business Profil Schritt für Schritt durchgegangen und optimiert:
@@ -83,7 +76,7 @@
       Business Profil entschieden (Kategorie, Fotos, Rezensionen –
       wichtigster noch offener Hebel, siehe GBP-Punkt), Website-Content
       betrifft eher die organische Websuche.
-      Noch offen: Deployment (siehe "Offen")
+      Deployment abgeschlossen, live bestätigt.
 - [x] Google Fonts selbst gehostet statt live von fonts.googleapis.com/
       fonts.gstatic.com geladen (DSGVO-Absicherung, kein IP-Transfer an
       Google mehr beim Seitenaufruf). Anton (400) + Inter (Variable Font,
@@ -92,7 +85,8 @@
       @font-face lokal in index.html + erfolge.html eingebunden, Google-
       Fonts-<link>-Tags entfernt. Datenschutzerklärung angepasst: Absatz zu
       Google Fonts entfernt (nur noch Google Maps als externe Einbindung
-      genannt). Nutzer muss assets/fonts/ noch per FTP hochladen.
+      genannt). Deployment abgeschlossen (assets/fonts/ hochgeladen), live
+      bestätigt.
 - [x] "Erfolge"-Sektion umgesetzt: Instagram-Iframe-Galerie auf der Startseite
       durch echte <img>-Karten ersetzt (5 Erfolge chronologisch von Nutzer
       erhalten, Bilder via Plesk-Upload auf boxring-woelfersheim.de/assets/
@@ -140,7 +134,7 @@
         Philipp Guirguis, kein großes Turnier daher kein Trainer-Verweis;
         Katja Insenbiel aus dem Originaltext bewusst weggelassen, da sie
         nicht auf dem Foto zu sehen ist)
-      Noch offen: Deployment (siehe "Offen")
+      Deployment abgeschlossen, live bestätigt.
 - [x] Vereinsregisternummer + Amtsgericht ermittelt (VR 1020, Amtsgericht Friedberg)
       und in impressum.html eingetragen – auch für Anfrage an Strothmann IT
       bzgl. boxring-woelfersheim.de verwendbar
