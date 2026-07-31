@@ -79,6 +79,8 @@
       Meta-Keywords-Tag auf der Startseite ist SEO-technisch wirkungslos
       (von Google seit 2009 ignoriert), aber auch harmlos – bewusst
       stehengelassen statt grundlos zu löschen.
+      ZIP wurde bereitgestellt, Nutzer hat per FTP deployed. Deployment
+      abgeschlossen.
 - [x] 2 neue Erfolge in erfolge.html + Startseiten-Teaser eingebaut,
       chronologisch neuester zuerst:
       - 13.6.2026 – "Duelle der Champions", Wiesbaden: 5 Athleten im Ring,
