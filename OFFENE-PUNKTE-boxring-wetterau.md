@@ -72,9 +72,8 @@
       Guirguis-KO, Özcorapci-Deutscher-Meister-Masterboxen (bisherige
       Teaser-Einträge Leonid-Hessenmeister und U17-DM-Bronze rutschen auf
       die Unterseite). sitemap.xml lastmod für / und erfolge.html auf
-      2026-07-31 aktualisiert. Bilder müssen noch vom Nutzer per Plesk
-      hochgeladen werden. Deployment noch offen (Nutzer entscheidet, wann
-      "jetzt deployen").
+      2026-07-31 aktualisiert. ZIP wurde bereitgestellt, Nutzer hat Code +
+      beide Fotos per FTP/Plesk hochgeladen. Deployment abgeschlossen.
 - [x] Google Business Profil Schritt für Schritt durchgegangen und optimiert:
       - Kategorien bereits korrekt gesetzt (Sportverein primär + Fitness-
         studio, Boxclub, Boxklub, Boxring als Zusatzkategorien) – Punkt war
