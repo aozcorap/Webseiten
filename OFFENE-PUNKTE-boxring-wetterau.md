@@ -1,6 +1,14 @@
-# Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-29, Ende Session)
+# Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-31, Ende Session)
 
 ## Offen
+- [ ] Schreibweise Nachname klären: "Mezhidov" oder "Mehzidov"? Im neuen Erfolg
+      vom 13.6.2026 (Duelle der Champions, Wiesbaden) wurde für Murad
+      vorläufig "Mezhidov" verwendet (analog zu Mansur Mezhidov, Eintrag
+      25.9.2021), da der Nutzer sich bei der Schreibweise unsicher war.
+      Sobald Rückmeldung da ist: ggf. Text in erfolge.html + Teaser in
+      index.html korrigieren. Der Dateiname des Fotos
+      (erfolge-2026-06-13-duelle-champions-wiesbaden.jpg) enthält den Namen
+      nicht, muss also nicht umbenannt werden.
 - [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
       vom Nutzer kommen. Ablauf (siehe auch "Hintergrund-Infos"):
       1. Nutzer schickt Screenshot (Bild + Text) im Chat + Datum
@@ -51,6 +59,22 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] 2 neue Erfolge in erfolge.html + Startseiten-Teaser eingebaut,
+      chronologisch neuester zuerst:
+      - 13.6.2026 – "Duelle der Champions", Wiesbaden: 5 Athleten im Ring,
+        5 Kämpfe/2 Siege/3 Unentschieden (Siege: Niko Kotanidis, Dominik
+        Deichert; Unentschieden: Cavit Gencer, Murad Mezhidov [Schreibweise
+        unsicher, siehe "Offen"], Yusuf Demiroglu). Dateiname:
+        erfolge-2026-06-13-duelle-champions-wiesbaden.jpg
+      - 12.4.2026 – Anfängerturnier, Bruchköbel: Cavit Gencer siegt durch
+        TKO in seinem 2. Kampf. Dateiname: erfolge-2026-04-12-gencer-tko.jpg
+      Neue Teaser-4 auf Startseite: Duelle der Champions, Gencer-TKO,
+      Guirguis-KO, Özcorapci-Deutscher-Meister-Masterboxen (bisherige
+      Teaser-Einträge Leonid-Hessenmeister und U17-DM-Bronze rutschen auf
+      die Unterseite). sitemap.xml lastmod für / und erfolge.html auf
+      2026-07-31 aktualisiert. Bilder müssen noch vom Nutzer per Plesk
+      hochgeladen werden. Deployment noch offen (Nutzer entscheidet, wann
+      "jetzt deployen").
 - [x] Google Business Profil Schritt für Schritt durchgegangen und optimiert:
       - Kategorien bereits korrekt gesetzt (Sportverein primär + Fitness-
         studio, Boxclub, Boxklub, Boxring als Zusatzkategorien) – Punkt war
