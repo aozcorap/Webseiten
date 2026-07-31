@@ -60,6 +60,26 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] 4 neue Erfolge zu Max Auguste (Nachwuchsboxer, fortlaufende Serie
+      "X. Kampf, X. Sieg") in erfolge.html + Startseiten-Teaser eingebaut,
+      chronologisch neuester zuerst:
+      - 17.1.2025 – Walldorf: 1. Kampf, 1. Sieg (Debüt). Kein Trainer-
+        Verweis. Dateiname: erfolge-2025-01-17-auguste-erster-sieg.jpg
+      - 21.2.2026 – Anfängerturnier, Bruchköbel: 2. Kampf, 2. Sieg. Kein
+        Trainer-Verweis. Dateiname:
+        erfolge-2026-02-21-auguste-zweiter-sieg.jpg
+      - 21.3.2026 – Marburg: 3. Kampf, 3. Sieg. Kein Trainer-Verweis.
+        Dateiname: erfolge-2026-03-21-auguste-dritter-sieg.jpg
+      - 10.5.2026 – Walldorf: 4. Kampf, 4. Sieg. Trainer Ahmet Özcorapci
+        posiert mit im Foto, daher im Alt-Text genannt, aber NICHT im
+        Fließtext (kein großes Turnier) – Alt-Text beschreibt nur, was
+        sichtbar ist, unabhängig von der Trainer-Erwähnungsregel für den
+        Fließtext. Dateiname: erfolge-2026-05-10-auguste-vierter-sieg.jpg
+      Neue Teaser-4 auf Startseite: Duelle der Champions, Auguste-4.-Sieg,
+      Gencer-TKO, Auguste-3.-Sieg (bisherige Teaser-Einträge Mezhidov-
+      Hessenmeister und Deichert+Mezhidov-Viertel/Halbfinale rutschen auf
+      die Unterseite, bleiben dort aber natürlich weiter sichtbar). Bilder
+      wurden vom Nutzer bereits per Plesk hochgeladen.
 - [x] 3 neue Erfolge rund um Mansur Mezhidov / Hessenmeisterschaft der Elite
       in erfolge.html + Startseiten-Teaser eingebaut, chronologisch neuester
       zuerst:
