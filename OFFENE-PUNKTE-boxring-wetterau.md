@@ -1,6 +1,12 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-31, Ende Session)
 
 ## Offen
+- [ ] SVG-Logo (assets/logo-white.svg, ~90 KB) ist für ein einfarbiges Logo
+      ungewöhnlich groß, vermutlich unoptimierte Pfade/Metadaten aus dem
+      Export. Kein Ranking-Problem, nur kleine Performance-Bremse. Sollte
+      vor einer Optimierung (z. B. SVGO) visuell geprüft werden, damit das
+      Logo nicht kaputtgeht – nicht ohne visuelle Kontrolle automatisiert
+      anfassen.
 - [ ] Laufend: weitere Erfolge einpflegen, sobald neue Instagram-Posts/Fotos
       vom Nutzer kommen. Ablauf (siehe auch "Hintergrund-Infos"):
       1. Nutzer schickt Screenshot (Bild + Text) im Chat + Datum
@@ -54,6 +60,25 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] Vollständige SEO-Analyse des aktuellen Stands durchgeführt (Startseite,
+      erfolge.html, Impressum, Datenschutz, robots.txt, sitemap.xml,
+      JSON-LD). Ergebnis: technisches Fundament ist bereits sehr stark
+      (SportsClub+FAQPage-Schema, GeoCircle, selbst gehostete Fonts,
+      Mobile-Optimierung); Engpass liegt nicht mehr im Code, sondern bei
+      Off-Page-Signalen (siehe offene Punkte oben). Gefundene und behobene
+      Kleinigkeiten:
+      - erfolge.html hatte keine Open-Graph-/Twitter-Tags → ergänzt (Titel,
+        Description, hero-boxer.jpeg als Share-Bild), damit Erfolge-Links
+        beim Teilen (WhatsApp etc.) eine Vorschau zeigen.
+      - Sitemap-URL für die Startseite hatte einen trailing Slash
+        ("boxring-wetterau.de/"), Canonical/og:url nicht
+        ("boxring-wetterau.de") → in sitemap.xml angeglichen.
+      Geprüft und bewusst NICHT geändert: impressum.html/datenschutz.html
+      haben keine meta description, aber beide sind absichtlich auf
+      "noindex,follow" gesetzt – eine Description wäre dort wirkungslos.
+      Meta-Keywords-Tag auf der Startseite ist SEO-technisch wirkungslos
+      (von Google seit 2009 ignoriert), aber auch harmlos – bewusst
+      stehengelassen statt grundlos zu löschen.
 - [x] 2 neue Erfolge in erfolge.html + Startseiten-Teaser eingebaut,
       chronologisch neuester zuerst:
       - 13.6.2026 – "Duelle der Champions", Wiesbaden: 5 Athleten im Ring,
