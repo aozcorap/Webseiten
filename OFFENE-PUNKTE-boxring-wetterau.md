@@ -60,6 +60,37 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] 3 neue Erfolge rund um Mansur Mezhidov / Hessenmeisterschaft der Elite
+      in erfolge.html + Startseiten-Teaser eingebaut, chronologisch neuester
+      zuerst:
+      - 31.8.2025 – Vorbereitungskampf, Bensheim: Mezhidov siegt zur
+        Einstimmung auf die Hessenmeisterschaft. Kein Trainer-Verweis (kein
+        großes Turnier selbst). Dateiname:
+        erfolge-2025-08-31-mezhidov-vorbereitung-hessenmeisterschaft.jpg
+      - 21.9.2025 – Hessenmeisterschaft der Elite, Darmstadt: Mezhidov
+        (bis 65 kg) siegt im Viertelfinale, Dominik Deichert (bis 80 kg)
+        siegt im Halbfinale (direkt ohne Viertelfinale angetreten).
+        Turnierserien-Redaktionsregel angewendet: EIN zusammenfassender
+        Beitrag statt Einzelposts pro Runde. Trainer erwähnt (Hessen-
+        meisterschaft = großes Turnier). Dateiname:
+        erfolge-2025-09-21-deichert-mezhidov-hessenmeisterschaft.jpg
+      - 28.9.2025 – Finale, Kassel: Mezhidov wird Hessenmeister im
+        Weltergewicht (bis 65 kg), einstimmig nach Punkten. Dominik Deichert
+        musste krankheitsbedingt kampflos passen – laut Nutzer gibt es in
+        diesem Fall KEINEN Vize-Hessenmeister-Titel (kein Finalkampf =
+        keine Platzierung), im Text entsprechend neutral formuliert statt
+        einen Titel zu erfinden. Trainer erwähnt. Dateiname:
+        erfolge-2025-09-28-mezhidov-hessenmeister.jpg
+      Bildauswahl für den Hessenmeister-Beitrag: Nutzer hatte 3 Fotos zur
+      Auswahl (Trainer+Urkunde / Porträt mit Medaillen / Ring-Moment mit
+      Schiedsrichterin), gemeinsam Bild "Mansur + Trainer mit Urkunde und
+      Fellmützen" gewählt (emotionalste + gleichzeitig fungiert es als
+      Beleg für den Titel).
+      Neue Teaser-4 auf Startseite: Duelle der Champions, Gencer-TKO,
+      Mezhidov-Hessenmeister, Deichert+Mezhidov-Viertel/Halbfinale
+      (bisherige Teaser-Einträge Guirguis-KO und Özcorapci-Deutscher-
+      Meister-Masterboxen rutschen auf die Unterseite). Bilder wurden vom
+      Nutzer bereits per Plesk hochgeladen.
 - [x] Vollständige SEO-Analyse des aktuellen Stands durchgeführt (Startseite,
       erfolge.html, Impressum, Datenschutz, robots.txt, sitemap.xml,
       JSON-LD). Ergebnis: technisches Fundament ist bereits sehr stark
