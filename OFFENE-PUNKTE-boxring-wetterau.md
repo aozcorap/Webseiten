@@ -50,11 +50,14 @@
       fokussiert statt breit auf Jugendliche, da diese kaum Google nutzen.
       Empfehlung: 5–10 Bewertungen über 2–3 Wochen verteilt einholen statt
       alle auf einmal (wirkt organischer)
-- [ ] NAP-Einträge (Name/Adresse/Telefon) in weiteren Verzeichnissen ergänzen:
-      HABV-Verbandsseite, DOSB-Vereinssuche, LSB Hessen Vereinsverzeichnis
-      (Stadt Friedberg Vereinsverzeichnis bereits erledigt, siehe unten;
-      Das Örtliche/Gelbe Seiten bewusst rausgenommen – primär Firmenverzeichnisse,
-      für einen Verein wenig SEO-Nutzen)
+- [ ] NAP-Eintrag (Name/Adresse/Telefon) im LSB Hessen Vereinsverzeichnis
+      ergänzen (Stadt Friedberg Vereinsverzeichnis bereits erledigt, siehe
+      unten; HABV-Verbandsseite bereits selbst durch Nutzer eingetragen;
+      DOSB-Punkt gestrichen – DOSB ist reiner Dachverband der Landessport-
+      bünde/Spitzenverbände ohne eigene Vereins-Selbstregistrierung, der
+      Verein ist über HABV + LSB Hessen ohnehin indirekt Teil der DOSB-
+      Struktur; Das Örtliche/Gelbe Seiten bewusst rausgenommen – primär
+      Firmenverzeichnisse, für einen Verein wenig SEO-Nutzen)
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
