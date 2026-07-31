@@ -1,6 +1,15 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-31, Ende Session)
 
 ## Offen
+- [ ] Echte PageSpeed-Insights-Analyse (Mobile + Desktop) noch nicht möglich:
+      PSI-API lieferte 429 (Tageskontingent des Projekts auf 0 gesetzt),
+      Versuch über Headless-Browser gegen pagespeed.web.dev scheiterte an
+      einem Proxy-/TLS-Problem in der Claude-Umgebung (ERR_CONNECTION_RESET),
+      nicht an der Website selbst. Kein akuter Handlungsbedarf – strukturell
+      spricht nichts gegen ein gutes Ergebnis (self-gehostete Fonts, kleine
+      HTML-Größe ~37 KB, TTFB ~0,46s, keine render-blockenden Ressourcen).
+      Falls gewünscht: Nutzer kann https://pagespeed.web.dev selbst einmal
+      aufrufen und Ergebnis/Screenshot durchgeben zur Einordnung.
 - [ ] SVG-Logo (assets/logo-white.svg, ~90 KB) ist für ein einfarbiges Logo
       ungewöhnlich groß, vermutlich unoptimierte Pfade/Metadaten aus dem
       Export. Kein Ranking-Problem, nur kleine Performance-Bremse. Sollte
@@ -60,6 +69,14 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] Live-Audit durchgeführt: index.html, erfolge.html, sitemap.xml, robots.txt
+      und JSON-LD (SportsClub + FAQPage) sind byte-identisch zum Code-Stand
+      im Repo. Dabei einen Deploy-Bug gefunden und vom Nutzer direkt per
+      Plesk behoben: Bild assets/erfolge-2025-01-17-auguste-erster-sieg.jpg
+      war auf dem Server als .JPG (Großbuchstaben) abgelegt, Code erwartet
+      .jpg – auf dem case-sensitiven Linux-Server führte das zu einem
+      kaputten Bild bei "Auguste gewinnt seinen ersten Kampf" (17.1.2025)
+      auf erfolge.html. Live bestätigt (200 statt 404).
 - [x] 4 neue Erfolge zu Max Auguste (Nachwuchsboxer, fortlaufende Serie
       "X. Kampf, X. Sieg") in erfolge.html + Startseiten-Teaser eingebaut,
       chronologisch neuester zuerst:
