@@ -79,7 +79,8 @@
       Gencer-TKO, Auguste-3.-Sieg (bisherige Teaser-Einträge Mezhidov-
       Hessenmeister und Deichert+Mezhidov-Viertel/Halbfinale rutschen auf
       die Unterseite, bleiben dort aber natürlich weiter sichtbar). Bilder
-      wurden vom Nutzer bereits per Plesk hochgeladen.
+      wurden vom Nutzer bereits per Plesk hochgeladen. ZIP wurde
+      bereitgestellt, Nutzer hat per FTP deployed. Deployment abgeschlossen.
 - [x] 3 neue Erfolge rund um Mansur Mezhidov / Hessenmeisterschaft der Elite
       in erfolge.html + Startseiten-Teaser eingebaut, chronologisch neuester
       zuerst:
@@ -110,7 +111,8 @@
       Mezhidov-Hessenmeister, Deichert+Mezhidov-Viertel/Halbfinale
       (bisherige Teaser-Einträge Guirguis-KO und Özcorapci-Deutscher-
       Meister-Masterboxen rutschen auf die Unterseite). Bilder wurden vom
-      Nutzer bereits per Plesk hochgeladen.
+      Nutzer bereits per Plesk hochgeladen. ZIP wurde bereitgestellt, Nutzer
+      hat per FTP deployed. Deployment abgeschlossen.
 - [x] Vollständige SEO-Analyse des aktuellen Stands durchgeführt (Startseite,
       erfolge.html, Impressum, Datenschutz, robots.txt, sitemap.xml,
       JSON-LD). Ergebnis: technisches Fundament ist bereits sehr stark
