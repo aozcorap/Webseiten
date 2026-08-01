@@ -30,21 +30,21 @@
   }
   /* Der Weg von dunkel (Problem) nach hell (Lösung).
      Jede Stufe setzt Hintergrund + zugehörige Textfarben neu. */
-  .stage-1{ --bg-now:#07090D; --text-now:#F2F5F8; --muted-now:#8B96A5; --muted2-now:#6B7683;
+  .stage-1{ --bg-now:#07090D; --text-now:#F2F5F8; --muted-now:#8B96A5; --muted2-now:#8B96A5;
             --line-now:rgba(255,255,255,0.09); --line2-now:rgba(255,255,255,0.16); --card-now:rgba(255,255,255,0.02); }
-  .stage-2{ --bg-now:#0E141C; --text-now:#F2F5F8; --muted-now:#939EAD; --muted2-now:#74808D;
+  .stage-2{ --bg-now:#0E141C; --text-now:#F2F5F8; --muted-now:#939EAD; --muted2-now:#939EAD;
             --line-now:rgba(255,255,255,0.10); --line2-now:rgba(255,255,255,0.18); --card-now:rgba(255,255,255,0.03); }
-  .stage-3{ --bg-now:#1B242F; --text-now:#F4F7FA; --muted-now:#A3AEBC; --muted2-now:#8592A0;
+  .stage-3{ --bg-now:#1B242F; --text-now:#F4F7FA; --muted-now:#A3AEBC; --muted2-now:#A3AEBC;
             --line-now:rgba(255,255,255,0.12); --line2-now:rgba(255,255,255,0.2); --card-now:rgba(255,255,255,0.045); }
-  .stage-4{ --bg-now:#33414F; --text-now:#F7FAFC; --muted-now:#BAC5D1; --muted2-now:#9DAAB8;
+  .stage-4{ --bg-now:#33414F; --text-now:#F7FAFC; --muted-now:#BAC5D1; --muted2-now:#BAC5D1;
             --line-now:rgba(255,255,255,0.15); --line2-now:rgba(255,255,255,0.24); --card-now:rgba(255,255,255,0.06); }
-  .stage-5{ --bg-now:#778794; --text-now:#FFFFFF; --muted-now:#E6ECF1; --muted2-now:#D2DBE2;
+  .stage-5{ --bg-now:#778794; --text-now:#FFFFFF; --muted-now:#E6ECF1; --muted2-now:#E6ECF1;
             --line-now:rgba(255,255,255,0.24); --line2-now:rgba(255,255,255,0.34); --card-now:rgba(255,255,255,0.12); }
-  .stage-5b{ --bg-now:#AFBAC3; --text-now:#0E141C; --muted-now:#3E4954; --muted2-now:#5C6874;
+  .stage-5b{ --bg-now:#AFBAC3; --text-now:#0E141C; --muted-now:#3E4954; --muted2-now:#3E4954;
             --line-now:rgba(14,20,28,0.15); --line2-now:rgba(14,20,28,0.26); --card-now:rgba(255,255,255,0.55); }
-  .stage-6{ --bg-now:#DDE3E8; --text-now:#0E141C; --muted-now:#4A5663; --muted2-now:#6B7683;
+  .stage-6{ --bg-now:#DDE3E8; --text-now:#0E141C; --muted-now:#4A5663; --muted2-now:#4A5663;
             --line-now:rgba(14,20,28,0.13); --line2-now:rgba(14,20,28,0.24); --card-now:rgba(255,255,255,0.72); }
-  .stage-7{ --bg-now:#F7F9FA; --text-now:#0B1017; --muted-now:#454F5B; --muted2-now:#6B7683;
+  .stage-7{ --bg-now:#F7F9FA; --text-now:#0B1017; --muted-now:#454F5B; --muted2-now:#454F5B;
             --line-now:rgba(14,20,28,0.14); --line2-now:rgba(14,20,28,0.26); --card-now:#FFFFFF; }
 
   [class*="stage-"]{
@@ -196,7 +196,7 @@
     background:rgba(255,255,255,0.03); font-size:12.5px; color:var(--muted-now); margin-bottom:22px; flex-wrap:wrap;}
   .badge b{color:var(--lime); font-weight:600; background:var(--lime-dim); padding:3px 10px; border-radius:999px; font-size:11.5px; letter-spacing:.04em;}
   h1{font-size:clamp(32px,4.4vw,52px); margin-bottom:18px;}
-  .accent{color:var(--lime); font-weight:600;}
+  .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(17px,1.9vw,20px); color:var(--text-now); max-width:60ch; margin-bottom:24px; line-height:1.6;}
   .actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:16px;}
   .btn{background:var(--lime); color:#07090D; font-weight:600; font-size:16px; padding:17px 30px; border-radius:999px;
@@ -586,7 +586,7 @@
       </div>
       <div class="micro">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Anfrage dauert 2 Minuten · wir melden uns innerhalb von 24 Stunden
+        Anfrage dauert 2 Minuten · wir melden uns <span class="accent">innerhalb von 24 Stunden</span>
       </div>
     </div>
   </div>
@@ -669,7 +669,7 @@
       <div class="fside" data-rev>
         <span class="kick">Dein kostenloser Test</span>
         <h2>Welche Arbeit soll dir ab jetzt jemand abnehmen?</h2>
-        <p>Sag uns, was dich am meisten Zeit kostet. Wir melden uns innerhalb von 24 Stunden — ehrlich, ob wir helfen können oder eben nicht.</p>
+        <p>Sag uns, was dich am meisten Zeit kostet. Wir melden uns <span class="accent">innerhalb von 24 Stunden</span> — ehrlich, ob wir helfen können oder eben nicht.</p>
         <div class="guarantee">
           <div class="g">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
