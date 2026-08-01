@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BüroKollege.de — 60 Tage kostenlos: Dein digitaler Kollege für Handwerksbetriebe</title>
 <meta name="description" content="Wir bauen dir kostenlos einen digitalen Kollegen für deinen größten Zeitfresser. 60 Tage testen, keine Kosten, keine Kündigung. Für Handwerk und kleine Betriebe.">
 <meta property="og:title" content="60 Tage kostenlos: Dein digitaler Kollege für Handwerksbetriebe — BüroKollege.de">
@@ -412,6 +412,7 @@
   .result-stats > div{border-left:2px solid var(--lime); padding-left:15px;}
   .result-stats b{display:block; font-size:clamp(22px,2.8vw,30px); font-weight:600; letter-spacing:-0.03em; margin-bottom:4px;}
   .result-stats span{font-size:13.8px; color:var(--muted-now); line-height:1.45; display:block;}
+  .result-cta{margin-top:32px;}
 
   /* FORM */
   .form-wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:52px; align-items:start;}
@@ -469,6 +470,18 @@
   .foot-links a{color:var(--muted-now); font-size:13.5px; display:inline-flex; align-items:center; min-height:44px; padding:0 7px; transition:color .18s;}
   .foot-links a:hover{color:var(--text-now);}
   .foot-links a.foot-cta{color:var(--lime); font-weight:600;}
+
+  /* Sticky Mobile-CTA */
+  .sticky-cta{display:none; position:fixed; left:0; right:0; bottom:0; z-index:90;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:rgba(7,9,13,0.94); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    border-top:1px solid var(--line2-now); transition:transform .25s ease;}
+  .sticky-cta .btn{width:100%; justify-content:center;}
+  .sticky-cta.hide{transform:translateY(100%);}
+  @media(max-width:860px){
+    .sticky-cta{display:block;}
+    body{padding-bottom:78px;}
+  }
 
   /* Auf dem Handy nichts unter 12px — sonst kaum lesbar. */
   @media(max-width:640px){
@@ -640,6 +653,10 @@
           <div><b>60 Tage</b><span>kostenlos ausprobieren</span></div>
           <div><b>0 €</b><span>bis du dich entscheidest</span></div>
         </div>
+        <a href="#test" class="btn result-cta">
+          60 Tage kostenlos testen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -755,6 +772,13 @@
   </div>
 </footer>
 
+<div class="sticky-cta" id="stickyCta">
+  <a href="#test" class="btn">
+    60 Tage kostenlos testen
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
 <script>
 // Einblenden beim Scrollen — nur wenn der Browser mitspielt.
 (function(){
@@ -850,6 +874,16 @@
   });
 })();
 
+// Sticky-Mobile-CTA ausblenden, sobald das Formular selbst sichtbar ist.
+(function(){
+  var bar = document.getElementById('stickyCta');
+  var target = document.getElementById('test');
+  if (!bar || !target || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ bar.classList.toggle('hide', e.isIntersecting); });
+  }, { threshold: 0.2 });
+  io.observe(target);
+})();
 </script>
 
 </body>
