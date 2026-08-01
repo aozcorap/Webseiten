@@ -414,6 +414,17 @@
   .step b{display:block; font-size:15.5px; font-weight:600; margin-bottom:5px;}
   .step p{font-size:14.5px; color:var(--muted-now); line-height:1.55;}
 
+  /* FAQ */
+  .faq-list{display:flex; flex-direction:column; gap:12px; max-width:760px;}
+  .faq-item{border:1px solid var(--line-now); border-radius:14px; padding:6px 24px; background:rgba(255,255,255,0.02); transition:border-color .2s, background .2s;}
+  .faq-item[open]{border-color:var(--line2-now); background:rgba(255,255,255,0.035);}
+  .faq-item summary{cursor:pointer; font-size:15.5px; font-weight:600; list-style:none; padding:16px 0; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+'; font-size:22px; font-weight:400; color:var(--lime); flex-shrink:0; line-height:1; transition:transform .2s;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{color:var(--muted-now); font-size:14.8px; line-height:1.6; padding-bottom:18px; max-width:60ch;}
+  .stage-6 .faq-item, .stage-7 .faq-item{background:var(--card-now);}
+
   /* OBJECTIONS */
   .objs{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
   @media(max-width:860px){ .objs{grid-template-columns:1fr;} }
@@ -669,6 +680,34 @@
       </div>
     </div>
   </section>
+
+<div class="wrap">
+  <!-- FAQ -->
+  <section id="faq" class="stage-1">
+    <div class="shead" data-rev>
+      <span class="kick">Fragen vorab</span>
+      <h2>Kurz und ehrlich beantwortet</h2>
+    </div>
+    <div class="faq-list" data-revs>
+      <details class="faq-item">
+        <summary>Muss ich dafür jemanden einstellen oder einen Vertrag unterschreiben?</summary>
+        <p>Nein. Das ist eine Software, kein neuer Mitarbeiter. 60 Tage kostenlos, ohne Zahlungsdaten, ohne Vertrag.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Was passiert nach den 60 Tagen?</summary>
+        <p>Der Test endet von selbst. Nur wenn du weitermachen willst, reden wir über Geld — sonst passiert gar nichts.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Muss ich mich mit Technik auskennen?</summary>
+        <p>Nein. Wir richten alles für dich ein. Du musst nichts installieren oder konfigurieren.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Geht wirklich nichts raus, ohne dass ich es sehe?</summary>
+        <p>Nein. Dein digitaler Mitarbeiter bereitet alles vor — du prüfst kurz und gibst die Freigabe.</p>
+      </details>
+    </div>
+  </section>
+</div>
 
 <div class="wrap">
   <!-- TEST / FORMULAR -->
