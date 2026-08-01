@@ -504,11 +504,15 @@
   .field label{display:block; font-size:14px; font-weight:600; margin-bottom:8px;}
   .field .req{color:var(--lime);}
   .field .hint{display:block; font-weight:400; color:var(--muted2-now); font-size:12.8px; margin-top:4px;}
+  .field-input{position:relative;}
+  .field-ic{position:absolute; left:15px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--muted-now); pointer-events:none; transition:color .18s;}
+  .field-input:focus-within .field-ic{color:var(--lime);}
   .field input, .field select, .field textarea{
     width:100%; padding:13px 15px; font-size:16px; font-family:inherit; color:var(--text-now);
     background:rgba(255,255,255,0.04); border:1px solid var(--line2-now); border-radius:10px;
     transition:border-color .18s, box-shadow .18s, background .18s; min-height:50px;
   }
+  .field-input input{padding-left:44px;}
   .field textarea{min-height:100px; resize:vertical; line-height:1.55;}
   .field select{cursor:pointer; appearance:none; padding-right:42px;
     background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B96A5' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
@@ -530,10 +534,12 @@
 
   footer{border-top:1px solid var(--line-now); padding:44px 0; position:relative; z-index:1;}
   .foot{display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap;}
-  .foot p{color:var(--muted2-now); font-size:13.5px;}
-  .foot-links{display:flex; gap:10px; flex-wrap:wrap;}
+  .foot p{color:var(--muted-now); font-size:13.5px;}
+  .foot-brand{display:flex; align-items:center; gap:10px;}
+  .foot-links{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
   .foot-links a{color:var(--muted-now); font-size:13.5px; display:inline-flex; align-items:center; min-height:44px; padding:0 7px; transition:color .18s;}
   .foot-links a:hover{color:var(--text-now);}
+  .foot-links a.foot-cta{color:var(--lime); font-weight:600;}
 
   /* Auf dem Handy nichts unter 12px — sonst kaum lesbar. */
   @media(max-width:640px){
@@ -774,12 +780,18 @@
         <form id="testForm" novalidate>
           <div class="field">
             <label for="f-name">Dein Name <span class="req" aria-hidden="true">*</span></label>
-            <input type="text" id="f-name" name="name" autocomplete="name" required aria-required="true" aria-describedby="e-name">
+            <div class="field-input">
+              <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="f-name" name="name" autocomplete="name" required aria-required="true" aria-describedby="e-name">
+            </div>
             <span class="ferr" id="e-name" role="alert"></span>
           </div>
           <div class="field">
             <label for="f-mail">E-Mail <span class="req" aria-hidden="true">*</span></label>
-            <input type="email" id="f-mail" name="email" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="e-mail">
+            <div class="field-input">
+              <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              <input type="email" id="f-mail" name="email" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="e-mail">
+            </div>
             <span class="ferr" id="e-mail" role="alert"></span>
           </div>
           <div class="field">
@@ -809,8 +821,12 @@
 
 <footer class="stage-1">
   <div class="wrap foot">
-    <p>BüroKollege.de — Digitale Kollegen für Handwerk und Mittelstand</p>
+    <div class="foot-brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+      <p>BüroKollege.de — Digitale Kollegen für Handwerk und Mittelstand</p>
+    </div>
     <div class="foot-links">
+      <a href="#test" class="foot-cta">60 Tage kostenlos testen</a>
       <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
