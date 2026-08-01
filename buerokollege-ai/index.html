@@ -8,6 +8,7 @@
 <meta property="og:title" content="60 Tage kostenlos: Dein digitaler Kollege für Handwerksbetriebe — BüroKollege.de">
 <meta property="og:description" content="E-Mails, WhatsApp und Rechnungen erledigt, bevor du abends dazu kommst. 60 Tage kostenlos testen — ohne Risiko.">
 <meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='7' fill='%23C4F82A'/%3E%3Cpath d='M6 12.5l4 4 8-8' stroke='%2307090D' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -153,7 +154,11 @@
   @media(max-width:640px){ .navrow{padding:13px 20px;} }
   .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:16px; letter-spacing:-0.02em; flex-shrink:0;}
   .brand-suffix{color:var(--lime); font-weight:500;}
-  .brand-dot{width:9px; height:9px; border-radius:50%; background:var(--lime); box-shadow:0 0 14px var(--lime); flex-shrink:0;}
+  .brand-mark{width:26px; height:26px; border-radius:8px; background:var(--lime); display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; box-shadow:0 0 14px rgba(196,248,42,0.4);}
+  .brand-mark svg{width:15px; height:15px; color:#07090D;}
+  nav.light .brand-mark{background:#4A7C0F; box-shadow:0 0 12px rgba(74,124,15,.5);}
+  nav.light .brand-mark svg{color:#EAFFC2;}
   .nav-links{display:flex; align-items:center; gap:30px;}
   .nav-links a:not(.nav-cta){font-size:14.5px; color:var(--muted-now); transition:color .18s;}
   .nav-links a:not(.nav-cta):hover{color:var(--text-now);}
@@ -550,7 +555,10 @@
 
 <nav>
   <div class="navrow">
-    <div class="brand"><span class="brand-dot"></span>BüroKollege<span class="brand-suffix">.de</span></div>
+    <div class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+      BüroKollege<span class="brand-suffix">.de</span>
+    </div>
     <div class="nav-links">
       <a href="#problem">Wie es funktioniert</a>
       <a href="#ergebnis">Das Ergebnis</a>
