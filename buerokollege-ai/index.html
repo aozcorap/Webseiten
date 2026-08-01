@@ -31,13 +31,13 @@
   }
   /* Der Weg von dunkel (Problem) nach hell (Lösung).
      Jede Stufe setzt Hintergrund + zugehörige Textfarben neu. */
-  .stage-1{ --bg-now:#07090D; --text-now:#F2F5F8; --muted-now:#8B96A5; --muted2-now:#8B96A5;
+  .stage-1{ --bg-now:#07090D; --text-now:#F2F5F8; --muted-now:#B7C0CB; --muted2-now:#B7C0CB;
             --line-now:rgba(255,255,255,0.09); --line2-now:rgba(255,255,255,0.16); --card-now:rgba(255,255,255,0.02); }
-  .stage-2{ --bg-now:#0E141C; --text-now:#F2F5F8; --muted-now:#939EAD; --muted2-now:#939EAD;
+  .stage-2{ --bg-now:#0E141C; --text-now:#F2F5F8; --muted-now:#BFC8D2; --muted2-now:#BFC8D2;
             --line-now:rgba(255,255,255,0.10); --line2-now:rgba(255,255,255,0.18); --card-now:rgba(255,255,255,0.03); }
-  .stage-3{ --bg-now:#1B242F; --text-now:#F4F7FA; --muted-now:#A3AEBC; --muted2-now:#A3AEBC;
+  .stage-3{ --bg-now:#1B242F; --text-now:#F4F7FA; --muted-now:#C5CDD7; --muted2-now:#C5CDD7;
             --line-now:rgba(255,255,255,0.12); --line2-now:rgba(255,255,255,0.2); --card-now:rgba(255,255,255,0.045); }
-  .stage-4{ --bg-now:#33414F; --text-now:#F7FAFC; --muted-now:#BAC5D1; --muted2-now:#BAC5D1;
+  .stage-4{ --bg-now:#33414F; --text-now:#F7FAFC; --muted-now:#D2DAE2; --muted2-now:#D2DAE2;
             --line-now:rgba(255,255,255,0.15); --line2-now:rgba(255,255,255,0.24); --card-now:rgba(255,255,255,0.06); }
   .stage-5{ --bg-now:#778794; --text-now:#FFFFFF; --muted-now:#E6ECF1; --muted2-now:#E6ECF1;
             --line-now:rgba(255,255,255,0.24); --line2-now:rgba(255,255,255,0.34); --card-now:rgba(255,255,255,0.12); }
@@ -207,9 +207,6 @@
   @media(max-width:820px){ .hero-bg{display:none;} }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
-  .badge{display:inline-flex; align-items:center; gap:9px; padding:7px 15px 7px 8px; border:1px solid var(--line2-now); border-radius:999px;
-    background:rgba(255,255,255,0.03); font-size:12.5px; color:var(--muted-now); margin-bottom:22px; flex-wrap:wrap;}
-  .badge b{color:var(--lime); font-weight:600; background:var(--lime-dim); padding:3px 10px; border-radius:999px; font-size:11.5px; letter-spacing:.04em;}
   h1{font-size:clamp(32px,4.4vw,52px); margin-bottom:18px;}
   .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(17px,1.9vw,20px); color:var(--text-now); max-width:60ch; margin-bottom:24px; line-height:1.6;}
@@ -249,8 +246,9 @@
   }
   .chip.go{background:var(--lime); color:#07090D; font-weight:600;}
   .chip.wait{background:rgba(255,255,255,0.06); color:var(--muted2-now);}
-  .panel-foot{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:16px 18px; border-top:1px solid var(--line-now); font-size:12.5px; color:var(--muted2-now); flex-wrap:wrap;}
-  .panel-foot b{color:var(--text-now); font-weight:500;}
+  .panel-foot{display:flex; align-items:center; justify-content:center; gap:6px; padding:18px; border-top:1px solid rgba(196,248,42,0.25);
+    background:var(--lime-dim); font-size:15px; font-weight:600; color:var(--lime); text-align:center; flex-wrap:wrap;}
+  .panel-foot b{color:var(--lime); font-weight:700;}
 
 
   /* MARQUEE */
@@ -484,8 +482,6 @@
 
   /* Auf dem Handy nichts unter 12px — sonst kaum lesbar. */
   @media(max-width:640px){
-    .badge{font-size:13px;}
-    .badge b{font-size:12px;}
     .chip{font-size:11.5px;}
     .case-lab{font-size:12.5px;}
     .bar-label{font-size:12px;}
@@ -540,10 +536,6 @@
   <div class="wrap">
     <div class="hero-inner" data-rev>
       <span class="kick">Das Problem</span>
-      <div class="badge">
-        <b>KOSTENLOS</b>
-        <span>60 Tage testen · keine Zahlungsdaten · keine Kündigung</span>
-      </div>
       <h1>Kennst du das? Noch offene Mails, WhatsApp-Nachrichten, Angebote und Rechnungen?</h1>
       <p class="lead">Ich schenke dir einen <span class="accent">digitalen Mitarbeiter</span>, der sich darum kümmert, damit du mehr Zeit für dich und deine Familie hast — ohne Risiko.</p>
       <div class="actions">
@@ -608,7 +600,7 @@
               <span class="chip wait">Läuft</span>
             </div>
           </div>
-          <div class="panel-foot"><span><b>5 Minuten</b> abends drübergehen</span><span>statt den ganzen Tag Unterbrechungen</span></div>
+          <div class="panel-foot"><b>5 Minuten</b> abends drübergehen — statt den ganzen Tag Unterbrechungen</div>
         </div>
       </div>
 
