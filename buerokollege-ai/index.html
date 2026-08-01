@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BüroKollege.de — 60 Tage kostenlos: Dein digitaler Kollege für Handwerksbetriebe</title>
 <meta name="description" content="Wir bauen dir kostenlos einen digitalen Kollegen für deinen größten Zeitfresser. 60 Tage testen, keine Kosten, keine Kündigung. Für Handwerk und kleine Betriebe.">
 <meta property="og:title" content="60 Tage kostenlos: Dein digitaler Kollege für Handwerksbetriebe — BüroKollege.de">
@@ -150,7 +150,7 @@
 
   /* NAV */
   nav{position:sticky; top:0; z-index:80; background:rgba(7,9,13,0.92); transition:background-color .4s linear, border-color .4s linear; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--line-now);}
-  .navrow{display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:15px 28px; gap:20px;}
+  .navrow{display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:15px 28px; gap:20px; position:relative;}
   @media(max-width:640px){ .navrow{padding:13px 20px;} }
   .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:16px; letter-spacing:-0.02em; flex-shrink:0;}
   .brand-suffix{color:var(--lime); font-weight:500;}
@@ -159,18 +159,30 @@
   .brand-mark svg{width:15px; height:15px; color:#07090D;}
   nav.light .brand-mark{background:#4A7C0F; box-shadow:0 0 12px rgba(74,124,15,.5);}
   nav.light .brand-mark svg{color:#EAFFC2;}
+  .nav-toggle{display:none; background:none; border:none; padding:8px; margin:-8px; color:var(--text-now); cursor:pointer; flex-shrink:0;}
+  .nav-toggle svg{width:22px; height:22px; display:block;}
   .nav-links{display:flex; align-items:center; gap:30px;}
   .nav-links a:not(.nav-cta){font-size:14.5px; color:var(--muted-now); transition:color .18s;}
   .nav-links a:not(.nav-cta):hover{color:var(--text-now);}
-  @media(max-width:860px){ .nav-links a:not(.nav-cta){display:none;} }
   .nav-cta{background:var(--lime); color:#07090D; font-weight:600; font-size:14px; padding:11px 19px; border-radius:999px;
     transition:transform .18s, box-shadow .18s; display:inline-flex; align-items:center; min-height:42px; white-space:nowrap;}
   .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -6px rgba(196,248,42,0.5);}
 
+  @media(max-width:860px){
+    .nav-toggle{display:flex; align-items:center; justify-content:center;}
+    .nav-links{position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:stretch; gap:0;
+      background:rgba(7,9,13,0.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line-now); max-height:0; overflow:hidden; transition:max-height .25s ease;}
+    .nav-links.open{max-height:420px;}
+    .nav-links a:not(.nav-cta){display:block; padding:16px 24px; border-bottom:1px solid var(--line-now); font-size:16px;}
+    .nav-links .nav-cta{margin:16px 24px; justify-content:center;}
+    nav.light .nav-links{background:rgba(233,237,240,0.97);}
+  }
 
   /* Navigation wird hell, sobald der helle Teil beginnt */
   nav.light{background:rgba(233,237,240,0.88); border-bottom-color:rgba(14,20,28,0.12);}
   nav.light .brand{color:#0B1017;}
+  nav.light .nav-toggle{color:#0B1017;}
   nav.light .nav-links a:not(.nav-cta){color:#454F5B;}
   nav.light .nav-links a:not(.nav-cta):hover{color:#0B1017;}
   nav.light .nav-cta{background:#1B2A0A; color:#EAFFC2;}
@@ -250,10 +262,8 @@
   /* SECTION HEAD */
   .shead{max-width:660px; margin-bottom:var(--s4);}
   .shead.mid{margin-left:auto; margin-right:auto; text-align:center;}
-  .kick{display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--lime); margin-bottom:20px;}
-  .kick::before{content:''; width:22px; height:1px; background:var(--lime);}
-  .shead.mid .kick::before{display:none;}
+  .kick{display:block; font-family:'JetBrains Mono',monospace; font-size:clamp(22px,2.8vw,30px); font-weight:600;
+    letter-spacing:-0.01em; color:var(--lime); margin-bottom:14px;}
   .shead h2{font-size:clamp(28px,4.2vw,46px); margin-bottom:16px;}
   .shead p{color:var(--muted-now); font-size:17.5px; line-height:1.6;}
 
@@ -412,7 +422,6 @@
   .result-stats > div{border-left:2px solid var(--lime); padding-left:15px;}
   .result-stats b{display:block; font-size:clamp(22px,2.8vw,30px); font-weight:600; letter-spacing:-0.03em; margin-bottom:4px;}
   .result-stats span{font-size:13.8px; color:var(--muted-now); line-height:1.45; display:block;}
-  .result-cta{margin-top:32px;}
 
   /* FORM */
   .form-wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:52px; align-items:start;}
@@ -471,32 +480,13 @@
   .foot-links a:hover{color:var(--text-now);}
   .foot-links a.foot-cta{color:var(--lime); font-weight:600;}
 
-  /* Sticky Mobile-CTA */
-  .sticky-cta{display:none; position:fixed; left:0; right:0; bottom:0; z-index:90;
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-    background:rgba(7,9,13,0.94); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-    border-top:1px solid var(--line2-now); transition:transform .25s ease;}
-  .sticky-cta .btn{width:100%; justify-content:center;}
-  .sticky-cta.hide{transform:translateY(100%);}
-  @media(max-width:860px){
-    .sticky-cta{display:block;}
-    body{padding-bottom:78px;}
-  }
-
   /* Auf dem Handy nichts unter 12px — sonst kaum lesbar. */
   @media(max-width:640px){
     .badge{font-size:13px;}
     .badge b{font-size:12px;}
-    .kick{font-size:12px;}
-    .chat-who span{font-size:12px;}
-    .chat-live{font-size:11px;}
-    .msg-time{font-size:11px;}
-    .doc-txt span{font-size:12px;}
-    .vtime{font-size:12px;}
     .chip{font-size:11.5px;}
     .case-lab{font-size:12.5px;}
     .bar-label{font-size:12px;}
-    .msg-time{font-size:12px;}
     .panel-title{font-size:12px;}
     .banner-txt .k{font-size:12px;}
     .photo-cap .k{font-size:12px;}
@@ -517,15 +507,20 @@
       <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
       BüroKollege<span class="brand-suffix">.de</span>
     </div>
-    <div class="nav-links">
-      <a href="#problem">Wie es funktioniert</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menü öffnen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="nav-links" id="navMenu">
+      <a href="#problem">Das Problem</a>
+      <a href="#loesung">Die Lösung</a>
       <a href="#ergebnis">Das Ergebnis</a>
+      <a href="#faq">Deine Frage</a>
       <a href="#test" class="nav-cta">60 Tage kostenlos</a>
     </div>
   </div>
 </nav>
 
-<section class="hero stage-1">
+<section id="problem" class="hero stage-1">
   <div class="hero-bg">
     <img src="./assets/hero-papierkram.jpg" alt="Mann sitzt abends erschöpft am Schreibtisch voller Rechnungen und Papiere, daneben ein Familienfoto" fetchpriority="high">
     <div class="hero-bg-scrim"></div>
@@ -548,7 +543,7 @@
           60 Tage kostenlos testen
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#problem" class="btn-2">Wie funktioniert das?</a>
+        <a href="#loesung" class="btn-2">Wie funktioniert das?</a>
       </div>
       <div class="micro">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -568,9 +563,9 @@
 <div class="wrap">
 
   <!-- PROBLEM + LÖSUNG -->
-  <section id="problem" class="stage-1">
+  <section id="loesung" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Wie es funktioniert</span>
+      <span class="kick">Die Lösung</span>
       <h2>Darf ich vorstellen? Dein neuer digitaler Mitarbeiter.</h2>
       <p>Dein digitaler Mitarbeiter übernimmt die Vorbereitung von E-Mails, WhatsApp-Nachrichten, Angeboten und Rechnungen.</p>
     </div>
@@ -653,10 +648,6 @@
           <div><b>60 Tage</b><span>kostenlos ausprobieren</span></div>
           <div><b>0 €</b><span>bis du dich entscheidest</span></div>
         </div>
-        <a href="#test" class="btn result-cta">
-          60 Tage kostenlos testen
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
       </div>
     </div>
   </section>
@@ -665,7 +656,7 @@
   <!-- FAQ -->
   <section id="faq" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Fragen vorab</span>
+      <span class="kick">Deine Frage</span>
       <h2>Kurz und ehrlich beantwortet</h2>
     </div>
     <div class="faq-list" data-revs>
@@ -772,13 +763,6 @@
   </div>
 </footer>
 
-<div class="sticky-cta" id="stickyCta">
-  <a href="#test" class="btn">
-    60 Tage kostenlos testen
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
-</div>
-
 <script>
 // Einblenden beim Scrollen — nur wenn der Browser mitspielt.
 (function(){
@@ -807,6 +791,23 @@
     });
   }, { threshold:0.4 });
   bars.forEach(function(b){ io.observe(b); });
+})();
+
+// Mobiles Menü ein-/ausklappen
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var menu = document.getElementById('navMenu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', function(){
+    var open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  [].slice.call(menu.querySelectorAll('a')).forEach(function(a){
+    a.addEventListener('click', function(){
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 })();
 
 // Formular
@@ -872,17 +873,6 @@
       status.scrollIntoView({ block:'center', behavior:'smooth' });
     }, 600);
   });
-})();
-
-// Sticky-Mobile-CTA ausblenden, sobald das Formular selbst sichtbar ist.
-(function(){
-  var bar = document.getElementById('stickyCta');
-  var target = document.getElementById('test');
-  if (!bar || !target || !('IntersectionObserver' in window)) return;
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ bar.classList.toggle('hide', e.isIntersecting); });
-  }, { threshold: 0.2 });
-  io.observe(target);
 })();
 </script>
 
