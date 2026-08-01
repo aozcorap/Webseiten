@@ -191,23 +191,26 @@
 
   /* HERO */
   .hero{position:relative; padding:72px 0 76px; overflow:hidden;}
-  @media(max-width:820px){ .hero{padding:36px 0 320px;} }
+  @media(max-width:820px){ .hero{padding:32px 0 44px;} }
 
   .hero.stage-1 .hero-bg{position:absolute !important; inset:0; z-index:0;}
   .hero-bg img{position:absolute; top:0; right:0; width:62%; height:100%; object-fit:cover; object-position:center;
     filter:brightness(0.55) saturate(0.85);}
-  @media(max-width:820px){ .hero-bg img{width:100%; top:auto; bottom:0; height:340px;} }
   .hero-bg-scrim{position:absolute; inset:0;
     background:linear-gradient(90deg, var(--bg-now) 0%, var(--bg-now) 20%, rgba(7,9,13,0.78) 32%, rgba(7,9,13,0.5) 44%, rgba(7,9,13,0.28) 56%, rgba(7,9,13,0.28) 100%),
       linear-gradient(0deg, rgba(7,9,13,0.6) 0%, transparent 30%);}
-  @media(max-width:820px){
-    .hero-bg-scrim{background:linear-gradient(0deg, var(--bg-now) 0%, var(--bg-now) 8%, rgba(7,9,13,0.65) 32%, rgba(7,9,13,0.35) 55%, rgba(7,9,13,0.35) 100%),
-      linear-gradient(180deg, var(--bg-now) 0%, var(--bg-now) 4%, transparent 22%);}
-  }
   .hero-bg-cap{position:absolute; right:28px; bottom:26px; text-align:right; max-width:44%; z-index:1;}
-  @media(max-width:820px){ .hero-bg-cap{right:20px; left:20px; max-width:none; bottom:22px;} }
   .hero-bg-cap .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--lime); text-transform:uppercase; margin-bottom:7px; text-shadow:0 2px 10px rgba(0,0,0,0.6);}
   .hero-bg-cap p{font-size:15px; font-weight:500; line-height:1.4; letter-spacing:-0.01em; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,0.7);}
+  /* Auf Mobile wirkt das Foto als abgetrennter Streifen statt als Hintergrund - lieber ganz weglassen. */
+  @media(max-width:820px){ .hero-bg{display:none;} }
+
+  .hero-mobile-cap{display:none;}
+  @media(max-width:820px){
+    .hero-mobile-cap{display:block; margin-bottom:16px;}
+    .hero-mobile-cap .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--lime); text-transform:uppercase; margin-bottom:6px;}
+    .hero-mobile-cap p{font-size:14px; color:var(--muted-now); line-height:1.4;}
+  }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
   .badge{display:inline-flex; align-items:center; gap:9px; padding:7px 15px 7px 8px; border:1px solid var(--line2-now); border-radius:999px;
@@ -536,6 +539,10 @@
   <div class="wrap">
     <div class="hero-inner" data-rev>
       <span class="kick">Das Problem</span>
+      <div class="hero-mobile-cap">
+        <div class="k">21:40 Uhr — kennst du das?</div>
+        <p>Alle sind zuhause. Du sitzt noch am Papierkram.</p>
+      </div>
       <div class="badge">
         <b>KOSTENLOS</b>
         <span>60 Tage testen · keine Zahlungsdaten · keine Kündigung</span>
