@@ -246,9 +246,8 @@
   }
   .chip.go{background:var(--lime); color:#07090D; font-weight:600;}
   .chip.wait{background:rgba(255,255,255,0.06); color:var(--muted2-now);}
-  .panel-foot{display:flex; align-items:center; justify-content:center; gap:6px; padding:18px; border-top:1px solid rgba(196,248,42,0.25);
-    background:var(--lime-dim); font-size:15px; font-weight:600; color:var(--lime); text-align:center; flex-wrap:wrap;}
-  .panel-foot b{color:var(--lime); font-weight:700;}
+  .panel-foot{padding:18px; border-top:1px solid var(--line-now); font-size:14.5px; color:var(--text-now); line-height:1.5;}
+  .panel-foot .pf-label{color:var(--lime); font-weight:700;}
 
 
   /* MARQUEE */
@@ -600,7 +599,7 @@
               <span class="chip wait">Läuft</span>
             </div>
           </div>
-          <div class="panel-foot"><b>5 Minuten</b> abends drübergehen — statt den ganzen Tag Unterbrechungen</div>
+          <div class="panel-foot"><span class="pf-label">Dein Vorteil:</span> Entwürfe kurz prüfen und freigeben, statt den ganzen Tag Unterbrechungen.</div>
         </div>
       </div>
 
