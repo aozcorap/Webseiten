@@ -239,66 +239,6 @@
   .panel-foot b{color:var(--text-now); font-weight:500;}
 
 
-  /* ===== CHAT-DEMO ===== */
-  .chat{border:1px solid var(--line-now); border-radius:20px; overflow:hidden;
-    background:linear-gradient(180deg, var(--surface), var(--bg-2)); display:flex; flex-direction:column;}
-  .chat-bar{display:flex; align-items:center; gap:11px; padding:14px 16px; border-bottom:1px solid var(--line-now); background:rgba(255,255,255,0.02);}
-  .chat-ava{width:34px; height:34px; border-radius:50%; background:var(--lime); color:#07090D;
-    display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; flex-shrink:0; letter-spacing:-0.02em;}
-  .chat-who{flex:1; min-width:0;}
-  .chat-who b{display:block; font-size:14px; font-weight:600;}
-  .chat-who span{font-size:11.5px; color:var(--muted2-now);}
-  .chat-live{display:flex; align-items:center; gap:6px; font-size:10px; color:var(--lime); letter-spacing:.1em; flex-shrink:0;
-    border:1px solid rgba(196,248,42,0.3); border-radius:999px; padding:4px 9px;}
-
-  .chat-body{padding:18px 16px; display:flex; flex-direction:column; gap:11px; flex:1;}
-  .msg{max-width:88%; border-radius:14px; padding:12px 14px; position:relative; font-size:14.2px; line-height:1.5;}
-  .msg.out{align-self:flex-end; background:var(--lime-dim); border:1px solid rgba(196,248,42,0.28); border-bottom-right-radius:5px;}
-  .msg.in{align-self:flex-start; background:rgba(255,255,255,0.05); border:1px solid var(--line-now); border-bottom-left-radius:5px;}
-  .msg p{margin:0;}
-  .msg-time{display:block; font-size:10px; color:var(--muted2-now); margin-top:7px; text-align:right;}
-  .msg-cap{font-size:12.8px; color:var(--muted-now); margin-top:9px; line-height:1.5;}
-
-  .voice{display:flex; align-items:center; gap:10px;}
-  .play{width:30px; height:30px; border-radius:50%; background:var(--lime); color:#07090D; flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;}
-  .play svg{width:14px; height:14px; margin-left:2px;}
-  .wave{display:flex; align-items:center; gap:2.5px; flex:1; height:24px;}
-  .wave i{flex:1; background:var(--lime); opacity:.45; border-radius:2px; height:22%;}
-  .vtime{font-size:11px; color:var(--muted2-now); flex-shrink:0;}
-  .playing .wave i{animation:bounce 1s ease-in-out infinite;}
-  .playing .wave i:nth-child(2n){animation-delay:.12s;}
-  .playing .wave i:nth-child(3n){animation-delay:.26s;}
-  .playing .wave i:nth-child(4n){animation-delay:.4s;}
-  @keyframes bounce{0%,100%{height:22%; opacity:.45;} 50%{height:88%; opacity:1;}}
-
-  .msg.typing{padding:14px 16px;}
-  .dots{display:flex; gap:5px;}
-  .dots i{width:6px; height:6px; border-radius:50%; background:var(--muted-now); animation:blink 1.3s infinite;}
-  .dots i:nth-child(2){animation-delay:.2s;} .dots i:nth-child(3){animation-delay:.4s;}
-  @keyframes blink{0%,60%,100%{opacity:.28;} 30%{opacity:1;}}
-
-  .doc{display:flex; align-items:flex-start; gap:11px; background:rgba(255,255,255,0.06);
-    border:1px solid var(--line-now); border-radius:11px; padding:11px 12px; margin-bottom:11px;}
-  .doc-ic{width:32px; height:32px; border-radius:8px; background:var(--lime-dim); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
-  .doc-ic svg{width:16px; height:16px; color:var(--lime);}
-  .doc-txt{min-width:0;}
-  .doc-txt b{display:block; font-size:13px; font-weight:600; line-height:1.35; margin-bottom:2px; word-break:break-word;}
-  .doc-txt span{font-size:11px; color:var(--muted2-now);}
-  .ask{font-size:14px;}
-  .msg-actions{display:flex; gap:8px; margin-top:11px; flex-wrap:wrap;}
-  .act{font-size:12.2px; padding:8px 14px; border-radius:999px; border:1px solid var(--line2-now); color:var(--muted-now);}
-  .act.go{background:var(--lime); color:#07090D; border-color:transparent; font-weight:600;}
-
-  .chat-foot{display:flex; align-items:center; justify-content:space-between; gap:14px;
-    padding:14px 16px; border-top:1px solid var(--line-now); font-size:12.2px; color:var(--muted2-now); flex-wrap:wrap;}
-  .chat-foot b{color:var(--text-now); font-weight:500;}
-
-  /* Schrittweises Erscheinen — nur wenn JS läuft */
-  .js-on .chat-body .msg{opacity:0; transform:translateY(8px); transition:opacity .45s ease-out, transform .45s ease-out;}
-  .js-on .chat-body .msg.shown{opacity:1; transform:none;}
-  .js-on .chat-body .msg.hide{display:none;}
-
   /* MARQUEE */
   .ticker{border-top:1px solid var(--line-now); border-bottom:1px solid var(--line-now); overflow:hidden; white-space:nowrap; padding:16px 0; position:relative; z-index:1;}
   .ticker-track{display:inline-flex; animation:slide 34s linear infinite;}
@@ -320,17 +260,6 @@
   /* PAIN */
   .pain{display:grid; grid-template-columns:0.85fr 1.15fr; gap:40px; align-items:center;}
   @media(max-width:940px){ .pain{grid-template-columns:1fr; gap:32px;} }
-  .pain-photo{position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--line-now); aspect-ratio:4/2.2;}
-  @media(max-width:940px){ .pain-photo{aspect-ratio:4/2.6;} }
-  .pain-photo img{width:100%; height:100%; object-fit:cover;}
-  .pain-photo::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,9,13,0.1), rgba(7,9,13,0.75));}
-  .pain-photo .stamp{position:absolute; left:22px; bottom:22px; right:22px; z-index:1;}
-  .pain-photo .stamp .t{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--amber); letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px;}
-  .pain-photo .stamp p{font-size:17px; font-weight:500; letter-spacing:-0.015em; line-height:1.4;}
-  .pain-photo-ai{aspect-ratio:4/3.4;}
-  @media(max-width:940px){ .pain-photo-ai{aspect-ratio:4/2.6;} }
-  .pain-photo-ai img{filter:brightness(0.85) saturate(0.85) contrast(1.02);}
-  .pain-photo-ai::after{background:linear-gradient(160deg, rgba(7,9,13,0.15), rgba(7,9,13,0.4)), linear-gradient(0deg, rgba(196,248,42,0.1), transparent 55%);}
   .quotes{display:flex; flex-direction:column; gap:16px;}
   .quote{border:1px solid var(--line-now); border-left:2px solid var(--amber); border-radius:0 14px 14px 0; padding:22px 24px; background:rgba(255,255,255,0.02); transition:border-color .2s, background .2s;}
   .quote:hover{background:rgba(255,255,255,0.035);}
@@ -558,7 +487,6 @@
     .panel-title{font-size:12px;}
     .banner-txt .k{font-size:12px;}
     .photo-cap .k{font-size:12px;}
-    .pain-photo .stamp .t{font-size:12px;}
     .ticker span{font-size:12px;}
     .flegal{font-size:13px;}
     .field .hint{font-size:13px;}
@@ -636,42 +564,35 @@
 
     <div class="pain">
       <div data-rev>
-        <div class="chat">
-          <div class="chat-bar">
-            <div class="chat-ava">MK</div>
-            <div class="chat-who"><b>Martin K.</b><span>WhatsApp · Kundenanfrage</span></div>
-            <div class="chat-live">AUTOMATISCH</div>
+        <div class="panel">
+          <div class="panel-bar">
+            <span class="pd"></span><span class="pd"></span><span class="pd"></span>
+            <span class="panel-title">Postfach · Entwürfe</span>
+            <span class="panel-live"><span class="pulse"></span>3 BEREIT</span>
           </div>
-          <div class="chat-body" id="chatBody">
-            <div class="msg in">
-              <div class="voice">
-                <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-                <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                <div class="vtime">0:14</div>
-              </div>
-              <span class="msg-time">19:52</span>
+          <div class="panel-body">
+            <div class="task ok">
+              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="task-txt"><b>Anfrage Martin K. — Steckdosen Keller</b><span>WhatsApp · Entwurf fertig</span></div>
+              <span class="chip go">Bereit</span>
             </div>
-            <div class="msg out typing" id="typingMsg">
-              <div class="dots"><i></i><i></i><i></i></div>
+            <div class="task ok">
+              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="task-txt"><b>Angebot Fenster-Sanierung</b><span>E-Mail · Entwurf fertig</span></div>
+              <span class="chip go">Bereit</span>
             </div>
-            <div class="msg out">
-              <div class="doc">
-                <div class="doc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-                <div class="doc-txt"><b>Angebot_Steckdosen-Keller.pdf</b><span>automatisch erstellt</span></div>
-              </div>
-              <p class="ask">Angebot ist fertig — soll ich es senden?</p>
-              <div class="msg-actions">
-                <span class="act">Entwurf ansehen</span>
-                <span class="act go">Freigeben &amp; senden</span>
-              </div>
-              <span class="msg-time">19:56</span>
+            <div class="task ok">
+              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="task-txt"><b>Zahlungserinnerung Rechnung #482</b><span>Mahnung · Entwurf fertig</span></div>
+              <span class="chip go">Bereit</span>
             </div>
-            <div class="msg in">
-              <p>Super, danke! Passt am Dienstag? 👍</p>
-              <span class="msg-time">19:58</span>
+            <div class="task">
+              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg></div>
+              <div class="task-txt"><b>Anfrage Fliesenleger-Team</b><span>WhatsApp · wird vorbereitet</span></div>
+              <span class="chip wait">Läuft</span>
             </div>
           </div>
-          <div class="chat-foot"><b>4 Minuten</b> statt Stunden am Abend</div>
+          <div class="panel-foot"><span><b>5 Minuten</b> abends drübergehen</span><span>statt den ganzen Tag Unterbrechungen</span></div>
         </div>
       </div>
 
@@ -929,44 +850,6 @@
   });
 })();
 
-// Chat-Demo: Nachrichten nacheinander zeigen, sobald sie sichtbar wird.
-(function(){
-  var body = document.getElementById('chatBody');
-  if (!body) return;
-  var msgs = [].slice.call(body.querySelectorAll('.msg'));
-  var voice = body.querySelector('.voice');
-  var typing = document.getElementById('typingMsg');
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced || !('IntersectionObserver' in window)){
-    msgs.forEach(function(m){ m.classList.add('shown'); });
-    if (typing) typing.classList.add('hide');
-    return;
-  }
-
-  var started = false;
-  function run(){
-    if (started) return;
-    started = true;
-    var delays = [200, 1500, 3100, 4400];
-    msgs.forEach(function(m, i){
-      setTimeout(function(){
-        m.classList.add('shown');
-        if (m === msgs[0] && voice){
-          voice.classList.add('playing');
-          setTimeout(function(){ voice.classList.remove('playing'); }, 2400);
-        }
-        // Tippanzeige verschwindet, sobald die echte Antwort kommt
-        if (i === 2 && typing) typing.classList.add('hide');
-      }, delays[i] || 0);
-    });
-  }
-
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if (e.isIntersecting){ run(); io.disconnect(); } });
-  }, { threshold: 0.3 });
-  io.observe(body);
-})();
 </script>
 
 </body>
