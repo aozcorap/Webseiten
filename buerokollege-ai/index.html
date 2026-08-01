@@ -110,7 +110,8 @@
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth; background:#07090D; overflow-x:hidden;}
+  html{scroll-behavior:smooth; background:#07090D; overflow-x:hidden; scroll-padding-top:76px;}
+  @media(max-width:640px){ html{scroll-padding-top:68px;} }
   body{
     background:#F7F9FA; color:var(--text);
     font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
@@ -124,7 +125,7 @@
   .wrap{max-width:1200px; margin:0 auto; padding:0 28px;}
   @media(max-width:640px){ .wrap{padding:0 20px;} }
   section{padding:var(--s5) 0; position:relative; z-index:1;}
-  @media(max-width:820px){ section{padding:var(--s6) 0;} }
+  @media(max-width:820px){ section{padding:var(--s4) 0;} }
   :focus-visible{outline:2.5px solid var(--lime); outline-offset:3px; border-radius:3px;}
 
   @media (prefers-reduced-motion: reduce){
@@ -504,10 +505,10 @@
 
 <nav>
   <div class="navrow">
-    <div class="brand">
+    <a class="brand" href="#problem">
       <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
       BüroKollege<span class="brand-suffix">.de</span>
-    </div>
+    </a>
     <div class="nav-links" id="navMenu">
       <a href="#problem">Das Problem</a>
       <a href="#loesung">Die Lösung</a>
