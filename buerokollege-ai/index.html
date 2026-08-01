@@ -705,7 +705,7 @@
 
         <div class="fstatus" id="fstatus" role="status" aria-live="polite"></div>
 
-        <form id="testForm" novalidate>
+        <form id="testForm" action="https://formspree.io/f/mgogjnqz" method="POST" novalidate>
           <div class="field">
             <label for="f-name">Dein Name <span class="req" aria-hidden="true">*</span></label>
             <div class="field-input">
@@ -814,6 +814,8 @@
   var form = document.getElementById('testForm');
   if (!form) return;
   var status = document.getElementById('fstatus');
+  var btn = document.getElementById('sendBtn');
+  var label = document.getElementById('sendLabel');
 
   var rules = {
     'f-name':    { err:'e-name',    msg:'Bitte trag deinen Namen ein.' },
@@ -856,22 +858,32 @@
       return;
     }
 
-    var name = document.getElementById('f-name').value.trim();
-    var mail = document.getElementById('f-mail').value.trim();
-    var fresserEl = document.getElementById('f-fresser');
-    var fresserText = fresserEl.options[fresserEl.selectedIndex].text;
+    btn.disabled = true;
+    label.textContent = 'Wird gesendet …';
 
-    var subject = encodeURIComponent('Kostenloser Test - Anfrage von ' + name);
-    var body = encodeURIComponent(
-      'Name: ' + name + '\n' +
-      'E-Mail: ' + mail + '\n' +
-      'Was kostet am meisten Zeit: ' + fresserText + '\n'
-    );
-    window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
-
-    status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit einer vorausgefüllten Nachricht — schick sie einfach ab. Klappt das nicht automatisch, schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
-    status.className = 'fstatus ok on';
-    status.scrollIntoView({ block:'center', behavior:'smooth' });
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res){
+      btn.disabled = false;
+      label.textContent = 'Kostenlosen Test anfragen';
+      if (res.ok){
+        status.innerHTML = 'Danke! Deine Anfrage ist angekommen — wir melden uns innerhalb von 24 Stunden.';
+        status.className = 'fstatus ok on';
+        form.reset();
+      } else {
+        status.innerHTML = 'Das hat leider nicht geklappt. Bitte schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
+        status.className = 'fstatus bad on';
+      }
+      status.scrollIntoView({ block:'center', behavior:'smooth' });
+    }).catch(function(){
+      btn.disabled = false;
+      label.textContent = 'Kostenlosen Test anfragen';
+      status.innerHTML = 'Das hat leider nicht geklappt. Bitte schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
+      status.className = 'fstatus bad on';
+      status.scrollIntoView({ block:'center', behavior:'smooth' });
+    });
   });
 })();
 </script>
