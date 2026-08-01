@@ -814,8 +814,6 @@
   var form = document.getElementById('testForm');
   if (!form) return;
   var status = document.getElementById('fstatus');
-  var btn = document.getElementById('sendBtn');
-  var label = document.getElementById('sendLabel');
 
   var rules = {
     'f-name':    { err:'e-name',    msg:'Bitte trag deinen Namen ein.' },
@@ -858,19 +856,22 @@
       return;
     }
 
-    btn.disabled = true;
-    label.textContent = 'Wird gesendet …';
+    var name = document.getElementById('f-name').value.trim();
+    var mail = document.getElementById('f-mail').value.trim();
+    var fresserEl = document.getElementById('f-fresser');
+    var fresserText = fresserEl.options[fresserEl.selectedIndex].text;
 
-    // TODO: Hier den eigenen Endpunkt eintragen (z. B. Formspree).
-    // Solange keiner hinterlegt ist, zeigen wir die direkte E-Mail-Adresse,
-    // damit keine Anfrage verloren geht.
-    setTimeout(function(){
-      btn.disabled = false;
-      label.textContent = 'Kostenlosen Test anfragen';
-      status.innerHTML = 'Das Formular ist noch nicht angeschlossen. Bitte schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a> — wir antworten innerhalb von 24 Stunden.';
-      status.className = 'fstatus bad on';
-      status.scrollIntoView({ block:'center', behavior:'smooth' });
-    }, 600);
+    var subject = encodeURIComponent('Kostenloser Test - Anfrage von ' + name);
+    var body = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'E-Mail: ' + mail + '\n' +
+      'Was kostet am meisten Zeit: ' + fresserText + '\n'
+    );
+    window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
+
+    status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit einer vorausgefüllten Nachricht — schick sie einfach ab. Klappt das nicht automatisch, schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
+    status.className = 'fstatus ok on';
+    status.scrollIntoView({ block:'center', behavior:'smooth' });
   });
 })();
 </script>
