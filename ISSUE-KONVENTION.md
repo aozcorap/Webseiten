@@ -4,7 +4,7 @@ Dieses Repo enthält mehrere unabhängige Website-Projekte in eigenen Unterverze
 
 ## Pflicht-Labels pro Issue
 
-Jedes Issue bekommt genau zwei Labels:
+Jedes Issue bekommt genau zwei Labels — **ausschließlich auf Englisch**, keine deutschen Varianten (also nicht `Priorität: hoch` o. ä. anlegen):
 
 1. **Projekt-Label** — Name des betroffenen Unterverzeichnisses, exakt wie der Ordnername (z. B. `aralia-ballroom.de`, `boxring-wetterau.de`, `buerokollege-ai`)
 2. **Prioritäts-Label** — eines von: `priority: high`, `priority: medium`, `priority: low`
@@ -13,13 +13,11 @@ Beide Labels werden beim ersten Issue mit diesem Namen automatisch von GitHub an
 
 ## Titel
 
-**Kein Website-Präfix mehr im Titel** (früher z. B. `[aralia-ballroom.de] ...` — das ist jetzt redundant, da über das Projekt-Label filterbar).
+**Weder Website- noch Prioritäts-Präfix im Titel.** Beides steckt ausschließlich in den Labels — der Titel ist reine, kurze Problembeschreibung, ohne `[...]`-Klammern davor.
 
-Empfohlenes Format:
-```
-[Priorität] Kurze, klare Problembeschreibung
-```
-Beispiel: `[High] ~227 MB unkomprimierte GIF-Dateien zerstören Ladezeit und Ranking`
+Beispiel: `~227 MB unkomprimierte GIF-Dateien zerstören Ladezeit und Ranking`
+
+Der Issue-Body darf im Fließtext natürlich weiterhin `**Priorität:** High` als deutschsprachige Erläuterung enthalten (siehe unten) — das ist kein Label, sondern Kontext für Menschen, die den Issue lesen.
 
 ## Filtern
 
@@ -45,4 +43,4 @@ https://github.com/aozcorap/Webseiten/issues?q=is%3Aissue+is%3Aopen+label%3A%22a
 
 ## Hinweis zu bestehenden Issues
 
-Ältere Issues (z. B. `[BüroKollege.AI] ...`) nutzen noch das alte Titel-Präfix-Schema ohne Labels. Diese wurden nicht rückwirkend angepasst — die Konvention gilt ab sofort für neue Issues.
+Ältere Issues (z. B. `[BüroKollege.AI] ...`) nutzen noch das alte Titel-Präfix-Schema, haben aber bereits durchgängig die korrekten englischen `priority: high/medium/low`-Labels. Die Titel-Präfixe dort wurden nicht rückwirkend entfernt — die Konvention (kein Präfix mehr) gilt ab sofort für neue Issues.
