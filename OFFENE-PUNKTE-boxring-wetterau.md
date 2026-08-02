@@ -69,6 +69,29 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] Senior-Webdesigner/SEO-Review der Live-Seite durchgeführt, 6 Issues
+      angelegt (#50–#55) und direkt im Code gefixt:
+      - #50 (High): Non-www-Domain (boxring-wetterau.de ohne www) lieferte
+        200 statt 301 auf www → .htaccess mit RewriteRule ergänzt
+      - #51 (Medium): 24 Erfolge-Fotos unoptimiert (250 KB–2 MB je Bild,
+        teils bis 3753px Kantenlänge) → von der Live-Seite geladen, auf
+        max. 900px Kantenlänge verkleinert und neu komprimiert (JPEG
+        q78 + WebP q78), Gesamtgröße 8,9 MB → 2,5 MB (JPEG-Fallback) bzw.
+        1,6 MB (WebP). erfolge.html + Startseiten-Teaser auf
+        <picture>-Element mit WebP-Source umgestellt (JPEG-Fallback für
+        ältere Browser bleibt erhalten)
+      - #52 (Low): Sicherheits-Header (HSTS, X-Content-Type-Options,
+        X-Frame-Options) fehlten → in .htaccess ergänzt
+      - #53 (Low): Google-Maps-iframe ohne title-Attribut → ergänzt
+      - #54 (Low): Instagram-Link ohne target/rel → target="_blank"
+        rel="noopener noreferrer" ergänzt
+      - #55 (Low): keine Mobile-Icons → apple-touch-icon.png (180×180,
+        aus favicon.png generiert), manifest.json und
+        <meta name="theme-color"> ergänzt
+      Deployment abgeschlossen, live verifiziert (02.08.2026): 301-Redirect,
+      Security-Header, WebP/verkleinerte JPEGs, apple-touch-icon/manifest,
+      iframe-title und Instagram-Link-Fix per curl gegen die Live-Seite
+      bestätigt. Alle 6 Issues geschlossen.
 - [x] Live-Audit durchgeführt: index.html, erfolge.html, sitemap.xml, robots.txt
       und JSON-LD (SportsClub + FAQPage) sind byte-identisch zum Code-Stand
       im Repo. Dabei einen Deploy-Bug gefunden und vom Nutzer direkt per
