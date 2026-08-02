@@ -1,5 +1,12 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-31, Ende Session)
 
+## ⚠️ Nächster Deploy braucht vollständigen assets/-Upload
+Die Fixes zu Issues #50–#55 (siehe unten) ersetzen 24 Erfolge-Bilder durch
+verkleinerte/komprimierte Versionen und ergänzen 24 neue .webp-Dateien sowie
+apple-touch-icon.png. Beim nächsten FTP-Upload müssen diesmal ALLE Dateien
+in assets/ mit hochgeladen werden (nicht nur neue Erfolge wie sonst), sowie
+.htaccess und manifest.json im Root von boxring-wetterau.de/.
+
 ## Offen
 - [ ] Echte PageSpeed-Insights-Analyse (Mobile + Desktop) noch nicht möglich:
       PSI-API lieferte 429 (Tageskontingent des Projekts auf 0 gesetzt),
@@ -69,6 +76,28 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Bereits erledigt
+- [x] Senior-Webdesigner/SEO-Review der Live-Seite durchgeführt, 6 Issues
+      angelegt (#50–#55) und direkt im Code gefixt:
+      - #50 (High): Non-www-Domain (boxring-wetterau.de ohne www) lieferte
+        200 statt 301 auf www → .htaccess mit RewriteRule ergänzt
+      - #51 (Medium): 24 Erfolge-Fotos unoptimiert (250 KB–2 MB je Bild,
+        teils bis 3753px Kantenlänge) → von der Live-Seite geladen, auf
+        max. 900px Kantenlänge verkleinert und neu komprimiert (JPEG
+        q78 + WebP q78), Gesamtgröße 8,9 MB → 2,5 MB (JPEG-Fallback) bzw.
+        1,6 MB (WebP). erfolge.html + Startseiten-Teaser auf
+        <picture>-Element mit WebP-Source umgestellt (JPEG-Fallback für
+        ältere Browser bleibt erhalten)
+      - #52 (Low): Sicherheits-Header (HSTS, X-Content-Type-Options,
+        X-Frame-Options) fehlten → in .htaccess ergänzt
+      - #53 (Low): Google-Maps-iframe ohne title-Attribut → ergänzt
+      - #54 (Low): Instagram-Link ohne target/rel → target="_blank"
+        rel="noopener noreferrer" ergänzt
+      - #55 (Low): keine Mobile-Icons → apple-touch-icon.png (180×180,
+        aus favicon.png generiert), manifest.json und
+        <meta name="theme-color"> ergänzt
+      Alle Änderungen sind im Code, noch nicht live – siehe Warnhinweis
+      oben zum nächsten Deploy (kompletter assets/-Ordner + .htaccess +
+      manifest.json müssen mit hoch).
 - [x] Live-Audit durchgeführt: index.html, erfolge.html, sitemap.xml, robots.txt
       und JSON-LD (SportsClub + FAQPage) sind byte-identisch zum Code-Stand
       im Repo. Dabei einen Deploy-Bug gefunden und vom Nutzer direkt per
