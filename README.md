@@ -24,13 +24,6 @@ Interaktiver Redesign-Entwurf für die reale Website des Aralia Ballroom (Florst
 - Kontaktformular passt Ansprache live an gewählten Anlass an; eingebaute Vorher/Nachher-Argumentation am Seitenende
 - Details: siehe [aralia-ballroom.de/README.md](aralia-ballroom.de/README.md)
 
-### [aralia.de](aralia.de/index.html)
-Landingpage "Aralia Events" — Hochzeiten & Events der Extraklasse, Signature-Feature: Ankunft des Brautpaars per Helikopter.
-
-- Dunkles, edles Design (Schwarz/Ivory mit Gold-Akzent), Serif-Headlines, eigene SVG-Illustrationen statt Stockfotos
-- One-Pager mit Leistungen, Helikopter-Feature, Ablauf, Referenzen, Locations und Kontaktformular (aktuell `mailto`-Versand)
-- Offene Punkte (Impressum/Datenschutz-Platzhalter, echtes Bildmaterial, Kontaktdaten): siehe [OFFENE-PUNKTE-aralia.md](OFFENE-PUNKTE-aralia.md)
-
 ### [buerokollege-ai](buerokollege-ai/index.html)
 Landingpage "BüroKollege.AI" — 30 Tage kostenlos testen, digitaler Kollege für Handwerksbetriebe (KI-Agent für Postfach/WhatsApp/Rechnungen).
 
