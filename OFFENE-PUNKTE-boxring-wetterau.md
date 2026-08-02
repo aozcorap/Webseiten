@@ -1,12 +1,5 @@
 # Offene Punkte – Boxring Wetterau SEO/AEO (Stand 2026-07-31, Ende Session)
 
-## ⚠️ Nächster Deploy braucht vollständigen assets/-Upload
-Die Fixes zu Issues #50–#55 (siehe unten) ersetzen 24 Erfolge-Bilder durch
-verkleinerte/komprimierte Versionen und ergänzen 24 neue .webp-Dateien sowie
-apple-touch-icon.png. Beim nächsten FTP-Upload müssen diesmal ALLE Dateien
-in assets/ mit hochgeladen werden (nicht nur neue Erfolge wie sonst), sowie
-.htaccess und manifest.json im Root von boxring-wetterau.de/.
-
 ## Offen
 - [ ] Echte PageSpeed-Insights-Analyse (Mobile + Desktop) noch nicht möglich:
       PSI-API lieferte 429 (Tageskontingent des Projekts auf 0 gesetzt),
@@ -95,9 +88,10 @@ in assets/ mit hochgeladen werden (nicht nur neue Erfolge wie sonst), sowie
       - #55 (Low): keine Mobile-Icons → apple-touch-icon.png (180×180,
         aus favicon.png generiert), manifest.json und
         <meta name="theme-color"> ergänzt
-      Alle Änderungen sind im Code, noch nicht live – siehe Warnhinweis
-      oben zum nächsten Deploy (kompletter assets/-Ordner + .htaccess +
-      manifest.json müssen mit hoch).
+      Deployment abgeschlossen, live verifiziert (02.08.2026): 301-Redirect,
+      Security-Header, WebP/verkleinerte JPEGs, apple-touch-icon/manifest,
+      iframe-title und Instagram-Link-Fix per curl gegen die Live-Seite
+      bestätigt. Alle 6 Issues geschlossen.
 - [x] Live-Audit durchgeführt: index.html, erfolge.html, sitemap.xml, robots.txt
       und JSON-LD (SportsClub + FAQPage) sind byte-identisch zum Code-Stand
       im Repo. Dabei einen Deploy-Bug gefunden und vom Nutzer direkt per
