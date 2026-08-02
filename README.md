@@ -17,6 +17,13 @@ Vereins-Website Boxring Wetterau 1983 e.V., dunkles Rot/Schwarz-Farbschema.
 - **`erfolge.html`** — Unterseite mit allen Erfolgen vollständig, chronologisch (neuester zuerst)
 - Offene Punkte, Deploy-Workflow und Hintergrundinfos: siehe [OFFENE-PUNKTE-boxring-wetterau.md](OFFENE-PUNKTE-boxring-wetterau.md)
 
+### [aralia-ballroom.de](aralia-ballroom.de/index.html)
+Interaktiver Redesign-Entwurf für die reale Website des Aralia Ballroom (Florstadt) — Pitch-Grundlage für ein Kundengespräch, kein Produktivsystem.
+
+- Löst das Kernproblem der Live-Seite (fast nur auf Hochzeiten ausgelegt): eigene Sektionen + eigene Pakete für Hochzeiten, Firmenevents & Seminare, Messen & Galas, Abibälle
+- Kontaktformular passt Ansprache live an gewählten Anlass an; eingebaute Vorher/Nachher-Argumentation am Seitenende
+- Details: siehe [aralia-ballroom.de/README.md](aralia-ballroom.de/README.md)
+
 ### [aralia.de](aralia.de/index.html)
 Landingpage "Aralia Events" — Hochzeiten & Events der Extraklasse, Signature-Feature: Ankunft des Brautpaars per Helikopter.
 
