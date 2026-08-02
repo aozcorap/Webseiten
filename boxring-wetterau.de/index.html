@@ -18,6 +18,9 @@
 <meta name="twitter:image" content="https://www.boxring-wetterau.de/assets/hero-boxer.jpeg">
 <link rel="canonical" href="https://www.boxring-wetterau.de">
 <link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#e8394f">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -226,7 +229,7 @@
     </p>
     <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
       <a href="#training" style="background:#e8394f;color:#fff;padding:18px 32px;border-radius:999px;font-weight:700;font-size:16px;" style-hover="background:#c92e42;">Jetzt Probetraining sichern</a>
-      <a href="https://www.instagram.com/boxringwetterau/" style="display:flex;align-items:center;gap:10px;color:#c4bdb5;font-weight:600;font-size:15px;min-height:44px;">
+      <a href="https://www.instagram.com/boxringwetterau/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;color:#c4bdb5;font-weight:600;font-size:15px;min-height:44px;">
         <div style="width:32px;height:32px;border-radius:50%;background:#1c1b19;border:1px solid rgba(242,237,232,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4bdb5" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="#c4bdb5" stroke="none"></circle></svg>
         </div>
@@ -321,7 +324,10 @@
         <sc-for list="{{ erfolgeTeaser }}" as="e" hint-placeholder-count="4">
           <a href="./erfolge.html#{{ e.slug }}" style="display:flex;flex-direction:column;height:100%;background:#1c1b19;border-radius:16px;overflow:hidden;border:1px solid rgba(242,237,232,0.06);">
             <div style="aspect-ratio:4/3;overflow:hidden;flex-shrink:0;">
-              <img src="{{ e.image }}" alt="{{ e.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+              <picture>
+                <source srcset="{{ e.imageWebp }}" type="image/webp">
+                <img src="{{ e.image }}" alt="{{ e.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+              </picture>
             </div>
             <div style="padding:20px;display:flex;flex-direction:column;flex:1;">
               <div style="font-size:13px;color:#e8394f;font-weight:700;margin-bottom:8px;">{{ e.date }}</div>
@@ -349,7 +355,7 @@
       <p style="font-size:14px;color:#8f887f;line-height:1.6;max-width:420px;">Unsere Mitglieder kommen aus Friedberg und der gesamten Wetterau – u.a. aus Bad Nauheim, Karben, Rosbach v. d. Höhe, Butzbach, Ober-Mörlen, Wölfersheim, Florstadt, Reichelsheim, Münzenberg, Wöllstadt, Rockenberg, Nidda, Altenstadt, Hungen, Ranstadt, Niddatal und Echzell.</p>
     </div>
     <div style="aspect-ratio:4/3;border-radius:20px;overflow:hidden;border:1px solid rgba(242,237,232,0.06);filter:grayscale(1) invert(0.92) contrast(0.9);">
-      <iframe src="https://www.google.com/maps?q=Maria-Montessori-Weg+2,+61169+Friedberg&output=embed" style="width:100%;height:100%;border:0;" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps?q=Maria-Montessori-Weg+2,+61169+Friedberg&output=embed" title="Standort Boxring Wetterau, Maria-Montessori-Weg 2, 61169 Friedberg" style="width:100%;height:100%;border:0;" loading="lazy"></iframe>
     </div>
   </section>
 
@@ -486,6 +492,7 @@ class Component extends DCLogic {
           title: '5 Kämpfer, starker Teamauftritt in Wiesbaden',
           excerpt: 'Fünf Athleten des Boxring Wetterau boxen bei Duelle der Champions in Wiesbaden – Siege von Niko Kotanidis und Dominik Deichert.',
           image: './assets/erfolge-2026-06-13-duelle-champions-wiesbaden.jpg',
+          imageWebp: './assets/erfolge-2026-06-13-duelle-champions-wiesbaden.webp',
           alt: 'Niko Kotanidis, Dominik Deichert und weitere Boxer des Boxring Wetterau nach der Veranstaltung Duelle der Champions in Wiesbaden',
           slug: 'erfolge-2026-06-13-duelle-champions-wiesbaden',
         },
@@ -494,6 +501,7 @@ class Component extends DCLogic {
           title: '4 Kämpfe, 4 Siege für Auguste',
           excerpt: 'Max Auguste gewinnt auch seinen vierten Kampf in Walldorf und bleibt damit weiterhin ungeschlagen.',
           image: './assets/erfolge-2026-05-10-auguste-vierter-sieg.jpg',
+          imageWebp: './assets/erfolge-2026-05-10-auguste-vierter-sieg.webp',
           alt: 'Max Auguste mit Trainer Ahmet Özcorapci nach seinem vierten Sieg im vierten Kampf in Walldorf, Boxring Wetterau',
           slug: 'erfolge-2026-05-10-auguste-vierter-sieg',
         },
@@ -502,6 +510,7 @@ class Component extends DCLogic {
           title: 'Gencer siegt durch TKO',
           excerpt: 'Cavit Gencer feiert beim Anfängerturnier in Bruchköbel seinen ersten Sieg durch technischen KO.',
           image: './assets/erfolge-2026-04-12-gencer-tko.jpg',
+          imageWebp: './assets/erfolge-2026-04-12-gencer-tko.webp',
           alt: 'Cavit Gencer nach seinem TKO-Sieg beim Anfängerturnier in Bruchköbel, Boxring Wetterau',
           slug: 'erfolge-2026-04-12-gencer-tko',
         },
@@ -510,6 +519,7 @@ class Component extends DCLogic {
           title: '3 Kämpfe, 3 Siege für Auguste',
           excerpt: 'Max Auguste gewinnt auch seinen dritten Kampf in Marburg – die perfekte Bilanz geht weiter.',
           image: './assets/erfolge-2026-03-21-auguste-dritter-sieg.jpg',
+          imageWebp: './assets/erfolge-2026-03-21-auguste-dritter-sieg.webp',
           alt: 'Max Auguste nach seinem dritten Sieg im dritten Kampf in Marburg, Boxring Wetterau',
           slug: 'erfolge-2026-03-21-auguste-dritter-sieg',
         },
