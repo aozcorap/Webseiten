@@ -28,6 +28,8 @@ jobs:
           cp -r boxring-wetterau.de/. _site/boxring-wetterau.de/
           mkdir -p _site/buerokollege-ai
           cp -r buerokollege-ai/. _site/buerokollege-ai/
+          mkdir -p _site/aralia-ballroom.de
+          cp -r aralia-ballroom.de/. _site/aralia-ballroom.de/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
