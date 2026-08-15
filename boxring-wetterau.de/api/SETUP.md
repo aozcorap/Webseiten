@@ -13,18 +13,20 @@ eingerichtet").
 - Die Ordner `api/vendor/` (FPDF + PHPMailer) werden mitgeliefert – dafür ist
   **keine** Composer-Installation auf dem Server nötig.
 
-## 2. Google Sheet für die Anmeldungen anlegen
+## 2. Google Sheet für die Anmeldungen (bereits angelegt)
 
-1. Neues Google Sheet erstellen, z. B. "Boxring Wetterau – Mitgliedsanmeldungen".
-2. Im ersten Tabellenblatt (Standardname "Tabelle1" bzw. "Sheet1") in Zeile 1
-   optional Spaltenüberschriften eintragen – das Skript hängt Zeilen einfach an:
-   Zeitstempel, Name, Vorname, Straße, Nr., PLZ, Ort, Beruf, Geburtstag,
-   Telefon, E-Mail, Erziehungsberechtigte/r, Beitragsart, Anteiliger Beitrag,
-   Bildeinwilligung, Kontoinhaber=Antragsteller, Kontoinhaber-Name,
-   Kontoinhaber-Straße, Kontoinhaber-Ort, IBAN, BIC, Unterschrift Antrag,
-   Unterschrift SEPA, Ort, Datum.
-3. Die Sheet-ID aus der URL kopieren:
-   `https://docs.google.com/spreadsheets/d/<DIESE-ID>/edit`
+Das Sheet "Boxring Wetterau – Mitgliedsanmeldungen" wurde bereits erstellt,
+inkl. Kopfzeile (Zeitstempel, Name, Vorname, Straße, Nr., PLZ, Ort, Beruf,
+Geburtstag, Telefon, E-Mail, Erziehungsberechtigte/r, Beitragsart, Anteiliger
+Beitrag, Bildeinwilligung, Kontoinhaber=Antragsteller, Kontoinhaber-Name,
+Kontoinhaber-Straße, Kontoinhaber-Ort, IBAN, BIC, Unterschrift Antrag,
+Unterschrift SEPA, Ort, Datum):
+
+`https://docs.google.com/spreadsheets/d/1EBY445YDsC49iHzlWD09MZQPuIyPUEbqPP5BKgxRRxU/edit`
+
+Die Sheet-ID ist bereits in `config.sample.php` eingetragen. Falls du ein
+eigenes Sheet verwenden willst, hier einfach die ID aus der URL des eigenen
+Sheets eintragen.
 
 ## 3. Google-Service-Account anlegen
 
