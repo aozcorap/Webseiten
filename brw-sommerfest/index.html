@@ -171,6 +171,63 @@
 
   footer{padding:26px 0 44px;text-align:center;}
   footer p{font-size:13px;color:var(--text-dim);}
+  footer button.linklike{
+    background:none;border:none;padding:0;font:inherit;color:var(--text-dim);
+    text-decoration:underline;cursor:pointer;
+  }
+  footer button.linklike:hover{color:var(--accent);}
+
+  /* ---------- Admin overlay ---------- */
+  #adminOverlay{
+    display:none;position:fixed;inset:0;z-index:100;background:rgba(23,16,8,0.55);
+    padding:24px;overflow-y:auto;
+  }
+  #adminOverlay.open{display:flex;align-items:flex-start;justify-content:center;}
+  .admin-panel{
+    background:var(--surface);border-radius:20px;box-shadow:0 20px 60px rgba(23,16,8,0.35);
+    width:100%;max-width:980px;margin:auto;padding:clamp(24px,4vw,36px);position:relative;
+  }
+  .admin-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--border-strong);background:var(--surface-alt);color:var(--text);
+    font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .admin-close:hover{border-color:var(--accent);color:var(--accent);}
+
+  .login-card{max-width:340px;margin:0 auto;}
+  .login-kicker{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
+  .login-card h2{font-size:24px;margin-bottom:22px;}
+  #loginError{margin-top:12px;font-size:13.5px;color:var(--accent-hover);display:none;}
+
+  .dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;padding-right:36px;}
+  .dash-head p{margin-top:6px;font-size:13.5px;}
+  .btn-outline{
+    display:inline-flex;align-items:center;gap:6px;background:var(--surface-alt);color:var(--text);
+    padding:9px 16px;border-radius:999px;font-weight:700;font-size:13px;
+    border:1px solid var(--border-strong);cursor:pointer;text-decoration:none;white-space:nowrap;
+  }
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+  .admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;}
+  .admin-stats .stat{background:var(--surface-alt);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+  .admin-stats .k{font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+  .admin-stats .v{font-family:'Anton',sans-serif;font-size:24px;color:var(--ink);}
+
+  .table-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .table-scroll{overflow-x:auto;}
+  #dataTable{width:100%;border-collapse:collapse;min-width:760px;}
+  #dataTable th,#dataTable td{text-align:left;padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  #dataTable th{background:var(--surface-alt);color:var(--text-dim);text-transform:uppercase;font-size:10.5px;letter-spacing:0.7px;font-weight:700;}
+  #dataTable tr:last-child td{border-bottom:none;}
+  #dataTable td.name{font-weight:700;color:var(--ink);}
+  .yes{color:#1f7a3d;font-weight:700;}
+  .no{color:var(--text-dim);}
+  .pfand-open{color:var(--accent-hover);font-weight:700;}
+
+  .empty{padding:44px 24px;text-align:center;}
+  .empty .big{font-size:36px;margin-bottom:8px;}
+  .empty p{max-width:340px;margin:6px auto 0;font-size:13.5px;}
+  .updated-note{font-size:11.5px;color:var(--text-dim);margin-top:12px;}
 </style>
 </head>
 <body>
@@ -346,8 +403,77 @@
   </div>
 
   <footer>
-    <p>Boxring Wetterau 1983 e.V. · Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a> · <a href="./admin.html" style="text-decoration:underline;">Vorstand-Login</a></p>
+    <p>Boxring Wetterau 1983 e.V. · Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a> · <button type="button" class="linklike" id="openAdmin">Vorstand-Login</button></p>
   </footer>
+</div>
+
+<div id="adminOverlay">
+  <div class="admin-panel">
+    <button type="button" class="admin-close" id="closeAdmin" aria-label="Schließen">&times;</button>
+
+    <div id="loginScreen">
+      <div class="login-card">
+        <div class="login-kicker">Boxring Wetterau e.V.</div>
+        <h2>Anmeldungen<br>Sommerfest 2026</h2>
+        <form id="loginForm">
+          <div class="field">
+            <label for="user">Benutzername</label>
+            <input type="text" id="user" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <label for="pass">Passwort</label>
+            <input type="password" id="pass" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn-primary">Anmelden</button>
+          <div id="loginError">Benutzername oder Passwort falsch.</div>
+        </form>
+      </div>
+    </div>
+
+    <div id="adminDashboard" style="display:none;">
+      <div class="dash-head">
+        <div>
+          <h2 style="font-size:22px;">Anmeldungen Sommerfest 2026</h2>
+          <p>Übersicht aller eingegangenen Anmeldungen.</p>
+        </div>
+        <button type="button" class="btn-outline" id="logoutBtn">Abmelden</button>
+      </div>
+
+      <div class="admin-stats">
+        <div class="stat"><div class="k">Anmeldungen</div><div class="v" id="statAnmeldungen">0</div></div>
+        <div class="stat"><div class="k">Personen gesamt</div><div class="v" id="statPersonen">0</div></div>
+        <div class="stat"><div class="k">Bringt Salat</div><div class="v" id="statSalat">0</div></div>
+        <div class="stat"><div class="k">Bringt Kuchen</div><div class="v" id="statKuchen">0</div></div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-scroll">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Name</th>
+                <th>Personen</th>
+                <th>Kinder</th>
+                <th>Vegetarisch</th>
+                <th>Salat</th>
+                <th>Kuchen</th>
+                <th>Pfand</th>
+                <th>Anmerkung</th>
+              </tr>
+            </thead>
+            <tbody id="dataBody"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="emptyState">
+          <div class="big">📋</div>
+          <div style="font-weight:700;color:var(--ink);">Noch keine Anmeldungen</div>
+          <p>Sobald sich Mitglieder über das Formular anmelden, erscheinen sie hier.</p>
+        </div>
+      </div>
+      <div class="updated-note" id="updatedNote"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -415,6 +541,116 @@
     window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
     status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit deiner Anmeldung. Bitte danach noch auf „Pfand mit PayPal bezahlen" klicken (' + pfand + '), damit die Anmeldung verbindlich ist.';
   });
+})();
+</script>
+
+<script>
+(function(){
+  // Einfacher Zugangsschutz für ein internes Vereins-Tool, kein sensibler Zahlungsverkehr
+  // dahinter. Bewusst clientseitig gehalten, da die Seite rein statisch (GitHub Pages) läuft.
+  var USER = 'vorstand';
+  var PASS = 'brw-vorstand';
+
+  // Wird von Claude bei jeder Aktualisierung neu befüllt (aus den eingehenden
+  // Anmeldungs-E-Mails bzw. Barzahlungen). Leeres Array = noch keine Anmeldungen erfasst.
+  var ANMELDUNGEN = [
+    { datum: '08.08.2026', name: 'Niko Kotanidis', personen: 4, kinder: 0, vegetarisch: false, salat: false, kuchen: false, anmerkung: '', pfandBezahlt: true, pfandBetrag: '20,00 €', pfandArt: 'Bar' }
+  ];
+  var LAST_UPDATED = '15.08.2026';
+
+  var overlay = document.getElementById('adminOverlay');
+  var openBtn = document.getElementById('openAdmin');
+  var closeBtn = document.getElementById('closeAdmin');
+  var loginScreen = document.getElementById('loginScreen');
+  var dashboard = document.getElementById('adminDashboard');
+  var loginForm = document.getElementById('loginForm');
+  var loginError = document.getElementById('loginError');
+
+  function openOverlay(){
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (sessionStorage.getItem('brwVorstandAuth') === '1') {
+      showDashboard();
+    }
+  }
+  function closeOverlay(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openOverlay);
+  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeOverlay(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeOverlay(); });
+
+  function showDashboard(){
+    loginScreen.style.display = 'none';
+    dashboard.style.display = 'block';
+    render();
+  }
+
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var u = document.getElementById('user').value.trim();
+    var p = document.getElementById('pass').value;
+    if (u === USER && p === PASS) {
+      sessionStorage.setItem('brwVorstandAuth', '1');
+      loginError.style.display = 'none';
+      showDashboard();
+    } else {
+      loginError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    sessionStorage.removeItem('brwVorstandAuth');
+    dashboard.style.display = 'none';
+    loginScreen.style.display = 'block';
+    loginForm.reset();
+  });
+
+  function esc(s){
+    var d = document.createElement('div');
+    d.textContent = s == null ? '' : s;
+    return d.innerHTML;
+  }
+
+  function render(){
+    var body = document.getElementById('dataBody');
+    var table = document.getElementById('dataTable');
+    var empty = document.getElementById('emptyState');
+
+    if (!ANMELDUNGEN.length) {
+      table.style.display = 'none';
+      empty.style.display = 'block';
+    } else {
+      table.style.display = '';
+      empty.style.display = 'none';
+      body.innerHTML = ANMELDUNGEN.map(function(a){
+        var pfandCell = a.pfandBezahlt
+          ? '<span class="yes">' + esc(a.pfandBetrag) + ' (' + esc(a.pfandArt) + ')</span>'
+          : '<span class="pfand-open">Offen</span>';
+        return '<tr>'
+          + '<td>' + esc(a.datum) + '</td>'
+          + '<td class="name">' + esc(a.name) + '</td>'
+          + '<td>' + esc(a.personen) + '</td>'
+          + '<td>' + esc(a.kinder) + '</td>'
+          + '<td>' + (a.vegetarisch ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
+          + '<td>' + (a.salat ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
+          + '<td>' + (a.kuchen ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
+          + '<td>' + pfandCell + '</td>'
+          + '<td>' + esc(a.anmerkung || '–') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    var personenGesamt = ANMELDUNGEN.reduce(function(sum, a){ return sum + (parseInt(a.personen, 10) || 0); }, 0);
+    document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
+    document.getElementById('statPersonen').textContent = personenGesamt;
+    document.getElementById('statSalat').textContent = ANMELDUNGEN.filter(function(a){ return a.salat; }).length;
+    document.getElementById('statKuchen').textContent = ANMELDUNGEN.filter(function(a){ return a.kuchen; }).length;
+    document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + LAST_UPDATED;
+  }
 })();
 </script>
 

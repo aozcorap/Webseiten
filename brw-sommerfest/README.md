@@ -30,21 +30,23 @@ Live auf GitHub Pages: https://aozcorap.github.io/Webseiten/brw-sommerfest/
   ist NICHT identisch mit der Trainingshalle (Maria-Montessori-Weg 2,
   Friedberg).
 
-## Admin-Übersicht (`admin.html`)
+## Admin-Übersicht
 
-Passwortgeschützte Übersichtsseite ("Vorstand-Login" im Footer der
-Anmeldeseite verlinkt) mit Liste aller Anmeldungen (Name, Personen,
-Kinder, Vegetarisch, Salat/Kuchen, Anmerkung) plus Kennzahlen (Anzahl
-Anmeldungen, Personen gesamt, wie viele Salat/Kuchen mitbringen).
+Passwortgeschütztes Overlay direkt auf der Hauptseite (`index.html`),
+erreichbar über den Link "Vorstand-Login" im Footer – kein separater
+Seitenaufruf mehr. Zeigt eine Liste aller Anmeldungen (Name, Personen,
+Kinder, Vegetarisch, Salat/Kuchen, Pfand-Status, Anmerkung) plus
+Kennzahlen (Anzahl Anmeldungen, Personen gesamt, wie viele Salat/Kuchen
+mitbringen).
 
 - Zugang: Benutzername `vorstand`, Passwort `brw-vorstand`.
 - **Wichtig:** Reiner clientseitiger Zugangsschutz (Passwort steht im
   Seitenquelltext) – kein Hochsicherheits-Login, aber ausreichend für ein
-  internes Vereins-Tool ohne Zahlungsdaten dahinter. Nicht für sensible
-  Daten geeignet.
+  internes Vereins-Tool ohne sensible Zahlungsdaten dahinter.
 - Die Anmeldungsliste ist ein statisches JavaScript-Array im Seitencode
-  (`ANMELDUNGEN` in `admin.html`), da die Seite rein statisch ist (kein
-  Server, keine Datenbank). Es gibt keine automatische Live-Anbindung an
-  eingehende E-Mails – Claude aktualisiert die Liste bei Bedarf aus den
-  eingegangenen "Sommerfest-Anmeldung"-E-Mails und deployt die Seite neu.
-  Bei Bedarf einfach nachfragen ("Adminliste aktualisieren").
+  (`ANMELDUNGEN` in `index.html`), da die Seite rein statisch ist (kein
+  Server, keine Datenbank). Pfand-Status (bar oder PayPal bezahlt, Betrag)
+  wird pro Anmeldung mitgeführt. Es gibt keine automatische Live-Anbindung
+  an eingehende E-Mails – Claude aktualisiert die Liste bei Bedarf und
+  deployt die Seite neu. Bei Bedarf einfach nachfragen ("Adminliste
+  aktualisieren").
