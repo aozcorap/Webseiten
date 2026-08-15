@@ -145,7 +145,6 @@
             <tr>
               <th>Datum</th>
               <th>Name</th>
-              <th>E-Mail</th>
               <th>Personen</th>
               <th>Kinder</th>
               <th>Vegetarisch</th>
@@ -235,7 +234,6 @@
         return '<tr>'
           + '<td>' + esc(a.datum) + '</td>'
           + '<td class="name">' + esc(a.name) + '</td>'
-          + '<td>' + esc(a.email) + '</td>'
           + '<td>' + esc(a.personen) + '</td>'
           + '<td>' + esc(a.kinder) + '</td>'
           + '<td>' + (a.vegetarisch ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'

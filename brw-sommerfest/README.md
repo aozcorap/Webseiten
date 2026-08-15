@@ -11,10 +11,10 @@ Live auf GitHub Pages: https://aozcorap.github.io/Webseiten/brw-sommerfest/
 
 ## Anmeldeseite (`index.html`)
 
-- Formularfelder: Name des Mitglieds, E-Mail, Teilnahme-Checkbox, Anzahl
-  Personen (inkl. Mitglied), Kinder unter 12, vegetarische Verpflegung
-  (+ Anzahl), Mitgebrachtes (Salat/Kuchen, Mehrfachauswahl möglich),
-  optionale Anmerkung.
+- Formularfelder: Name des Mitglieds, Teilnahme-Checkbox, Anzahl Personen
+  (inkl. Mitglied), Kinder unter 12, vegetarische Verpflegung (+ Anzahl),
+  Mitgebrachtes (Salat/Kuchen, Mehrfachauswahl möglich), optionale
+  Anmerkung. Kein E-Mail-Feld (bewusst entfernt).
 - Kostenbeitrag: 5,00 € Pfand pro angemeldeter Person, wird live berechnet
   und über einen echten PayPal-Zahlungslink (PayPal Website Payments
   Standard, `business=ahmet@ozcorapci.de`) beglichen – öffnet die von
@@ -33,7 +33,7 @@ Live auf GitHub Pages: https://aozcorap.github.io/Webseiten/brw-sommerfest/
 ## Admin-Übersicht (`admin.html`)
 
 Passwortgeschützte Übersichtsseite ("Vorstand-Login" im Footer der
-Anmeldeseite verlinkt) mit Liste aller Anmeldungen (Name, E-Mail, Personen,
+Anmeldeseite verlinkt) mit Liste aller Anmeldungen (Name, Personen,
 Kinder, Vegetarisch, Salat/Kuchen, Anmerkung) plus Kennzahlen (Anzahl
 Anmeldungen, Personen gesamt, wie viele Salat/Kuchen mitbringen).
 
