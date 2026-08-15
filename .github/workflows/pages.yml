@@ -30,6 +30,8 @@ jobs:
           cp -r buerokollege-ai/. _site/buerokollege-ai/
           mkdir -p _site/aralia-ballroom.de
           cp -r aralia-ballroom.de/. _site/aralia-ballroom.de/
+          mkdir -p _site/brw-vereinsshop
+          cp -r brw-vereinsshop/. _site/brw-vereinsshop/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
