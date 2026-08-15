@@ -32,6 +32,8 @@ jobs:
           cp -r aralia-ballroom.de/. _site/aralia-ballroom.de/
           mkdir -p _site/brw-sommerfest
           cp -r brw-sommerfest/. _site/brw-sommerfest/
+          mkdir -p _site/brw-vereinsshop
+          cp -r brw-vereinsshop/. _site/brw-vereinsshop/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
