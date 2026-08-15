@@ -33,7 +33,7 @@ Live auf GitHub Pages: https://aozcorap.github.io/Webseiten/brw-sommerfest/
 ## Admin-Übersicht
 
 Passwortgeschütztes Overlay direkt auf der Hauptseite (`index.html`),
-erreichbar über den Link "Vorstand-Login" im Footer – kein separater
+erreichbar über den Link "Admin" im Footer – kein separater
 Seitenaufruf mehr. Zeigt eine Liste aller Anmeldungen (Name, Personen,
 Kinder, Vegetarisch, Salat/Kuchen, Pfand-Status, Anmerkung) plus
 Kennzahlen (Anzahl Anmeldungen, Personen gesamt, wie viele Salat/Kuchen
