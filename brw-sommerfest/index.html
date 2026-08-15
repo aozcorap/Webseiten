@@ -555,8 +555,14 @@
   personenInput.addEventListener('input', updatePfand);
   updatePfand();
 
+  var submitting = false;
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    if (submitting) return;
+    submitting = true;
+    paypalBtn.disabled = true;
+
     var name = document.getElementById('name').value.trim();
     var personen = personenInput.value;
     var kinder = document.getElementById('kinder').value;
@@ -589,9 +595,13 @@
         status.innerHTML = 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
       } else {
         status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
+        submitting = false;
+        paypalBtn.disabled = false;
       }
     }).catch(function(){
       status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
+      submitting = false;
+      paypalBtn.disabled = false;
     });
   });
 })();
