@@ -7,8 +7,9 @@ echte Zahlungsanbindung.
 
 ## Konzept
 
-- **Zugang**: Login übers Mitgliederverzeichnis (Magic-Link statt Passwort),
-  kein offenes Angebot im Internet.
+- **Zugang**: Kein Login/Account — Link wird intern im Verein geteilt, Katalog
+  ist direkt aufrufbar. Name wird nur beim Bezahlen für die Bestellzuordnung
+  abgefragt.
 - **Bestellung**: Katalog mit Größenauswahl (XS–XXL), Sammelbestell-Fenster
   statt laufender Einzelbestellungen.
 - **Bezahlung**: PayPal Checkout, Bestellung wird erst nach Zahlungseingang
