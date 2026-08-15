@@ -296,6 +296,22 @@ body{
 .text-input.invalid{border-color:var(--danger);}
 .modal-btn{width:100%;padding:12px;margin-top:4px;}
 
+/* ---- admin login ---- */
+#adminLogin{display:flex;justify-content:center;padding:64px 0;}
+.login-card{
+  width:min(360px,100%);background:var(--surface);border:1px solid var(--line);
+  padding:32px 28px;text-align:center;
+}
+.login-badge{
+  width:48px;height:48px;border-radius:50%;margin:0 auto 14px;
+  background:var(--brand-dark);overflow:hidden;
+}
+.login-card .brand-name{font-size:16px;margin-bottom:4px;}
+.login-card .brand-sub{margin-bottom:18px;}
+.login-copy{font-size:13px;color:var(--ink-soft);text-align:left;margin:0 0 16px;}
+.login-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-faint);text-align:left;margin:0 0 5px;}
+.login-error{font-size:12.5px;color:var(--danger);text-align:left;margin:-6px 0 12px;}
+
 /* ---- topnav extras ---- */
 .topnav a{padding-bottom:2px;border-bottom:2px solid transparent;}
 .topnav a.active{color:var(--ink);border-bottom-color:var(--accent);}
@@ -343,7 +359,6 @@ body{
     </div>
     <div class="topnav">
       <a href="#" id="navShop" class="active">Shop</a>
-      <a href="#">Meine Bestellungen</a>
       <div class="cart-pill" id="cartToggle">
         Warenkorb <span class="cart-count" id="cartCount">0</span>
       </div>
@@ -368,6 +383,23 @@ body{
     </div>
 
     <div class="grid" id="productGrid"></div>
+  </div>
+
+  <div id="adminLogin" style="display:none;">
+    <div class="login-card">
+      <div class="login-badge"><img src="" alt="" id="adminLoginLogo" style="width:100%;height:100%;object-fit:contain;padding:6px;"></div>
+      <div class="brand-name">Admin-Bereich</div>
+      <div class="brand-sub">Nur für die Zeugwart:in</div>
+      <p class="login-copy">Zugang mit Benutzername und Passwort.</p>
+      <form id="adminLoginForm">
+        <label class="login-label" for="adminUser">Benutzername</label>
+        <input class="text-input" id="adminUser" type="text" autocomplete="username" style="margin-bottom:14px;">
+        <label class="login-label" for="adminPass">Passwort</label>
+        <input class="text-input" id="adminPass" type="password" autocomplete="current-password" style="margin-bottom:14px;">
+        <div class="login-error" id="adminLoginError" style="display:none;">Benutzername oder Passwort falsch.</div>
+        <button type="submit" class="btn-add modal-btn">Anmelden</button>
+      </form>
+    </div>
   </div>
 
   <div id="adminPanel" style="display:none;">
@@ -746,32 +778,47 @@ function exportOrdersCsv(){
 }
 function showShopView(){
   document.getElementById("shopCatalog").style.display = "";
+  document.getElementById("adminLogin").style.display = "none";
   document.getElementById("adminPanel").style.display = "none";
   document.getElementById("navShop").classList.add("active");
 }
+function showAdminLoginForm(){
+  document.getElementById("shopCatalog").style.display = "none";
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("adminLogin").style.display = "flex";
+  document.getElementById("navShop").classList.remove("active");
+  document.getElementById("adminLoginError").style.display = "none";
+  document.getElementById("adminPass").value = "";
+  document.getElementById("adminUser").focus();
+}
 function showAdminView(){
   document.getElementById("shopCatalog").style.display = "none";
+  document.getElementById("adminLogin").style.display = "none";
   document.getElementById("adminPanel").style.display = "";
   document.getElementById("navShop").classList.remove("active");
   renderAdminTable();
 }
 
-const ADMIN_PASSCODE = "brw2026";
+const ADMIN_USER = "Ahmet";
+const ADMIN_PASS = "Karayazgan1!";
 let adminUnlocked = false;
 function checkAdminAccess(){
   if(location.hash !== "#admin"){
-    if(adminUnlocked){ adminUnlocked = false; showShopView(); }
+    adminUnlocked = false;
+    showShopView();
     return;
   }
   if(adminUnlocked){ showAdminView(); return; }
-  const code = prompt("Zugangscode für den Admin-Bereich:");
-  if(code === ADMIN_PASSCODE){
+  showAdminLoginForm();
+}
+function tryAdminLogin(username, password){
+  if(username === ADMIN_USER && password === ADMIN_PASS){
     adminUnlocked = true;
     showAdminView();
   } else {
-    if(code !== null) alert("Falscher Zugangscode.");
-    history.replaceState(null, "", location.pathname + location.search);
-    showShopView();
+    document.getElementById("adminLoginError").style.display = "block";
+    document.getElementById("adminPass").value = "";
+    document.getElementById("adminPass").focus();
   }
 }
 
@@ -803,11 +850,17 @@ document.getElementById("navShop").addEventListener("click", e => {
 window.addEventListener("hashchange", checkAdminAccess);
 document.getElementById("exportCsv").addEventListener("click", exportOrdersCsv);
 
+document.getElementById("adminLoginForm").addEventListener("submit", e => {
+  e.preventDefault();
+  tryAdminLogin(document.getElementById("adminUser").value.trim(), document.getElementById("adminPass").value);
+});
+
 document.getElementById("checkoutName").addEventListener("input", () => {
   document.getElementById("checkoutName").classList.remove("invalid");
 });
 
 document.getElementById("brandLogo").src = CLUB_CREST;
+document.getElementById("adminLoginLogo").src = CLUB_CREST;
 
 renderGrid();
 wireCards();
