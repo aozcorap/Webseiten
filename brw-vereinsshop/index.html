@@ -510,14 +510,10 @@ const KID_SIZES = ["116","128","140","152","164","176"];
 const fmt = n => n.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
 
 const cart = [];
-let orderSeq = 1042;
+let orderSeq = 1000;
 let lastOrder = null;
 
-const ORDERS = [
-  {id:"BRW-1039", date:"12.08.2026", member:"Jana Weidmann", items:[{name:"Entrada 22 Trikot Schwarz-Weiß", size:"M", price:22.95}]},
-  {id:"BRW-1040", date:"13.08.2026", member:"Tobias Krämer", items:[{name:"Entrada 22 Hoody", size:"L", price:44.95},{name:"Entrada 22 Trainingshose", size:"L", price:32.95}]},
-  {id:"BRW-1041", date:"14.08.2026", member:"Nils Bergmann", items:[{name:"Entrada 22 TK Trainingsjacke", size:"XL", price:36.95}]},
-];
+const ORDERS = [];
 
 function artFrameHTML(p){
   const crestHTML = p.crest ? `<img class="crest" src="${CLUB_CREST}" alt="BRW Vereinslogo" style="--cx:${p.crest.x}%;--cy:${p.crest.y}%;--cw:${CLUB_CREST_SIZE}%;--ch:${(CLUB_CREST_SIZE*600/720).toFixed(2)}%;">` : "";
