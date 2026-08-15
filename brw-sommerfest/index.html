@@ -500,15 +500,30 @@
   var paypalBtnLabel = document.getElementById('paypalBtnLabel');
   var PAYPAL_EMAIL = 'ahmet@ozcorapci.de';
 
-  function buildPaypalUrl(name, n){
-    var itemName = 'Sommerfest-Pfand – ' + name + ' (' + n + ' Person' + (n === 1 ? '' : 'en') + ')';
+  // Kodiert alle Formulardaten kompakt in der Zahlungsbeschreibung (PayPal item_name,
+  // max. ~127 Zeichen), damit die Zahlungs-Bestätigungsmail allein zur automatischen
+  // Auswertung der Anmeldung reicht (das mailto-Formular kommt bei vielen Absendern
+  // nicht zuverlässig an, die PayPal-Zahlung dagegen schon).
+  function buildPaypalItemName(data){
+    var note = (data.anmerkung || '').replace(/[|]/g, ' ').slice(0, 30);
+    return 'SF26|N=' + data.name
+      + '|P=' + data.personen
+      + '|K=' + data.kinder
+      + '|V=' + (data.vegetarisch ? data.vegPersonen : 0)
+      + '|S=' + (data.salat ? 1 : 0)
+      + '|C=' + (data.kuchen ? 1 : 0)
+      + '|M=' + (note || '-');
+  }
+
+  function buildPaypalUrl(data){
+    var n = data.personen;
     var amount = (n * 5).toFixed(2);
     return 'https://www.paypal.com/cgi-bin/webscr'
       + '?cmd=_xclick'
       + '&business=' + encodeURIComponent(PAYPAL_EMAIL)
       + '&amount=' + amount
       + '&currency_code=EUR'
-      + '&item_name=' + encodeURIComponent(itemName)
+      + '&item_name=' + encodeURIComponent(buildPaypalItemName(data))
       + '&no_shipping=1';
   }
 
@@ -541,7 +556,16 @@
     if (kuchen) mitgebracht.push('Kuchen');
 
     // PayPal-Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
-    window.open(buildPaypalUrl(name || 'Sommerfest-Anmeldung', n), '_blank', 'noopener');
+    window.open(buildPaypalUrl({
+      name: name || 'Sommerfest-Anmeldung',
+      personen: n,
+      kinder: parseInt(kinder, 10) || 0,
+      vegetarisch: vegetarisch,
+      vegPersonen: parseInt(vegPersonen, 10) || 0,
+      salat: salat,
+      kuchen: kuchen,
+      anmerkung: nachricht
+    }), '_blank', 'noopener');
 
     var subject = encodeURIComponent('Sommerfest-Anmeldung: ' + name);
     var body = encodeURIComponent(
@@ -567,10 +591,13 @@
   var USER = 'vorstand';
   var PASS = 'brw-vorstand';
 
-  // Wird von Claude bei jeder Aktualisierung neu befüllt (aus den eingehenden
-  // Anmeldungs-E-Mails bzw. Barzahlungen). Leeres Array = noch keine Anmeldungen erfasst.
+  // Wird von Claude regelmäßig automatisch aus den PayPal-Zahlungsbestätigungen an
+  // ahmet@ozcorapci.de aktualisiert (Item-Beschreibung im Format
+  // "SF26|N=Name|P=Personen|K=Kinder|V=VegPersonen|S=0/1|C=0/1|M=Notiz").
+  // Leeres Array = noch keine Anmeldungen erfasst.
   var ANMELDUNGEN = [
-    { datum: '08.08.2026', name: 'Niko Kotanidis', personen: 4, kinder: 0, vegetarisch: false, salat: false, kuchen: false, anmerkung: '', pfandBezahlt: true, pfandBetrag: '20,00 €', pfandArt: 'Bar' }
+    { datum: '08.08.2026', name: 'Niko Kotanidis', personen: 4, kinder: 0, vegetarisch: false, salat: false, kuchen: false, anmerkung: '', pfandBezahlt: true, pfandBetrag: '20,00 €', pfandArt: 'Bar' },
+    { datum: '15.08.2026', name: 'Dennis Stork', personen: 1, kinder: 0, vegetarisch: false, salat: false, kuchen: false, anmerkung: 'Weitere Angaben unbekannt (Zahlung vor Formular-Update)', pfandBezahlt: true, pfandBetrag: '5,00 €', pfandArt: 'PayPal' }
   ];
   var LAST_UPDATED = '15.08.2026';
 
