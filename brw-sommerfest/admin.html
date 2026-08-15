@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anmeldungen – Sommerfest 2026 | Boxring Wetterau e.V.</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('./assets/fonts/anton-latin-400.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url('./assets/fonts/inter-latin-variable.woff2') format('woff2');}
+
+  :root{
+    --bg:#FBF0DA;
+    --surface:#FFFFFF;
+    --surface-alt:#FFF8EA;
+    --text:#241B10;
+    --text-muted:#6E6152;
+    --text-dim:#9A8D71;
+    --border:rgba(36,27,16,0.12);
+    --border-strong:rgba(36,27,16,0.22);
+    --accent:#E8432A;
+    --accent-hover:#CB3720;
+    --accent2:#F7A823;
+    --accent-soft:rgba(232,67,42,0.09);
+    --accent-soft-border:rgba(232,67,42,0.30);
+    --shadow:0 8px 24px rgba(36,27,16,0.08);
+    --ink:#171008;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(720px 420px at 8% -6%, rgba(247,168,35,0.30), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    min-height:100vh;
+  }
+  a{color:var(--text);}
+  a:hover{color:var(--accent);}
+  h1,h2{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;color:var(--ink);}
+  p{margin:0;color:var(--text-muted);line-height:1.6;}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Login ---------- */
+  #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:clamp(28px,5vw,40px);box-shadow:var(--shadow);width:100%;max-width:360px;}
+  .login-kicker{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
+  .login-card h1{font-size:26px;margin-bottom:22px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:7px;}
+  input[type="text"],input[type="password"]{
+    width:100%;font-family:inherit;font-size:16px;padding:12px 14px;
+    border-radius:10px;border:1px solid var(--border-strong);
+    background:var(--surface-alt);color:var(--text);
+  }
+  input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .btn-primary{
+    display:flex;align-items:center;justify-content:center;width:100%;
+    background:linear-gradient(90deg,var(--accent2),var(--accent) 80%);
+    color:#fff;padding:14px 24px;border-radius:999px;
+    font-weight:700;font-size:15px;border:none;cursor:pointer;margin-top:6px;
+  }
+  .btn-primary:hover{filter:brightness(0.96);}
+  #loginError{margin-top:12px;font-size:13.5px;color:var(--accent-hover);display:none;}
+
+  /* ---------- Dashboard ---------- */
+  #dashboard{display:none;padding:clamp(28px,5vw,48px) 0 60px;}
+  .dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px;}
+  .dash-head h1{font-size:clamp(26px,4vw,36px);}
+  .dash-head p{margin-top:6px;font-size:14px;}
+  .btn-outline{
+    display:inline-flex;align-items:center;gap:6px;background:var(--surface);color:var(--text);
+    padding:10px 18px;border-radius:999px;font-weight:700;font-size:13.5px;
+    border:1px solid var(--border-strong);cursor:pointer;text-decoration:none;white-space:nowrap;
+  }
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px;}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);}
+  .stat .k{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .stat .v{font-family:'Anton',sans-serif;font-size:28px;color:var(--ink);}
+
+  .table-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;}
+  .table-scroll{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;min-width:820px;}
+  th,td{text-align:left;padding:13px 16px;font-size:13.5px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  th{background:var(--surface-alt);color:var(--text-dim);text-transform:uppercase;font-size:11px;letter-spacing:0.8px;font-weight:700;}
+  tr:last-child td{border-bottom:none;}
+  td.name{font-weight:700;color:var(--ink);}
+  .yes{color:var(--accent-hover);font-weight:700;}
+  .no{color:var(--text-dim);}
+
+  .empty{padding:56px 24px;text-align:center;}
+  .empty .big{font-size:40px;margin-bottom:10px;}
+  .empty p{max-width:380px;margin:8px auto 0;font-size:14px;}
+
+  .updated-note{font-size:12px;color:var(--text-dim);margin-top:14px;}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-kicker">Boxring Wetterau e.V.</div>
+    <h1>Anmeldungen<br>Sommerfest 2026</h1>
+    <form id="loginForm">
+      <div class="field">
+        <label for="user">Benutzername</label>
+        <input type="text" id="user" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="pass">Passwort</label>
+        <input type="password" id="pass" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-primary">Anmelden</button>
+      <div id="loginError">Benutzername oder Passwort falsch.</div>
+    </form>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="wrap">
+    <div class="dash-head">
+      <div>
+        <h1>Anmeldungen Sommerfest 2026</h1>
+        <p>Übersicht aller eingegangenen Anmeldungen aus dem Teilnahmeformular.</p>
+      </div>
+      <button class="btn-outline" id="logoutBtn">Abmelden</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Anmeldungen</div><div class="v" id="statAnmeldungen">0</div></div>
+      <div class="stat"><div class="k">Personen gesamt</div><div class="v" id="statPersonen">0</div></div>
+      <div class="stat"><div class="k">Bringt Salat</div><div class="v" id="statSalat">0</div></div>
+      <div class="stat"><div class="k">Bringt Kuchen</div><div class="v" id="statKuchen">0</div></div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-scroll">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Name</th>
+              <th>Personen</th>
+              <th>Kinder</th>
+              <th>Vegetarisch</th>
+              <th>Salat</th>
+              <th>Kuchen</th>
+              <th>Anmerkung</th>
+            </tr>
+          </thead>
+          <tbody id="dataBody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="emptyState">
+        <div class="big">📋</div>
+        <div style="font-weight:700;color:var(--ink);">Noch keine Anmeldungen</div>
+        <p>Sobald sich Mitglieder über das Formular anmelden, erscheinen sie hier.</p>
+      </div>
+    </div>
+    <div class="updated-note" id="updatedNote"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Einfacher Zugangsschutz für ein internes Vereins-Tool, kein sensibler Zahlungsverkehr
+  // dahinter. Bewusst clientseitig gehalten, da die Seite rein statisch (GitHub Pages) läuft.
+  var USER = 'vorstand';
+  var PASS = 'brw-vorstand';
+
+  // Wird von Claude bei jeder Aktualisierung neu befüllt (aus den eingehenden
+  // Anmeldungs-E-Mails). Leeres Array = noch keine Anmeldungen erfasst.
+  var ANMELDUNGEN = [];
+  var LAST_UPDATED = '15.08.2026, 11:40 Uhr';
+
+  var loginScreen = document.getElementById('loginScreen');
+  var dashboard = document.getElementById('dashboard');
+  var loginForm = document.getElementById('loginForm');
+  var loginError = document.getElementById('loginError');
+
+  function showDashboard(){
+    loginScreen.style.display = 'none';
+    dashboard.style.display = 'block';
+    render();
+  }
+
+  if (sessionStorage.getItem('brwVorstandAuth') === '1') {
+    showDashboard();
+  }
+
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var u = document.getElementById('user').value.trim();
+    var p = document.getElementById('pass').value;
+    if (u === USER && p === PASS) {
+      sessionStorage.setItem('brwVorstandAuth', '1');
+      loginError.style.display = 'none';
+      showDashboard();
+    } else {
+      loginError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    sessionStorage.removeItem('brwVorstandAuth');
+    dashboard.style.display = 'none';
+    loginScreen.style.display = 'flex';
+    loginForm.reset();
+  });
+
+  function esc(s){
+    var d = document.createElement('div');
+    d.textContent = s == null ? '' : s;
+    return d.innerHTML;
+  }
+
+  function render(){
+    var body = document.getElementById('dataBody');
+    var table = document.getElementById('dataTable');
+    var empty = document.getElementById('emptyState');
+
+    if (!ANMELDUNGEN.length) {
+      table.style.display = 'none';
+      empty.style.display = 'block';
+    } else {
+      table.style.display = '';
+      empty.style.display = 'none';
+      body.innerHTML = ANMELDUNGEN.map(function(a){
+        return '<tr>'
+          + '<td>' + esc(a.datum) + '</td>'
+          + '<td class="name">' + esc(a.name) + '</td>'
+          + '<td>' + esc(a.personen) + '</td>'
+          + '<td>' + esc(a.kinder) + '</td>'
+          + '<td>' + (a.vegetarisch ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
+          + '<td>' + (a.salat ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
+          + '<td>' + (a.kuchen ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
+          + '<td>' + esc(a.anmerkung || '–') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    var personenGesamt = ANMELDUNGEN.reduce(function(sum, a){ return sum + (parseInt(a.personen, 10) || 0); }, 0);
+    document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
+    document.getElementById('statPersonen').textContent = personenGesamt;
+    document.getElementById('statSalat').textContent = ANMELDUNGEN.filter(function(a){ return a.salat; }).length;
+    document.getElementById('statKuchen').textContent = ANMELDUNGEN.filter(function(a){ return a.kuchen; }).length;
+    document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + LAST_UPDATED;
+  }
+})();
+</script>
+
+</body>
+</html>
