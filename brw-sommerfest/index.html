@@ -44,7 +44,8 @@
   ::selection{background:var(--accent);color:#fff;}
   a{color:var(--text);}
   a:hover{color:var(--accent);}
-  h1,h2,h3{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;color:var(--ink);}
+  h1{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;color:var(--ink);}
+  h2,h3{font-family:'Inter',sans-serif;font-weight:700;margin:0;color:var(--ink);}
   p{margin:0;color:var(--text-muted);line-height:1.65;}
 
   .wrap{max-width:920px;margin:0 auto;padding:0 20px;position:relative;}
@@ -138,6 +139,7 @@
     display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
     background:#111110;color:#fff;padding:14px 24px;border-radius:999px;
     font-weight:700;font-size:15px;text-decoration:none;margin-top:16px;
+    border:none;cursor:pointer;font-family:inherit;
   }
   .btn-paypal:hover{background:#2b2925;color:#fff;}
   .btn-paypal:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
@@ -310,6 +312,7 @@
     <!-- Left: form -->
     <div>
       <div class="card">
+        <form id="sommerfestForm">
         <h2>Persönliche Angaben</h2>
         <div class="field">
           <label for="name">Name des Mitglieds</label>
@@ -362,16 +365,13 @@
           <div class="k">Pfand (wird bei Teilnahme zurückerstattet)</div>
           <div class="pfand-amount" id="pfandAmount">5,00 €</div>
           <p>Pro angemeldeter Person werden <strong>5,00 €</strong> als verbindliche Teilnahmebestätigung fällig – zahlbar per PayPal. Der Betrag wird bei tatsächlicher Teilnahme am Sommerfest vollständig zurückerstattet; eine Rückerstattung erfolgt ausschließlich bei persönlicher Teilnahme am Veranstaltungstag.</p>
-          <a id="paypalBtn" class="btn-paypal" href="#" target="_blank" rel="noopener noreferrer">
+          <button type="submit" id="paypalBtn" class="btn-paypal">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M7.4 20.6H4.7a.6.6 0 0 1-.6-.7l2.3-14.6a.9.9 0 0 1 .9-.7h5.9c2.8 0 4.7 1.5 4.4 4.1-.4 3.4-2.8 5-6 5H9.4l-1 6.9zM17.9 9c-.3 2.3-2 3.4-4.4 3.4h-1.7l.8-5.3h1.9c1.6 0 2.7.6 3.4 1.9z"></path></svg>
-            <span id="paypalBtnLabel">Pfand mit PayPal bezahlen (5,00 €)</span>
-          </a>
+            <span id="paypalBtnLabel">Anmelden und Pfand mit PayPal bezahlen (5,00 €)</span>
+          </button>
           <div class="paypal-note">Öffnet die sichere PayPal-Bezahlseite an <code>ahmet@ozcorapci.de</code> in einem neuen Tab. Verwendungszweck wird automatisch mit deinem Namen befüllt.</div>
-        </div>
-
-        <form id="sommerfestForm">
-          <button type="submit" class="btn-primary">Anmeldung senden</button>
           <div id="status" role="status"></div>
+        </div>
         </form>
       </div>
     </div>
@@ -481,33 +481,31 @@
   var form = document.getElementById('sommerfestForm');
   var status = document.getElementById('status');
   var personenInput = document.getElementById('personen');
-  var nameInput = document.getElementById('name');
   var pfandAmount = document.getElementById('pfandAmount');
   var paypalBtn = document.getElementById('paypalBtn');
   var paypalBtnLabel = document.getElementById('paypalBtnLabel');
   var PAYPAL_EMAIL = 'ahmet@ozcorapci.de';
 
-  function updatePfand(){
-    var n = parseInt(personenInput.value, 10);
-    if (!n || n < 1) n = 1;
-    var total = (n * 5).toFixed(2).replace('.', ',');
-    pfandAmount.textContent = total + ' €';
-    paypalBtnLabel.textContent = 'Pfand mit PayPal bezahlen (' + total + ' €)';
-
-    var name = nameInput.value.trim() || 'Sommerfest-Anmeldung';
+  function buildPaypalUrl(name, n){
     var itemName = 'Sommerfest-Pfand – ' + name + ' (' + n + ' Person' + (n === 1 ? '' : 'en') + ')';
     var amount = (n * 5).toFixed(2);
-    var url = 'https://www.paypal.com/cgi-bin/webscr'
+    return 'https://www.paypal.com/cgi-bin/webscr'
       + '?cmd=_xclick'
       + '&business=' + encodeURIComponent(PAYPAL_EMAIL)
       + '&amount=' + amount
       + '&currency_code=EUR'
       + '&item_name=' + encodeURIComponent(itemName)
       + '&no_shipping=1';
-    paypalBtn.setAttribute('href', url);
+  }
+
+  function updatePfand(){
+    var n = parseInt(personenInput.value, 10);
+    if (!n || n < 1) n = 1;
+    var total = (n * 5).toFixed(2).replace('.', ',');
+    pfandAmount.textContent = total + ' €';
+    paypalBtnLabel.textContent = 'Anmelden und Pfand mit PayPal bezahlen (' + total + ' €)';
   }
   personenInput.addEventListener('input', updatePfand);
-  nameInput.addEventListener('input', updatePfand);
   updatePfand();
 
   form.addEventListener('submit', function(e){
@@ -522,10 +520,14 @@
     var kuchen = document.getElementById('kuchen').checked;
     var nachricht = document.getElementById('nachricht').value.trim();
     var pfand = pfandAmount.textContent;
+    var n = parseInt(personen, 10) || 1;
 
     var mitgebracht = [];
     if (salat) mitgebracht.push('Salat');
     if (kuchen) mitgebracht.push('Kuchen');
+
+    // PayPal-Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
+    window.open(buildPaypalUrl(name || 'Sommerfest-Anmeldung', n), '_blank', 'noopener');
 
     var subject = encodeURIComponent('Sommerfest-Anmeldung: ' + name);
     var body = encodeURIComponent(
@@ -539,7 +541,7 @@
       'Anmerkung: ' + (nachricht || '-')
     );
     window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
-    status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit deiner Anmeldung. Bitte danach noch auf „Pfand mit PayPal bezahlen" klicken (' + pfand + '), damit die Anmeldung verbindlich ist.';
+    status.innerHTML = 'Die PayPal-Bezahlseite öffnet sich in einem neuen Tab (' + pfand + '). Dein E-Mail-Programm öffnet sich gleich zusätzlich mit deiner Anmeldung.';
   });
 })();
 </script>
