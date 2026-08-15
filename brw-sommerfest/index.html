@@ -39,6 +39,7 @@
     color:var(--text);
     font-family:'Inter',system-ui,sans-serif;
     overflow-x:hidden;
+    position:relative;
   }
   ::selection{background:var(--accent);color:#fff;}
   a{color:var(--text);}
@@ -46,19 +47,30 @@
   h1,h2,h3{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;color:var(--ink);}
   p{margin:0;color:var(--text-muted);line-height:1.65;}
 
-  .wrap{max-width:920px;margin:0 auto;padding:0 20px;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px;position:relative;}
+
+  /* ---------- Sun decoration ---------- */
+  .sun{position:absolute;top:-60px;left:-60px;width:260px;height:260px;pointer-events:none;z-index:0;opacity:0.9;}
+  .sun .core{fill:url(#sunGrad);}
+  .sun .ray{stroke:var(--accent2);stroke-width:3;stroke-linecap:round;opacity:0.55;}
 
   /* ---------- Hero ---------- */
-  .top{padding:clamp(36px,8vw,72px) 0 clamp(28px,5vw,40px);}
+  .top{padding:clamp(36px,8vw,72px) 0 clamp(28px,5vw,40px);position:relative;z-index:1;}
   .back{display:inline-block;margin-bottom:20px;font-size:14px;font-weight:600;color:var(--text-dim);}
   .back:hover{color:var(--accent);}
   .hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
   .kicker{font-family:'Anton',sans-serif;font-size:clamp(22px,4vw,34px);letter-spacing:0.5px;text-transform:uppercase;color:var(--ink);margin-bottom:2px;}
   h1.title{
-    font-size:clamp(40px,9vw,72px);line-height:0.92;margin:2px 0 10px;
+    font-size:clamp(42px,9.5vw,78px);line-height:0.9;margin:2px 0 14px;
     background:linear-gradient(100deg,var(--accent2),var(--accent) 65%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
     transform:skewY(-1.5deg) skewX(-2deg);transform-origin:left;display:inline-block;
+    filter:drop-shadow(2px 3px 0 rgba(23,16,8,0.08));
+  }
+  .invite-pill{
+    display:inline-flex;align-items:center;background:var(--ink);color:#fff;
+    font-size:12.5px;font-weight:700;letter-spacing:0.6px;padding:9px 18px;
+    border-radius:999px;margin-bottom:16px;box-shadow:var(--shadow);
   }
   .orgname{font-size:19px;font-weight:800;color:var(--ink);}
   .logo-badge{
@@ -77,6 +89,17 @@
   .infobar .k{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;}
   .infobar .v{font-size:15.5px;font-weight:700;color:var(--ink);}
   .infobar .sep{width:1px;align-self:stretch;background:var(--border);min-height:36px;}
+
+  /* ---------- Highlights ---------- */
+  .highlights{
+    margin-top:20px;background:var(--ink);border-radius:18px;padding:22px 24px;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;box-shadow:var(--shadow);
+  }
+  @media (max-width:560px){.highlights{grid-template-columns:1fr;}}
+  .hitem{display:flex;align-items:center;gap:14px;}
+  .hitem .ic{width:42px;height:42px;border-radius:12px;background:rgba(247,168,35,0.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hitem .ic svg{width:22px;height:22px;stroke:var(--accent2);}
+  .hitem span{color:#fff;font-size:14.5px;font-weight:700;line-height:1.3;}
 
   /* ---------- Two-column layout ---------- */
   .cols{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;align-items:start;padding:clamp(28px,5vw,44px) 0 clamp(56px,9vw,88px);}
@@ -132,7 +155,7 @@
   /* ---------- Ribbon + footer ---------- */
   .ribbon{background:var(--ink);border-radius:18px;padding:22px 28px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center;box-shadow:var(--shadow);}
   .ribbon span{font-family:'Anton',sans-serif;color:#fff;font-size:clamp(16px,3vw,20px);text-transform:none;letter-spacing:0.2px;}
-  .ribbon svg{width:24px;height:24px;stroke:var(--accent2);flex-shrink:0;}
+  .ribbon svg{width:24px;height:24px;fill:var(--accent2);stroke:var(--accent2);flex-shrink:0;}
 
   footer{padding:26px 0 44px;text-align:center;}
   footer p{font-size:13px;color:var(--text-dim);}
@@ -140,13 +163,36 @@
 </head>
 <body>
 
-<div class="top">
-  <div class="wrap">
+<div class="wrap">
+  <svg class="sun" viewBox="0 0 260 260" aria-hidden="true">
+    <defs>
+      <radialGradient id="sunGrad" cx="30%" cy="30%" r="70%">
+        <stop offset="0%" stop-color="#FFE9B8"></stop>
+        <stop offset="100%" stop-color="#F7A823"></stop>
+      </radialGradient>
+    </defs>
+    <g transform="translate(60,60)">
+      <circle class="core" r="34"></circle>
+      <g class="ray">
+        <line x1="0" y1="-56" x2="0" y2="-72"></line>
+        <line x1="40" y1="-40" x2="51" y2="-51"></line>
+        <line x1="56" y1="0" x2="72" y2="0"></line>
+        <line x1="40" y1="40" x2="51" y2="51"></line>
+        <line x1="0" y1="56" x2="0" y2="72"></line>
+        <line x1="-40" y1="40" x2="-51" y2="51"></line>
+        <line x1="-56" y1="0" x2="-72" y2="0"></line>
+        <line x1="-40" y1="-40" x2="-51" y2="-51"></line>
+      </g>
+    </g>
+  </svg>
+
+  <div class="top">
     <a class="back" href="../boxring-wetterau.de/index.html">&larr; Zur Vereinsseite</a>
     <div class="hero-row">
       <div>
         <div class="kicker">Teilnahmeformular</div>
         <h1 class="title">Sommerfest 2026</h1>
+        <div class="invite-pill">Alle Mitglieder sind herzlich eingeladen!</div>
         <div class="orgname">Boxring Wetterau e.V.</div>
       </div>
       <div class="logo-badge">
@@ -167,6 +213,25 @@
       <div class="grp">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg></div>
         <div><div class="k">Veranstaltungsort</div><div class="v">Brüder-Grimm-Weg, 61169 Friedberg-Dorheim</div></div>
+      </div>
+    </div>
+
+    <div class="highlights">
+      <div class="hitem">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"></path><circle cx="17" cy="9" r="2.6"></circle><path d="M16 14.2c2.9.5 5 2.6 5 5.3"></path></svg></div>
+        <span>Gemeinsam feiern</span>
+      </div>
+      <div class="hitem">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16l-1.5 7a2 2 0 0 1-2 1.6H7.5a2 2 0 0 1-2-1.6L4 12z"></path><path d="M12 12V8M8.5 12c0-3 1-4 1-6M15.5 12c0-3-1-4-1-6"></path></svg></div>
+        <span>Leckeres Essen &amp; Getränke</span>
+      </div>
+      <div class="hitem">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg></div>
+        <span>Musik &amp; gute Laune</span>
+      </div>
+      <div class="hitem">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a3 3 0 0 1 6 0v1"></path><path d="M13 8a2.5 2.5 0 0 1 5 0v6c0 3.3-2.5 6-6.5 6h-1C7 20 5 18.5 4 16.5L2.7 14a1.6 1.6 0 0 1 2.6-1.8L7 14"></path></svg></div>
+        <span>Spaß &amp; Aktionen für Groß &amp; Klein</span>
       </div>
     </div>
   </div>
