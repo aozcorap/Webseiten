@@ -77,14 +77,14 @@ body{
 }
 .brand{display:flex;align-items:center;gap:12px;}
 .badge{
-  width:38px;height:38px;border-radius:50%;
+  width:56px;height:56px;border-radius:50%;
   background:var(--brand-dark);color:var(--accent-ink);
   display:flex;align-items:center;justify-content:center;
   font-size:14px;font-weight:800;flex-shrink:0;
   overflow:hidden;
 }
 .badge svg{width:20px;height:20px;}
-.badge img{width:100%;height:100%;object-fit:contain;padding:4px;}
+.badge img{width:100%;height:100%;object-fit:contain;padding:2px;}
 .brand-name{font-size:15px;font-weight:700;letter-spacing:0.01em;}
 .brand-sub{font-size:12px;color:var(--ink-faint);}
 .topnav{display:flex;align-items:center;gap:22px;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;row-gap:10px;}
@@ -122,11 +122,6 @@ body{
 .hero p{
   max-width:46ch;color:var(--ink-soft);font-size:14.5px;margin:10px 0 0;
 }
-.hero-meta{
-  text-align:right;font-size:12.5px;color:var(--ink-faint);
-}
-.hero-meta strong{display:block;color:var(--ink);font-size:13px;font-weight:600;}
-
 /* ---- collection label ---- */
 .collection-row{
   display:flex;justify-content:space-between;align-items:baseline;
@@ -285,35 +280,6 @@ body{
 }
 .scrim.open{opacity:1;pointer-events:auto;}
 
-/* ---- concept section ---- */
-.concept{
-  margin-top:64px;padding-top:40px;border-top:1px solid var(--line);
-}
-.concept h2.hdisplay{font-size:22px;margin:0 0 8px;}
-.concept > p{color:var(--ink-soft);font-size:14px;max-width:60ch;margin:0 0 28px;}
-.concept-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--line);border:1px solid var(--line);
-}
-@media (max-width:760px){.concept-grid{grid-template-columns:1fr;}}
-.concept-cell{background:var(--surface);padding:22px 22px 24px;}
-.concept-cell .step{
-  font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.08em;
-  text-transform:uppercase;margin-bottom:8px;
-}
-.concept-cell h3{font-size:15px;margin:0 0 8px;font-weight:700;}
-.concept-cell p{font-size:13px;color:var(--ink-soft);margin:0 0 10px;}
-.concept-cell ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink-soft);}
-.concept-cell li{margin-bottom:5px;}
-
-.stack-row{
-  margin-top:1px;background:var(--surface);border:1px solid var(--line);border-top:none;
-  padding:20px 22px;display:flex;gap:32px;flex-wrap:wrap;
-}
-.stack-item{min-width:150px;}
-.stack-item .label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-faint);margin-bottom:4px;}
-.stack-item .val{font-size:13.5px;font-weight:600;}
-
 @media (prefers-reduced-motion: reduce){
   .cart-panel,.scrim{transition:none;}
 }
@@ -378,7 +344,6 @@ body{
     <div class="topnav">
       <a href="#" id="navShop" class="active">Shop</a>
       <a href="#">Meine Bestellungen</a>
-      <a href="#" id="navAdmin">Admin</a>
       <div class="cart-pill" id="cartToggle">
         Warenkorb <span class="cart-count" id="cartCount">0</span>
       </div>
@@ -393,11 +358,7 @@ body{
       <div>
         <div class="eyebrow">Entrada 22 Kollektion · Schwarz</div>
         <h1 class="hdisplay">Trainingsausstattung<br>für den Verein bestellen</h1>
-        <p>Größe wählen, in den Warenkorb legen, mit PayPal bezahlen. Bestellungen gehen direkt an die Zeugwart:in — Lieferung ins Vereinsheim oder nach Hause.</p>
-      </div>
-      <div class="hero-meta">
-        <strong>9 Artikel</strong>
-        Nächster Sammel­versand: 30.08.2026
+        <p>Größe wählen, in den Warenkorb legen, mit PayPal bezahlen. Bestellungen gehen direkt an die Zeugwart:in — Lieferung ins Vereinsheim.</p>
       </div>
     </div>
 
@@ -482,51 +443,6 @@ body{
   <input type="hidden" name="currency_code" value="EUR">
   <input type="hidden" name="no_shipping" value="1">
 </form>
-
-<div class="wrap">
-  <div class="concept">
-    <h2 class="hdisplay">Wie der Shop dahinter funktioniert</h2>
-    <p>Umsetzung als schlanke Web-App (mobilfähig, kein Appstore nötig). Direkt aufrufen und bestellen, keine Anmeldung nötig.</p>
-
-    <div class="concept-grid">
-      <div class="concept-cell">
-        <div class="step">Zugang</div>
-        <h3>Einfach den Link aufrufen</h3>
-        <p>Kein Account, kein Login. Wer den Link hat (Verein-intern geteilt), sieht direkt den Katalog und kann bestellen — Name wird nur beim Bezahlen für die Bestellzuordnung abgefragt.</p>
-        <ul>
-          <li>Kein Passwort, keine Registrierung</li>
-          <li>Link wird intern im Verein geteilt (z. B. Teamchat, Aushang)</li>
-        </ul>
-      </div>
-      <div class="concept-cell">
-        <div class="step">Bestellung</div>
-        <h3>Katalog, Größe, Warenkorb</h3>
-        <p>Jeder Artikel aus der Entrada-22-Reihe mit Größentabelle, Bestand pro Größe und Sammelbestell-Frist.</p>
-        <ul>
-          <li>Bestellfenster z. B. alle 8 Wochen, statt laufend</li>
-          <li>Live-Stückzahl pro Größe für die Sammelbestellung bei 11teamsports</li>
-        </ul>
-      </div>
-      <div class="concept-cell">
-        <div class="step">Bezahlung</div>
-        <h3>PayPal Checkout</h3>
-        <p>Bezahlung direkt beim Bestellen über PayPal (Vereinskonto als Empfänger), Bestellung wird erst nach Zahlungseingang bestätigt.</p>
-        <ul>
-          <li>PayPal Smart Buttons, keine Kartendaten auf eigenem Server</li>
-          <li>Automatische Bestellbestätigung per E-Mail</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="stack-row">
-      <div class="stack-item"><div class="label">Frontend</div><div class="val">Next.js / React, responsive</div></div>
-      <div class="stack-item"><div class="label">Backend</div><div class="val">Node.js API + Datenbank (Postgres)</div></div>
-      <div class="stack-item"><div class="label">Zahlung</div><div class="val">PayPal Checkout SDK</div></div>
-      <div class="stack-item"><div class="label">Admin</div><div class="val">Bestellliste + CSV-Export für Zeugwart:in</div></div>
-      <div class="stack-item"><div class="label">Hosting</div><div class="val">Vercel/Netlify (gering, oft kostenlos)</div></div>
-    </div>
-  </div>
-</div>
 
 <script>
 const IMAGES = {
@@ -832,14 +748,31 @@ function showShopView(){
   document.getElementById("shopCatalog").style.display = "";
   document.getElementById("adminPanel").style.display = "none";
   document.getElementById("navShop").classList.add("active");
-  document.getElementById("navAdmin").classList.remove("active");
 }
 function showAdminView(){
   document.getElementById("shopCatalog").style.display = "none";
   document.getElementById("adminPanel").style.display = "";
   document.getElementById("navShop").classList.remove("active");
-  document.getElementById("navAdmin").classList.add("active");
   renderAdminTable();
+}
+
+const ADMIN_PASSCODE = "brw2026";
+let adminUnlocked = false;
+function checkAdminAccess(){
+  if(location.hash !== "#admin"){
+    if(adminUnlocked){ adminUnlocked = false; showShopView(); }
+    return;
+  }
+  if(adminUnlocked){ showAdminView(); return; }
+  const code = prompt("Zugangscode für den Admin-Bereich:");
+  if(code === ADMIN_PASSCODE){
+    adminUnlocked = true;
+    showAdminView();
+  } else {
+    if(code !== null) alert("Falscher Zugangscode.");
+    history.replaceState(null, "", location.pathname + location.search);
+    showShopView();
+  }
 }
 
 document.getElementById("cartToggle").addEventListener("click", openCart);
@@ -862,8 +795,12 @@ document.getElementById("checkoutConfirm").addEventListener("click", e => {
   if(e.target.id === "checkoutConfirm") closeCheckoutConfirm();
 });
 
-document.getElementById("navShop").addEventListener("click", e => { e.preventDefault(); showShopView(); });
-document.getElementById("navAdmin").addEventListener("click", e => { e.preventDefault(); showAdminView(); });
+document.getElementById("navShop").addEventListener("click", e => {
+  e.preventDefault();
+  if(location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
+  showShopView();
+});
+window.addEventListener("hashchange", checkAdminAccess);
 document.getElementById("exportCsv").addEventListener("click", exportOrdersCsv);
 
 document.getElementById("checkoutName").addEventListener("input", () => {
@@ -875,4 +812,5 @@ document.getElementById("brandLogo").src = CLUB_CREST;
 renderGrid();
 wireCards();
 renderCart();
+checkAdminAccess();
 </script>
