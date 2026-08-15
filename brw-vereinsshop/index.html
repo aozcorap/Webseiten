@@ -359,6 +359,7 @@ body{
     </div>
     <div class="topnav">
       <a href="#" id="navShop" class="active">Shop</a>
+      <a href="#admin" id="navAdmin">Admin</a>
       <div class="cart-pill" id="cartToggle">
         Warenkorb <span class="cart-count" id="cartCount">0</span>
       </div>
@@ -781,12 +782,14 @@ function showShopView(){
   document.getElementById("adminLogin").style.display = "none";
   document.getElementById("adminPanel").style.display = "none";
   document.getElementById("navShop").classList.add("active");
+  document.getElementById("navAdmin").classList.remove("active");
 }
 function showAdminLoginForm(){
   document.getElementById("shopCatalog").style.display = "none";
   document.getElementById("adminPanel").style.display = "none";
   document.getElementById("adminLogin").style.display = "flex";
   document.getElementById("navShop").classList.remove("active");
+  document.getElementById("navAdmin").classList.add("active");
   document.getElementById("adminLoginError").style.display = "none";
   document.getElementById("adminPass").value = "";
   document.getElementById("adminUser").focus();
@@ -796,6 +799,7 @@ function showAdminView(){
   document.getElementById("adminLogin").style.display = "none";
   document.getElementById("adminPanel").style.display = "";
   document.getElementById("navShop").classList.remove("active");
+  document.getElementById("navAdmin").classList.add("active");
   renderAdminTable();
 }
 
