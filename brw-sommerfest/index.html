@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sommerfest 2026 – Anmeldung | Boxring Wetterau 1983 e.V.</title>
+<meta name="description" content="Meld dich jetzt zum Sommerfest des Boxring Wetterau 1983 e.V. an – Datum, Ort und Anmeldeformular für Mitglieder, Familie und Freunde.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.boxring-wetterau.de/">
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('../boxring-wetterau.de/assets/fonts/anton-latin-400.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url('../boxring-wetterau.de/assets/fonts/inter-latin-variable.woff2') format('woff2');}
+  *{box-sizing:border-box;}
+  body{margin:0;background:#111110;color:#f2ede8;font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;}
+  a{color:#f2ede8;}
+  a:hover{color:#e8394f;}
+  ::selection{background:#e8394f;color:#111110;}
+  h1,h2{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;}
+  input,select,textarea{font-family:inherit;font-size:16px;width:100%;padding:14px 16px;border-radius:10px;border:1px solid rgba(242,237,232,0.15);background:#1c1b19;color:#f2ede8;}
+  input:focus,select:focus,textarea:focus{outline:2px solid #e8394f;outline-offset:1px;}
+  label{display:block;font-size:14px;font-weight:600;color:#c4bdb5;margin-bottom:8px;}
+  fieldset{border:none;padding:0;margin:0;}
+  .field{margin-bottom:20px;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:#e8394f;color:#fff;padding:16px 32px;border-radius:999px;font-weight:700;font-size:16px;border:none;cursor:pointer;width:100%;}
+  .btn:hover{background:#c92e42;}
+  .card{background:#191817;border:1px solid rgba(242,237,232,0.06);border-radius:20px;padding:32px;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
+  .badge{display:inline-block;background:rgba(232,57,79,0.12);border:1px solid rgba(232,57,79,0.35);color:#e8394f;font-size:13px;font-weight:700;letter-spacing:1.5px;padding:8px 16px;border-radius:999px;margin-bottom:24px;}
+  section{padding:clamp(48px,8vw,90px) 0;}
+  h1{font-size:clamp(32px,6vw,56px);line-height:1.05;margin-bottom:20px;}
+  p{font-size:17px;line-height:1.6;color:#c4bdb5;}
+  .infogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:32px;}
+  .infoitem{background:#1c1b19;border:1px solid rgba(242,237,232,0.06);border-radius:14px;padding:18px;}
+  .infoitem .label{font-size:12px;color:#8f887f;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .infoitem .value{font-size:16px;font-weight:700;}
+  #status{margin-top:16px;font-size:14px;line-height:1.6;}
+  footer{padding:32px 0;border-top:1px solid rgba(242,237,232,0.08);text-align:center;font-size:14px;color:#8f887f;}
+</style>
+</head>
+<body>
+
+<section style="padding-top:clamp(48px,10vw,100px);">
+  <div class="wrap">
+    <a href="../boxring-wetterau.de/index.html" style="display:inline-block;margin-bottom:32px;font-size:14px;font-weight:600;color:#8f887f;">&larr; Zur Vereinsseite</a>
+    <div class="badge">BOXRING WETTERAU 1983 E.V.</div>
+    <h1>Sommerfest 2026</h1>
+    <p>Wir feiern gemeinsam mit Mitgliedern, Familie und Freunden – mit Grillen, Musik und einer kleinen Trainings-Show. Meld dich unten verbindlich an, damit wir gut planen können.</p>
+
+    <div class="infogrid">
+      <div class="infoitem"><div class="label">Datum</div><div class="value">Samstag, 12. September 2026</div></div>
+      <div class="infoitem"><div class="label">Uhrzeit</div><div class="value">ab 15:00 Uhr</div></div>
+      <div class="infoitem"><div class="label">Ort</div><div class="value">Maria-Montessori-Weg 2, Friedberg</div></div>
+      <div class="infoitem"><div class="label">Anmeldeschluss</div><div class="value">5. September 2026</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="card">
+      <h2 style="font-size:26px;margin-bottom:24px;">Jetzt anmelden</h2>
+      <form id="sommerfestForm">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="personen">Anzahl Personen (inkl. dir)</label>
+          <input type="number" id="personen" name="personen" min="1" value="1" required>
+        </div>
+        <div class="field">
+          <label for="kinder">Davon Kinder</label>
+          <input type="number" id="kinder" name="kinder" min="0" value="0">
+        </div>
+        <div class="field">
+          <label for="essen">Essenswunsch</label>
+          <select id="essen" name="essen">
+            <option value="Alles">Alles</option>
+            <option value="Vegetarisch">Vegetarisch</option>
+            <option value="Vegan">Vegan</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="nachricht">Anmerkung (optional)</label>
+          <textarea id="nachricht" name="nachricht" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn">Anmeldung senden</button>
+        <div id="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Boxring Wetterau 1983 e.V. · Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a></div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('sommerfestForm');
+  var status = document.getElementById('status');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var personen = document.getElementById('personen').value;
+    var kinder = document.getElementById('kinder').value;
+    var essen = document.getElementById('essen').value;
+    var nachricht = document.getElementById('nachricht').value.trim();
+
+    var subject = encodeURIComponent('Sommerfest-Anmeldung: ' + name);
+    var body = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'E-Mail: ' + email + '\n' +
+      'Anzahl Personen: ' + personen + '\n' +
+      'Davon Kinder: ' + kinder + '\n' +
+      'Essenswunsch: ' + essen + '\n' +
+      'Anmerkung: ' + (nachricht || '-')
+    );
+    window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
+    status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit deiner Anmeldung. Falls nicht, schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
+  });
+})();
+</script>
+
+</body>
+</html>

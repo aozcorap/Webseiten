@@ -17,6 +17,12 @@ Vereins-Website Boxring Wetterau 1983 e.V., dunkles Rot/Schwarz-Farbschema.
 - **`erfolge.html`** — Unterseite mit allen Erfolgen vollständig, chronologisch (neuester zuerst)
 - Offene Punkte, Deploy-Workflow und Hintergrundinfos: siehe [OFFENE-PUNKTE-boxring-wetterau.md](OFFENE-PUNKTE-boxring-wetterau.md)
 
+### [brw-sommerfest](brw-sommerfest/index.html)
+Anmeldeseite für das Sommerfest des Boxring Wetterau 1983 e.V., im Farb-/Font-Schema der Vereinsseite.
+
+- Formular sendet noch nicht an einen echten Endpunkt (mailto-Fallback)
+- Details: siehe [brw-sommerfest/README.md](brw-sommerfest/README.md)
+
 ### [aralia-ballroom.de](aralia-ballroom.de/index.html)
 Interaktiver Redesign-Entwurf für die reale Website des Aralia Ballroom (Florstadt) — Pitch-Grundlage für ein Kundengespräch, kein Produktivsystem.
 
