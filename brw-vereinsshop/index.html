@@ -278,6 +278,7 @@ body{
 }
 .btn-paypal:hover{filter:brightness(0.96);}
 .cart-note{font-size:11px;color:var(--ink-faint);text-align:center;margin-top:10px;}
+.admin-hint{text-align:left;max-width:60ch;margin:0 0 18px;font-size:12.5px;}
 .scrim{
   position:fixed;inset:0;background:rgba(0,0,0,0.35);
   opacity:0;pointer-events:none;transition:opacity 0.25s ease;z-index:30;
@@ -413,6 +414,7 @@ body{
       <h2>Bestellliste — Zeugwart:in</h2>
       <span id="adminOrderCount">0 Bestellungen</span>
     </div>
+    <p class="cart-note admin-hint">Diese Übersicht zeigt nur Bestellungen aus der aktuellen Browser-Sitzung (Demo). Die verbindliche Übersicht — inkl. Zahlungsstatus — ist die PayPal-Aktivität von ahmet@ozcorapci.de: jede Zahlung enthält Artikel, Größe und die Bestellnummer/den Namen in der Notiz.</p>
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
@@ -464,7 +466,7 @@ body{
     <p class="confirm-sub">Bestellnummer <strong id="confirmOrderId"></strong></p>
     <div class="confirm-items" id="confirmItems"></div>
     <div class="confirm-total-row"><span>Gesamt</span><span id="confirmTotal"></span></div>
-    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung bei PayPal abgeschlossen ist.</p>
+    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung bei PayPal abgeschlossen ist. Du erhältst dafür automatisch eine Zahlungsbestätigung von PayPal per E-Mail.</p>
     <button type="button" class="btn-paypal" id="confirmPayNow">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="#003087"><path d="M7 3h7.2c3 0 5.1 1.7 4.6 4.8-.5 3.6-3 5.4-6.4 5.4H9.8l-1 6H5l3-16zm3.1 8.3h1.7c1.7 0 2.9-.8 3.2-2.6.3-1.9-.7-2.6-2.4-2.6h-1.6l-.9 5.2z"/></svg>
       Jetzt bei PayPal bezahlen
@@ -764,7 +766,7 @@ function payWithPaypal(){
   lastOrder.items.forEach((item, idx) => {
     const n = idx + 1;
     const fields = {
-      [`item_name_${n}`]: item.name,
+      [`item_name_${n}`]: `${item.name} – Größe ${item.size}`,
       [`item_number_${n}`]: item.size,
       [`amount_${n}`]: item.price.toFixed(2),
       [`quantity_${n}`]: 1,
@@ -781,7 +783,7 @@ function payWithPaypal(){
   const custom = document.createElement("input");
   custom.type = "hidden";
   custom.name = "custom";
-  custom.value = `${lastOrder.id} — ${lastOrder.member}`;
+  custom.value = `Bestellnummer ${lastOrder.id} — Besteller:in: ${lastOrder.member}`;
   custom.dataset.line = "1";
   form.appendChild(custom);
   form.submit();
