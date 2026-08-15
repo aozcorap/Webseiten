@@ -110,7 +110,7 @@
 
   .field{margin-bottom:18px;}
   .field label{display:block;font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:8px;letter-spacing:0.2px;}
-  input[type="text"],input[type="email"],input[type="number"],textarea{
+  input[type="text"],input[type="email"],input[type="number"],input[type="password"],textarea{
     width:100%;font-family:inherit;font-size:16px;padding:13px 15px;
     border-radius:10px;border:1px solid var(--border-strong);
     background:var(--surface-alt);color:var(--text);
@@ -184,11 +184,14 @@
     display:none;position:fixed;inset:0;z-index:100;background:rgba(23,16,8,0.55);
     padding:24px;overflow-y:auto;
   }
-  #adminOverlay.open{display:flex;align-items:flex-start;justify-content:center;}
+  #adminOverlay.open{display:flex;justify-content:center;}
+  #adminOverlay.state-login{align-items:center;}
+  #adminOverlay.state-dashboard{align-items:flex-start;}
   .admin-panel{
     background:var(--surface);border-radius:20px;box-shadow:0 20px 60px rgba(23,16,8,0.35);
     width:100%;max-width:980px;margin:auto;padding:clamp(24px,4vw,36px);position:relative;
   }
+  #adminOverlay.state-login .admin-panel{max-width:380px;}
   .admin-close{
     position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
     border:1px solid var(--border-strong);background:var(--surface-alt);color:var(--text);
@@ -196,9 +199,15 @@
   }
   .admin-close:hover{border-color:var(--accent);color:var(--accent);}
 
-  .login-card{max-width:340px;margin:0 auto;}
+  .login-card{max-width:280px;margin:0 auto;text-align:center;}
+  .login-icon{
+    width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+  }
+  .login-icon svg{width:24px;height:24px;stroke:#fff;}
   .login-kicker{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
-  .login-card h2{font-size:24px;margin-bottom:22px;}
+  .login-card h2{font-size:22px;margin-bottom:24px;}
+  .login-card .field{text-align:left;}
   #loginError{margin-top:12px;font-size:13.5px;color:var(--accent-hover);display:none;}
 
   .dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;padding-right:36px;}
@@ -403,7 +412,7 @@
   </div>
 
   <footer>
-    <p>Boxring Wetterau 1983 e.V. · Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a> · <button type="button" class="linklike" id="openAdmin">Vorstand-Login</button></p>
+    <p>Boxring Wetterau 1983 e.V. · Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a> · <button type="button" class="linklike" id="openAdmin">Admin</button></p>
   </footer>
 </div>
 
@@ -413,8 +422,11 @@
 
     <div id="loginScreen">
       <div class="login-card">
+        <div class="login-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        </div>
         <div class="login-kicker">Boxring Wetterau e.V.</div>
-        <h2>Anmeldungen<br>Sommerfest 2026</h2>
+        <h2>Admin-Login</h2>
         <form id="loginForm">
           <div class="field">
             <label for="user">Benutzername</label>
@@ -568,11 +580,18 @@
   var loginForm = document.getElementById('loginForm');
   var loginError = document.getElementById('loginError');
 
+  function setOverlayState(state){
+    overlay.classList.remove('state-login', 'state-dashboard');
+    overlay.classList.add('state-' + state);
+  }
+
   function openOverlay(){
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
     if (sessionStorage.getItem('brwVorstandAuth') === '1') {
       showDashboard();
+    } else {
+      setOverlayState('login');
     }
   }
   function closeOverlay(){
@@ -588,6 +607,7 @@
   function showDashboard(){
     loginScreen.style.display = 'none';
     dashboard.style.display = 'block';
+    setOverlayState('dashboard');
     render();
   }
 
@@ -609,6 +629,7 @@
     dashboard.style.display = 'none';
     loginScreen.style.display = 'block';
     loginForm.reset();
+    setOverlayState('login');
   });
 
   function esc(s){
