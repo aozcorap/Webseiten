@@ -454,6 +454,8 @@
       <div class="admin-stats">
         <div class="stat"><div class="k">Anmeldungen</div><div class="v" id="statAnmeldungen">0</div></div>
         <div class="stat"><div class="k">Personen gesamt</div><div class="v" id="statPersonen">0</div></div>
+        <div class="stat"><div class="k">Erwachsene (Ü12)</div><div class="v" id="statErwachsene">0</div></div>
+        <div class="stat"><div class="k">Kinder (U12)</div><div class="v" id="statKinder">0</div></div>
         <div class="stat"><div class="k">Bringt Salat</div><div class="v" id="statSalat">0</div></div>
         <div class="stat"><div class="k">Bringt Kuchen</div><div class="v" id="statKuchen">0</div></div>
       </div>
@@ -668,8 +670,12 @@
     }
 
     var personenGesamt = ANMELDUNGEN.reduce(function(sum, a){ return sum + (parseInt(a.personen, 10) || 0); }, 0);
+    var kinderGesamt = ANMELDUNGEN.reduce(function(sum, a){ return sum + (parseInt(a.kinder, 10) || 0); }, 0);
+    var erwachseneGesamt = personenGesamt - kinderGesamt;
     document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
     document.getElementById('statPersonen').textContent = personenGesamt;
+    document.getElementById('statErwachsene').textContent = erwachseneGesamt;
+    document.getElementById('statKinder').textContent = kinderGesamt;
     document.getElementById('statSalat').textContent = ANMELDUNGEN.filter(function(a){ return a.salat; }).length;
     document.getElementById('statKuchen').textContent = ANMELDUNGEN.filter(function(a){ return a.kuchen; }).length;
     document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + LAST_UPDATED;
