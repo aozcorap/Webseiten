@@ -1,18 +1,27 @@
-# Sommerfest 2026 – Anmeldung
+# Sommerfest 2026 – Teilnahmeformular
 
 Eigenständige, responsive Anmeldeseite (`index.html`) für das Vereins-Sommerfest
-des Boxring Wetterau 1983 e.V. (05.09.2026, ab 16 Uhr), im Farb-/Font-Schema
-der Vereinsseite ([boxring-wetterau.de](../boxring-wetterau.de)) – Inhalte
-orientiert am offiziellen Flyer.
+des Boxring Wetterau e.V. (Samstag, 05.09.2026, ab 16 Uhr, Brüder-Grimm-Weg,
+61169 Friedberg-Dorheim). Inhalte, Adresse und Formularfelder 1:1 vom
+offiziellen gedruckten Teilnahmeformular übernommen; Farben/Layout an den
+Sommerfest-Flyer angelehnt (warmes Creme, Orange-Rot-Verlauf) statt am
+dunklen Farbschema der Vereinsseite – wirkt einladender für ein Sommerfest.
 
 - Reines HTML/CSS/JS, kein Backend.
-- Formular fragt Name, E-Mail, Anzahl Personen und Mitbringsel (Salat/Kuchen/Nichts) ab.
-- Pfand: 5 € pro angemeldeter Person, wird live berechnet und angezeigt.
-  Zahlung im Voraus per PayPal (E-Mail-Adresse, „Freunde & Familie“ zur
-  Gebührenvermeidung) – **kein echtes Zahlungs-Backend**, es wird nur die
-  PayPal-Adresse zum manuellen Überweisen angezeigt.
-- Formular öffnet beim Absenden zusätzlich das E-Mail-Programm (`mailto:`)
-  mit den eingegebenen Daten als Nachricht – es gibt keinen echten
+- Formularfelder wie auf dem Papierformular: Name des Mitglieds, E-Mail,
+  Teilnahme-Checkbox, Anzahl Personen (inkl. Mitglied), Kinder unter 12,
+  vegetarische Verpflegung (+ Anzahl), Mitgebrachtes (Salat/Kuchen,
+  Mehrfachauswahl möglich), optionale Anmerkung.
+- Kostenbeitrag: 5,00 € pro Vereinsmitglied, **in bar beim Vereinsvorstand**
+  zu entrichten (Wortlaut 1:1 vom Papierformular) – wird bei tatsächlicher
+  Teilnahme zurückerstattet. Keine Online-Zahlung eingebaut, da das
+  Originalformular Barzahlung vorsieht.
+- Wegbeschreibung-Sektion (Adresse, Anfahrt Auto/ÖPNV, Google-Maps-Embed)
+  vom Papierformular übernommen.
+- Formular öffnet beim Absenden das E-Mail-Programm (`mailto:`) mit den
+  eingegebenen Daten als Nachricht – es gibt keinen echten
   Formular-Endpunkt, die Anmeldung geht per E-Mail an ahmet@ozcorapci.de.
-- TODO: Sobald ein echter PayPal.me-Link oder Vereinskonto existiert, den
-  Hinweistext/Link in `index.html` (Bereich `.pfandbox`) austauschen.
+- Wichtig: Veranstaltungsort Sommerfest (Brüder-Grimm-Weg, Friedberg-Dorheim)
+  ist NICHT identisch mit der Trainingshalle (Maria-Montessori-Weg 2,
+  Friedberg) – im Footer bewusst beide Adressen genannt, um Verwechslung
+  zu vermeiden.

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sommerfest 2026 – Anmeldung | Boxring Wetterau 1983 e.V.</title>
-<meta name="description" content="Meld dich jetzt verbindlich zum Vereins-Sommerfest des Boxring Wetterau 1983 e.V. an – 05.09.2026 ab 16 Uhr. Anmeldung, Pfand-Info und Mitbringsel-Auswahl.">
+<title>Sommerfest 2026 – Teilnahmeformular | Boxring Wetterau e.V.</title>
+<meta name="description" content="Meld dich jetzt verbindlich zum Vereins-Sommerfest des Boxring Wetterau e.V. an – 05.09.2026 ab 16 Uhr, Brüder-Grimm-Weg, Friedberg-Dorheim.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://www.boxring-wetterau.de/">
 <style>
@@ -26,6 +26,7 @@
     --accent-soft:rgba(232,67,42,0.09);
     --accent-soft-border:rgba(232,67,42,0.30);
     --shadow:0 8px 24px rgba(36,27,16,0.08);
+    --ink:#171008;
   }
 
   *{box-sizing:border-box;}
@@ -42,161 +43,272 @@
   ::selection{background:var(--accent);color:#fff;}
   a{color:var(--text);}
   a:hover{color:var(--accent);}
-  h1,h2{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;}
-  input,select,textarea{font-family:inherit;font-size:16px;width:100%;padding:14px 16px;border-radius:10px;border:1px solid var(--border-strong);background:var(--surface-alt);color:var(--text);}
-  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
-  label{display:block;font-size:14px;font-weight:600;color:var(--text-muted);margin-bottom:8px;}
-  fieldset{border:none;padding:0;margin:0;}
-  .field{margin-bottom:20px;}
-  .btn{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent2),var(--accent) 80%);color:#fff;padding:16px 32px;border-radius:999px;font-weight:700;font-size:16px;border:none;cursor:pointer;width:100%;box-shadow:0 10px 24px rgba(232,67,42,0.28);}
-  .btn:hover{filter:brightness(0.96);}
-  .btn-outline{display:inline-flex;align-items:center;justify-content:center;background:var(--surface);color:var(--text);padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px;border:1px solid var(--border-strong);cursor:pointer;}
-  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;box-shadow:var(--shadow);}
-  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
-  .badge{display:inline-block;background:var(--surface);border:1px solid var(--border-strong);color:var(--accent);font-size:13px;font-weight:700;letter-spacing:1.5px;padding:8px 16px;border-radius:999px;margin-bottom:24px;box-shadow:var(--shadow);}
-  section{padding:clamp(48px,8vw,90px) 0;}
-  h1{font-size:clamp(32px,6vw,56px);line-height:1.02;margin-bottom:20px;}
-  h1 .grad{background:linear-gradient(90deg,var(--accent2),var(--accent) 70%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-  p{font-size:17px;line-height:1.6;color:var(--text-muted);}
-  .infogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:32px;}
-  .infoitem{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);}
-  .infoitem .label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
-  .infoitem .value{font-size:16px;font-weight:700;color:var(--text);}
-  #status{margin-top:16px;font-size:14px;line-height:1.6;color:var(--text-muted);}
-  footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;font-size:14px;color:var(--text-dim);}
-  .radiogroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;}
-  .radiogroup label{display:flex;align-items:center;gap:10px;background:var(--surface-alt);border:1px solid var(--border-strong);border-radius:10px;padding:14px 16px;font-weight:600;color:var(--text);margin-bottom:0;cursor:pointer;}
-  .radiogroup input{width:auto;accent-color:var(--accent);}
-  .pfandbox{background:var(--accent-soft);border:1px solid var(--accent-soft-border);border-radius:16px;padding:24px;margin:24px 0;}
-  .pfandbox .amount{font-family:'Anton',sans-serif;font-size:36px;margin:8px 0;background:linear-gradient(90deg,var(--accent2),var(--accent) 75%);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;}
-  .paypal-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;}
-  .paypal-row code{font-size:14px;color:var(--text);word-break:break-all;}
-  .logo-badge{width:56px;height:56px;border-radius:50%;background:#1A130B;display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:var(--shadow);}
-  .logo-badge img{width:66%;height:66%;display:block;}
+  h1,h2,h3{font-family:'Anton',sans-serif;text-transform:uppercase;margin:0;color:var(--ink);}
+  p{margin:0;color:var(--text-muted);line-height:1.65;}
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Hero ---------- */
+  .top{padding:clamp(36px,8vw,72px) 0 clamp(28px,5vw,40px);}
+  .back{display:inline-block;margin-bottom:20px;font-size:14px;font-weight:600;color:var(--text-dim);}
+  .back:hover{color:var(--accent);}
+  .hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .kicker{font-family:'Anton',sans-serif;font-size:clamp(22px,4vw,34px);letter-spacing:0.5px;text-transform:uppercase;color:var(--ink);margin-bottom:2px;}
+  h1.title{
+    font-size:clamp(40px,9vw,72px);line-height:0.92;margin:2px 0 10px;
+    background:linear-gradient(100deg,var(--accent2),var(--accent) 65%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    transform:skewY(-1.5deg) skewX(-2deg);transform-origin:left;display:inline-block;
+  }
+  .orgname{font-size:19px;font-weight:800;color:var(--ink);}
+  .logo-badge{
+    width:88px;height:88px;border-radius:50%;background:#1A130B;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+  }
+  .logo-badge img{width:68%;height:68%;display:block;}
+
+  .infobar{
+    margin-top:30px;background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    box-shadow:var(--shadow);padding:22px 26px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;
+  }
+  .infobar .grp{display:flex;align-items:center;gap:12px;}
+  .infobar .ic{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .infobar .ic svg{width:20px;height:20px;stroke:var(--accent);}
+  .infobar .k{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px;}
+  .infobar .v{font-size:15.5px;font-weight:700;color:var(--ink);}
+  .infobar .sep{width:1px;align-self:stretch;background:var(--border);min-height:36px;}
+
+  /* ---------- Two-column layout ---------- */
+  .cols{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;align-items:start;padding:clamp(28px,5vw,44px) 0 clamp(56px,9vw,88px);}
+  @media (max-width:800px){.cols{grid-template-columns:1fr;}}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:clamp(24px,4vw,32px);box-shadow:var(--shadow);}
+  .card + .card{margin-top:20px;}
+  .card h2{font-size:20px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:inline-block;}
+
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:8px;letter-spacing:0.2px;}
+  input[type="text"],input[type="email"],input[type="number"],textarea{
+    width:100%;font-family:inherit;font-size:16px;padding:13px 15px;
+    border-radius:10px;border:1px solid var(--border-strong);
+    background:var(--surface-alt);color:var(--text);
+  }
+  input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  textarea{resize:vertical;min-height:70px;}
+
+  .checkline{display:flex;align-items:flex-start;gap:11px;background:var(--surface-alt);border:1px solid var(--border-strong);border-radius:10px;padding:13px 15px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text);}
+  .checkline input{width:19px;height:19px;margin-top:1px;accent-color:var(--accent);flex-shrink:0;}
+  .checkline + .checkline{margin-top:10px;}
+
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:420px){.row2{grid-template-columns:1fr;}}
+
+  .pfand{background:var(--accent-soft);border:1px solid var(--accent-soft-border);border-radius:14px;padding:20px 22px;margin:22px 0;}
+  .pfand .k{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;}
+  .pfand p{font-size:14.5px;color:var(--text);margin-bottom:0;}
+  .pfand p + p{margin-top:8px;}
+  .pfand strong{color:var(--ink);}
+
+  .btn-primary{
+    display:flex;align-items:center;justify-content:center;width:100%;
+    background:linear-gradient(90deg,var(--accent2),var(--accent) 80%);
+    color:#fff;padding:16px 32px;border-radius:999px;
+    font-weight:700;font-size:16px;border:none;cursor:pointer;margin-top:6px;
+    box-shadow:0 10px 24px rgba(232,67,42,0.28);
+  }
+  .btn-primary:hover{filter:brightness(0.96);}
+  .btn-primary:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+
+  #status{margin-top:14px;font-size:13.5px;line-height:1.6;color:var(--text-muted);}
+  #status a{text-decoration:underline;}
+
+  /* ---------- Wegbeschreibung ---------- */
+  .weg dt{font-size:12.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin:14px 0 4px;}
+  .weg dt:first-child{margin-top:0;}
+  .weg dd{margin:0;font-size:14.5px;color:var(--text-muted);line-height:1.6;}
+  .map{margin-top:16px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid var(--border);}
+  .map iframe{width:100%;height:100%;border:0;display:block;}
+
+  /* ---------- Ribbon + footer ---------- */
+  .ribbon{background:var(--ink);border-radius:18px;padding:22px 28px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center;box-shadow:var(--shadow);}
+  .ribbon span{font-family:'Anton',sans-serif;color:#fff;font-size:clamp(16px,3vw,20px);text-transform:none;letter-spacing:0.2px;}
+  .ribbon svg{width:24px;height:24px;stroke:var(--accent2);flex-shrink:0;}
+
+  footer{padding:26px 0 44px;text-align:center;}
+  footer p{font-size:13px;color:var(--text-dim);}
 </style>
 </head>
 <body>
 
-<section style="padding-top:clamp(48px,10vw,100px);">
+<div class="top">
   <div class="wrap">
-    <a href="../boxring-wetterau.de/index.html" style="display:inline-block;margin-bottom:24px;font-size:14px;font-weight:600;color:var(--text-dim);">&larr; Zur Vereinsseite</a>
-    <div class="logo-badge">
-      <img src="../boxring-wetterau.de/assets/logo-white.svg" alt="Boxring Wetterau">
+    <a class="back" href="../boxring-wetterau.de/index.html">&larr; Zur Vereinsseite</a>
+    <div class="hero-row">
+      <div>
+        <div class="kicker">Teilnahmeformular</div>
+        <h1 class="title">Sommerfest 2026</h1>
+        <div class="orgname">Boxring Wetterau e.V.</div>
+      </div>
+      <div class="logo-badge">
+        <img src="../boxring-wetterau.de/assets/logo-white.svg" alt="Boxring Wetterau">
+      </div>
     </div>
-    <div class="badge">EINLADUNG ZUM VEREINS-SOMMERFEST</div>
-    <h1>Sommerfest <span class="grad">2026</span></h1>
-    <p>Alle Mitglieder sind herzlich eingeladen! Gemeinsam feiern, leckeres Essen &amp; Getränke, Musik und Aktionen für Groß &amp; Klein. Meld dich unten verbindlich an, damit wir gut planen können.</p>
 
-    <div class="infogrid">
-      <div class="infoitem"><div class="label">Datum</div><div class="value">Samstag, 05.09.2026</div></div>
-      <div class="infoitem"><div class="label">Uhrzeit</div><div class="value">ab 16:00 Uhr</div></div>
-      <div class="infoitem"><div class="label">Ort</div><div class="value">Maria-Montessori-Weg 2, Friedberg</div></div>
-      <div class="infoitem"><div class="label">Pfand</div><div class="value">5 € / Person</div></div>
+    <div class="infobar">
+      <div class="grp">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"></rect><path d="M3 9h18M8 2v4M16 2v4"></path></svg></div>
+        <div><div class="k">Termin</div><div class="v">Samstag, 05.09.2026</div></div>
+      </div>
+      <div class="grp">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></div>
+        <div><div class="k">Beginn</div><div class="v">16:00 Uhr</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="grp">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg></div>
+        <div><div class="k">Veranstaltungsort</div><div class="v">Brüder-Grimm-Weg, 61169 Friedberg-Dorheim</div></div>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
-<section style="padding-top:0;">
-  <div class="wrap">
-    <div class="card">
-      <h2 style="font-size:26px;margin-bottom:8px;">Jetzt verbindlich anmelden</h2>
-      <p style="margin-bottom:24px;">Pro angemeldeter Person wird ein Pfand von 5 € im Voraus per PayPal erhoben. Das Pfand bekommst du bei Anwesenheit am Sommerfest vollständig zurück.</p>
-      <form id="sommerfestForm">
+<div class="wrap">
+  <div class="cols">
+    <!-- Left: form -->
+    <div>
+      <div class="card">
+        <h2>Persönliche Angaben</h2>
         <div class="field">
-          <label for="name">Name</label>
+          <label for="name">Name des Mitglieds</label>
           <input type="text" id="name" name="name" required autocomplete="name">
         </div>
         <div class="field">
           <label for="email">E-Mail</label>
           <input type="email" id="email" name="email" required autocomplete="email">
         </div>
-        <div class="field">
-          <label for="personen">Anzahl Personen (inkl. dir)</label>
-          <input type="number" id="personen" name="personen" min="1" value="1" required>
-        </div>
-        <div class="field">
-          <label>Ich bringe mit</label>
-          <div class="radiogroup">
-            <label><input type="radio" name="mitbringsel" value="Salat" checked> Salat</label>
-            <label><input type="radio" name="mitbringsel" value="Kuchen"> Kuchen</label>
-            <label><input type="radio" name="mitbringsel" value="Nichts"> Nichts</label>
+
+        <label class="checkline" style="margin-bottom:18px;">
+          <input type="checkbox" id="teilnahme" name="teilnahme" required>
+          Ich nehme am Sommerfest teil.
+        </label>
+
+        <div class="row2">
+          <div class="field">
+            <label for="personen">Personen (inkl. Mitglied)</label>
+            <input type="number" id="personen" name="personen" min="1" value="1" required>
+          </div>
+          <div class="field">
+            <label for="kinder">Davon Kinder unter 12</label>
+            <input type="number" id="kinder" name="kinder" min="0" value="0">
           </div>
         </div>
-        <div class="field">
+
+        <h2 style="margin-top:8px;">Verpflegung</h2>
+        <label class="checkline">
+          <input type="checkbox" id="vegetarisch" name="vegetarisch">
+          Vegetarische Verpflegung gewünscht
+        </label>
+        <div class="field" style="margin-top:12px;">
+          <label for="vegPersonen">Falls ja, für wie viele Person(en)?</label>
+          <input type="number" id="vegPersonen" name="vegPersonen" min="0" value="0">
+        </div>
+
+        <h2>Mitgebrachtes</h2>
+        <label class="checkline">
+          <input type="checkbox" id="salat" name="salat">
+          Ich bringe einen Salat mit.
+        </label>
+        <label class="checkline">
+          <input type="checkbox" id="kuchen" name="kuchen">
+          Ich bringe einen Kuchen mit.
+        </label>
+
+        <div class="field" style="margin-top:18px;">
           <label for="nachricht">Anmerkung (optional)</label>
           <textarea id="nachricht" name="nachricht" rows="3"></textarea>
         </div>
 
-        <div class="pfandbox">
-          <div class="label" style="font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;">Pfand im Voraus (5 € × Personen)</div>
-          <div class="amount" id="pfandAmount">5 €</div>
-          <div style="font-size:14px;color:var(--text-muted);">Bitte per PayPal senden – wähle „Geld an Freunde &amp; Familie senden“, damit keine Gebühren anfallen.</div>
-          <div class="paypal-row">
-            <code id="paypalEmail">ahmet@ozcorapci.de</code>
-            <button type="button" class="btn-outline" id="copyPaypal">E-Mail kopieren</button>
-          </div>
-          <div style="font-size:13px;color:var(--text-dim);margin-top:10px;">Verwendungszweck bitte: Name + „Sommerfest“.</div>
+        <h2>Teilnahmebedingungen</h2>
+        <div class="pfand">
+          <div class="k">Kostenbeitrag</div>
+          <p>Mit Abgabe dieser Anmeldung ist ein einmaliger Kostenbeitrag in Höhe von <strong>5,00 € pro Vereinsmitglied</strong> in bar beim Vereinsvorstand zu entrichten.</p>
+          <p>Der Betrag dient ausschließlich als verbindliche Teilnahmebestätigung und wird bei der tatsächlichen Teilnahme am Sommerfest vollständig zurückerstattet.</p>
+          <p>Eine Rückerstattung erfolgt ausschließlich bei persönlicher Teilnahme am Veranstaltungstag.</p>
         </div>
 
-        <button type="submit" class="btn">Anmeldung senden</button>
-        <div id="status"></div>
-      </form>
+        <form id="sommerfestForm">
+          <button type="submit" class="btn-primary">Anmeldung senden</button>
+          <div id="status" role="status"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right: Wegbeschreibung -->
+    <div>
+      <div class="card">
+        <h2>Wegbeschreibung</h2>
+        <dl class="weg">
+          <dt>Adresse</dt>
+          <dd>Brüder-Grimm-Weg, 61169 Friedberg-Dorheim</dd>
+
+          <dt>Anfahrt mit dem Auto</dt>
+          <dd>Über die Wetterauer Straße (B275) in Richtung Friedberg-Dorheim fahren. Im Ortsgebiet Dorheim der Beschilderung „Brüder-Grimm-Weg“ folgen. Parkmöglichkeiten befinden sich in der Nähe des Veranstaltungsortes.</dd>
+
+          <dt>Anfahrt mit öffentlichen Verkehrsmitteln</dt>
+          <dd>Mit der Buslinie FB-50 bis zur Haltestelle „Dorheim Mitte“. Von dort sind es ca. 5 Minuten Fußweg zum Veranstaltungsort.</dd>
+        </dl>
+        <div class="map">
+          <iframe src="https://www.google.com/maps?q=Br%C3%BCder-Grimm-Weg,+61169+Friedberg-Dorheim&output=embed" title="Anfahrt Sommerfest, Brüder-Grimm-Weg, Friedberg-Dorheim" loading="lazy"></iframe>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="wrap">Boxring Wetterau 1983 e.V. · Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a></div>
-</footer>
+  <div class="ribbon">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path></svg>
+    <span>Wir freuen uns auf ein tolles Fest mit euch!</span>
+  </div>
+
+  <footer>
+    <p>Boxring Wetterau 1983 e.V. · Trainingshalle: Maria-Montessori-Weg 2, 61169 Friedberg · <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a></p>
+  </footer>
+</div>
 
 <script>
 (function(){
   var form = document.getElementById('sommerfestForm');
   var status = document.getElementById('status');
-  var personenInput = document.getElementById('personen');
-  var pfandAmount = document.getElementById('pfandAmount');
-  var copyBtn = document.getElementById('copyPaypal');
-  var paypalEmail = document.getElementById('paypalEmail');
-
-  function updatePfand(){
-    var n = parseInt(personenInput.value, 10);
-    if (!n || n < 1) n = 1;
-    pfandAmount.textContent = (n * 5) + ' €';
-  }
-  personenInput.addEventListener('input', updatePfand);
-  updatePfand();
-
-  copyBtn.addEventListener('click', function(){
-    var text = paypalEmail.textContent;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(function(){
-        copyBtn.textContent = 'Kopiert!';
-        setTimeout(function(){ copyBtn.textContent = 'E-Mail kopieren'; }, 2000);
-      });
-    }
-  });
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('name').value.trim();
     var email = document.getElementById('email').value.trim();
-    var personen = personenInput.value;
-    var mitbringsel = form.querySelector('input[name="mitbringsel"]:checked').value;
+    var teilnahme = document.getElementById('teilnahme').checked;
+    var personen = document.getElementById('personen').value;
+    var kinder = document.getElementById('kinder').value;
+    var vegetarisch = document.getElementById('vegetarisch').checked;
+    var vegPersonen = document.getElementById('vegPersonen').value;
+    var salat = document.getElementById('salat').checked;
+    var kuchen = document.getElementById('kuchen').checked;
     var nachricht = document.getElementById('nachricht').value.trim();
-    var pfand = pfandAmount.textContent;
+
+    var mitgebracht = [];
+    if (salat) mitgebracht.push('Salat');
+    if (kuchen) mitgebracht.push('Kuchen');
 
     var subject = encodeURIComponent('Sommerfest-Anmeldung: ' + name);
     var body = encodeURIComponent(
-      'Name: ' + name + '\n' +
+      'Name des Mitglieds: ' + name + '\n' +
       'E-Mail: ' + email + '\n' +
-      'Anzahl Personen: ' + personen + '\n' +
-      'Pfand (5 € / Person): ' + pfand + '\n' +
-      'Bringt mit: ' + mitbringsel + '\n' +
+      'Teilnahme: ' + (teilnahme ? 'Ja' : 'Nein') + '\n' +
+      'Anzahl Personen (inkl. Mitglied): ' + personen + '\n' +
+      'Davon Kinder unter 12: ' + kinder + '\n' +
+      'Vegetarische Verpflegung gewünscht: ' + (vegetarisch ? 'Ja, für ' + vegPersonen + ' Person(en)' : 'Nein') + '\n' +
+      'Mitgebrachtes: ' + (mitgebracht.length ? mitgebracht.join(', ') : '-') + '\n' +
       'Anmerkung: ' + (nachricht || '-')
     );
     window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
-    status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit deiner Anmeldung. Bitte zusätzlich den Pfandbetrag (' + pfand + ') per PayPal an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a> senden, damit die Anmeldung verbindlich ist.';
+    status.innerHTML = 'Dein E-Mail-Programm öffnet sich gleich mit deiner Anmeldung. Der Kostenbeitrag von 5,00 € wird wie gewohnt in bar beim Vereinsvorstand entrichtet und bei Teilnahme zurückerstattet.';
   });
 })();
 </script>
