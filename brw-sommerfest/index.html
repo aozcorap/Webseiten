@@ -500,10 +500,40 @@
   var paypalBtnLabel = document.getElementById('paypalBtnLabel');
   var PAYPAL_EMAIL = 'ahmet@ozcorapci.de';
 
+  // Supabase-Projekt "brw-sommerfest": öffentliches Formular darf nur einfügen
+  // (Row Level Security, Policy "Anmeldungen: oeffentlich einfuegen"), der
+  // "publishable key" ist absichtlich öffentlich (kein Geheimnis wie ein GitHub-Token
+  // – die eigentliche Absicherung passiert über die Datenbank-Policy, nicht den Key).
+  var SUPABASE_URL = 'https://ifnxmioxixqffrsbghnb.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_-YynMu3ptMQDVBvyQWL9JQ_K3QhmFPm';
+
+  function createAnmeldung(data){
+    return fetch(SUPABASE_URL + '/rest/v1/anmeldungen', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        name: data.name,
+        personen: data.personen,
+        kinder: data.kinder,
+        vegetarisch: data.vegetarisch,
+        veg_personen: data.vegPersonen,
+        salat: data.salat,
+        kuchen: data.kuchen,
+        anmerkung: data.anmerkung || null,
+        pfand_betrag: (data.personen * 5).toFixed(2).replace('.', ',') + ' €',
+        pfand_art: 'PayPal'
+      })
+    });
+  }
+
   // Kodiert alle Formulardaten kompakt in der Zahlungsbeschreibung (PayPal item_name,
-  // max. ~127 Zeichen), damit die Zahlungs-Bestätigungsmail allein zur automatischen
-  // Auswertung der Anmeldung reicht (das mailto-Formular kommt bei vielen Absendern
-  // nicht zuverlässig an, die PayPal-Zahlung dagegen schon).
+  // max. ~127 Zeichen) als lesbare Zweitsicherung, falls die Zahlungs-Bestätigungsmail
+  // mal manuell geprüft werden muss.
   function buildPaypalItemName(data){
     var note = (data.anmerkung || '').replace(/[|]/g, ' ').slice(0, 30);
     return 'SF26|N=' + data.name
@@ -540,7 +570,6 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('name').value.trim();
-    var teilnahme = document.getElementById('teilnahme').checked;
     var personen = personenInput.value;
     var kinder = document.getElementById('kinder').value;
     var vegetarisch = document.getElementById('vegetarisch').checked;
@@ -551,12 +580,7 @@
     var pfand = pfandAmount.textContent;
     var n = parseInt(personen, 10) || 1;
 
-    var mitgebracht = [];
-    if (salat) mitgebracht.push('Salat');
-    if (kuchen) mitgebracht.push('Kuchen');
-
-    // PayPal-Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
-    window.open(buildPaypalUrl({
+    var anmeldungData = {
       name: name || 'Sommerfest-Anmeldung',
       personen: n,
       kinder: parseInt(kinder, 10) || 0,
@@ -565,21 +589,22 @@
       salat: salat,
       kuchen: kuchen,
       anmerkung: nachricht
-    }), '_blank', 'noopener');
+    };
 
-    var subject = encodeURIComponent('Sommerfest-Anmeldung: ' + name);
-    var body = encodeURIComponent(
-      'Name des Mitglieds: ' + name + '\n' +
-      'Teilnahme: ' + (teilnahme ? 'Ja' : 'Nein') + '\n' +
-      'Anzahl Personen (inkl. Mitglied): ' + personen + '\n' +
-      'Davon Kinder unter 12: ' + kinder + '\n' +
-      'Vegetarische Verpflegung gewünscht: ' + (vegetarisch ? 'Ja, für ' + vegPersonen + ' Person(en)' : 'Nein') + '\n' +
-      'Mitgebrachtes: ' + (mitgebracht.length ? mitgebracht.join(', ') : '-') + '\n' +
-      'Pfand (PayPal): ' + pfand + '\n' +
-      'Anmerkung: ' + (nachricht || '-')
-    );
-    window.location.href = 'mailto:ahmet@ozcorapci.de?subject=' + subject + '&body=' + body;
-    status.innerHTML = 'Die PayPal-Bezahlseite öffnet sich in einem neuen Tab (' + pfand + '). Dein E-Mail-Programm öffnet sich gleich zusätzlich mit deiner Anmeldung.';
+    // PayPal-Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
+    window.open(buildPaypalUrl(anmeldungData), '_blank', 'noopener');
+
+    status.innerHTML = 'Die PayPal-Bezahlseite öffnet sich in einem neuen Tab (' + pfand + '). Deine Anmeldung wird gerade eingetragen …';
+
+    createAnmeldung(anmeldungData).then(function(res){
+      if (res.ok) {
+        status.innerHTML = 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+      } else {
+        status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
+      }
+    }).catch(function(){
+      status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
+    });
   });
 })();
 </script>
@@ -591,15 +616,45 @@
   var USER = 'vorstand';
   var PASS = 'brw-vorstand';
 
-  // Wird von Claude regelmäßig automatisch aus den PayPal-Zahlungsbestätigungen an
-  // ahmet@ozcorapci.de aktualisiert (Item-Beschreibung im Format
-  // "SF26|N=Name|P=Personen|K=Kinder|V=VegPersonen|S=0/1|C=0/1|M=Notiz").
-  // Leeres Array = noch keine Anmeldungen erfasst.
-  var ANMELDUNGEN = [
-    { datum: '08.08.2026', name: 'Niko Kotanidis', personen: 4, kinder: 0, vegetarisch: false, salat: false, kuchen: false, anmerkung: '', pfandBezahlt: true, pfandBetrag: '20,00 €', pfandArt: 'Bar' },
-    { datum: '15.08.2026', name: 'Dennis Stork', personen: 1, kinder: 0, vegetarisch: false, salat: false, kuchen: false, anmerkung: 'Weitere Angaben unbekannt (Zahlung vor Formular-Update)', pfandBezahlt: true, pfandBetrag: '5,00 €', pfandArt: 'PayPal' }
-  ];
-  var LAST_UPDATED = '15.08.2026';
+  // Anmeldungen leben in Supabase (Tabelle "anmeldungen"). Das Formular schreibt
+  // automatisch beim Absenden, der Admin-Bereich liest live – kein manuelles Pflegen.
+  var SUPABASE_URL = 'https://ifnxmioxixqffrsbghnb.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_-YynMu3ptMQDVBvyQWL9JQ_K3QhmFPm';
+  var ANMELDUNGEN = [];
+  var lastLoaded = null;
+  var pollTimer = null;
+
+  function loadAnmeldungen(){
+    return fetch(SUPABASE_URL + '/rest/v1/anmeldungen?select=*&order=created_at.asc', {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    })
+      .then(function(res){
+        if (!res.ok) throw new Error('Supabase-Antwort nicht ok');
+        return res.json();
+      })
+      .then(function(rows){
+        ANMELDUNGEN = rows.map(function(r){
+          return {
+            datum: new Date(r.created_at).toLocaleDateString('de-DE'),
+            name: r.name,
+            personen: r.personen,
+            kinder: r.kinder,
+            vegetarisch: r.vegetarisch,
+            salat: r.salat,
+            kuchen: r.kuchen,
+            anmerkung: r.anmerkung,
+            pfandBezahlt: true,
+            pfandBetrag: r.pfand_betrag,
+            pfandArt: r.pfand_art
+          };
+        });
+        lastLoaded = new Date();
+        return ANMELDUNGEN;
+      });
+  }
 
   var overlay = document.getElementById('adminOverlay');
   var openBtn = document.getElementById('openAdmin');
@@ -626,6 +681,7 @@
   function closeOverlay(){
     overlay.classList.remove('open');
     document.body.style.overflow = '';
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
   }
 
   openBtn.addEventListener('click', openOverlay);
@@ -637,7 +693,10 @@
     loginScreen.style.display = 'none';
     dashboard.style.display = 'block';
     setOverlayState('dashboard');
-    render();
+    render(true);
+    if (!pollTimer) {
+      pollTimer = setInterval(function(){ render(false); }, 15000);
+    }
   }
 
   loginForm.addEventListener('submit', function(e){
@@ -667,7 +726,18 @@
     return d.innerHTML;
   }
 
-  function render(){
+  function render(showLoading){
+    var updatedNote = document.getElementById('updatedNote');
+    if (showLoading) updatedNote.textContent = 'Lade Anmeldungen …';
+
+    loadAnmeldungen().then(function(){
+      renderTable();
+    }).catch(function(){
+      updatedNote.textContent = 'Anmeldungen konnten nicht geladen werden. Bitte Seite neu laden.';
+    });
+  }
+
+  function renderTable(){
     var body = document.getElementById('dataBody');
     var table = document.getElementById('dataTable');
     var empty = document.getElementById('emptyState');
@@ -705,7 +775,7 @@
     document.getElementById('statKinder').textContent = kinderGesamt;
     document.getElementById('statSalat').textContent = ANMELDUNGEN.filter(function(a){ return a.salat; }).length;
     document.getElementById('statKuchen').textContent = ANMELDUNGEN.filter(function(a){ return a.kuchen; }).length;
-    document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + LAST_UPDATED;
+    document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
   }
 })();
 </script>
