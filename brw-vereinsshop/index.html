@@ -84,7 +84,6 @@ body{
 .topnav{display:flex;align-items:center;gap:22px;font-size:13px;color:var(--ink-soft);flex-wrap:wrap;row-gap:10px;}
 .topnav a{color:inherit;text-decoration:none;}
 @media (max-width:640px){
-  .member-greeting{width:100%;order:-1;}
   .topnav{gap:14px;}
 }
 .cart-pill{
@@ -304,37 +303,19 @@ body{
   .cart-panel,.scrim{transition:none;}
 }
 
-/* ---- login gate ---- */
-.app-hidden{display:none;}
-.login-screen{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:var(--bg);padding:24px;
-}
-.login-card{
-  width:min(360px,100%);background:var(--surface);border:1px solid var(--line);
-  padding:32px 28px;text-align:center;
-}
-.login-badge{
-  width:44px;height:44px;border-radius:50%;margin:0 auto 14px;
-  background:var(--accent);color:var(--accent-ink);
-  display:flex;align-items:center;justify-content:center;
-}
-.login-badge svg{width:22px;height:22px;}
-.login-card .brand-name{font-size:16px;margin-bottom:4px;}
-.login-card .brand-sub{margin-bottom:20px;}
-.login-copy{font-size:13px;color:var(--ink-soft);text-align:left;margin:0 0 16px;}
-.login-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-faint);text-align:left;margin:0 0 5px;}
-.login-input{
-  width:100%;padding:10px 11px;margin-bottom:14px;font-size:13.5px;
+/* ---- checkout name field ---- */
+.checkout-name{padding:14px 20px 0;}
+.checkout-name label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-faint);margin:0 0 5px;}
+.text-input{
+  width:100%;padding:10px 11px;font-size:13.5px;
   border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);color:var(--ink);
   font-family:inherit;
 }
-.login-input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
-.login-btn{width:100%;padding:12px;margin-top:4px;}
-.login-note{font-size:11px;color:var(--ink-faint);margin-top:14px;}
+.text-input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+.text-input.invalid{border-color:var(--danger);}
+.modal-btn{width:100%;padding:12px;margin-top:4px;}
 
 /* ---- topnav extras ---- */
-.member-greeting{font-size:12.5px;color:var(--ink-faint);}
 .topnav a{padding-bottom:2px;border-bottom:2px solid transparent;}
 .topnav a.active{color:var(--ink);border-bottom-color:var(--accent);}
 
@@ -368,32 +349,6 @@ body{
 }
 </style>
 
-<div class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <div class="login-badge">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5L12 14.8 7.1 17.2l.9-5.5-4-3.9L9.5 7z"/></svg>
-    </div>
-    <div class="brand-name">SV Mustergladbach 04 e.V.</div>
-    <div class="brand-sub">Vereinsausstatter — nur für Mitglieder</div>
-
-    <div id="loginStep1">
-      <p class="login-copy">Anmeldung übers Mitgliederverzeichnis. Name eingeben, Magic-Link per E-Mail erhalten — kein Passwort nötig.</p>
-      <label class="login-label" for="loginName">Name</label>
-      <input class="login-input" id="loginName" type="text" placeholder="Vor- und Nachname" autocomplete="name">
-      <label class="login-label" for="loginEmail">E-Mail (Mitgliederverzeichnis)</label>
-      <input class="login-input" id="loginEmail" type="email" placeholder="du@verein-mail.de" autocomplete="email">
-      <button type="button" class="btn-add login-btn" id="sendMagicLink">Magic-Link senden</button>
-    </div>
-
-    <div id="loginStep2" style="display:none;">
-      <p class="login-copy">Magic-Link gesendet an <strong id="loginSentTo"></strong>. Prüfe dein Postfach.</p>
-      <button type="button" class="btn-add login-btn" id="openMagicLink">Demo: Link in E-Mail öffnen</button>
-      <div class="login-note">Nur zu Demozwecken — im echten Betrieb kommt hier eine echte E-Mail an.</div>
-    </div>
-  </div>
-</div>
-
-<div id="appRoot" class="app-hidden">
 <div class="topbar">
   <div class="topbar-inner">
     <div class="brand">
@@ -406,7 +361,6 @@ body{
       </div>
     </div>
     <div class="topnav">
-      <span class="member-greeting" id="memberGreeting"></span>
       <a href="#" id="navShop" class="active">Shop</a>
       <a href="#">Meine Bestellungen</a>
       <a href="#" id="navAdmin">Admin</a>
@@ -466,6 +420,10 @@ body{
   <div class="cart-items" id="cartItems">
     <div class="cart-empty">Noch keine Artikel ausgewählt.</div>
   </div>
+  <div class="checkout-name">
+    <label for="checkoutName">Name für die Bestellung</label>
+    <input class="text-input" id="checkoutName" type="text" placeholder="Vor- und Nachname" autocomplete="name">
+  </div>
   <div class="cart-foot">
     <div class="cart-total-row"><span>Gesamt</span><span id="cartTotal">0,00 €</span></div>
     <button class="btn-paypal">
@@ -492,24 +450,24 @@ body{
     <p class="confirm-sub">Bestellnummer <strong id="confirmOrderId"></strong></p>
     <div class="confirm-items" id="confirmItems"></div>
     <div class="confirm-total-row"><span>Gesamt</span><span id="confirmTotal"></span></div>
-    <p class="cart-note">Demo — die Bestellung ist erst verbindlich, sobald die PayPal-Zahlung eingegangen ist. Eine Bestätigung geht an deine Mitglieder-E-Mail.</p>
-    <button type="button" class="btn-add login-btn" id="confirmBackToShop">Weiter einkaufen</button>
+    <p class="cart-note">Demo — die Bestellung ist erst verbindlich, sobald die PayPal-Zahlung eingegangen ist.</p>
+    <button type="button" class="btn-add modal-btn" id="confirmBackToShop">Weiter einkaufen</button>
   </div>
 </div>
 
 <div class="wrap">
   <div class="concept">
     <h2 class="hdisplay">Wie der Shop dahinter funktioniert</h2>
-    <p>Umsetzung als schlanke Web-App (mobilfähig, kein Appstore nötig). Mitglieder rufen einen Link auf, keine komplizierte Registrierung.</p>
+    <p>Umsetzung als schlanke Web-App (mobilfähig, kein Appstore nötig). Direkt aufrufen und bestellen, keine Anmeldung nötig.</p>
 
     <div class="concept-grid">
       <div class="concept-cell">
         <div class="step">Zugang</div>
-        <h3>Login übers Mitgliederverzeichnis</h3>
-        <p>Anmeldung per Name + E-Mail oder Mitgliedsnummer, die gegen eine vom Vorstand gepflegte Liste geprüft wird. Kein offenes Internet-Angebot.</p>
+        <h3>Einfach den Link aufrufen</h3>
+        <p>Kein Account, kein Login. Wer den Link hat (Verein-intern geteilt), sieht direkt den Katalog und kann bestellen — Name wird nur beim Bezahlen für die Bestellzuordnung abgefragt.</p>
         <ul>
-          <li>Magic-Link per E-Mail statt Passwort</li>
-          <li>Optional: getrennte Bereiche pro Abteilung/Team</li>
+          <li>Kein Passwort, keine Registrierung</li>
+          <li>Link wird intern im Verein geteilt (z. B. Teamchat, Aushang)</li>
         </ul>
       </div>
       <div class="concept-cell">
@@ -540,8 +498,6 @@ body{
       <div class="stack-item"><div class="label">Hosting</div><div class="val">Vercel/Netlify (gering, oft kostenlos)</div></div>
     </div>
   </div>
-</div>
-
 </div>
 
 <script>
@@ -576,7 +532,6 @@ const SIZES = ["XS","S","M","L","XL","XXL"];
 const fmt = n => n.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
 
 const cart = [];
-let memberName = "";
 let orderSeq = 1042;
 
 const ORDERS = [
@@ -701,17 +656,27 @@ function closeCart(){
 /* ---- checkout confirmation ---- */
 function checkout(){
   if(cart.length === 0) return;
+  const nameInput = document.getElementById("checkoutName");
+  const name = nameInput.value.trim();
+  if(!name){
+    nameInput.classList.add("invalid");
+    nameInput.focus();
+    return;
+  }
+  nameInput.classList.remove("invalid");
+
   orderSeq += 1;
   const today = new Date();
   const pad = n => String(n).padStart(2,"0");
   const order = {
     id: "SVM-" + orderSeq,
     date: `${pad(today.getDate())}.${pad(today.getMonth()+1)}.${today.getFullYear()}`,
-    member: memberName || "Mitglied",
+    member: name,
     items: cart.map(i => ({name:i.name, size:i.size, price:i.price})),
   };
   ORDERS.push(order);
   cart.length = 0;
+  nameInput.value = "";
   renderCart();
   closeCart();
 
@@ -788,22 +753,6 @@ function showAdminView(){
   renderAdminTable();
 }
 
-/* ---- login ---- */
-function sendMagicLink(){
-  const name = document.getElementById("loginName").value.trim();
-  const email = document.getElementById("loginEmail").value.trim();
-  if(!name || !email) return;
-  memberName = name;
-  document.getElementById("loginSentTo").textContent = email;
-  document.getElementById("loginStep1").style.display = "none";
-  document.getElementById("loginStep2").style.display = "";
-}
-function completeLogin(){
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("appRoot").classList.remove("app-hidden");
-  document.getElementById("memberGreeting").textContent = "Angemeldet als " + memberName;
-}
-
 document.getElementById("cartToggle").addEventListener("click", openCart);
 document.getElementById("cartCloseBtn").addEventListener("click", closeCart);
 document.getElementById("scrim").addEventListener("click", closeCart);
@@ -827,8 +776,9 @@ document.getElementById("navShop").addEventListener("click", e => { e.preventDef
 document.getElementById("navAdmin").addEventListener("click", e => { e.preventDefault(); showAdminView(); });
 document.getElementById("exportCsv").addEventListener("click", exportOrdersCsv);
 
-document.getElementById("sendMagicLink").addEventListener("click", sendMagicLink);
-document.getElementById("openMagicLink").addEventListener("click", completeLogin);
+document.getElementById("checkoutName").addEventListener("input", () => {
+  document.getElementById("checkoutName").classList.remove("invalid");
+});
 
 renderGrid();
 wireCards();
