@@ -32,7 +32,14 @@
   .bw-field{margin-bottom:18px;}
   .bw-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .bw-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-  @media screen and (max-width:640px){.bw-row,.bw-row3{grid-template-columns:1fr;}}
+  @media screen and (max-width:640px){
+    .bw-row,.bw-row3{grid-template-columns:1fr;}
+    /* Einzelne Felder in .bw-row3 (z.B. Ort, Straße) setzen ihre Spalte per
+       Inline-Style (grid-column), das schlaegt sonst die obige Umstellung
+       auf eine Spalte und quetscht das Nachbarfeld (z.B. PLZ) in eine
+       schmale automatische Spalte statt es untereinander zu stapeln. */
+    .bw-row3 > .bw-field{grid-column:auto !important;}
+  }
   label{display:block;font-size:13px;font-weight:600;color:#c4bdb5;margin-bottom:6px;}
   label .req{color:#e8394f;}
   input[type="text"],input[type="email"],input[type="tel"],input[type="date"]{
@@ -160,8 +167,9 @@
       </div>
 
       <div class="bw-field" style="margin-bottom:0;">
-        <label for="f-erzieher">Nur bei Minderjährigen: Name des/der Erziehungsberechtigten</label>
-        <input type="text" id="f-erzieher" name="erziehungsberechtigter" placeholder="Nur ausfüllen, wenn das neue Mitglied unter 18 Jahre alt ist">
+        <label for="f-erzieher">Name des/der Erziehungsberechtigten</label>
+        <p style="font-size:13px;color:#8f887f;margin:0 0 8px;">Nur ausfüllen, wenn das neue Mitglied unter 18 Jahre alt ist.</p>
+        <input type="text" id="f-erzieher" name="erziehungsberechtigter" placeholder="Vorname Nachname">
       </div>
     </div>
 
