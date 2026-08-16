@@ -71,7 +71,15 @@
 ## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-16, Ende Session)
 - [ ] `MEMBER_CC_EMAIL`-Go-Live-Schalter in `api/config.php` von der Testphase
       (`Kontakt@`) auf `NOTIFY_EMAIL` (Kassenwart) umstellen, sobald endgültig
-      live geschaltet wird. Einzig verbleibender offener Punkt.
+      live geschaltet wird.
+- [ ] Beim Go-Live: Button/Link "Jetzt Mitglied werden" auf der Startseite
+      (index.html) wieder einbauen, der zu mitglied-werden.html führt. Der
+      Link wurde waehrend der Entwicklung/Testphase bewusst entfernt (siehe
+      Commit "Verlinkung zum Anmeldeformular von der Startseite entfernen"),
+      damit die Seite ohne sichtbaren Einstiegspunkt nicht versehentlich vor
+      dem Go-Live von echten Interessenten gefunden/genutzt wird. Ohne
+      diesen Schritt bleibt das fertige Formular fuer Besucher unauffindbar,
+      selbst wenn Mailversand/Sheet/PDF technisch bereit sind.
 
 **Entschieden/erledigt in dieser Session:**
 - Praxistest durch den Kassenwart erfolgreich durchlaufen (mehrere Runden
