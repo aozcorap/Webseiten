@@ -81,13 +81,26 @@
       inkl. IBAN. Muss auf "Eingeschränkt" umgestellt und nur dem Kassenwart
       (namentlich per Mailadresse, Rolle Bearbeiter) freigegeben werden. Nur der
       Nutzer selbst kann das in den Google-Sheets-Freigabeeinstellungen ändern.
-- [ ] **Zahlungsabwicklung klären (SEPA-Lastschrift vs. PayPal & Co.)**: Aktuell
-      sammelt das Formular nur die SEPA-Mandatsdaten (IBAN) ein, der tatsächliche
-      Einzug (wann, welcher Betrag – Mitgliedsbeitrag + ggf. Aufnahmegebühr)
-      läuft manuell über den Kassenwart, keine automatisierte Zahlungsanbindung.
-      Muss mit dem Kassenwart geklärt werden: Soll der Einzug automatisiert
-      werden (z. B. über einen Zahlungsdienstleister/PayPal), welcher Betrag zu
-      welchem Zeitpunkt? Danach Formular/Backend entsprechend erweitern.
+- [ ] **Zahlungsabwicklung: SEPA-Lastschrift automatisieren (Entscheidung
+      gefallen: SEPA, NICHT PayPal)**: Aktuell sammelt das Formular nur die
+      SEPA-Mandatsdaten (IBAN) ein, der tatsächliche Einzug (wann, welcher
+      Betrag – Mitgliedsbeitrag + ggf. Aufnahmegebühr) läuft manuell über den
+      Kassenwart. PayPal wurde bewusst verworfen: PayPal kann keine echte
+      SEPA-Lastschrift auf eine im Formular eingegebene IBAN ausführen, das
+      würde ein separates PayPal-Konto samt aktiver Zustimmung des Mitglieds
+      erfordern statt eines klassischen SEPA-Mandats.
+      Nächster Schritt (liegt beim Nutzer, nicht bei Claude): Klären mit der
+      Volksbank, ob für das Vereinskonto ein **EBICS-Zugang**
+      (Electronic Banking Internet Communication Standard) eingerichtet werden
+      kann/ist – das ist die Bankschnittstelle, über die sich SEPA-
+      Sammellastschriften automatisiert per Software einreichen lassen, ohne
+      manuellen Upload im Online-Banking. Sobald ein EBICS-Zugang (inkl.
+      technischer Zugangsdaten/Zertifikate der Bank) vorliegt, kann eine
+      Automatisierung (regelmäßiger Lastschrifteinzug zu festen Zeitpunkten,
+      z. B. jährlich zum 01.03.) aufgesetzt werden. Das ist ein größeres,
+      eigenständiges Projekt (Bank-Freigabe, Zertifikatsaustausch,
+      EBICS-Client-Anbindung) – noch nicht spezifiziert, wartet auf
+      Rückmeldung der Bank.
 
 ## Bereits erledigt
 - [x] Senior-Webdesigner/SEO-Review der Live-Seite durchgeführt, 6 Issues
