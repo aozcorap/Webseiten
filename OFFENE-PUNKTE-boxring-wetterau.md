@@ -68,13 +68,23 @@
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
-## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-16)
-- [ ] Praxistest durch den Kassenwart läuft noch (Rückmeldung steht aus).
+## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-16, Ende Session)
 - [ ] `MEMBER_CC_EMAIL`-Go-Live-Schalter in `api/config.php` von der Testphase
-      (`Kontakt@`) auf `NOTIFY_EMAIL` (Kassenwart) umstellen, sobald live
-      geschaltet wird.
+      (`Kontakt@`) auf `NOTIFY_EMAIL` (Kassenwart) umstellen, sobald endgültig
+      live geschaltet wird. Einzig verbleibender offener Punkt.
 
 **Entschieden/erledigt in dieser Session:**
+- Praxistest durch den Kassenwart erfolgreich durchlaufen (mehrere Runden
+  über reale, per Formular generierte PDFs Feedback erhalten und behoben:
+  BIC-Feld raus, Telefon/PLZ mit führender Null in Google Sheet, deutsches
+  Datumsformat, sofortige Feldvalidierung inkl. Geburtsdatum-Plausibilität,
+  korrekte deutsche Zeitzone im PDF).
+- Formularvorlage (PDF) grundlegend überarbeitet: Kassenwart hat eine neue
+  Version mit entfernter Passive-Beitragszeile, neu formatiertem
+  Aufnahmegebühr-Hinweis (fest im Template statt Code-Overlay) und neu
+  gestalteter Kontoinhaber-Tabelle (IBAN als Textzeile "Bankverbindung:"
+  statt Einzelkästchen, kein BIC mehr) geliefert - `PdfFormBuilder.php`
+  komplett neu vermessen und getestet, deployt.
 - SEPA-Lastschrift-Automatisierung (EBICS-Anbindung an die Volksbank) wird
   NICHT umgesetzt – Kassenwart zieht den jährlichen Beitrag weiterhin bewusst
   manuell ein. Punkt komplett gestrichen, keine weitere Aktion nötig.
