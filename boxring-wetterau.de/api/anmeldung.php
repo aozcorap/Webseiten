@@ -215,7 +215,8 @@ try {
         NOTIFY_NAME,
         'Neue Mitgliedsanmeldung: ' . $data['vorname'] . ' ' . $data['name'],
         $internalBodyHtml,
-        $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null
+        $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null,
+        [ADMIN_CC_EMAIL]
     );
 } catch (Throwable $e) {
     error_log('anmeldung.php: interne Benachrichtigungsmail fehlgeschlagen: ' . $e->getMessage());

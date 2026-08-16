@@ -21,6 +21,9 @@ define('SMTP_FROM_NAME', 'Boxring Wetterau 1983 e.V.');
 define('NOTIFY_EMAIL', 'Kassenwart@boxring-wetterau.de');
 define('NOTIFY_NAME', 'Boxring Wetterau – Vereinskasse');
 
+// Zusaetzlicher CC-Empfaenger auf der internen Benachrichtigung (z.B. 1. Vorsitzender).
+define('ADMIN_CC_EMAIL', 'ahmet@ozcorapci.de');
+
 // --- Google Sheets: Speicherung der Anmeldungen ---
 // Pfad zur Service-Account-JSON-Datei. UNBEDINGT ausserhalb des Webroots
 // ablegen (z.B. eine Ebene ueber httpdocs/) oder per .htaccess sperren -

@@ -12,13 +12,15 @@ final class Mailer
 {
     /**
      * @param array{name:string,content:string,filename:string}|null $attachment
+     * @param string[] $cc
      */
     public static function send(
         string $toEmail,
         string $toName,
         string $subject,
         string $bodyHtml,
-        ?array $attachment = null
+        ?array $attachment = null,
+        array $cc = []
     ): void {
         $mail = new PHPMailer(true);
         try {
@@ -33,6 +35,9 @@ final class Mailer
 
             $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
             $mail->addAddress($toEmail, $toName);
+            foreach ($cc as $ccEmail) {
+                $mail->addCC($ccEmail);
+            }
             $mail->addReplyTo(NOTIFY_EMAIL, 'Boxring Wetterau 1983 e.V.');
 
             $mail->isHTML(true);
