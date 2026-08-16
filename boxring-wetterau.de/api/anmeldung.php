@@ -132,7 +132,9 @@ if ($data['unterschrift_datum'] !== null && $data['geburtstag'] !== null) {
     }
 }
 $data['anteiliger_beitrag'] = $anteiligerBeitrag;
-$data['eingereicht_am'] = (new DateTimeImmutable())->format('d.m.Y H:i');
+// Explizite Zeitzone, da der Server standardmaessig in UTC laeuft - ohne das
+// hier steht z.B. 15:31 statt 17:31 im PDF (Sommerzeit CEST = UTC+2).
+$data['eingereicht_am'] = (new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')))->format('d.m.Y H:i');
 
 // Ab hier auf deutsches Anzeigeformat (tt.mm.jjjj) umstellen - das <input
 // type="date">-Feld liefert ISO (jjjj-mm-tt), das brauchte oben noch die

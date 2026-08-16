@@ -140,11 +140,11 @@ final class PdfFormBuilder
         // Lastschrift eingezogen. Optik (grauer Kasten, fett, zentriert)
         // bewusst wie im Original beibehalten, nur der Text ist neu.
         $pdf->SetFillColor(230, 230, 230);
-        $pdf->Rect(69.36, 539.28, 470.64, 24.24, 'F');
-        $pdf->SetFont('Helvetica', 'B', 9);
+        $pdf->Rect(69.36, 539.6, 470.64, 32.2, 'F');
+        $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->SetTextColor(20, 20, 20);
-        $pdf->SetXY(69.36, 540.8);
-        $pdf->MultiCell(470.64, 11, self::t(
+        $pdf->SetXY(69.36, 540.3);
+        $pdf->MultiCell(470.64, 10.5, self::t(
             'Es wird eine einmalige Aufnahmegebühr von 20,-€ erhoben. Diese wird zusammen mit ' .
             'dem ersten Mitgliedsbeitrag automatisch per SEPA-Lastschrift von dem angegebenen ' .
             'Konto eingezogen.'
@@ -173,8 +173,24 @@ final class PdfFormBuilder
         self::row($pdf, 180, 482.5, 494.8, 350, $kiStrasse);
         self::row($pdf, 180, 505.5, 517.9, 350, $kiOrt);
 
-        // IBAN-Kaestchen: Box 0 = "D", Box 1 = "E" (im Original bereits vorgedruckt),
-        // Boxen 2..21 nehmen die 20 Ziffern nach "DE" auf.
+        // Die Vorlage hatte hier eine eigene "Bankverbindung"-Ueberschrift,
+        // einen "(Bitte ordentlich und vollstaendig ausfuellen)"-Hinweis und
+        // darunter die IBAN-/BIC-Kaestchen mit viel Leerraum dazwischen
+        // (Bereich y=518-608, x=68-520 im Original-PDF vermessen). Da das
+        // Formular online bereits vollstaendig ausgefuellt ist, ergibt der
+        // Hinweistext keinen Sinn mehr - wir ueberdecken den kompletten
+        // Bereich weiss und zeichnen stattdessen direkt unter den
+        // Kontoinhaber-Angaben eine eigene, kompakte IBAN-Zeile (gleicher
+        // Kaestchen-Stil wie im Original, nur neu positioniert). Keine
+        // eigene Ueberschrift mehr noetig, das "IBAN:"-Label in der Zeile
+        // selbst reicht.
+        $pdf->SetFillColor(255, 255, 255);
+        $pdf->Rect(68, 518.5, 452, 90, 'F');
+
+        // IBAN-Kaestchen: Box 0 = "D", Box 1 = "E" (fest vorgedruckt),
+        // Boxen 2..21 nehmen die 20 Ziffern nach "DE" auf. x-Werte 1:1 aus
+        // der Original-Vorlage uebernommen, nur y auf die neue Position
+        // direkt unter "PLZ und Ort:" verschoben.
         $ibanBoxes = [
             [204.7, 217.9], [218.4, 232.1], [232.8, 246.5], [247.0, 260.2], [261.6, 274.8],
             [275.3, 289.0], [289.4, 303.4], [303.8, 317.0], [318.5, 331.7], [332.2, 345.8],
@@ -182,20 +198,34 @@ final class PdfFormBuilder
             [417.4, 430.6], [432.0, 445.2], [445.7, 459.4], [459.8, 473.8], [474.2, 487.4],
             [488.9, 502.1], [502.6, 516.0],
         ];
+        $ibanRowY0 = 524;
+        $ibanRowY1 = 538.16;
+
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->SetLineWidth(0.75);
+
+        $labelX0 = 71.28;
+        $labelX1 = 203.28;
+        $pdf->SetFillColor(191, 191, 191);
+        $pdf->Rect($labelX0, $ibanRowY0, $labelX1 - $labelX0, $ibanRowY1 - $ibanRowY0, 'FD');
+        $pdf->SetFont('Helvetica', '', 10);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetXY($labelX0, $ibanRowY0);
+        $pdf->Cell($labelX1 - $labelX0 - 4.7, $ibanRowY1 - $ibanRowY0, 'IBAN:', 0, 0, 'R');
+
+        foreach ($ibanBoxes as [$bx0, $bx1]) {
+            $pdf->SetFillColor(255, 255, 255);
+            $pdf->Rect($bx0, $ibanRowY0, $bx1 - $bx0, $ibanRowY1 - $ibanRowY0, 'FD');
+        }
+
         $iban = (string) ($data['iban'] ?? '');
         $ibanRest = str_starts_with($iban, 'DE') ? substr($iban, 2) : $iban;
-        self::charBoxes($pdf, array_slice($ibanBoxes, 2), 575.8, 589.9, $ibanRest);
+        self::charBoxes($pdf, $ibanBoxes, $ibanRowY0, $ibanRowY1, 'DE' . $ibanRest);
 
         // BIC wird seit SEPA-Umstellung nicht mehr im Online-Formular abgefragt
         // (innerhalb der EU/EWR seit Februar 2016 nicht mehr Pflicht - die IBAN
-        // allein genuegt fuer den Lastschrifteinzug). Die komplette "BIC /
-        // SWIFT"-Tabellenzeile der Vorlage (Label + 11 Kaestchen, Koordinaten
-        // aus dem Original-PDF vermessen) wird daher weiss ueberdeckt, statt
-        // sie leer stehen zu lassen oder den BIC kuenstlich aus der IBAN
-        // abzuleiten (bräuchte eine externe Bankleitzahl-Tabelle als
-        // zusaetzliche Fehlerquelle - unnoetig, da rechtlich nicht gebraucht).
-        $pdf->SetFillColor(255, 255, 255);
-        $pdf->Rect(70.5, 589.6, 447.2, 17.9, 'F');
+        // allein genuegt fuer den Lastschrifteinzug), daher keine eigene Zeile
+        // dafuer mehr - der Bereich wurde oben bereits mit ueberdeckt.
 
         $ortDatum = trim(($data['unterschrift_ort'] ?? '') . ', ' . ($data['unterschrift_datum'] ?? ''), ' ,');
         self::row($pdf, 75, 672, 682, 140, $ortDatum);
