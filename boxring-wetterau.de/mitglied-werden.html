@@ -248,12 +248,6 @@
         <div class="bw-error" id="f-iban-error">Bitte eine gültige IBAN angeben.</div>
       </div>
 
-      <div class="bw-field">
-        <label for="f-bic">BIC / SWIFT <span class="req">*</span></label>
-        <input type="text" id="f-bic" name="bic" required placeholder="z. B. VBMHDE5F" autocomplete="off" maxlength="11" style="text-transform:uppercase;">
-        <div class="bw-error">Bitte gültigen BIC (8 oder 11 Zeichen) angeben.</div>
-      </div>
-
       <p class="bw-legal">Hiermit ermächtige ich den Vereinskassierer des Boxring Wetterau Friedberg 1983 e.V., den jährlichen Mitgliedsbeitrag von dem oben genannten Konto einzuziehen. Diese Einzugsermächtigung kann jederzeit formlos widerrufen werden. Ich kann/wir können innerhalb von 8 Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten die mit meinem/unserem Kreditinstitut vereinbarten Bedingungen.</p>
 
       <div class="bw-checkbox">
@@ -314,11 +308,6 @@
     return remainder === 1;
   }
 
-  function bicValid(raw){
-    var bic = (raw || "").replace(/\s+/g, "").toUpperCase();
-    return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(bic);
-  }
-
   var form = document.getElementById("bw-anmeldung-form");
   var statusBox = document.getElementById("bw-form-status");
   var submitBtn = document.getElementById("f-submit");
@@ -340,19 +329,26 @@
     if(vorGeburtstag) alter--;
     return alter;
   }
+  function geburtstagValid(value, stichtag){
+    if(!value) return false;
+    var alter = alterAmStichtag(value, stichtag);
+    return alter >= 0 && alter <= 120;
+  }
   function updateBeitrag(){
+    var stichtag = datumInput.value || new Date().toISOString().slice(0, 10);
     if(!geburtstagInput.value){
       beitragInput.value = "";
       beitragText.textContent = "Bitte zuerst dein Geburtsdatum oben eintragen.";
       return;
     }
-    var stichtag = datumInput.value || new Date().toISOString().slice(0, 10);
-    var alter = alterAmStichtag(geburtstagInput.value, stichtag);
-    if(alter < 0 || alter > 120){
+    if(!geburtstagValid(geburtstagInput.value, stichtag)){
       beitragInput.value = "";
       beitragText.textContent = "Bitte ein gültiges Geburtsdatum eintragen.";
+      showFieldError(geburtstagInput, "Dieses Geburtsdatum ist ungültig (z. B. in der Zukunft oder unrealistisch). Bitte kontrollieren.");
       return;
     }
+    clearFieldError(geburtstagInput);
+    var alter = alterAmStichtag(geburtstagInput.value, stichtag);
     if(alter < 18){
       beitragInput.value = "jugendlich_75";
       beitragText.textContent = "Jugendliche (bis 18 Jahre): 75,- € / Jahr.";
@@ -362,6 +358,11 @@
     }
   }
   geburtstagInput.addEventListener("change", updateBeitrag);
+  geburtstagInput.addEventListener("blur", function(){
+    if(!geburtstagInput.value){
+      showFieldError(geburtstagInput, "Bitte Geburtsdatum angeben.");
+    }
+  });
   datumInput.addEventListener("change", updateBeitrag);
   updateBeitrag();
 
@@ -380,7 +381,12 @@
   var ibanInput = document.getElementById("f-iban");
   var ibanError = document.getElementById("f-iban-error");
   ibanInput.addEventListener("blur", function(){
-    if(ibanInput.value.trim() === "") return;
+    if(ibanInput.value.trim() === ""){
+      ibanInput.classList.add("bw-invalid");
+      ibanError.textContent = "Bitte eine gültige IBAN angeben.";
+      ibanError.classList.add("show");
+      return;
+    }
     var valid = ibanValid(ibanInput.value);
     ibanInput.classList.toggle("bw-invalid", !valid);
     if(!valid){
@@ -417,6 +423,27 @@
     var err = input.parentElement.querySelector(".bw-error");
     if(err) err.classList.remove("show");
   }
+
+  // Alle übrigen Pflicht-Textfelder (IBAN und Geburtstag haben oben eigene,
+  // spezialisierte Prüfungen): Fehlerhinweis direkt beim Verlassen des Feldes
+  // zeigen, statt erst beim Absenden des kompletten Formulars.
+  Array.prototype.forEach.call(
+    form.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[type="date"]'),
+    function(input){
+      if(input === ibanInput || input === geburtstagInput || input.classList.contains("bw-honeypot")) return;
+      input.addEventListener("blur", function(){
+        if(!input.required){
+          clearFieldError(input);
+          return;
+        }
+        if(!input.value.trim() || !input.checkValidity()){
+          showFieldError(input);
+        } else {
+          clearFieldError(input);
+        }
+      });
+    }
+  );
 
   form.addEventListener("submit", function(evt){
     evt.preventDefault();
@@ -461,13 +488,6 @@
       if(!firstInvalid) firstInvalid = ibanInput;
     }
 
-    var bicInput = document.getElementById("f-bic");
-    if(!bicValid(bicInput.value)){
-      showFieldError(bicInput);
-      valid = false;
-      if(!firstInvalid) firstInvalid = bicInput;
-    }
-
     if(!valid){
       if(firstInvalid) firstInvalid.scrollIntoView({behavior: "smooth", block: "center"});
       statusBox.textContent = "Bitte prüfe die rot markierten Felder.";
@@ -482,7 +502,6 @@
     var payload = {};
     formData.forEach(function(value, key){ payload[key] = value; });
     payload.iban = payload.iban.replace(/\s+/g, "").toUpperCase();
-    payload.bic = (payload.bic || "").replace(/\s+/g, "").toUpperCase();
 
     fetch("./api/anmeldung.php", {
       method: "POST",
