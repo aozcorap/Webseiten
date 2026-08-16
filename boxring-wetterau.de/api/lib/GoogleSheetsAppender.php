@@ -30,25 +30,15 @@ final class GoogleSheetsAppender
             'row' => array_values($row),
         ], JSON_UNESCAPED_UNICODE);
 
-        $ch = curl_init($this->webAppUrl);
-        curl_setopt_array($ch, [
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $body,
-            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 15,
-            // Apps-Script-Web-Apps antworten mit einem 302 auf script.googleusercontent.com,
-            // das die eigentliche JSON-Antwort enthaelt - muss verfolgt werden.
-            CURLOPT_FOLLOWLOCATION => true,
-        ]);
-        $response = curl_exec($ch);
-        if ($response === false) {
-            $error = curl_error($ch);
-            curl_close($ch);
-            throw new RuntimeException("Apps-Script-Request fehlgeschlagen: $error");
-        }
-        $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        // Apps-Script-Web-Apps antworten auf den POST zunaechst mit einem 302
+        // auf eine script.googleusercontent.com-URL, die die eigentliche
+        // JSON-Antwort enthaelt. Bewusst KEIN automatisches Redirect-Folgen
+        // (CURLOPT_FOLLOWLOCATION) - das hat sich als unzuverlaessig gezeigt,
+        // je nachdem wie der Client mit dem Methodenwechsel POST->GET beim
+        // Redirect umgeht. Stattdessen die Location-Adresse selbst auslesen
+        // und in einem zweiten, einfachen GET abrufen.
+        $redirectUrl = $this->postAndGetRedirect($this->webAppUrl, $body);
+        [$status, $response] = $this->httpGet($redirectUrl);
 
         if ($status < 200 || $status >= 300) {
             throw new RuntimeException("Apps-Script-Request fehlgeschlagen (HTTP $status): $response");
@@ -61,5 +51,53 @@ final class GoogleSheetsAppender
         }
 
         return (int) $data['mitgliedsnr'];
+    }
+
+    private function postAndGetRedirect(string $url, string $body): string
+    {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => true,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_TIMEOUT => 15,
+        ]);
+        $response = curl_exec($ch);
+        if ($response === false) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            throw new RuntimeException("Apps-Script-Request fehlgeschlagen: $error");
+        }
+        $redirectUrl = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
+        curl_close($ch);
+
+        if (!is_string($redirectUrl) || $redirectUrl === '') {
+            throw new RuntimeException("Apps Script hat keine Weiterleitung geliefert - Antwort: $response");
+        }
+
+        return $redirectUrl;
+    }
+
+    /** @return array{0:int,1:string} */
+    private function httpGet(string $url): array
+    {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 15,
+        ]);
+        $response = curl_exec($ch);
+        if ($response === false) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            throw new RuntimeException("Apps-Script-Redirect-Request fehlgeschlagen: $error");
+        }
+        $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return [$status, (string) $response];
     }
 }

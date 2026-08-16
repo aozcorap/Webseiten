@@ -34,7 +34,7 @@ define('MEMBER_CC_EMAIL', CONTACT_EMAIL);
 
 // Die Web-App-URL, die man nach dem Bereitstellen des Apps Scripts bekommt
 // (endet auf ".../exec"). Siehe Anleitung oben im .gs-File.
-define('GOOGLE_SHEETS_WEBAPP_URL', 'HIER-APPS-SCRIPT-WEBAPP-URL-EINTRAGEN');
+define('GOOGLE_SHEETS_WEBAPP_URL', 'https://script.google.com/macros/s/AKfycbzrR-ml8fjyAZhd5C4-fm2iljHoWoEVO9I4-IvLnZ7oRskA3M1xkFGM1sdKZSaqKgr0/exec');
 
 // Muss EXAKT mit SHARED_SECRET im Apps Script uebereinstimmen (dort selbst
 // gesetzt). Schuetzt den Endpunkt, da die Web-App-URL oeffentlich erreichbar
