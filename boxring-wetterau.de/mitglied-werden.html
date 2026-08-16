@@ -36,10 +36,11 @@
   label{display:block;font-size:13px;font-weight:600;color:#c4bdb5;margin-bottom:6px;}
   label .req{color:#e8394f;}
   input[type="text"],input[type="email"],input[type="tel"],input[type="date"]{
-    width:100%;background:#111110;border:1px solid rgba(242,237,232,0.15);border-radius:10px;
+    width:100%;background:#111110;border:1px solid rgba(242,237,232,0.4);border-radius:10px;
     padding:12px 14px;color:#f2ede8;font-size:15px;font-family:inherit;
   }
-  input:focus{outline:none;border-color:#e8394f;}
+  input::placeholder{color:#8f887f;opacity:1;}
+  input:focus{outline:none;border-color:#e8394f;box-shadow:0 0 0 3px rgba(232,57,79,0.18);}
   input.bw-invalid{border-color:#e8394f;background:rgba(232,57,79,0.08);}
   .bw-error{font-size:13px;color:#e8394f;margin-top:6px;display:none;}
   .bw-error.show{display:block;}
@@ -167,7 +168,7 @@
     <div class="bw-card">
       <h2>Mitgliedsbeitrag</h2>
       <p class="hint">Der Jahresbeitrag richtet sich nach dem Alter und wird automatisch aus deinem Geburtsdatum berechnet. Fällig am 01.03.; bei Beitritt nach dem 01.03. wird der Beitrag anteilig für das restliche Jahr berechnet. Zusätzlich wird eine Aufnahmegebühr von 20,&#8201;&euro; erhoben, die bar beim Vereinskassierer oder 1. Vorsitzenden zu entrichten ist.</p>
-      <div id="f-beitrag-anzeige" style="background:#111110;border:1px solid rgba(242,237,232,0.15);border-radius:10px;padding:16px;font-size:15px;">
+      <div id="f-beitrag-anzeige" style="background:#111110;border:1px solid rgba(242,237,232,0.4);border-radius:10px;padding:16px;font-size:15px;">
         <span id="f-beitrag-text">Bitte zuerst dein Geburtsdatum oben eintragen.</span>
       </div>
       <input type="hidden" id="f-beitrag" name="beitrag" value="">
