@@ -78,8 +78,8 @@ if ($data['email'] !== null && !Validation::emailValid($data['email'])) {
     $errors[] = 'E-Mail-Adresse ist ungueltig.';
 }
 
-if (!in_array($data['beitrag'], ['aktive_150', 'passive_30', 'jugend_75'], true)) {
-    $errors[] = 'Bitte eine gueltige Beitragsart auswaehlen.';
+if ($data['geburtstag'] !== null && !Validation::dateValid($data['geburtstag'])) {
+    $errors[] = 'Geburtsdatum ist ungueltig.';
 }
 
 if ($data['kuendigung_gelesen'] !== 'ja' || $data['satzung_anerkannt'] !== 'ja' || $data['sepa_bestaetigt'] !== 'ja' || $data['datenschutz_gelesen'] !== 'ja') {
@@ -113,10 +113,14 @@ if (!empty($errors)) {
 $data['iban'] = strtoupper(str_replace(' ', '', $data['iban']));
 $data['bic'] = strtoupper(str_replace(' ', '', $data['bic']));
 
+// Beitragsart wird serverseitig aus dem Geburtsdatum bestimmt - der vom
+// Client mitgeschickte Wert ist nur eine Anzeige-Vorschau und nie verbindlich.
 $anteiligerBeitrag = null;
-if ($data['unterschrift_datum'] !== null) {
+if ($data['unterschrift_datum'] !== null && $data['geburtstag'] !== null) {
     try {
-        $anteiligerBeitrag = Beitrag::anteiligerBeitrag($data['beitrag'], new DateTimeImmutable($data['unterschrift_datum']));
+        $beitrittsdatum = new DateTimeImmutable($data['unterschrift_datum']);
+        $data['beitrag'] = Beitrag::ausAlter(new DateTimeImmutable($data['geburtstag']), $beitrittsdatum);
+        $anteiligerBeitrag = Beitrag::anteiligerBeitrag($data['beitrag'], $beitrittsdatum);
     } catch (Throwable $e) {
         error_log('anmeldung.php: Beitragsberechnung fehlgeschlagen: ' . $e->getMessage());
     }
@@ -209,11 +213,10 @@ try {
     // Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
     // Strasse, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt,
     // Anmeldegebuehr Zahldatum. Mandatsref/Anmeldegebuehr-Zahldatum bleiben
-    // leer - die vergibt/pflegt der Kassenwart von Hand.
-    $status = match ($data['beitrag']) {
-        'passive_30' => 'Passiv',
-        default => 'aktive',
-    };
+    // leer - die vergibt/pflegt der Kassenwart von Hand. Online-Anmeldungen
+    // sind immer "aktive" - die Unterscheidung Aktiv/Passiv gibt es fuer neue
+    // Mitglieder nicht mehr, das war nur eine Alt-Kategorie im Bestand.
+    $status = 'aktive';
     $zahlungspflichtiger = $data['kontoinhaber_gleich_antragsteller'] === 'ja'
         ? ''
         : ($data['kontoinhaber_name'] ?? '');

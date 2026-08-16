@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/fpdf/fpdf.php';
+require_once __DIR__ . '/Beitrag.php';
 
 /**
  * Baut das ausgefuellte Aufnahme-Antrag- + SEPA-Mandat-PDF nach, das die
@@ -106,15 +107,9 @@ final class PdfFormBuilder
         $pdf->Ln(2);
 
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Cell(0, 7, self::t('Jährlicher Mitgliedsbeitrag (fällig am 01.03.):'), 0, 1);
-        $beitragKey = (string) ($data['beitrag'] ?? '');
-        foreach ([
-            'aktive_150' => 'Erwachsene – Aktive (150,- Euro)',
-            'passive_30' => 'Erwachsene – Passive (30,- Euro)',
-            'jugend_75' => 'Jugendliche bis 18 Jahre (75,- Euro)',
-        ] as $key => $label) {
-            self::checkboxLine($pdf, $beitragKey === $key, $label);
-        }
+        $pdf->Cell(0, 7, self::t('Jährlicher Mitgliedsbeitrag (fällig am 01.03., automatisch aus dem Geburtsdatum berechnet):'), 0, 1);
+        $pdf->SetFont('Helvetica', '', 10);
+        $pdf->Cell(0, 7, self::t((Beitrag::label((string) ($data['beitrag'] ?? '')) ?? '-') . ' – ' . number_format((float) (Beitrag::jahresbetrag((string) ($data['beitrag'] ?? '')) ?? 0), 2, ',', '.') . ' Euro'), 0, 1);
         if (isset($data['anteiliger_beitrag']) && $data['anteiliger_beitrag'] !== null) {
             $pdf->SetFont('Helvetica', 'B', 10);
             $pdf->Cell(0, 7, self::t(sprintf('Anteiliger Beitrag im Beitrittsjahr: %.2f Euro', $data['anteiliger_beitrag'])), 0, 1);

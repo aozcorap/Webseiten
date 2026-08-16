@@ -166,22 +166,11 @@
 
     <div class="bw-card">
       <h2>Mitgliedsbeitrag</h2>
-      <p class="hint">Jährlicher Beitrag, fällig am 01.03. Bei Beitritt nach dem 01.03. wird der Beitrag anteilig für das restliche Jahr berechnet. Zusätzlich wird eine Aufnahmegebühr von 20,&#8201;&euro; erhoben, die bar beim Vereinskassierer oder 1. Vorsitzenden zu entrichten ist.</p>
-      <div class="bw-choice-group" id="f-beitrag-group">
-        <label class="bw-choice">
-          <input type="radio" name="beitrag" value="aktive_150" required>
-          <span class="bw-choice-label"><strong>Erwachsene – Aktive</strong> · 150,&#8201;&euro; / Jahr</span>
-        </label>
-        <label class="bw-choice">
-          <input type="radio" name="beitrag" value="passive_30" required>
-          <span class="bw-choice-label"><strong>Erwachsene – Passive</strong> · 30,&#8201;&euro; / Jahr</span>
-        </label>
-        <label class="bw-choice">
-          <input type="radio" name="beitrag" value="jugend_75" required>
-          <span class="bw-choice-label"><strong>Jugendliche</strong> (bis 18 Jahre) · 75,&#8201;&euro; / Jahr</span>
-        </label>
+      <p class="hint">Der Jahresbeitrag richtet sich nach dem Alter und wird automatisch aus deinem Geburtsdatum berechnet. Fällig am 01.03.; bei Beitritt nach dem 01.03. wird der Beitrag anteilig für das restliche Jahr berechnet. Zusätzlich wird eine Aufnahmegebühr von 20,&#8201;&euro; erhoben, die bar beim Vereinskassierer oder 1. Vorsitzenden zu entrichten ist.</p>
+      <div id="f-beitrag-anzeige" style="background:#111110;border:1px solid rgba(242,237,232,0.15);border-radius:10px;padding:16px;font-size:15px;">
+        <span id="f-beitrag-text">Bitte zuerst dein Geburtsdatum oben eintragen.</span>
       </div>
-      <div class="bw-error" id="f-beitrag-error">Bitte eine Beitragsart auswählen.</div>
+      <input type="hidden" id="f-beitrag" name="beitrag" value="">
     </div>
 
     <div class="bw-card">
@@ -189,7 +178,7 @@
       <div class="bw-row">
         <div class="bw-field">
           <label for="f-ort-datum">Ort <span class="req">*</span></label>
-          <input type="text" id="f-ort-datum" name="unterschrift_ort" required placeholder="z. B. Friedberg">
+          <input type="text" id="f-ort-datum" name="unterschrift_ort" required placeholder="wird automatisch aus deiner Adresse übernommen">
           <div class="bw-error">Bitte Ort angeben.</div>
         </div>
         <div class="bw-field">
@@ -338,6 +327,55 @@
     datumInput.value = new Date().toISOString().slice(0, 10);
   }
 
+  // Mitgliedsbeitrag automatisch aus dem Alter berechnen (Stichtag: Beitrittsdatum).
+  var geburtstagInput = document.getElementById("f-geburtstag");
+  var beitragInput = document.getElementById("f-beitrag");
+  var beitragText = document.getElementById("f-beitrag-text");
+  function alterAmStichtag(geburtstag, stichtag){
+    var geb = new Date(geburtstag + "T00:00:00");
+    var st = new Date(stichtag + "T00:00:00");
+    var alter = st.getFullYear() - geb.getFullYear();
+    var vorGeburtstag = (st.getMonth() < geb.getMonth()) || (st.getMonth() === geb.getMonth() && st.getDate() < geb.getDate());
+    if(vorGeburtstag) alter--;
+    return alter;
+  }
+  function updateBeitrag(){
+    if(!geburtstagInput.value){
+      beitragInput.value = "";
+      beitragText.textContent = "Bitte zuerst dein Geburtsdatum oben eintragen.";
+      return;
+    }
+    var stichtag = datumInput.value || new Date().toISOString().slice(0, 10);
+    var alter = alterAmStichtag(geburtstagInput.value, stichtag);
+    if(alter < 0 || alter > 120){
+      beitragInput.value = "";
+      beitragText.textContent = "Bitte ein gültiges Geburtsdatum eintragen.";
+      return;
+    }
+    if(alter < 18){
+      beitragInput.value = "jugendlich_75";
+      beitragText.textContent = "Jugendliche (bis 18 Jahre): 75,- € / Jahr.";
+    } else {
+      beitragInput.value = "erwachsene_150";
+      beitragText.textContent = "Erwachsene (ab 18 Jahre): 150,- € / Jahr.";
+    }
+  }
+  geburtstagInput.addEventListener("change", updateBeitrag);
+  datumInput.addEventListener("change", updateBeitrag);
+  updateBeitrag();
+
+  // Ort bei "Beitritt & Einwilligungen" automatisch aus der Adresse übernehmen,
+  // solange die Person das Feld nicht manuell selbst geändert hat.
+  var ortInput = document.getElementById("f-ort");
+  var ortDatumInput = document.getElementById("f-ort-datum");
+  var ortDatumManuell = false;
+  ortDatumInput.addEventListener("input", function(){ ortDatumManuell = true; });
+  ortInput.addEventListener("input", function(){
+    if(!ortDatumManuell){
+      ortDatumInput.value = ortInput.value;
+    }
+  });
+
   var ibanInput = document.getElementById("f-iban");
   var ibanError = document.getElementById("f-iban-error");
   ibanInput.addEventListener("blur", function(){
@@ -410,14 +448,10 @@
       }
     });
 
-    var beitragChecked = form.querySelector('input[name="beitrag"]:checked');
-    var beitragError = document.getElementById("f-beitrag-error");
-    if(!beitragChecked){
+    if(!beitragInput.value){
       valid = false;
-      beitragError.classList.add("show");
-      if(!firstInvalid) firstInvalid = document.getElementById("f-beitrag-group");
-    } else {
-      beitragError.classList.remove("show");
+      if(!firstInvalid) firstInvalid = document.getElementById("f-geburtstag");
+      showFieldError(document.getElementById("f-geburtstag"), "Bitte Geburtsdatum angeben, damit der Beitrag berechnet werden kann.");
     }
 
     if(!ibanValid(ibanInput.value)){

@@ -9,9 +9,8 @@ declare(strict_types=1);
 final class Beitrag
 {
     private const BETRAEGE = [
-        'aktive_150' => ['label' => 'Erwachsene – Aktive', 'betrag' => 150.0],
-        'passive_30' => ['label' => 'Erwachsene – Passive', 'betrag' => 30.0],
-        'jugend_75' => ['label' => 'Jugendliche (bis 18 Jahre)', 'betrag' => 75.0],
+        'erwachsene_150' => ['label' => 'Erwachsene (ab 18 Jahre)', 'betrag' => 150.0],
+        'jugendlich_75' => ['label' => 'Jugendliche (bis 18 Jahre)', 'betrag' => 75.0],
     ];
 
     public static function label(string $key): ?string
@@ -22,6 +21,18 @@ final class Beitrag
     public static function jahresbetrag(string $key): ?float
     {
         return self::BETRAEGE[$key]['betrag'] ?? null;
+    }
+
+    /**
+     * Beitragsart serverseitig aus dem Geburtsdatum ableiten (nie dem Client
+     * vertrauen - das Formular schickt zwar bereits einen berechneten Wert
+     * mit, der wird hier aber verbindlich neu bestimmt). Stichtag ist das
+     * Beitrittsdatum.
+     */
+    public static function ausAlter(DateTimeImmutable $geburtstag, DateTimeImmutable $stichtag): string
+    {
+        $alter = $stichtag->diff($geburtstag)->y;
+        return $alter < 18 ? 'jugendlich_75' : 'erwachsene_150';
     }
 
     /**
