@@ -30,7 +30,7 @@
  * "Bereitstellen" (die URL bleibt dabei gleich).
  */
 
-var SHARED_SECRET = 'HIER-EIGENES-LANGES-ZUFALLSPASSWORT-EINTRAGEN';
+var SHARED_SECRET = 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ';
 var SHEET_NAME = 'Sheet1';
 var MITGLIEDSNR_SPALTE = 7; // Spalte G
 

@@ -39,4 +39,4 @@ define('GOOGLE_SHEETS_WEBAPP_URL', 'HIER-APPS-SCRIPT-WEBAPP-URL-EINTRAGEN');
 // Muss EXAKT mit SHARED_SECRET im Apps Script uebereinstimmen (dort selbst
 // gesetzt). Schuetzt den Endpunkt, da die Web-App-URL oeffentlich erreichbar
 // ist (Zugriff "Jeder").
-define('GOOGLE_SHEETS_WEBAPP_SECRET', 'HIER-EIGENES-LANGES-ZUFALLSPASSWORT-EINTRAGEN');
+define('GOOGLE_SHEETS_WEBAPP_SECRET', 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ');
