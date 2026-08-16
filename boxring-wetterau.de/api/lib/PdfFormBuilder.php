@@ -133,23 +133,22 @@ final class PdfFormBuilder
         }
 
         // Vorlagentext "...direkt in bar zu entrichten!" (grauer Kasten von
-        // x=69.36-540, y=539.28-563.52, aus dem Original-PDF vermessen) weiss
-        // ueberdecken und durch den korrekten Hinweis auf den automatischen
-        // SEPA-Einzug ersetzen - fuer Online-Anmeldungen wird die
-        // Aufnahmegebuehr nicht bar entrichtet, sondern zusammen mit dem
-        // ersten Beitrag per Lastschrift eingezogen. Rechteck bewusst etwas
-        // groesser als der graue Kasten, damit dessen Kanten sicher mit
-        // abgedeckt werden.
-        $pdf->SetFillColor(255, 255, 255);
-        $pdf->Rect(68, 538, 474, 27, 'F');
-        $pdf->SetFont('Helvetica', '', 9);
+        // x=69.36-540, y=539.28-563.52, aus dem Original-PDF vermessen) durch
+        // den korrekten Hinweis auf den automatischen SEPA-Einzug ersetzen -
+        // fuer Online-Anmeldungen wird die Aufnahmegebuehr nicht bar
+        // entrichtet, sondern zusammen mit dem ersten Beitrag per
+        // Lastschrift eingezogen. Optik (grauer Kasten, fett, zentriert)
+        // bewusst wie im Original beibehalten, nur der Text ist neu.
+        $pdf->SetFillColor(230, 230, 230);
+        $pdf->Rect(69.36, 539.28, 470.64, 24.24, 'F');
+        $pdf->SetFont('Helvetica', 'B', 9);
         $pdf->SetTextColor(20, 20, 20);
-        $pdf->SetXY(70.8, 540);
-        $pdf->MultiCell(468, 11, self::t(
+        $pdf->SetXY(69.36, 540.8);
+        $pdf->MultiCell(470.64, 11, self::t(
             'Es wird eine einmalige Aufnahmegebühr von 20,-€ erhoben. Diese wird zusammen mit ' .
             'dem ersten Mitgliedsbeitrag automatisch per SEPA-Lastschrift von dem angegebenen ' .
             'Konto eingezogen.'
-        ), 0, 'L');
+        ), 0, 'C');
 
         $ortDatum = trim(($data['unterschrift_ort'] ?? '') . ', ' . ($data['unterschrift_datum'] ?? ''), ' ,');
         self::row($pdf, 75, 682, 692, 140, $ortDatum);
