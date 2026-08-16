@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitglied werden – Boxring Wetterau 1983 e.V.</title>
+<meta name="description" content="Werde online Mitglied im Boxring Wetterau 1983 e.V. Aufnahmeantrag und SEPA-Lastschriftmandat direkt über die Webseite ausfüllen.">
+<meta property="og:title" content="Mitglied werden – Boxring Wetterau 1983 e.V.">
+<meta property="og:description" content="Online-Aufnahmeantrag für den Boxring Wetterau 1983 e.V. in Friedberg.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.boxring-wetterau.de/mitglied-werden.html">
+<meta property="og:image" content="https://www.boxring-wetterau.de/assets/hero-boxer.jpeg">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.boxring-wetterau.de/mitglied-werden.html">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#e8394f">
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('./assets/fonts/anton-latin-400.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url('./assets/fonts/inter-latin-variable.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:#111110;color:#f2ede8;font-family:'Inter',sans-serif;overflow-x:hidden;}
+  a{color:#f2ede8;text-decoration:none;}
+  a:hover{color:#e8394f;}
+  ::selection{background:#e8394f;color:#111110;}
+  header nav a{font-size:15px;font-weight:600;}
+
+  .bw-card{background:#191817;border-radius:20px;border:1px solid rgba(242,237,232,0.06);padding:32px;margin-bottom:24px;}
+  .bw-card h2{font-family:'Anton',sans-serif;font-size:clamp(18px,3vw,24px);text-transform:uppercase;letter-spacing:0.3px;margin:0 0 6px;}
+  .bw-card p.hint{font-size:14px;color:#c4bdb5;margin:0 0 24px;line-height:1.6;}
+  .bw-field{margin-bottom:18px;}
+  .bw-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .bw-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media screen and (max-width:640px){.bw-row,.bw-row3{grid-template-columns:1fr;}}
+  label{display:block;font-size:13px;font-weight:600;color:#c4bdb5;margin-bottom:6px;}
+  label .req{color:#e8394f;}
+  input[type="text"],input[type="email"],input[type="tel"],input[type="date"]{
+    width:100%;background:#111110;border:1px solid rgba(242,237,232,0.4);border-radius:10px;
+    padding:12px 14px;color:#f2ede8;font-size:15px;font-family:inherit;
+  }
+  input::placeholder{color:#8f887f;opacity:1;}
+  input:focus{outline:none;border-color:#e8394f;box-shadow:0 0 0 3px rgba(232,57,79,0.18);}
+  input.bw-invalid{border-color:#e8394f;background:rgba(232,57,79,0.08);}
+  .bw-error{font-size:13px;color:#e8394f;margin-top:6px;display:none;}
+  .bw-error.show{display:block;}
+  .bw-choice-group{display:flex;flex-direction:column;gap:10px;}
+  .bw-choice{display:flex;align-items:flex-start;gap:10px;background:#111110;border:1px solid rgba(242,237,232,0.12);border-radius:10px;padding:12px 14px;cursor:pointer;}
+  .bw-choice input{margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#e8394f;}
+  .bw-choice-label{font-size:14px;line-height:1.5;}
+  .bw-choice-label strong{color:#f2ede8;}
+  .bw-checkbox{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;}
+  .bw-checkbox input{margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#e8394f;}
+  .bw-checkbox label{font-size:14px;font-weight:400;color:#f2ede8;margin:0;line-height:1.6;}
+  .bw-checkbox label a{color:#e8394f;text-decoration:underline;}
+  .bw-legal{font-size:13px;color:#8f887f;line-height:1.7;margin:0 0 18px;}
+  .bw-submit{width:100%;background:#e8394f;color:#fff;border:none;border-radius:999px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .bw-submit:hover{background:#d12f43;}
+  .bw-submit:disabled{opacity:0.5;cursor:not-allowed;}
+  #bw-form-status{margin-top:16px;font-size:14px;line-height:1.6;padding:14px 16px;border-radius:10px;display:none;}
+  #bw-form-status.show{display:block;}
+  #bw-form-status.ok{background:rgba(76,175,80,0.12);color:#8fd694;border:1px solid rgba(76,175,80,0.3);}
+  #bw-form-status.err{background:rgba(232,57,79,0.12);color:#f2a4ae;border:1px solid rgba(232,57,79,0.3);}
+  .bw-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+</style>
+</head>
+<body>
+
+<header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px clamp(20px,4vw,48px);background:rgba(17,17,16,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(242,237,232,0.08);">
+  <a href="./index.html" style="display:flex;align-items:center;gap:12px;min-width:0;">
+    <img src="./assets/logo-white.svg" alt="Boxring Wetterau" style="width:clamp(44px,8vw,76px);height:clamp(44px,8vw,76px);flex-shrink:0;">
+    <div style="font-family:'Anton',sans-serif;line-height:1;letter-spacing:0.5px;white-space:nowrap;">
+      <div style="font-size:16px;">BOXRING</div>
+      <div style="font-size:16px;color:#e8394f;">WETTERAU</div>
+    </div>
+  </a>
+  <nav style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+    <a href="./index.html#training">Training</a>
+    <a href="./index.html#erfolge">Erfolge</a>
+    <a href="./index.html#ueber-uns">Über uns</a>
+    <a href="./index.html#standort">Kontakt</a>
+  </nav>
+</header>
+
+<main style="max-width:760px;margin:0 auto;padding:64px 24px 100px;">
+  <a href="./index.html" style="display:inline-block;margin-bottom:32px;font-size:14px;color:#c4bdb5;">← Zurück zur Startseite</a>
+  <div style="font-family:'Anton',sans-serif;font-size:clamp(24px,6vw,52px);color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;overflow-wrap:break-word;">Mitglied werden</div>
+  <h1 style="font-family:'Anton',sans-serif;font-size:clamp(22px,4vw,32px);text-transform:uppercase;margin:0 0 12px;max-width:640px;">Aufnahmeantrag online ausfüllen.</h1>
+  <p style="font-size:15px;color:#c4bdb5;line-height:1.7;margin:0 0 40px;max-width:600px;">Fülle den Aufnahmeantrag aus – du bekommst dein ausgefülltes Formular anschließend per E-Mail als PDF zugeschickt. Bitte in Druckbuchstaben und vollständig ausfüllen. Felder mit <span style="color:#e8394f;">*</span> sind Pflichtfelder.</p>
+
+  <form id="bw-anmeldung-form" novalidate>
+    <input type="text" name="website" class="bw-honeypot" tabindex="-1" autocomplete="off">
+
+    <div class="bw-card">
+      <h2>Persönliche Daten</h2>
+      <p class="hint">Angaben zur Person, die Mitglied wird.</p>
+
+      <div class="bw-row">
+        <div class="bw-field">
+          <label for="f-name">Name <span class="req">*</span></label>
+          <input type="text" id="f-name" name="name" required autocomplete="family-name">
+          <div class="bw-error">Bitte Namen angeben.</div>
+        </div>
+        <div class="bw-field">
+          <label for="f-vorname">Vorname <span class="req">*</span></label>
+          <input type="text" id="f-vorname" name="vorname" required autocomplete="given-name">
+          <div class="bw-error">Bitte Vornamen angeben.</div>
+        </div>
+      </div>
+
+      <div class="bw-row3">
+        <div class="bw-field" style="grid-column:1 / span 2;">
+          <label for="f-strasse">Straße <span class="req">*</span></label>
+          <input type="text" id="f-strasse" name="strasse" required autocomplete="address-line1">
+          <div class="bw-error">Bitte Straße angeben.</div>
+        </div>
+        <div class="bw-field">
+          <label for="f-hausnr">Nr. <span class="req">*</span></label>
+          <input type="text" id="f-hausnr" name="hausnummer" required>
+          <div class="bw-error">Bitte Hausnummer angeben.</div>
+        </div>
+      </div>
+
+      <div class="bw-row3">
+        <div class="bw-field">
+          <label for="f-plz">PLZ <span class="req">*</span></label>
+          <input type="text" id="f-plz" name="plz" required inputmode="numeric" pattern="[0-9]{4,5}" autocomplete="postal-code">
+          <div class="bw-error">Bitte gültige PLZ angeben.</div>
+        </div>
+        <div class="bw-field" style="grid-column:2 / span 2;">
+          <label for="f-ort">Ort <span class="req">*</span></label>
+          <input type="text" id="f-ort" name="ort" required autocomplete="address-level2">
+          <div class="bw-error">Bitte Ort angeben.</div>
+        </div>
+      </div>
+
+      <div class="bw-row">
+        <div class="bw-field">
+          <label for="f-beruf">Beruf</label>
+          <input type="text" id="f-beruf" name="beruf">
+        </div>
+        <div class="bw-field">
+          <label for="f-geburtstag">Geburtstag <span class="req">*</span></label>
+          <input type="date" id="f-geburtstag" name="geburtstag" required>
+          <div class="bw-error">Bitte Geburtsdatum angeben.</div>
+        </div>
+      </div>
+
+      <div class="bw-row">
+        <div class="bw-field">
+          <label for="f-telefon">Telefon <span class="req">*</span></label>
+          <input type="tel" id="f-telefon" name="telefon" required autocomplete="tel">
+          <div class="bw-error">Bitte Telefonnummer angeben.</div>
+        </div>
+        <div class="bw-field">
+          <label for="f-email">E-Mail <span class="req">*</span></label>
+          <input type="email" id="f-email" name="email" required autocomplete="email">
+          <div class="bw-error">Bitte gültige E-Mail-Adresse angeben.</div>
+        </div>
+      </div>
+
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="f-erzieher">Nur bei Minderjährigen: Name des/der Erziehungsberechtigten</label>
+        <input type="text" id="f-erzieher" name="erziehungsberechtigter" placeholder="Nur ausfüllen, wenn das neue Mitglied unter 18 Jahre alt ist">
+      </div>
+    </div>
+
+    <div class="bw-card">
+      <h2>Mitgliedsbeitrag</h2>
+      <p class="hint">Der Jahresbeitrag richtet sich nach dem Alter und wird automatisch aus deinem Geburtsdatum berechnet. Fällig am 01.03.; bei Beitritt nach dem 01.03. wird der Beitrag anteilig für das restliche Jahr berechnet. Zusätzlich wird eine Aufnahmegebühr von 20,&#8201;&euro; erhoben, die bar beim Vereinskassierer oder 1. Vorsitzenden zu entrichten ist.</p>
+      <div id="f-beitrag-anzeige" style="background:#111110;border:1px solid rgba(242,237,232,0.4);border-radius:10px;padding:16px;font-size:15px;">
+        <span id="f-beitrag-text">Bitte zuerst dein Geburtsdatum oben eintragen.</span>
+      </div>
+      <input type="hidden" id="f-beitrag" name="beitrag" value="">
+    </div>
+
+    <div class="bw-card">
+      <h2>Beitritt &amp; Einwilligungen</h2>
+      <div class="bw-row">
+        <div class="bw-field">
+          <label for="f-ort-datum">Ort <span class="req">*</span></label>
+          <input type="text" id="f-ort-datum" name="unterschrift_ort" required placeholder="wird automatisch aus deiner Adresse übernommen">
+          <div class="bw-error">Bitte Ort angeben.</div>
+        </div>
+        <div class="bw-field">
+          <label for="f-datum">Datum <span class="req">*</span></label>
+          <input type="date" id="f-datum" name="unterschrift_datum" required>
+          <div class="bw-error">Bitte Datum angeben.</div>
+        </div>
+      </div>
+
+      <div class="bw-checkbox">
+        <input type="checkbox" id="f-bilder" name="bilder_einwilligung" value="ja">
+        <label for="f-bilder">Ich willige ein, dass Bildaufnahmen von mir bzw. meinem/meiner minderjährigen Kind/Kindern auf der Webseite und/oder den sozialen Medien des Vereins gemäß DSGVO veröffentlicht werden dürfen. (optional)</label>
+      </div>
+
+      <div class="bw-checkbox">
+        <input type="checkbox" id="f-kuendigung" name="kuendigung_gelesen" value="ja" required>
+        <label for="f-kuendigung">Ich habe gelesen und akzeptiere: Eine Kündigung der Mitgliedschaft kann nur zum 31.12. eines Jahres erfolgen. Die schriftliche Austrittserklärung muss spätestens drei Monate zuvor dem Verein vorliegen (schriftlich oder per E-Mail an <a href="mailto:Kassenwart@boxring-wetterau.de">Kassenwart@boxring-wetterau.de</a>). <span class="req">*</span></label>
+      </div>
+      <div class="bw-error" id="f-kuendigung-error">Bitte bestätigen.</div>
+
+      <div class="bw-checkbox">
+        <input type="checkbox" id="f-satzung" name="satzung_anerkannt" value="ja" required>
+        <label for="f-satzung">Ich erkläre hiermit meinen Beitritt zum Boxring Wetterau 1983 e.V. und erkenne die Vereinssatzung sowie die Satzung des Hessischen Boxsport Verbandes (HBV) an. <span class="req">*</span></label>
+      </div>
+      <div class="bw-error" id="f-satzung-error">Bitte bestätigen.</div>
+
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="f-signatur-antrag">Getippte Unterschrift (Vor- und Nachname, ersetzt die handschriftliche Unterschrift) <span class="req">*</span></label>
+        <input type="text" id="f-signatur-antrag" name="signatur_antrag" required placeholder="Vorname Nachname">
+        <div class="bw-error">Bitte Namen als Unterschrift eintragen.</div>
+      </div>
+    </div>
+
+    <div class="bw-card">
+      <h2>SEPA-Lastschriftmandat</h2>
+      <p class="hint">Die Aufnahme setzt die Erteilung einer Einzugsermächtigung voraus. Der Mitgliedsbeitrag wird jährlich am 01.03. eingezogen. Zahlungsempfänger: Boxring Wetterau Friedberg 1983 e.V., Hospitalgasse 36d, 61169 Friedberg. Gläubiger-Identifikationsnummer: DE28ZZZ00001372209.</p>
+
+      <div class="bw-checkbox">
+        <input type="checkbox" id="f-kontoinhaber-gleich" name="kontoinhaber_gleich_antragsteller" value="ja" checked>
+        <label for="f-kontoinhaber-gleich">Kontoinhaber/in ist identisch mit der oben genannten Person.</label>
+      </div>
+
+      <div id="f-kontoinhaber-felder" style="display:none;">
+        <div class="bw-field">
+          <label for="f-ki-name">Name und Vorname des Kontoinhabers <span class="req">*</span></label>
+          <input type="text" id="f-ki-name" name="kontoinhaber_name">
+          <div class="bw-error">Bitte Name und Vorname angeben.</div>
+        </div>
+        <div class="bw-row">
+          <div class="bw-field">
+            <label for="f-ki-strasse">Straße und Nr. <span class="req">*</span></label>
+            <input type="text" id="f-ki-strasse" name="kontoinhaber_strasse">
+            <div class="bw-error">Bitte Adresse angeben.</div>
+          </div>
+          <div class="bw-field">
+            <label for="f-ki-ort">PLZ und Ort <span class="req">*</span></label>
+            <input type="text" id="f-ki-ort" name="kontoinhaber_ort">
+            <div class="bw-error">Bitte PLZ und Ort angeben.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bw-field">
+        <label for="f-iban">IBAN <span class="req">*</span></label>
+        <input type="text" id="f-iban" name="iban" required placeholder="DE00 0000 0000 0000 0000 00" autocomplete="off" maxlength="34">
+        <div class="bw-error" id="f-iban-error">Bitte eine gültige IBAN angeben.</div>
+      </div>
+
+      <div class="bw-field">
+        <label for="f-bic">BIC / SWIFT <span class="req">*</span></label>
+        <input type="text" id="f-bic" name="bic" required placeholder="z. B. VBMHDE5F" autocomplete="off" maxlength="11" style="text-transform:uppercase;">
+        <div class="bw-error">Bitte gültigen BIC (8 oder 11 Zeichen) angeben.</div>
+      </div>
+
+      <p class="bw-legal">Hiermit ermächtige ich den Vereinskassierer des Boxring Wetterau Friedberg 1983 e.V., den jährlichen Mitgliedsbeitrag von dem oben genannten Konto einzuziehen. Diese Einzugsermächtigung kann jederzeit formlos widerrufen werden. Ich kann/wir können innerhalb von 8 Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten die mit meinem/unserem Kreditinstitut vereinbarten Bedingungen.</p>
+
+      <div class="bw-checkbox">
+        <input type="checkbox" id="f-sepa-bestaetigt" name="sepa_bestaetigt" value="ja" required>
+        <label for="f-sepa-bestaetigt">Ich erteile das SEPA-Lastschriftmandat wie oben beschrieben. <span class="req">*</span></label>
+      </div>
+      <div class="bw-error" id="f-sepa-bestaetigt-error">Bitte bestätigen.</div>
+
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="f-signatur-sepa">Getippte Unterschrift des Kontoinhabers/der Kontoinhaberin <span class="req">*</span></label>
+        <input type="text" id="f-signatur-sepa" name="signatur_sepa" required placeholder="Vorname Nachname">
+        <div class="bw-error">Bitte Namen als Unterschrift eintragen.</div>
+      </div>
+    </div>
+
+    <div class="bw-checkbox">
+      <input type="checkbox" id="f-datenschutz" name="datenschutz_gelesen" value="ja" required>
+      <label for="f-datenschutz">Ich habe die <a href="./datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a> zur Kenntnis genommen, insbesondere zur Verarbeitung meiner Bankverbindung und Speicherung in Google Sheets. <span class="req">*</span></label>
+    </div>
+    <div class="bw-error" id="f-datenschutz-error">Bitte bestätigen.</div>
+
+    <button type="submit" class="bw-submit" id="f-submit">Anmeldung absenden</button>
+    <div id="bw-form-status" role="status"></div>
+  </form>
+</main>
+
+<footer style="background:#161514;color:#8f887f;padding:40px clamp(20px,4vw,48px);border-top:1px solid rgba(242,237,232,0.08);">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;font-size:14px;">
+    <div>Boxring Wetterau 1983 e.V. · Maria-Montessori-Weg 2, 61169 Friedberg · Telefon: <a href="tel:+491732609937" style="color:#f2ede8;">0173 2609937</a></div>
+    <div style="display:flex;gap:24px;">
+      <a href="./impressum.html" style="color:#f2ede8;font-weight:600;">Impressum</a>
+      <a href="./datenschutz.html" style="color:#f2ede8;font-weight:600;">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  function ibanValid(raw){
+    var iban = (raw || "").replace(/\s+/g, "").toUpperCase();
+    if(!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(iban)) return false;
+    var rearranged = iban.slice(4) + iban.slice(0, 4);
+    var numeric = "";
+    for(var i = 0; i < rearranged.length; i++){
+      var c = rearranged.charAt(i);
+      if(c >= "0" && c <= "9"){
+        numeric += c;
+      } else {
+        numeric += (c.charCodeAt(0) - 55).toString();
+      }
+    }
+    var remainder = 0;
+    for(var j = 0; j < numeric.length; j++){
+      remainder = (remainder * 10 + parseInt(numeric.charAt(j), 10)) % 97;
+    }
+    return remainder === 1;
+  }
+
+  function bicValid(raw){
+    var bic = (raw || "").replace(/\s+/g, "").toUpperCase();
+    return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(bic);
+  }
+
+  var form = document.getElementById("bw-anmeldung-form");
+  var statusBox = document.getElementById("bw-form-status");
+  var submitBtn = document.getElementById("f-submit");
+
+  var datumInput = document.getElementById("f-datum");
+  if(datumInput && !datumInput.value){
+    datumInput.value = new Date().toISOString().slice(0, 10);
+  }
+
+  // Mitgliedsbeitrag automatisch aus dem Alter berechnen (Stichtag: Beitrittsdatum).
+  var geburtstagInput = document.getElementById("f-geburtstag");
+  var beitragInput = document.getElementById("f-beitrag");
+  var beitragText = document.getElementById("f-beitrag-text");
+  function alterAmStichtag(geburtstag, stichtag){
+    var geb = new Date(geburtstag + "T00:00:00");
+    var st = new Date(stichtag + "T00:00:00");
+    var alter = st.getFullYear() - geb.getFullYear();
+    var vorGeburtstag = (st.getMonth() < geb.getMonth()) || (st.getMonth() === geb.getMonth() && st.getDate() < geb.getDate());
+    if(vorGeburtstag) alter--;
+    return alter;
+  }
+  function updateBeitrag(){
+    if(!geburtstagInput.value){
+      beitragInput.value = "";
+      beitragText.textContent = "Bitte zuerst dein Geburtsdatum oben eintragen.";
+      return;
+    }
+    var stichtag = datumInput.value || new Date().toISOString().slice(0, 10);
+    var alter = alterAmStichtag(geburtstagInput.value, stichtag);
+    if(alter < 0 || alter > 120){
+      beitragInput.value = "";
+      beitragText.textContent = "Bitte ein gültiges Geburtsdatum eintragen.";
+      return;
+    }
+    if(alter < 18){
+      beitragInput.value = "jugendlich_75";
+      beitragText.textContent = "Jugendliche (bis 18 Jahre): 75,- € / Jahr.";
+    } else {
+      beitragInput.value = "erwachsene_150";
+      beitragText.textContent = "Erwachsene (ab 18 Jahre): 150,- € / Jahr.";
+    }
+  }
+  geburtstagInput.addEventListener("change", updateBeitrag);
+  datumInput.addEventListener("change", updateBeitrag);
+  updateBeitrag();
+
+  // Ort bei "Beitritt & Einwilligungen" automatisch aus der Adresse übernehmen,
+  // solange die Person das Feld nicht manuell selbst geändert hat.
+  var ortInput = document.getElementById("f-ort");
+  var ortDatumInput = document.getElementById("f-ort-datum");
+  var ortDatumManuell = false;
+  ortDatumInput.addEventListener("input", function(){ ortDatumManuell = true; });
+  ortInput.addEventListener("input", function(){
+    if(!ortDatumManuell){
+      ortDatumInput.value = ortInput.value;
+    }
+  });
+
+  var ibanInput = document.getElementById("f-iban");
+  var ibanError = document.getElementById("f-iban-error");
+  ibanInput.addEventListener("blur", function(){
+    if(ibanInput.value.trim() === "") return;
+    var valid = ibanValid(ibanInput.value);
+    ibanInput.classList.toggle("bw-invalid", !valid);
+    if(!valid){
+      ibanError.textContent = "Diese IBAN ist ungültig (Prüfziffer stimmt nicht). Bitte kontrollieren.";
+      ibanError.classList.add("show");
+    } else {
+      ibanError.classList.remove("show");
+    }
+  });
+
+  var kontoGleich = document.getElementById("f-kontoinhaber-gleich");
+  var kontoFelder = document.getElementById("f-kontoinhaber-felder");
+  var kontoRequiredFields = ["f-ki-name", "f-ki-strasse", "f-ki-ort"];
+  function syncKontoinhaber(){
+    var show = !kontoGleich.checked;
+    kontoFelder.style.display = show ? "block" : "none";
+    kontoRequiredFields.forEach(function(id){
+      document.getElementById(id).required = show;
+    });
+  }
+  kontoGleich.addEventListener("change", syncKontoinhaber);
+  syncKontoinhaber();
+
+  function showFieldError(input, message){
+    input.classList.add("bw-invalid");
+    var err = input.parentElement.querySelector(".bw-error");
+    if(err){
+      if(message) err.textContent = message;
+      err.classList.add("show");
+    }
+  }
+  function clearFieldError(input){
+    input.classList.remove("bw-invalid");
+    var err = input.parentElement.querySelector(".bw-error");
+    if(err) err.classList.remove("show");
+  }
+
+  form.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    statusBox.className = "";
+    statusBox.textContent = "";
+
+    var valid = true;
+    var firstInvalid = null;
+
+    Array.prototype.forEach.call(form.querySelectorAll("input[required]"), function(input){
+      if(input.type === "checkbox"){
+        if(!input.checked){
+          valid = false;
+          if(!firstInvalid) firstInvalid = input;
+          var errBox = document.getElementById(input.id + "-error");
+          if(errBox) errBox.classList.add("show");
+        } else {
+          var errBoxOk = document.getElementById(input.id + "-error");
+          if(errBoxOk) errBoxOk.classList.remove("show");
+        }
+      } else if(input.type === "radio"){
+        // handled via group below
+      } else {
+        clearFieldError(input);
+        if(!input.value.trim() || !input.checkValidity()){
+          showFieldError(input);
+          valid = false;
+          if(!firstInvalid) firstInvalid = input;
+        }
+      }
+    });
+
+    if(!beitragInput.value){
+      valid = false;
+      if(!firstInvalid) firstInvalid = document.getElementById("f-geburtstag");
+      showFieldError(document.getElementById("f-geburtstag"), "Bitte Geburtsdatum angeben, damit der Beitrag berechnet werden kann.");
+    }
+
+    if(!ibanValid(ibanInput.value)){
+      showFieldError(ibanInput, "Diese IBAN ist ungültig (Prüfziffer stimmt nicht). Bitte kontrollieren.");
+      valid = false;
+      if(!firstInvalid) firstInvalid = ibanInput;
+    }
+
+    var bicInput = document.getElementById("f-bic");
+    if(!bicValid(bicInput.value)){
+      showFieldError(bicInput);
+      valid = false;
+      if(!firstInvalid) firstInvalid = bicInput;
+    }
+
+    if(!valid){
+      if(firstInvalid) firstInvalid.scrollIntoView({behavior: "smooth", block: "center"});
+      statusBox.textContent = "Bitte prüfe die rot markierten Felder.";
+      statusBox.className = "show err";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Wird gesendet …";
+
+    var formData = new FormData(form);
+    var payload = {};
+    formData.forEach(function(value, key){ payload[key] = value; });
+    payload.iban = payload.iban.replace(/\s+/g, "").toUpperCase();
+    payload.bic = (payload.bic || "").replace(/\s+/g, "").toUpperCase();
+
+    fetch("./api/anmeldung.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      if(result.ok && result.data && result.data.success){
+        statusBox.textContent = "Danke! Deine Anmeldung ist bei uns eingegangen. Du bekommst dein ausgefülltes Formular in Kürze per E-Mail als PDF zugeschickt.";
+        statusBox.className = "show ok";
+        form.reset();
+        form.style.display = "none";
+      } else {
+        statusBox.textContent = (result.data && result.data.message) || "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut oder melde dich direkt unter Kassenwart@boxring-wetterau.de.";
+        statusBox.className = "show err";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Anmeldung absenden";
+      }
+    }).catch(function(){
+      statusBox.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut oder melde dich direkt unter Kassenwart@boxring-wetterau.de.";
+      statusBox.className = "show err";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Anmeldung absenden";
+    });
+  });
+})();
+</script>
+</body>
+</html>
