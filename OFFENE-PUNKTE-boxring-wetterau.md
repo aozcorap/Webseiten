@@ -68,6 +68,27 @@
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
+## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-16)
+- [ ] **Anmeldegebühr im Formular anpassen**: Aktuell steht im Formular/Willkommensmail
+      eine fixe einmalige Aufnahmegebühr von 20,- € (laut Text bar beim Kassierer
+      zu zahlen bzw. laut Mailtext per SEPA-Lastschrift zusammen mit dem ersten
+      Beitrag einzuziehen – das ist bereits uneinheitlich). Kassenwart muss sich
+      auf eine Regelung festlegen (Betrag, Zahlweg), danach Formular + Mailtext +
+      ggf. PDF entsprechend anpassen.
+- [ ] **Google-Sheet-Freigabe einschränken**: Das Sheet "Boxring Wetterau –
+      Mitgliederliste" ist laut Nutzer aktuell über einen öffentlichen Link
+      ("Jeder mit dem Link") erreichbar – enthält aber personenbezogene Daten
+      inkl. IBAN. Muss auf "Eingeschränkt" umgestellt und nur dem Kassenwart
+      (namentlich per Mailadresse, Rolle Bearbeiter) freigegeben werden. Nur der
+      Nutzer selbst kann das in den Google-Sheets-Freigabeeinstellungen ändern.
+- [ ] **Zahlungsabwicklung klären (SEPA-Lastschrift vs. PayPal & Co.)**: Aktuell
+      sammelt das Formular nur die SEPA-Mandatsdaten (IBAN) ein, der tatsächliche
+      Einzug (wann, welcher Betrag – Mitgliedsbeitrag + ggf. Aufnahmegebühr)
+      läuft manuell über den Kassenwart, keine automatisierte Zahlungsanbindung.
+      Muss mit dem Kassenwart geklärt werden: Soll der Einzug automatisiert
+      werden (z. B. über einen Zahlungsdienstleister/PayPal), welcher Betrag zu
+      welchem Zeitpunkt? Danach Formular/Backend entsprechend erweitern.
+
 ## Bereits erledigt
 - [x] Senior-Webdesigner/SEO-Review der Live-Seite durchgeführt, 6 Issues
       angelegt (#50–#55) und direkt im Code gefixt:
