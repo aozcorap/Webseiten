@@ -28,11 +28,16 @@ define('NOTIFY_NAME', 'Boxring Wetterau – Vereinskasse');
 define('GOOGLE_SERVICE_ACCOUNT_JSON_PATH', __DIR__ . '/../../secrets/google-service-account.json');
 
 // Die ID aus der Sheet-URL: https://docs.google.com/spreadsheets/d/<DIESE-ID>/edit
-// Sheet "Boxring Wetterau – Mitgliedsanmeldungen" wurde bereits angelegt
-// (inkl. Kopfzeile), diese ID ist bereits korrekt:
-define('GOOGLE_SHEET_ID', '1EBY445YDsC49iHzlWD09MZQPuIyPUEbqPP5BKgxRRxU');
+// Sheet "Boxring Wetterau – Mitgliederliste" wurde bereits angelegt und mit
+// der echten Bestandsmitgliederliste (vom Kassenwart) befuellt, diese ID ist
+// bereits korrekt:
+define('GOOGLE_SHEET_ID', '1D2jkKifKdj9eokaSQAUoj4oGYSJ0pU2droyfxu-SUJs');
 
 // Tabellenblatt-Name + Spaltenbereich, an den neue Zeilen angehaengt werden.
 // Das automatisch angelegte Sheet hat standardmaessig ein Blatt "Sheet1" -
 // im Zweifel im Sheet unten am Tab-Reiter den echten Namen pruefen.
-define('GOOGLE_SHEET_RANGE', 'Sheet1!A:Z');
+// Spaltenreihenfolge MUSS zur Kopfzeile des Sheets passen (siehe anmeldung.php):
+// gekuendigt Jahresende, Status, Vorname, Nachname, IBAN, Beitrag, Mitgliedsnr,
+// Mandatsref, Zahlungspflichtiger, Strasse, PLZ, Ort, Beruf, Telefon, Mail,
+// Geburtstag, Eintritt, Anmeldegebuehr Zahldatum
+define('GOOGLE_SHEET_RANGE', 'Sheet1!A:R');

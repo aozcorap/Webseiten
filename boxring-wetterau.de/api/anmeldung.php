@@ -127,32 +127,39 @@ $data['eingereicht_am'] = (new DateTimeImmutable())->format('d.m.Y H:i');
 $sheetOk = false;
 try {
     $sheets = new GoogleSheetsAppender(GOOGLE_SERVICE_ACCOUNT_JSON_PATH, GOOGLE_SHEET_ID, GOOGLE_SHEET_RANGE);
+    // Spaltenreihenfolge MUSS exakt zur Kopfzeile von "Boxring Wetterau -
+    // Mitgliederliste" passen: gekuendigt Jahresende, Status, Vorname,
+    // Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
+    // Strasse, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt,
+    // Anmeldegebuehr Zahldatum. Mitgliedsnr/Mandatsref/Anmeldegebuehr-Zahldatum
+    // bleiben leer - die vergibt/pflegt der Kassenwart von Hand.
+    $status = match ($data['beitrag']) {
+        'passive_30' => 'Passiv',
+        default => 'aktive',
+    };
+    $zahlungspflichtiger = $data['kontoinhaber_gleich_antragsteller'] === 'ja'
+        ? ''
+        : ($data['kontoinhaber_name'] ?? '');
+
     $sheets->appendRow([
-        $data['eingereicht_am'],
-        $data['name'],
+        '',
+        $status,
         $data['vorname'],
-        $data['strasse'],
-        $data['hausnummer'],
+        $data['name'],
+        $data['iban'],
+        Beitrag::jahresbetrag($data['beitrag']),
+        '',
+        '',
+        $zahlungspflichtiger,
+        trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? '')),
         $data['plz'],
         $data['ort'],
         $data['beruf'],
-        $data['geburtstag'],
         $data['telefon'],
         $data['email'],
-        $data['erziehungsberechtigter'],
-        Beitrag::label($data['beitrag']),
-        $anteiligerBeitrag !== null ? number_format($anteiligerBeitrag, 2, ',', '.') : '',
-        $data['bilder_einwilligung'] === 'ja' ? 'ja' : 'nein',
-        $data['kontoinhaber_gleich_antragsteller'] === 'ja' ? 'ja' : 'nein',
-        $data['kontoinhaber_name'],
-        $data['kontoinhaber_strasse'],
-        $data['kontoinhaber_ort'],
-        $data['iban'],
-        $data['bic'],
-        $data['signatur_antrag'],
-        $data['signatur_sepa'],
-        $data['unterschrift_ort'],
+        $data['geburtstag'],
         $data['unterschrift_datum'],
+        '',
     ]);
     $sheetOk = true;
 } catch (Throwable $e) {

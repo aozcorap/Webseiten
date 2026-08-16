@@ -13,20 +13,34 @@ eingerichtet").
 - Die Ordner `api/vendor/` (FPDF + PHPMailer) werden mitgeliefert – dafür ist
   **keine** Composer-Installation auf dem Server nötig.
 
-## 2. Google Sheet für die Anmeldungen (bereits angelegt)
+## 2. Google Sheet für die Mitgliederliste (bereits angelegt)
 
-Das Sheet "Boxring Wetterau – Mitgliedsanmeldungen" wurde bereits erstellt,
-inkl. Kopfzeile (Zeitstempel, Name, Vorname, Straße, Nr., PLZ, Ort, Beruf,
-Geburtstag, Telefon, E-Mail, Erziehungsberechtigte/r, Beitragsart, Anteiliger
-Beitrag, Bildeinwilligung, Kontoinhaber=Antragsteller, Kontoinhaber-Name,
-Kontoinhaber-Straße, Kontoinhaber-Ort, IBAN, BIC, Unterschrift Antrag,
-Unterschrift SEPA, Ort, Datum):
+Das Sheet "Boxring Wetterau – Mitgliederliste" ist die **eine gemeinsame
+Quelle** für Bestandsmitglieder und neue Online-Anmeldungen. Es wurde aus der
+Excel-Liste des Kassenwarts (`BRW Mitgliederliste.xlsx`) mit den 248 aktuell
+geführten Mitgliedern befüllt, Kopfzeile: gekündigt Jahresende, Status,
+Vorname, Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
+Straße, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt, Anmeldegebühr
+Zahldatum:
 
-`https://docs.google.com/spreadsheets/d/1EBY445YDsC49iHzlWD09MZQPuIyPUEbqPP5BKgxRRxU/edit`
+`https://docs.google.com/spreadsheets/d/1D2jkKifKdj9eokaSQAUoj4oGYSJ0pU2droyfxu-SUJs/edit`
 
-Die Sheet-ID ist bereits in `config.sample.php` eingetragen. Falls du ein
-eigenes Sheet verwenden willst, hier einfach die ID aus der URL des eigenen
-Sheets eintragen.
+Die Sheet-ID ist bereits in `config.sample.php` eingetragen. Neue
+Online-Anmeldungen werden von `anmeldung.php` als neue Zeile mit exakt dieser
+Spaltenreihenfolge angehängt (Mitgliedsnr/Mandatsref/Anmeldegebühr-Zahldatum
+bleiben leer, die vergibt/pflegt der Kassenwart weiterhin von Hand).
+
+**Hinweis zur Vollständigkeit:** Aus der Original-Excel wurden nur die für
+den laufenden Betrieb nötigen Spalten übernommen. Die detaillierte
+Jahres-Zahlungshistorie 2014–2025 (wer wann welchen Beitrag überwiesen hat)
+steht weiterhin vollständig in der Original-Excel-Datei im Drive des Vereins
+– die wurde nicht verändert oder gelöscht, dient aber nicht mehr als
+Live-Arbeitsdokument.
+
+**Freigabe für den Kassenwart:** Die automatische Freigabe per Skript ist an
+einem Tool-Fehler gescheitert (Google Drive API lehnte den Share-Request ab).
+Bitte das Sheet einmal manuell freigeben: oben rechts auf "Teilen" klicken,
+`Kassenwart@boxring-wetterau.de` eintragen, Rolle "Bearbeiter" wählen.
 
 ## 3. Google-Service-Account anlegen
 
@@ -55,7 +69,8 @@ Sheets eintragen.
   ausfüllen:
   - `GOOGLE_SERVICE_ACCOUNT_JSON_PATH` → Pfad zur JSON-Datei aus Schritt 4.
   - `GOOGLE_SHEET_ID` → ID aus Schritt 2.
-  - `GOOGLE_SHEET_RANGE` → Tabellenblattname, z. B. `Tabelle1!A:Z`.
+  - `GOOGLE_SHEET_RANGE` → Tabellenblattname + Spaltenbereich, Standard ist
+    bereits `Sheet1!A:R` (18 Spalten) passend zur Mitgliederliste.
   - SMTP-Zugangsdaten des Vereins-Postfachs (`SMTP_HOST`, `SMTP_PORT`,
     `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE`) – im Zweifel beim
     E-Mail-Hosting/Plesk-Postfach-Einstellungen nachsehen (übliche Werte:
