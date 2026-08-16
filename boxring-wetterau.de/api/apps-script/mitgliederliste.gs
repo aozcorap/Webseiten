@@ -33,6 +33,15 @@
 var SHARED_SECRET = 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ';
 var MITGLIEDSNR_SPALTE = 7; // Spalte G
 
+// Spalten, die trotz rein numerischem Inhalt IMMER als Text gespeichert
+// werden muessen, weil Google Sheets sonst fuehrende Nullen verschluckt
+// (z.B. Telefonnummer 0173... -> 173..., PLZ 01067 Dresden -> 1067). Ein
+// fuehrendes Apostroph zwingt Sheets zur Text-Interpretation - unabhaengig
+// davon, wie die Spalte gerade formatiert ist (robuster als sich auf die
+// manuelle "Nur Text"-Formatierung der Spalte zu verlassen).
+var TELEFON_SPALTE = 14; // Spalte N
+var PLZ_SPALTE = 11; // Spalte K
+
 function doPost(e) {
   try {
     var payload = JSON.parse(e.postData.contents);
@@ -55,12 +64,24 @@ function doPost(e) {
     var neueMitgliedsnr = naechsteMitgliedsnr(sheet);
     row[MITGLIEDSNR_SPALTE - 1] = neueMitgliedsnr;
 
+    row[TELEFON_SPALTE - 1] = alsText(row[TELEFON_SPALTE - 1]);
+    row[PLZ_SPALTE - 1] = alsText(row[PLZ_SPALTE - 1]);
+
     sheet.appendRow(row);
 
     return jsonResponse({ success: true, mitgliedsnr: neueMitgliedsnr });
   } catch (err) {
     return jsonResponse({ success: false, message: String(err) });
   }
+}
+
+/** Erzwingt Text-Speicherung per fuehrendem Apostroph, damit fuehrende Nullen erhalten bleiben. */
+function alsText(value) {
+  if (value === null || value === undefined || value === '') {
+    return value;
+  }
+  var text = String(value);
+  return text.charAt(0) === "'" ? text : "'" + text;
 }
 
 function naechsteMitgliedsnr(sheet) {
