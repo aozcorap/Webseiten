@@ -42,35 +42,40 @@ einem Tool-Fehler gescheitert (Google Drive API lehnte den Share-Request ab).
 Bitte das Sheet einmal manuell freigeben: oben rechts auf "Teilen" klicken,
 `Kassenwart@boxring-wetterau.de` eintragen, Rolle "Bearbeiter" wählen.
 
-## 3. Google-Service-Account anlegen
+## 3. Apps Script im Sheet einrichten (ca. 3 Minuten, kein Google-Cloud-Projekt nötig)
 
-1. In der [Google Cloud Console](https://console.cloud.google.com/) ein neues
-   Projekt anlegen (z. B. "boxring-wetterau-anmeldung").
-2. "Google Sheets API" für dieses Projekt aktivieren (Menü *APIs & Dienste* →
-   *Bibliothek* → "Google Sheets API" → Aktivieren).
-3. Unter *APIs & Dienste* → *Anmeldedaten* → *Anmeldedaten erstellen* →
-   *Dienstkonto* ein neues Dienstkonto anlegen (Rolle kann leer bleiben).
-4. Im Dienstkonto unter *Schlüssel* → *Schlüssel hinzufügen* → *Neuen Schlüssel
-   erstellen* → **JSON** wählen. Die Datei wird heruntergeladen.
-5. Die im JSON enthaltene `client_email` (sieht aus wie
-   `xyz@projekt.iam.gserviceaccount.com`) kopieren.
-6. Im Google Sheet aus Schritt 2 auf "Teilen" klicken und diese `client_email`
-   als **Bearbeiter** hinzufügen (genau wie eine Person einladen).
+Statt eines separaten Google-Cloud-Projekts mit Service-Account nutzen wir ein
+kleines Skript, das direkt im Sheet lebt und automatisch Schreibrechte auf
+genau dieses eine Sheet hat:
+
+1. Das Sheet aus Schritt 2 öffnen.
+2. Menü *Erweiterungen → Apps Script*.
+3. Den kompletten Inhalt von `api/apps-script/mitgliederliste.gs` (aus diesem
+   Repo) kopieren und den Beispielcode im Editor damit ersetzen.
+4. In der Zeile `var SHARED_SECRET = ...` das Platzhalter-Passwort durch ein
+   eigenes, langes Zufallspasswort ersetzen (z. B. mit einem
+   Passwort-Generator erzeugen, mindestens 32 Zeichen).
+5. Oben rechts *Bereitstellen → Neue Bereitstellung*:
+   - Typ: **Web-App**
+   - Ausführen als: **Ich** (dein Google-Konto)
+   - Zugriff: **Jeder** (das Secret aus Schritt 4 schützt den Endpunkt vor
+     Fremdzugriff)
+6. Google fragt nach Berechtigungen ("Diese App wurde nicht überprüft") – das
+   ist normal für ein selbst geschriebenes Skript, auf "Erweitert" → "Zu
+   [Projektname] wechseln (unsicher)" klicken und bestätigen.
+7. Die angezeigte Web-App-URL kopieren (endet auf `.../exec`).
+
+Bei einer späteren Änderung des Skripts: erneut *Bereitstellen → Bereitstellungen
+verwalten* → Stift-Symbol → neue Version wählen → *Bereitstellen* (die URL
+bleibt dabei gleich).
 
 ## 4. Dateien auf dem Server ablegen
 
-- Die heruntergeladene JSON-Datei **außerhalb** des Webroots ablegen, z. B.
-  eine Ebene über `httpdocs/` in einem Ordner `secrets/` (Pfad ist bei Plesk
-  meist `/var/www/vhosts/boxring-wetterau.de/secrets/google-service-account.json`,
-  außerhalb von `httpdocs/`). Falls das nicht möglich ist: im Ordner `api/`
-  ablegen – der ist bereits per `.htaccess` gegen `.json`-Zugriff von außen
-  gesperrt, aber ein separater Ordner außerhalb des Webroots ist sicherer.
 - `api/config.sample.php` zu `api/config.php` kopieren (im selben Ordner) und
   ausfüllen:
-  - `GOOGLE_SERVICE_ACCOUNT_JSON_PATH` → Pfad zur JSON-Datei aus Schritt 4.
-  - `GOOGLE_SHEET_ID` → ID aus Schritt 2.
-  - `GOOGLE_SHEET_RANGE` → Tabellenblattname + Spaltenbereich, Standard ist
-    bereits `Sheet1!A:R` (18 Spalten) passend zur Mitgliederliste.
+  - `GOOGLE_SHEETS_WEBAPP_URL` → die Web-App-URL aus Schritt 3.7.
+  - `GOOGLE_SHEETS_WEBAPP_SECRET` → exakt dasselbe Passwort wie `SHARED_SECRET`
+    im Apps Script aus Schritt 3.4.
   - SMTP-Zugangsdaten des Vereins-Postfachs (`SMTP_HOST`, `SMTP_PORT`,
     `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE`) – im Zweifel beim
     E-Mail-Hosting/Plesk-Postfach-Einstellungen nachsehen (übliche Werte:

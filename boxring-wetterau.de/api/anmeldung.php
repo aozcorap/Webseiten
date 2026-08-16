@@ -180,40 +180,31 @@ try {
 
 $sheetOk = false;
 try {
-    $sheets = new GoogleSheetsAppender(GOOGLE_SERVICE_ACCOUNT_JSON_PATH, GOOGLE_SHEET_ID, GOOGLE_SHEET_RANGE);
-
-    // Naechste freie Mitgliedsnummer: hoechste bestehende Nummer in Spalte G + 1.
-    $existingRows = $sheets->getValues('Sheet1!G2:G');
-    $maxMitgliedsnr = 0;
-    foreach ($existingRows as $row) {
-        $value = (int) ($row[0] ?? 0);
-        if ($value > $maxMitgliedsnr) {
-            $maxMitgliedsnr = $value;
-        }
-    }
-    $neueMitgliedsnr = $maxMitgliedsnr + 1;
+    $sheets = new GoogleSheetsAppender(GOOGLE_SHEETS_WEBAPP_URL, GOOGLE_SHEETS_WEBAPP_SECRET);
 
     // Spaltenreihenfolge MUSS exakt zur Kopfzeile von "Boxring Wetterau -
     // Mitgliederliste" passen: gekuendigt Jahresende, Status, Vorname,
     // Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
     // Strasse, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt,
-    // Anmeldegebuehr Zahldatum. Mandatsref/Anmeldegebuehr-Zahldatum bleiben
-    // leer - die vergibt/pflegt der Kassenwart von Hand. Online-Anmeldungen
-    // sind immer "aktive" - die Unterscheidung Aktiv/Passiv gibt es fuer neue
-    // Mitglieder nicht mehr, das war nur eine Alt-Kategorie im Bestand.
+    // Anmeldegebuehr Zahldatum. Mitgliedsnr wird vom Apps Script vergeben
+    // (Platzhalter '' hier wird dort ueberschrieben). Mandatsref/
+    // Anmeldegebuehr-Zahldatum bleiben leer - die vergibt/pflegt der
+    // Kassenwart von Hand. Online-Anmeldungen sind immer "aktive" - die
+    // Unterscheidung Aktiv/Passiv gibt es fuer neue Mitglieder nicht mehr,
+    // das war nur eine Alt-Kategorie im Bestand.
     $status = 'aktive';
     $zahlungspflichtiger = $data['kontoinhaber_gleich_antragsteller'] === 'ja'
         ? ''
         : ($data['kontoinhaber_name'] ?? '');
 
-    $sheets->appendRow([
+    $neueMitgliedsnr = $sheets->appendRow([
         '',
         $status,
         $data['vorname'],
         $data['name'],
         $data['iban'],
         Beitrag::jahresbetrag($data['beitrag']),
-        $neueMitgliedsnr,
+        '',
         '',
         $zahlungspflichtiger,
         trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? '')),

@@ -29,23 +29,14 @@ define('CONTACT_EMAIL', 'Kontakt@boxring-wetterau.de');
 // da im Code nur noch diese eine Konstante referenziert wird.
 define('MEMBER_CC_EMAIL', CONTACT_EMAIL);
 
-// --- Google Sheets: Speicherung der Anmeldungen ---
-// Pfad zur Service-Account-JSON-Datei. UNBEDINGT ausserhalb des Webroots
-// ablegen (z.B. eine Ebene ueber httpdocs/) oder per .htaccess sperren -
-// die Datei enthaelt einen privaten Schluessel.
-define('GOOGLE_SERVICE_ACCOUNT_JSON_PATH', __DIR__ . '/../../secrets/google-service-account.json');
+// --- Google Sheets: Speicherung der Anmeldungen (via Apps Script, siehe
+// api/apps-script/mitgliederliste.gs - kein Google-Cloud-Projekt noetig) ---
 
-// Die ID aus der Sheet-URL: https://docs.google.com/spreadsheets/d/<DIESE-ID>/edit
-// Sheet "Boxring Wetterau – Mitgliederliste" wurde bereits angelegt und mit
-// der echten Bestandsmitgliederliste (vom Kassenwart) befuellt, diese ID ist
-// bereits korrekt:
-define('GOOGLE_SHEET_ID', '1D2jkKifKdj9eokaSQAUoj4oGYSJ0pU2droyfxu-SUJs');
+// Die Web-App-URL, die man nach dem Bereitstellen des Apps Scripts bekommt
+// (endet auf ".../exec"). Siehe Anleitung oben im .gs-File.
+define('GOOGLE_SHEETS_WEBAPP_URL', 'HIER-APPS-SCRIPT-WEBAPP-URL-EINTRAGEN');
 
-// Tabellenblatt-Name + Spaltenbereich, an den neue Zeilen angehaengt werden.
-// Das automatisch angelegte Sheet hat standardmaessig ein Blatt "Sheet1" -
-// im Zweifel im Sheet unten am Tab-Reiter den echten Namen pruefen.
-// Spaltenreihenfolge MUSS zur Kopfzeile des Sheets passen (siehe anmeldung.php):
-// gekuendigt Jahresende, Status, Vorname, Nachname, IBAN, Beitrag, Mitgliedsnr,
-// Mandatsref, Zahlungspflichtiger, Strasse, PLZ, Ort, Beruf, Telefon, Mail,
-// Geburtstag, Eintritt, Anmeldegebuehr Zahldatum
-define('GOOGLE_SHEET_RANGE', 'Sheet1!A:R');
+// Muss EXAKT mit SHARED_SECRET im Apps Script uebereinstimmen (dort selbst
+// gesetzt). Schuetzt den Endpunkt, da die Web-App-URL oeffentlich erreichbar
+// ist (Zugriff "Jeder").
+define('GOOGLE_SHEETS_WEBAPP_SECRET', 'HIER-EIGENES-LANGES-ZUFALLSPASSWORT-EINTRAGEN');
