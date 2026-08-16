@@ -31,7 +31,6 @@
  */
 
 var SHARED_SECRET = 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ';
-var SHEET_NAME = 'Sheet1';
 var MITGLIEDSNR_SPALTE = 7; // Spalte G
 
 function doPost(e) {
@@ -42,9 +41,10 @@ function doPost(e) {
       return jsonResponse({ success: false, message: 'unauthorized' });
     }
 
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    // Nimmt einfach das erste (aktuelle) Tabellenblatt, unabhaengig vom Namen.
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
     if (!sheet) {
-      return jsonResponse({ success: false, message: 'Sheet "' + SHEET_NAME + '" nicht gefunden' });
+      return jsonResponse({ success: false, message: 'Kein Tabellenblatt gefunden' });
     }
 
     var row = payload.row;
