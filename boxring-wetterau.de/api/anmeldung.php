@@ -156,15 +156,16 @@ try {
         '<p>Wir freuen uns auf dich im Training!</p>' .
         '<p>Sportliche Grüße,<br>Boxring Wetterau 1983 e.V.</p>',
         htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
-        CONTACT_EMAIL,
-        CONTACT_EMAIL
+        MEMBER_CC_EMAIL,
+        MEMBER_CC_EMAIL
     );
     Mailer::send(
         $data['email'],
         $data['vorname'] . ' ' . $data['name'],
         'Willkommen beim Boxring Wetterau 1983 e.V.!',
         $bodyHtml,
-        $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null
+        $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null,
+        [MEMBER_CC_EMAIL]
     );
     $memberMailOk = true;
 } catch (Throwable $e) {

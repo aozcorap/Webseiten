@@ -27,6 +27,13 @@ define('CONTACT_EMAIL', 'Kontakt@boxring-wetterau.de');
 // Zusaetzlicher CC-Empfaenger auf der internen Benachrichtigung (z.B. 1. Vorsitzender).
 define('ADMIN_CC_EMAIL', 'ahmet@ozcorapci.de');
 
+// CC-Empfaenger + "Bei Fragen"-Kontaktadresse in der Willkommensmail ans neue
+// Mitglied. EINZIGE Stelle, die beim Go-Live umgestellt werden muss: aktuell
+// (Testphase) Kontakt@, danach auf NOTIFY_EMAIL (Kassenwart) aendern - wird
+// dann automatisch an beiden Stellen (CC-Header + Mailtext) uebernommen,
+// da im Code nur noch diese eine Konstante referenziert wird.
+define('MEMBER_CC_EMAIL', CONTACT_EMAIL);
+
 // --- Google Sheets: Speicherung der Anmeldungen ---
 // Pfad zur Service-Account-JSON-Datei. UNBEDINGT ausserhalb des Webroots
 // ablegen (z.B. eine Ebene ueber httpdocs/) oder per .htaccess sperren -

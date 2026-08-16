@@ -77,6 +77,12 @@ Bitte das Sheet einmal manuell freigeben: oben rechts auf "Teilen" klicken,
     Port 587 + `tls`, oder Port 465 + `ssl`).
   - `NOTIFY_EMAIL` → E-Mail-Adresse, die bei jeder neuen Anmeldung eine Kopie
     bekommt (z. B. Kassenwart@boxring-wetterau.de).
+  - `MEMBER_CC_EMAIL` → **Go-Live-Schalter.** Steht auf CC der Willkommensmail
+    ans neue Mitglied und im "Bei Fragen"-Text derselben Mail. In der
+    Testphase auf `Kontakt@boxring-wetterau.de` gesetzt. Sobald live
+    geschaltet wird: hier einfach `define('MEMBER_CC_EMAIL', NOTIFY_EMAIL);`
+    eintragen (oder direkt die gewünschte Adresse) - das genügt, CC und
+    Mailtext ziehen automatisch nach.
 
   **Wichtig:** `config.php` enthält Passwörter und darf **nicht** ins
   Git-Repo eingecheckt werden (steht bereits in `.gitignore`). Diese Datei
