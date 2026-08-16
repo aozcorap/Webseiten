@@ -16,16 +16,11 @@ define('SMTP_PASS', 'HIER-PASSWORT-EINTRAGEN');
 define('SMTP_FROM_EMAIL', 'info@boxring-wetterau.de');
 define('SMTP_FROM_NAME', 'Boxring Wetterau 1983 e.V.');
 
-// Empfaenger fuer die interne Benachrichtigung bei jeder neuen Anmeldung
-// (z.B. Kassenwart und/oder 1. Vorsitzender).
+// Reply-To fuer alle Vereins-Mails + Kontaktadresse im Fehlerfall.
 define('NOTIFY_EMAIL', 'Kassenwart@boxring-wetterau.de');
-define('NOTIFY_NAME', 'Boxring Wetterau – Vereinskasse');
 
-// Zweiter gleichrangiger Empfaenger der internen Benachrichtigung.
+// Basis-Adresse fuer MEMBER_CC_EMAIL (siehe unten).
 define('CONTACT_EMAIL', 'Kontakt@boxring-wetterau.de');
-
-// Zusaetzlicher CC-Empfaenger auf der internen Benachrichtigung (z.B. 1. Vorsitzender).
-define('ADMIN_CC_EMAIL', 'ahmet@ozcorapci.de');
 
 // CC-Empfaenger + "Bei Fragen"-Kontaktadresse in der Willkommensmail ans neue
 // Mitglied. EINZIGE Stelle, die beim Go-Live umgestellt werden muss: aktuell

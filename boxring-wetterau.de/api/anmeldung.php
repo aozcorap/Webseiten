@@ -172,32 +172,11 @@ try {
     error_log('anmeldung.php: Mail an Mitglied fehlgeschlagen: ' . $e->getMessage());
 }
 
-$internalMailOk = false;
-try {
-    $internalBodyHtml = sprintf(
-        '<p>Neue Online-Anmeldung: <strong>%s %s</strong> (%s), Beitragsart: %s%s.</p>' .
-        '<p>PDF: %s · Mail an Mitglied: %s</p>',
-        htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($data['email'], ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars(Beitrag::label($data['beitrag']) ?? $data['beitrag'], ENT_QUOTES, 'UTF-8'),
-        $anteiligerBeitrag !== null ? sprintf(' (anteilig %.2f Euro)', $anteiligerBeitrag) : '',
-        $pdfContent !== null ? 'ok' : 'FEHLGESCHLAGEN, siehe Server-Log',
-        $memberMailOk ? 'ok' : 'FEHLGESCHLAGEN, siehe Server-Log'
-    );
-    Mailer::send(
-        NOTIFY_EMAIL,
-        NOTIFY_NAME,
-        'Neue Mitgliedsanmeldung: ' . $data['vorname'] . ' ' . $data['name'],
-        $internalBodyHtml,
-        $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null,
-        [ADMIN_CC_EMAIL],
-        [CONTACT_EMAIL]
-    );
-    $internalMailOk = true;
-} catch (Throwable $e) {
-    error_log('anmeldung.php: interne Benachrichtigungsmail fehlgeschlagen: ' . $e->getMessage());
-}
+// Bewusst KEINE separate interne Benachrichtigungsmail: Die CC auf der
+// Willkommensmail (MEMBER_CC_EMAIL) ist die einzige Benachrichtigung an den
+// Verein. Zwei getrennte Mails an teils dieselben Adressen fuehrten sonst zu
+// doppeltem Empfang (z.B. wenn Kontakt@ auf ein persoenliches Postfach
+// weiterleitet, das gleichzeitig als CC/Empfaenger eingetragen ist).
 
 $sheetOk = false;
 try {
@@ -252,7 +231,7 @@ try {
     error_log('anmeldung.php: Google Sheets append fehlgeschlagen: ' . $e->getMessage());
 }
 
-if ($sheetOk || $memberMailOk || $internalMailOk) {
+if ($sheetOk || $memberMailOk) {
     respond(200, ['success' => true]);
 }
 
