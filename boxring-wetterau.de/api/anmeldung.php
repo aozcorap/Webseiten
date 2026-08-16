@@ -59,7 +59,7 @@ foreach ([
     'name', 'vorname', 'strasse', 'hausnummer', 'plz', 'ort', 'beruf', 'geburtstag',
     'telefon', 'email', 'erziehungsberechtigter', 'beitrag', 'unterschrift_ort',
     'unterschrift_datum', 'signatur_antrag', 'kontoinhaber_gleich_antragsteller',
-    'kontoinhaber_name', 'kontoinhaber_strasse', 'kontoinhaber_ort', 'iban', 'bic',
+    'kontoinhaber_name', 'kontoinhaber_strasse', 'kontoinhaber_ort', 'iban',
     'signatur_sepa', 'sepa_bestaetigt', 'kuendigung_gelesen', 'satzung_anerkannt',
     'bilder_einwilligung', 'datenschutz_gelesen',
 ] as $key) {
@@ -90,10 +90,6 @@ if ($data['iban'] === null || !Validation::ibanValid($data['iban'])) {
     $errors[] = 'IBAN ist ungueltig.';
 }
 
-if ($data['bic'] === null || !Validation::bicValid($data['bic'])) {
-    $errors[] = 'BIC ist ungueltig.';
-}
-
 if ($data['unterschrift_datum'] !== null && !Validation::dateValid($data['unterschrift_datum'])) {
     $errors[] = 'Datum ist ungueltig.';
 }
@@ -111,7 +107,6 @@ if (!empty($errors)) {
 }
 
 $data['iban'] = strtoupper(str_replace(' ', '', $data['iban']));
-$data['bic'] = strtoupper(str_replace(' ', '', $data['bic']));
 
 // Beitragsart wird serverseitig aus dem Geburtsdatum bestimmt - der vom
 // Client mitgeschickte Wert ist nur eine Anzeige-Vorschau und nie verbindlich.
@@ -127,6 +122,15 @@ if ($data['unterschrift_datum'] !== null && $data['geburtstag'] !== null) {
 }
 $data['anteiliger_beitrag'] = $anteiligerBeitrag;
 $data['eingereicht_am'] = (new DateTimeImmutable())->format('d.m.Y H:i');
+
+// Ab hier auf deutsches Anzeigeformat (tt.mm.jjjj) umstellen - das <input
+// type="date">-Feld liefert ISO (jjjj-mm-tt), das brauchte oben noch die
+// Beitragsberechnung. PDF und Google-Sheet-Eintrag sollen aber tt.mm.jjjj zeigen.
+foreach (['geburtstag', 'unterschrift_datum'] as $dateKey) {
+    if ($data[$dateKey] !== null) {
+        $data[$dateKey] = (new DateTimeImmutable($data[$dateKey]))->format('d.m.Y');
+    }
+}
 
 // Reihenfolge des Gesamtprozesses (so vom Verein festgelegt):
 // 1. PDF aus den geprueften Formulardaten bauen

@@ -168,12 +168,9 @@ final class PdfFormBuilder
         $ibanRest = str_starts_with($iban, 'DE') ? substr($iban, 2) : $iban;
         self::charBoxes($pdf, array_slice($ibanBoxes, 2), 575.8, 589.9, $ibanRest);
 
-        $bicBoxes = [
-            [209.3, 221.3], [232.1, 243.8], [254.6, 266.6], [277.4, 289.4], [300.2, 312.2],
-            [323.0, 335.0], [345.8, 357.6], [368.4, 380.4], [391.2, 403.2], [414.0, 426.0],
-            [436.8, 448.6],
-        ];
-        self::charBoxes($pdf, $bicBoxes, 591.4, 604.1, (string) ($data['bic'] ?? ''));
+        // BIC wird seit SEPA-Umstellung nicht mehr im Online-Formular abgefragt
+        // (innerhalb der EU/EWR seit Februar 2016 nicht mehr Pflicht) - die
+        // entsprechenden Kaestchen auf der Vorlage bleiben daher leer.
 
         $ortDatum = trim(($data['unterschrift_ort'] ?? '') . ', ' . ($data['unterschrift_datum'] ?? ''), ' ,');
         self::row($pdf, 75, 672, 682, 140, $ortDatum);

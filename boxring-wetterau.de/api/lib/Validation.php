@@ -33,12 +33,6 @@ final class Validation
         return $remainder === 1;
     }
 
-    public static function bicValid(string $rawBic): bool
-    {
-        $bic = strtoupper(str_replace(' ', '', $rawBic));
-        return (bool) preg_match('/^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/', $bic);
-    }
-
     public static function emailValid(string $email): bool
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
