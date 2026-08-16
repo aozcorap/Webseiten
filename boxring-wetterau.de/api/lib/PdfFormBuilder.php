@@ -2,25 +2,52 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/fpdf/fpdf.php';
+require_once __DIR__ . '/../vendor/fpdi/src/autoload.php';
 require_once __DIR__ . '/Beitrag.php';
 
+use setasign\Fpdi\Fpdi;
+
 /**
- * Baut das ausgefuellte Aufnahme-Antrag- + SEPA-Mandat-PDF nach, das die
- * Person online eingereicht hat - inhaltlich analog zur Papier-Beitrittserklaerung.
- * FPDF liefert nur die Standard-Latin1-Fonts, daher Konvertierung von UTF-8.
+ * Traegt die Formulardaten direkt in das echte Vereinsformular ein
+ * (api/templates/beitrittserklaerung.pdf, zwei Seiten: Aufnahmeantrag +
+ * SEPA-Mandat) statt es nachzubauen. Die Original-PDF-Seiten werden per
+ * FPDI als Hintergrund importiert, die Werte werden an exakt vermessenen
+ * Koordinaten (in pt, aus dem Original-PDF extrahiert) darueber geschrieben.
+ *
+ * Aendert sich das Layout der Vorlage (templates/beitrittserklaerung.pdf),
+ * muessen die Koordinaten unten neu vermessen werden.
  */
 final class PdfFormBuilder
 {
+    private const TEMPLATE_PATH = __DIR__ . '/../templates/beitrittserklaerung.pdf';
+
     /** @param array<string, mixed> $data */
     public static function build(array $data): string
     {
-        $pdf = new FPDF('P', 'mm', 'A4');
-        $pdf->SetMargins(18, 16, 18);
-        $pdf->SetAutoPageBreak(true, 16);
+        $pdf = new Fpdi('P', 'pt', 'A4');
+        $pdf->SetAutoPageBreak(false);
         $pdf->SetTitle('Aufnahmeantrag Boxring Wetterau 1983 e.V.');
+        $pdf->SetMargins(0, 0, 0);
 
-        self::pageOne($pdf, $data);
-        self::pageTwo($pdf, $data);
+        $pageCount = $pdf->setSourceFile(self::TEMPLATE_PATH);
+
+        // FPDF schreibt Seiten sequenziell in den Ausgabestream - man kann
+        // nach AddPage() nicht mehr auf eine vorherige Seite zurückspringen.
+        // Deshalb: Vorlagenseite importieren, SOFORT die Felder dieser Seite
+        // ueberschreiben, danach erst zur naechsten Seite weitergehen.
+        $tplId = $pdf->importPage(1);
+        $size = $pdf->getTemplateSize($tplId);
+        $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
+        $pdf->useTemplate($tplId);
+        self::fillPageOne($pdf, $data);
+
+        if ($pageCount >= 2) {
+            $tplId2 = $pdf->importPage(2);
+            $size2 = $pdf->getTemplateSize($tplId2);
+            $pdf->AddPage($size2['orientation'], [$size2['width'], $size2['height']]);
+            $pdf->useTemplate($tplId2);
+            self::fillPageTwo($pdf, $data);
+        }
 
         return $pdf->Output('S');
     }
@@ -30,118 +57,87 @@ final class PdfFormBuilder
         return iconv('UTF-8', 'CP1252//TRANSLIT', $text ?? '');
     }
 
-    private static function heading(FPDF $pdf, string $text): void
+    /** Schreibt Text linksbuendig in eine Zeile, y0/y1 = Ober-/Unterkante der Zielzeile (aus dem Original-PDF vermessen). */
+    private static function row(Fpdi $pdf, float $x, float $y0, float $y1, float $width, ?string $text, float $fontSize = 10): void
     {
-        $pdf->SetFillColor(232, 57, 79);
-        $pdf->SetTextColor(255, 255, 255);
-        $pdf->SetFont('Helvetica', 'B', 14);
-        $pdf->Cell(0, 10, self::t($text), 0, 1, 'C', true);
+        if ($text === null || $text === '') {
+            return;
+        }
+        $pdf->SetFont('Helvetica', '', $fontSize);
+        $pdf->SetTextColor(20, 20, 20);
+        $pdf->SetXY($x, $y0);
+        $pdf->Cell($width, $y1 - $y0, self::t($text), 0, 0, 'L');
+    }
+
+    /** Setzt ein "X" in eine Checkbox an gemessenen Koordinaten. */
+    private static function checkbox(Fpdi $pdf, float $x0, float $y0, float $x1, float $y1): void
+    {
+        $pdf->SetFont('Helvetica', 'B', 11);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Ln(4);
+        $pdf->SetXY($x0, $y0);
+        $pdf->Cell($x1 - $x0, $y1 - $y0, 'X', 0, 0, 'C');
     }
 
-    private static function field(FPDF $pdf, string $label, ?string $value, float $labelWidth = 45): void
+    /** Schreibt einzelne Zeichen in eine Reihe von Kaestchen (IBAN/BIC). @param array<int, array{0:float,1:float}> $boxes je [x0, x1] */
+    private static function charBoxes(Fpdi $pdf, array $boxes, float $y0, float $y1, string $chars): void
     {
-        $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Cell($labelWidth, 7, self::t($label), 0, 0);
-        $pdf->SetFont('Helvetica', '', 10);
-        $pdf->Cell(0, 7, self::t($value ?: '-'), 0, 1);
-    }
-
-    private static function checkboxLine(FPDF $pdf, bool $checked, string $text): void
-    {
-        $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Cell(8, 6, $checked ? '[X]' : '[ ]', 0, 0);
-        $pdf->SetFont('Helvetica', '', 9);
-        $pdf->MultiCell(0, 5, self::t($text));
-        $pdf->Ln(1);
+        $pdf->SetFont('Courier', 'B', 10);
+        $pdf->SetTextColor(0, 0, 0);
+        foreach ($boxes as $i => [$bx0, $bx1]) {
+            $char = $chars[$i] ?? '';
+            if ($char === '') {
+                continue;
+            }
+            $pdf->SetXY($bx0, $y0);
+            $pdf->Cell($bx1 - $bx0, $y1 - $y0, $char, 0, 0, 'C');
+        }
     }
 
     /** @param array<string, mixed> $data */
-    private static function pageOne(FPDF $pdf, array $data): void
+    private static function fillPageOne(Fpdi $pdf, array $data): void
     {
-        $pdf->AddPage();
+        self::row($pdf, 120, 150.8, 163.1, 186, $data['name'] ?? null);
+        self::row($pdf, 368, 150.8, 163.1, 170, $data['vorname'] ?? null);
 
-        $pdf->SetFont('Helvetica', '', 9);
-        $pdf->MultiCell(0, 5, self::t(
-            "1. Vorsitzender: Ahmet Özcorapci, Hospitalgasse 36d, 61169 Friedberg\n" .
-            "2. Vorsitzender: Dennis Stork, Mühlgasse 38, 35519 Rockenberg\n" .
-            "Vereinskassierer: Leif Halmbohm, Waitz-von-Eschen-Str 17, 61231 Bad Nauheim\n" .
-            "Bankverbindung: Volksbank Mittelhessen eG · BLZ 513 900 00 · Kto.-Nr. 87 359 808 · BIC VBMHDE5F · IBAN DE28 5139 0000 0087 3598 08"
-        ));
-        $pdf->Ln(4);
+        self::row($pdf, 122, 173.4, 185.7, 184, $data['strasse'] ?? null);
+        self::row($pdf, 338, 173.4, 185.7, 200, $data['hausnummer'] ?? null);
 
-        self::heading($pdf, 'AUFNAHME-ANTRAG');
+        self::row($pdf, 119, 196.2, 208.5, 115, $data['plz'] ?? null);
+        self::row($pdf, 266, 196.2, 208.5, 272, $data['ort'] ?? null);
 
-        $pdf->SetFont('Helvetica', '', 9);
-        $pdf->MultiCell(0, 5, self::t(
-            'Hiermit erklärt die unten genannte Person ihren Beitritt zum Boxring Wetterau 1983 e.V. und erkennt ' .
-            'damit gleichzeitig die Vereinssatzung und die Satzung des Hessischen Boxsport Verbandes (HBV) an. ' .
-            'Online eingereicht über boxring-wetterau.de.'
-        ));
-        $pdf->Ln(3);
+        self::row($pdf, 122, 218.7, 231.1, 179, $data['beruf'] ?? null);
+        self::row($pdf, 372, 218.7, 231.1, 166, $data['geburtstag'] ?? null);
 
-        self::field($pdf, 'Name:', $data['name'] ?? null);
-        self::field($pdf, 'Vorname:', $data['vorname'] ?? null);
-        self::field($pdf, 'Strasse, Nr.:', trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? '')));
-        self::field($pdf, 'PLZ, Ort:', trim(($data['plz'] ?? '') . ' ' . ($data['ort'] ?? '')));
-        self::field($pdf, 'Beruf:', $data['beruf'] ?? null);
-        self::field($pdf, 'Geburtstag:', $data['geburtstag'] ?? null);
-        self::field($pdf, 'Telefon:', $data['telefon'] ?? null);
-        self::field($pdf, 'E-Mail:', $data['email'] ?? null);
-        if (!empty($data['erziehungsberechtigter'])) {
-            self::field($pdf, 'Erziehungsberechtigte/r:', $data['erziehungsberechtigter']);
+        self::row($pdf, 123, 241.5, 253.9, 415, $data['telefon'] ?? null);
+        self::row($pdf, 121, 264.3, 276.7, 417, $data['email'] ?? null);
+
+        if (($data['bilder_einwilligung'] ?? '') === 'ja') {
+            self::checkbox($pdf, 456.0, 307.2, 465.8, 317.0);
         }
-        $pdf->Ln(2);
+        // Kuendigungsbedingungen gelesen ist im Online-Formular Pflicht -> immer angehakt.
+        self::checkbox($pdf, 466.1, 376.8, 475.9, 386.6);
 
-        self::checkboxLine(
-            $pdf,
-            ($data['bilder_einwilligung'] ?? '') === 'ja',
-            'Einwilligung zur Veröffentlichung von Bildaufnahmen auf Webseite und/oder sozialen Medien des Vereins gemäß DSGVO.'
-        );
-        self::checkboxLine(
-            $pdf,
-            true,
-            'Kündigungsbedingungen gelesen: Kündigung nur zum 31.12., schriftliche Austrittserklärung spätestens drei Monate zuvor an Kassenwart@boxring-wetterau.de.'
-        );
-        $pdf->Ln(2);
-
-        $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Cell(0, 7, self::t('Jährlicher Mitgliedsbeitrag (fällig am 01.03., automatisch aus dem Geburtsdatum berechnet):'), 0, 1);
-        $pdf->SetFont('Helvetica', '', 10);
-        $pdf->Cell(0, 7, self::t((Beitrag::label((string) ($data['beitrag'] ?? '')) ?? '-') . ' – ' . number_format((float) (Beitrag::jahresbetrag((string) ($data['beitrag'] ?? '')) ?? 0), 2, ',', '.') . ' Euro'), 0, 1);
+        $beitragKey = (string) ($data['beitrag'] ?? '');
+        if ($beitragKey === 'erwachsene_150') {
+            self::checkbox($pdf, 268.3, 468.2, 278.2, 478.1); // Aktive
+        } elseif ($beitragKey === 'jugendlich_75') {
+            self::checkbox($pdf, 487.7, 468.2, 497.5, 478.1); // Jugendliche
+        }
         if (isset($data['anteiliger_beitrag']) && $data['anteiliger_beitrag'] !== null) {
-            $pdf->SetFont('Helvetica', 'B', 10);
-            $pdf->Cell(0, 7, self::t(sprintf('Anteiliger Beitrag im Beitrittsjahr: %.2f Euro', $data['anteiliger_beitrag'])), 0, 1);
+            $pdf->SetFont('Helvetica', 'B', 9);
+            $pdf->SetTextColor(20, 20, 20);
+            $pdf->SetXY(70.8, 493.0);
+            $pdf->Cell(400, 10, self::t(sprintf('Anteiliger Beitrag im Beitrittsjahr (Online-Anmeldung): %.2f Euro', $data['anteiliger_beitrag'])), 0, 0, 'L');
         }
-        $pdf->Ln(1);
 
-        $pdf->SetFont('Helvetica', '', 9);
-        $pdf->MultiCell(0, 5, self::t(
-            'Es wird eine Aufnahmegebühr von 20,- Euro erhoben. Diese ist beim Vereinskassierer oder 1. Vorsitzenden ' .
-            'direkt in bar zu entrichten. Für die Teilnahme an Kämpfen des HBV bzw. DBV sind Kampfpass und Lizenzmarke ' .
-            'auf eigene Kosten zu beantragen; nötige ärztliche Atteste sind selbst zu besorgen.'
-        ));
-        $pdf->Ln(6);
-
-        $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Cell(95, 7, self::t('Ort/Datum: ' . ($data['unterschrift_ort'] ?? '-') . ', ' . ($data['unterschrift_datum'] ?? '-')), 0, 0);
-        $pdf->Cell(0, 7, self::t('Unterschrift (digital): ' . ($data['signatur_antrag'] ?? '-')), 0, 1);
+        $ortDatum = trim(($data['unterschrift_ort'] ?? '') . ', ' . ($data['unterschrift_datum'] ?? ''), ' ,');
+        self::row($pdf, 75, 682, 692, 140, $ortDatum);
+        self::row($pdf, 278, 682, 692, 250, $data['signatur_antrag'] ?? null);
     }
 
     /** @param array<string, mixed> $data */
-    private static function pageTwo(FPDF $pdf, array $data): void
+    private static function fillPageTwo(Fpdi $pdf, array $data): void
     {
-        $pdf->AddPage();
-        self::heading($pdf, 'SEPA-LASTSCHRIFTMANDAT');
-
-        $pdf->SetFont('Helvetica', '', 9);
-        $pdf->MultiCell(0, 5, self::t(
-            'Zahlungsempfänger (Mandats-Gläubiger): Boxring Wetterau Friedberg 1983 e.V., Hospitalgasse 36d, 61169 Friedberg. ' .
-            'Gläubiger-Identifikationsnummer: DE28ZZZ00001372209.'
-        ));
-        $pdf->Ln(3);
-
         $kontoGleich = ($data['kontoinhaber_gleich_antragsteller'] ?? '') === 'ja';
         $kiName = $kontoGleich
             ? trim(($data['vorname'] ?? '') . ' ' . ($data['name'] ?? ''))
@@ -153,33 +149,41 @@ final class PdfFormBuilder
             ? trim(($data['plz'] ?? '') . ' ' . ($data['ort'] ?? ''))
             : ($data['kontoinhaber_ort'] ?? null);
 
-        self::field($pdf, 'Name, Vorname:', $kiName, 55);
-        self::field($pdf, 'Strasse, Nr.:', $kiStrasse, 55);
-        self::field($pdf, 'PLZ, Ort:', $kiOrt, 55);
-        self::field($pdf, 'IBAN:', $data['iban'] ?? null, 55);
-        self::field($pdf, 'BIC/SWIFT:', $data['bic'] ?? null, 55);
-        $pdf->Ln(3);
+        self::row($pdf, 180, 459.2, 471.5, 350, $kiName);
+        self::row($pdf, 180, 482.5, 494.8, 350, $kiStrasse);
+        self::row($pdf, 180, 505.5, 517.9, 350, $kiOrt);
 
-        $pdf->SetFont('Helvetica', '', 9);
-        $pdf->MultiCell(0, 5, self::t(
-            'Hiermit wird der Vereinskassierer des Boxring Wetterau Friedberg 1983 e.V. ermächtigt, den jährlichen ' .
-            'Mitgliedsbeitrag von obigem Konto einzuziehen. Diese Einzugsermächtigung kann jederzeit formlos widerrufen ' .
-            'werden. Erstattung des belasteten Betrages kann innerhalb von 8 Wochen ab Belastungsdatum verlangt werden; ' .
-            'es gelten die mit dem Kreditinstitut vereinbarten Bedingungen.'
-        ));
-        $pdf->Ln(6);
+        // IBAN-Kaestchen: Box 0 = "D", Box 1 = "E" (im Original bereits vorgedruckt),
+        // Boxen 2..21 nehmen die 20 Ziffern nach "DE" auf.
+        $ibanBoxes = [
+            [204.7, 217.9], [218.4, 232.1], [232.8, 246.5], [247.0, 260.2], [261.6, 274.8],
+            [275.3, 289.0], [289.4, 303.4], [303.8, 317.0], [318.5, 331.7], [332.2, 345.8],
+            [346.3, 360.0], [360.5, 373.7], [375.4, 388.6], [389.0, 402.7], [403.2, 416.9],
+            [417.4, 430.6], [432.0, 445.2], [445.7, 459.4], [459.8, 473.8], [474.2, 487.4],
+            [488.9, 502.1], [502.6, 516.0],
+        ];
+        $iban = (string) ($data['iban'] ?? '');
+        $ibanRest = str_starts_with($iban, 'DE') ? substr($iban, 2) : $iban;
+        self::charBoxes($pdf, array_slice($ibanBoxes, 2), 575.8, 589.9, $ibanRest);
 
-        $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Cell(95, 7, self::t('Ort/Datum: ' . ($data['unterschrift_ort'] ?? '-') . ', ' . ($data['unterschrift_datum'] ?? '-')), 0, 0);
-        $pdf->Cell(0, 7, self::t('Unterschrift Kontoinhaber (digital): ' . ($data['signatur_sepa'] ?? '-')), 0, 1);
+        $bicBoxes = [
+            [209.3, 221.3], [232.1, 243.8], [254.6, 266.6], [277.4, 289.4], [300.2, 312.2],
+            [323.0, 335.0], [345.8, 357.6], [368.4, 380.4], [391.2, 403.2], [414.0, 426.0],
+            [436.8, 448.6],
+        ];
+        self::charBoxes($pdf, $bicBoxes, 591.4, 604.1, (string) ($data['bic'] ?? ''));
 
-        $pdf->Ln(10);
-        $pdf->SetFont('Helvetica', 'I', 8);
+        $ortDatum = trim(($data['unterschrift_ort'] ?? '') . ', ' . ($data['unterschrift_datum'] ?? ''), ' ,');
+        self::row($pdf, 75, 672, 682, 140, $ortDatum);
+        self::row($pdf, 288, 672, 682, 240, $data['signatur_sepa'] ?? null);
+
+        $pdf->SetFont('Helvetica', 'I', 7);
         $pdf->SetTextColor(120, 120, 120);
-        $pdf->MultiCell(0, 4, self::t(
-            'Dieses Dokument wurde am ' . ($data['eingereicht_am'] ?? '') . ' über das Online-Formular auf ' .
-            'boxring-wetterau.de eingereicht. Die digitale Unterschrift ersetzt die handschriftliche Unterschrift ' .
-            'und wurde durch aktive Eingabe des vollen Namens im Formular bestätigt.'
+        $pdf->SetXY(70.8, 715);
+        $pdf->MultiCell(460, 10, self::t(
+            'Online eingereicht am ' . ($data['eingereicht_am'] ?? '') . ' über boxring-wetterau.de. ' .
+            'Die digitale Unterschrift ersetzt die handschriftliche Unterschrift und wurde durch aktive Eingabe ' .
+            'des vollen Namens im Online-Formular bestätigt.'
         ));
     }
 }
