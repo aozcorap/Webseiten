@@ -147,17 +147,22 @@ $pdfFilename = 'Aufnahmeantrag-' . preg_replace('/[^A-Za-z0-9_-]/', '', $data['n
 $memberMailOk = false;
 try {
     $bodyHtml = sprintf(
-        '<p>Hallo %s,</p><p>vielen Dank für deine Anmeldung beim Boxring Wetterau 1983 e.V.! ' .
-        'Im Anhang findest du dein ausgefülltes Aufnahmeformular als PDF – bitte einmal in Ruhe gegenprüfen. ' .
-        'Bei Fragen melde dich einfach unter <a href="mailto:%s">%s</a>.</p><p>Sportliche Grüße<br>Boxring Wetterau 1983 e.V.</p>',
+        '<p>Hallo %s,</p>' .
+        '<p>herzlich willkommen im Boxring Wetterau 1983 e.V.! Wir freuen uns sehr, dass du jetzt Teil unseres Vereins bist.</p>' .
+        '<p>Im Anhang findest du dein ausgefülltes Aufnahmeformular als PDF – bitte einmal in Ruhe gegenprüfen, ob alle Angaben stimmen.</p>' .
+        '<p>Eine Sache noch in eigener Sache: Die einmalige Aufnahmegebühr von 20,- Euro wird zusammen mit deinem ersten ' .
+        'Mitgliedsbeitrag automatisch per SEPA-Lastschrift von dem angegebenen Konto eingezogen.</p>' .
+        '<p>Bei Fragen melde dich jederzeit gerne unter <a href="mailto:%s">%s</a>.</p>' .
+        '<p>Wir freuen uns auf dich im Training!</p>' .
+        '<p>Sportliche Grüße,<br>Boxring Wetterau 1983 e.V.</p>',
         htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
-        NOTIFY_EMAIL,
-        NOTIFY_EMAIL
+        CONTACT_EMAIL,
+        CONTACT_EMAIL
     );
     Mailer::send(
         $data['email'],
         $data['vorname'] . ' ' . $data['name'],
-        'Deine Anmeldung beim Boxring Wetterau 1983 e.V.',
+        'Willkommen beim Boxring Wetterau 1983 e.V.!',
         $bodyHtml,
         $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null
     );
