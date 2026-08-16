@@ -80,6 +80,17 @@ if ($data['email'] !== null && !Validation::emailValid($data['email'])) {
 
 if ($data['geburtstag'] !== null && !Validation::dateValid($data['geburtstag'])) {
     $errors[] = 'Geburtsdatum ist ungueltig.';
+} elseif ($data['geburtstag'] !== null) {
+    // Auch inhaltlich pruefen (nicht nur Formatvaliditaet) - die Client-
+    // Pruefung in mitglied-werden.html laesst sich umgehen.
+    $geburtstagDt = new DateTimeImmutable($data['geburtstag']);
+    $stichtagDt = ($data['unterschrift_datum'] !== null && Validation::dateValid($data['unterschrift_datum']))
+        ? new DateTimeImmutable($data['unterschrift_datum'])
+        : new DateTimeImmutable();
+    $alter = $stichtagDt->diff($geburtstagDt)->y;
+    if ($geburtstagDt > $stichtagDt || $alter > 120) {
+        $errors[] = 'Geburtsdatum ist unrealistisch (z. B. in der Zukunft).';
+    }
 }
 
 if ($data['kuendigung_gelesen'] !== 'ja' || $data['satzung_anerkannt'] !== 'ja' || $data['sepa_bestaetigt'] !== 'ja' || $data['datenschutz_gelesen'] !== 'ja') {
