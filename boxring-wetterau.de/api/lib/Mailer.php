@@ -12,6 +12,7 @@ final class Mailer
 {
     /**
      * @param array{name:string,content:string,filename:string}|null $attachment
+     * @param string[] $additionalTo weitere Empfaenger gleichrangig zu $toEmail (z.B. Kassenwart + Kontakt)
      * @param string[] $cc
      */
     public static function send(
@@ -20,7 +21,8 @@ final class Mailer
         string $subject,
         string $bodyHtml,
         ?array $attachment = null,
-        array $cc = []
+        array $cc = [],
+        array $additionalTo = []
     ): void {
         $mail = new PHPMailer(true);
         try {
@@ -35,6 +37,9 @@ final class Mailer
 
             $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
             $mail->addAddress($toEmail, $toName);
+            foreach ($additionalTo as $extraEmail) {
+                $mail->addAddress($extraEmail);
+            }
             foreach ($cc as $ccEmail) {
                 $mail->addCC($ccEmail);
             }

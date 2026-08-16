@@ -124,47 +124,12 @@ if ($data['unterschrift_datum'] !== null) {
 $data['anteiliger_beitrag'] = $anteiligerBeitrag;
 $data['eingereicht_am'] = (new DateTimeImmutable())->format('d.m.Y H:i');
 
-$sheetOk = false;
-try {
-    $sheets = new GoogleSheetsAppender(GOOGLE_SERVICE_ACCOUNT_JSON_PATH, GOOGLE_SHEET_ID, GOOGLE_SHEET_RANGE);
-    // Spaltenreihenfolge MUSS exakt zur Kopfzeile von "Boxring Wetterau -
-    // Mitgliederliste" passen: gekuendigt Jahresende, Status, Vorname,
-    // Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
-    // Strasse, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt,
-    // Anmeldegebuehr Zahldatum. Mitgliedsnr/Mandatsref/Anmeldegebuehr-Zahldatum
-    // bleiben leer - die vergibt/pflegt der Kassenwart von Hand.
-    $status = match ($data['beitrag']) {
-        'passive_30' => 'Passiv',
-        default => 'aktive',
-    };
-    $zahlungspflichtiger = $data['kontoinhaber_gleich_antragsteller'] === 'ja'
-        ? ''
-        : ($data['kontoinhaber_name'] ?? '');
-
-    $sheets->appendRow([
-        '',
-        $status,
-        $data['vorname'],
-        $data['name'],
-        $data['iban'],
-        Beitrag::jahresbetrag($data['beitrag']),
-        '',
-        '',
-        $zahlungspflichtiger,
-        trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? '')),
-        $data['plz'],
-        $data['ort'],
-        $data['beruf'],
-        $data['telefon'],
-        $data['email'],
-        $data['geburtstag'],
-        $data['unterschrift_datum'],
-        '',
-    ]);
-    $sheetOk = true;
-} catch (Throwable $e) {
-    error_log('anmeldung.php: Google Sheets append fehlgeschlagen: ' . $e->getMessage());
-}
+// Reihenfolge des Gesamtprozesses (so vom Verein festgelegt):
+// 1. PDF aus den geprueften Formulardaten bauen
+// 2. Kopie per Mail ans neue Mitglied
+// 3. Kopie per Mail an Kassenwart + Kontakt (CC: 1. Vorsitzender)
+// 4. Erst danach: Eintrag mit neuer, automatisch vergebener Mitgliedsnummer
+//    in "Boxring Wetterau - Mitgliederliste" (Google Sheet)
 
 $pdfContent = null;
 try {
@@ -197,16 +162,16 @@ try {
     error_log('anmeldung.php: Mail an Mitglied fehlgeschlagen: ' . $e->getMessage());
 }
 
+$internalMailOk = false;
 try {
     $internalBodyHtml = sprintf(
         '<p>Neue Online-Anmeldung: <strong>%s %s</strong> (%s), Beitragsart: %s%s.</p>' .
-        '<p>Sheet-Eintrag: %s · PDF: %s · Mail an Mitglied: %s</p>',
+        '<p>PDF: %s · Mail an Mitglied: %s</p>',
         htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($data['email'], ENT_QUOTES, 'UTF-8'),
         htmlspecialchars(Beitrag::label($data['beitrag']) ?? $data['beitrag'], ENT_QUOTES, 'UTF-8'),
         $anteiligerBeitrag !== null ? sprintf(' (anteilig %.2f Euro)', $anteiligerBeitrag) : '',
-        $sheetOk ? 'ok' : 'FEHLGESCHLAGEN, siehe Server-Log',
         $pdfContent !== null ? 'ok' : 'FEHLGESCHLAGEN, siehe Server-Log',
         $memberMailOk ? 'ok' : 'FEHLGESCHLAGEN, siehe Server-Log'
     );
@@ -216,13 +181,69 @@ try {
         'Neue Mitgliedsanmeldung: ' . $data['vorname'] . ' ' . $data['name'],
         $internalBodyHtml,
         $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null,
-        [ADMIN_CC_EMAIL]
+        [ADMIN_CC_EMAIL],
+        [CONTACT_EMAIL]
     );
+    $internalMailOk = true;
 } catch (Throwable $e) {
     error_log('anmeldung.php: interne Benachrichtigungsmail fehlgeschlagen: ' . $e->getMessage());
 }
 
-if ($sheetOk || $memberMailOk) {
+$sheetOk = false;
+try {
+    $sheets = new GoogleSheetsAppender(GOOGLE_SERVICE_ACCOUNT_JSON_PATH, GOOGLE_SHEET_ID, GOOGLE_SHEET_RANGE);
+
+    // Naechste freie Mitgliedsnummer: hoechste bestehende Nummer in Spalte G + 1.
+    $existingRows = $sheets->getValues('Sheet1!G2:G');
+    $maxMitgliedsnr = 0;
+    foreach ($existingRows as $row) {
+        $value = (int) ($row[0] ?? 0);
+        if ($value > $maxMitgliedsnr) {
+            $maxMitgliedsnr = $value;
+        }
+    }
+    $neueMitgliedsnr = $maxMitgliedsnr + 1;
+
+    // Spaltenreihenfolge MUSS exakt zur Kopfzeile von "Boxring Wetterau -
+    // Mitgliederliste" passen: gekuendigt Jahresende, Status, Vorname,
+    // Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
+    // Strasse, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt,
+    // Anmeldegebuehr Zahldatum. Mandatsref/Anmeldegebuehr-Zahldatum bleiben
+    // leer - die vergibt/pflegt der Kassenwart von Hand.
+    $status = match ($data['beitrag']) {
+        'passive_30' => 'Passiv',
+        default => 'aktive',
+    };
+    $zahlungspflichtiger = $data['kontoinhaber_gleich_antragsteller'] === 'ja'
+        ? ''
+        : ($data['kontoinhaber_name'] ?? '');
+
+    $sheets->appendRow([
+        '',
+        $status,
+        $data['vorname'],
+        $data['name'],
+        $data['iban'],
+        Beitrag::jahresbetrag($data['beitrag']),
+        $neueMitgliedsnr,
+        '',
+        $zahlungspflichtiger,
+        trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? '')),
+        $data['plz'],
+        $data['ort'],
+        $data['beruf'],
+        $data['telefon'],
+        $data['email'],
+        $data['geburtstag'],
+        $data['unterschrift_datum'],
+        '',
+    ]);
+    $sheetOk = true;
+} catch (Throwable $e) {
+    error_log('anmeldung.php: Google Sheets append fehlgeschlagen: ' . $e->getMessage());
+}
+
+if ($sheetOk || $memberMailOk || $internalMailOk) {
     respond(200, ['success' => true]);
 }
 

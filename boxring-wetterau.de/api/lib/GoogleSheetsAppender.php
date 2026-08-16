@@ -38,6 +38,34 @@ final class GoogleSheetsAppender
         $this->range = $range;
     }
 
+    /**
+     * Liest den aktuellen Inhalt eines Bereichs (z.B. um die naechste freie
+     * Mitgliedsnummer zu bestimmen), bevor eine neue Zeile angehaengt wird.
+     *
+     * @return array<int, array<int, string>>
+     */
+    public function getValues(string $range): array
+    {
+        $token = $this->fetchAccessToken();
+
+        $url = sprintf(
+            'https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s',
+            rawurlencode($this->sheetId),
+            rawurlencode($range)
+        );
+
+        [$status, $response] = $this->httpJson('GET', $url, '', [
+            'Authorization: Bearer ' . $token,
+        ]);
+
+        if ($status < 200 || $status >= 300) {
+            throw new RuntimeException("Google Sheets Lesezugriff fehlgeschlagen (HTTP $status): $response");
+        }
+
+        $data = json_decode($response, true);
+        return is_array($data) && isset($data['values']) ? $data['values'] : [];
+    }
+
     /** @param array<int, scalar|null> $row */
     public function appendRow(array $row): void
     {
@@ -107,13 +135,16 @@ final class GoogleSheetsAppender
     private function httpJson(string $method, string $url, string $body, array $headers): array
     {
         $ch = curl_init($url);
-        curl_setopt_array($ch, [
+        $opts = [
             CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_POSTFIELDS => $body,
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 15,
-        ]);
+        ];
+        if ($body !== '') {
+            $opts[CURLOPT_POSTFIELDS] = $body;
+        }
+        curl_setopt_array($ch, $opts);
         $response = curl_exec($ch);
         if ($response === false) {
             $error = curl_error($ch);
