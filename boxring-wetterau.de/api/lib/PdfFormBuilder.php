@@ -187,8 +187,15 @@ final class PdfFormBuilder
         self::charBoxes($pdf, array_slice($ibanBoxes, 2), 575.8, 589.9, $ibanRest);
 
         // BIC wird seit SEPA-Umstellung nicht mehr im Online-Formular abgefragt
-        // (innerhalb der EU/EWR seit Februar 2016 nicht mehr Pflicht) - die
-        // entsprechenden Kaestchen auf der Vorlage bleiben daher leer.
+        // (innerhalb der EU/EWR seit Februar 2016 nicht mehr Pflicht - die IBAN
+        // allein genuegt fuer den Lastschrifteinzug). Die komplette "BIC /
+        // SWIFT"-Tabellenzeile der Vorlage (Label + 11 Kaestchen, Koordinaten
+        // aus dem Original-PDF vermessen) wird daher weiss ueberdeckt, statt
+        // sie leer stehen zu lassen oder den BIC kuenstlich aus der IBAN
+        // abzuleiten (bräuchte eine externe Bankleitzahl-Tabelle als
+        // zusaetzliche Fehlerquelle - unnoetig, da rechtlich nicht gebraucht).
+        $pdf->SetFillColor(255, 255, 255);
+        $pdf->Rect(70.5, 589.6, 447.2, 17.9, 'F');
 
         $ortDatum = trim(($data['unterschrift_ort'] ?? '') . ', ' . ($data['unterschrift_datum'] ?? ''), ' ,');
         self::row($pdf, 75, 672, 682, 140, $ortDatum);
