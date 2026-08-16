@@ -69,38 +69,21 @@
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
 ## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-16)
-- [ ] **Anmeldegebühr im Formular anpassen**: Aktuell steht im Formular/Willkommensmail
-      eine fixe einmalige Aufnahmegebühr von 20,- € (laut Text bar beim Kassierer
-      zu zahlen bzw. laut Mailtext per SEPA-Lastschrift zusammen mit dem ersten
-      Beitrag einzuziehen – das ist bereits uneinheitlich). Kassenwart muss sich
-      auf eine Regelung festlegen (Betrag, Zahlweg), danach Formular + Mailtext +
-      ggf. PDF entsprechend anpassen.
-- [ ] **Google-Sheet-Freigabe einschränken**: Das Sheet "Boxring Wetterau –
-      Mitgliederliste" ist laut Nutzer aktuell über einen öffentlichen Link
-      ("Jeder mit dem Link") erreichbar – enthält aber personenbezogene Daten
-      inkl. IBAN. Muss auf "Eingeschränkt" umgestellt und nur dem Kassenwart
-      (namentlich per Mailadresse, Rolle Bearbeiter) freigegeben werden. Nur der
-      Nutzer selbst kann das in den Google-Sheets-Freigabeeinstellungen ändern.
-- [ ] **Zahlungsabwicklung: SEPA-Lastschrift automatisieren (Entscheidung
-      gefallen: SEPA, NICHT PayPal)**: Aktuell sammelt das Formular nur die
-      SEPA-Mandatsdaten (IBAN) ein, der tatsächliche Einzug (wann, welcher
-      Betrag – Mitgliedsbeitrag + ggf. Aufnahmegebühr) läuft manuell über den
-      Kassenwart. PayPal wurde bewusst verworfen: PayPal kann keine echte
-      SEPA-Lastschrift auf eine im Formular eingegebene IBAN ausführen, das
-      würde ein separates PayPal-Konto samt aktiver Zustimmung des Mitglieds
-      erfordern statt eines klassischen SEPA-Mandats.
-      Nächster Schritt (liegt beim Nutzer, nicht bei Claude): Klären mit der
-      Volksbank, ob für das Vereinskonto ein **EBICS-Zugang**
-      (Electronic Banking Internet Communication Standard) eingerichtet werden
-      kann/ist – das ist die Bankschnittstelle, über die sich SEPA-
-      Sammellastschriften automatisiert per Software einreichen lassen, ohne
-      manuellen Upload im Online-Banking. Sobald ein EBICS-Zugang (inkl.
-      technischer Zugangsdaten/Zertifikate der Bank) vorliegt, kann eine
-      Automatisierung (regelmäßiger Lastschrifteinzug zu festen Zeitpunkten,
-      z. B. jährlich zum 01.03.) aufgesetzt werden. Das ist ein größeres,
-      eigenständiges Projekt (Bank-Freigabe, Zertifikatsaustausch,
-      EBICS-Client-Anbindung) – noch nicht spezifiziert, wartet auf
-      Rückmeldung der Bank.
+- [ ] Praxistest durch den Kassenwart läuft noch (Rückmeldung steht aus).
+- [ ] `MEMBER_CC_EMAIL`-Go-Live-Schalter in `api/config.php` von der Testphase
+      (`Kontakt@`) auf `NOTIFY_EMAIL` (Kassenwart) umstellen, sobald live
+      geschaltet wird.
+
+**Entschieden/erledigt in dieser Session:**
+- SEPA-Lastschrift-Automatisierung (EBICS-Anbindung an die Volksbank) wird
+  NICHT umgesetzt – Kassenwart zieht den jährlichen Beitrag weiterhin bewusst
+  manuell ein. Punkt komplett gestrichen, keine weitere Aktion nötig.
+- Anmeldegebühr-Text im Formular korrigiert: stand vorher "bar beim
+  Vereinskassierer oder 1. Vorsitzenden zu entrichten", jetzt einheitlich mit
+  der Willkommensmail: "wird zusammen mit deinem ersten Mitgliedsbeitrag
+  automatisch per SEPA-Lastschrift eingezogen".
+- Google-Sheet-Freigabe eingeschränkt: Nutzer hat den Zugriff auf sich selbst
+  und den Kassenwart beschränkt (kein öffentlicher Link mehr).
 
 ## Bereits erledigt
 - [x] Senior-Webdesigner/SEO-Review der Live-Seite durchgeführt, 6 Issues
