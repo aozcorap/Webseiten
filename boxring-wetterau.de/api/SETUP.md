@@ -93,8 +93,8 @@ Bitte das Sheet einmal manuell freigeben: oben rechts auf "Teilen" klicken,
 1. `https://www.boxring-wetterau.de/mitglied-werden.html` aufrufen, Formular
    mit Testdaten ausfüllen (eine gültige Test-IBAN verwenden, z. B. die
    Vereins-IBAN selbst) und absenden.
-2. Prüfen: Neue Zeile im Google Sheet? Bestätigungsmail mit PDF-Anhang
-   angekommen? Kopie an `NOTIFY_EMAIL` angekommen?
+2. Prüfen: Neue Zeile im Google Sheet? Willkommensmail mit PDF-Anhang beim
+   Test-Empfänger angekommen, inkl. Kopie an `MEMBER_CC_EMAIL` als CC?
 3. Bei Fehlern: Server-Error-Log prüfen (Plesk → Protokolle, oder
    `error_log`-Ausgabe je nach Hosting-Konfiguration) – das Skript schreibt
    dort verständliche Fehlermeldungen zu jedem der drei Schritte
