@@ -96,20 +96,22 @@ final class PdfFormBuilder
     /** @param array<string, mixed> $data */
     private static function fillPageOne(Fpdi $pdf, array $data): void
     {
-        self::row($pdf, 120, 150.8, 163.1, 186, $data['name'] ?? null);
-        self::row($pdf, 368, 150.8, 163.1, 170, $data['vorname'] ?? null);
+        // x-Werte = exakte Spaltentrenner der Original-Vorlage (aus den
+        // Tabellen-Fuellrechtecken vermessen) + 6pt Innenabstand.
+        self::row($pdf, 131, 150.8, 163.1, 175, $data['name'] ?? null);
+        self::row($pdf, 374, 150.8, 163.1, 164, $data['vorname'] ?? null);
 
-        self::row($pdf, 122, 173.4, 185.7, 184, $data['strasse'] ?? null);
-        self::row($pdf, 338, 173.4, 185.7, 200, $data['hausnummer'] ?? null);
+        self::row($pdf, 131, 173.4, 185.7, 175, $data['strasse'] ?? null);
+        self::row($pdf, 346, 173.4, 185.7, 55, $data['hausnummer'] ?? null);
 
-        self::row($pdf, 119, 196.2, 208.5, 115, $data['plz'] ?? null);
-        self::row($pdf, 266, 196.2, 208.5, 272, $data['ort'] ?? null);
+        self::row($pdf, 131, 196.2, 208.5, 62, $data['plz'] ?? null);
+        self::row($pdf, 315, 196.2, 208.5, 223, $data['ort'] ?? null);
 
-        self::row($pdf, 122, 218.7, 231.1, 179, $data['beruf'] ?? null);
-        self::row($pdf, 372, 218.7, 231.1, 166, $data['geburtstag'] ?? null);
+        self::row($pdf, 131, 218.7, 231.1, 175, $data['beruf'] ?? null);
+        self::row($pdf, 374, 218.7, 231.1, 164, $data['geburtstag'] ?? null);
 
-        self::row($pdf, 123, 241.5, 253.9, 415, $data['telefon'] ?? null);
-        self::row($pdf, 121, 264.3, 276.7, 417, $data['email'] ?? null);
+        self::row($pdf, 131, 241.5, 253.9, 407, $data['telefon'] ?? null);
+        self::row($pdf, 131, 264.3, 276.7, 407, $data['email'] ?? null);
 
         if (($data['bilder_einwilligung'] ?? '') === 'ja') {
             self::checkbox($pdf, 456.0, 307.2, 465.8, 317.0);
