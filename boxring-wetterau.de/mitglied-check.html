@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitglied-Check – Boxring Wetterau 1983 e.V.</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<meta name="theme-color" content="#e8394f">
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('./assets/fonts/anton-latin-400.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url('./assets/fonts/inter-latin-variable.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:#111110;color:#f2ede8;font-family:'Inter',sans-serif;overflow-x:hidden;}
+  a{color:#f2ede8;text-decoration:none;}
+  a:hover{color:#e8394f;}
+
+  .bw-card{background:#191817;border-radius:20px;border:1px solid rgba(242,237,232,0.06);padding:32px;margin-bottom:24px;}
+  .bw-card h2{font-family:'Anton',sans-serif;font-size:clamp(18px,3vw,24px);text-transform:uppercase;letter-spacing:0.3px;margin:0 0 6px;}
+  .bw-card p.hint{font-size:14px;color:#c4bdb5;margin:0 0 24px;line-height:1.6;}
+  .bw-field{margin-bottom:18px;}
+  .bw-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media screen and (max-width:640px){.bw-row{grid-template-columns:1fr;}}
+  label{display:block;font-size:13px;font-weight:600;color:#c4bdb5;margin-bottom:6px;}
+  input[type="text"],input[type="password"]{
+    width:100%;background:#111110;border:1px solid rgba(242,237,232,0.4);border-radius:10px;
+    padding:12px 14px;color:#f2ede8;font-size:16px;font-family:inherit;
+  }
+  input::placeholder{color:#8f887f;opacity:1;}
+  input:focus{outline:none;border-color:#e8394f;box-shadow:0 0 0 3px rgba(232,57,79,0.18);}
+  .bw-error{font-size:13px;color:#e8394f;margin-top:6px;display:none;}
+  .bw-error.show{display:block;}
+  .bw-submit{width:100%;background:#e8394f;color:#fff;border:none;border-radius:999px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .bw-submit:hover{background:#d12f43;}
+  .bw-submit:disabled{opacity:0.5;cursor:not-allowed;}
+  .bw-logout{background:none;border:1px solid rgba(242,237,232,0.3);color:#c4bdb5;border-radius:999px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:inherit;}
+  .bw-logout:hover{border-color:#e8394f;color:#e8394f;}
+  #status{margin-top:16px;font-size:14px;line-height:1.6;padding:14px 16px;border-radius:10px;display:none;}
+  #status.show{display:block;}
+  #status.err{background:rgba(232,57,79,0.12);color:#f2a4ae;border:1px solid rgba(232,57,79,0.3);}
+  .result{border-radius:14px;padding:24px;margin-top:20px;display:none;}
+  .result.show{display:block;}
+  .result.ja{background:rgba(76,175,80,0.12);border:1px solid rgba(76,175,80,0.35);}
+  .result.nein{background:rgba(232,57,79,0.12);border:1px solid rgba(232,57,79,0.35);}
+  .result .badge{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;letter-spacing:0.3px;margin:0 0 8px;}
+  .result.ja .badge{color:#8fd694;}
+  .result.nein .badge{color:#f2a4ae;}
+  .result .details{font-size:14px;color:#c4bdb5;line-height:1.7;}
+  .result .warn{margin-top:10px;font-size:13px;color:#e8c94f;}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:-3px;margin-right:8px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px clamp(20px,4vw,48px);background:rgba(17,17,16,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(242,237,232,0.08);">
+  <a href="./index.html" style="display:flex;align-items:center;gap:12px;min-width:0;">
+    <img src="./assets/logo-white.svg" alt="Boxring Wetterau" style="width:clamp(44px,8vw,76px);height:clamp(44px,8vw,76px);flex-shrink:0;">
+    <div style="font-family:'Anton',sans-serif;line-height:1;letter-spacing:0.5px;white-space:nowrap;">
+      <div style="font-size:16px;">BOXRING</div>
+      <div style="font-size:16px;color:#e8394f;">WETTERAU</div>
+    </div>
+  </a>
+  <button type="button" class="bw-logout" id="logout-btn" style="display:none;">Ausloggen</button>
+</header>
+
+<main style="max-width:520px;margin:0 auto;padding:64px 24px 100px;">
+  <div style="font-family:'Anton',sans-serif;font-size:clamp(24px,6vw,40px);color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Mitglied-Check</div>
+  <p style="font-size:15px;color:#c4bdb5;line-height:1.7;margin:0 0 32px;">Nur für Trainer. Prüft, ob eine Person bereits als Mitglied in unserer Liste geführt wird.</p>
+
+  <div class="bw-card" id="login-card">
+    <h2>Login</h2>
+    <p class="hint">Mit dem Trainer-Passwort einloggen.</p>
+    <form id="login-form">
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="f-password">Passwort</label>
+        <input type="password" id="f-password" name="password" required autocomplete="current-password">
+        <div class="bw-error" id="login-error">Passwort falsch.</div>
+      </div>
+      <button type="submit" class="bw-submit" id="login-submit" style="margin-top:20px;">Einloggen</button>
+    </form>
+  </div>
+
+  <div class="bw-card" id="search-card" style="display:none;">
+    <h2>Mitglied suchen</h2>
+    <p class="hint">Vor- und Nachname eingeben und mit der Mitgliederliste abgleichen.</p>
+    <form id="search-form">
+      <div class="bw-row">
+        <div class="bw-field">
+          <label for="f-vorname">Vorname</label>
+          <input type="text" id="f-vorname" name="vorname" required autocomplete="off">
+        </div>
+        <div class="bw-field">
+          <label for="f-nachname">Nachname</label>
+          <input type="text" id="f-nachname" name="nachname" required autocomplete="off">
+        </div>
+      </div>
+      <button type="submit" class="bw-submit" id="search-submit">Prüfen</button>
+    </form>
+    <div id="status"></div>
+    <div class="result" id="result"></div>
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  var loginCard = document.getElementById("login-card");
+  var searchCard = document.getElementById("search-card");
+  var logoutBtn = document.getElementById("logout-btn");
+  var loginForm = document.getElementById("login-form");
+  var loginError = document.getElementById("login-error");
+  var loginSubmit = document.getElementById("login-submit");
+  var searchForm = document.getElementById("search-form");
+  var searchSubmit = document.getElementById("search-submit");
+  var statusBox = document.getElementById("status");
+  var resultBox = document.getElementById("result");
+
+  function showLoggedIn(){
+    loginCard.style.display = "none";
+    searchCard.style.display = "block";
+    logoutBtn.style.display = "inline-block";
+  }
+  function showLoggedOut(){
+    loginCard.style.display = "block";
+    searchCard.style.display = "none";
+    logoutBtn.style.display = "none";
+  }
+
+  fetch("./api/mitglied-session.php").then(function(res){ return res.json(); }).then(function(data){
+    if(data && data.loggedIn){ showLoggedIn(); }
+  }).catch(function(){});
+
+  loginForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    loginError.classList.remove("show");
+    loginSubmit.disabled = true;
+    loginSubmit.textContent = "Wird geprüft …";
+    fetch("./api/mitglied-login.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({password: document.getElementById("f-password").value})
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      loginSubmit.disabled = false;
+      loginSubmit.textContent = "Einloggen";
+      if(result.ok && result.data && result.data.success){
+        document.getElementById("f-password").value = "";
+        showLoggedIn();
+      } else {
+        loginError.textContent = (result.data && result.data.message) || "Passwort falsch.";
+        loginError.classList.add("show");
+      }
+    }).catch(function(){
+      loginSubmit.disabled = false;
+      loginSubmit.textContent = "Einloggen";
+      loginError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      loginError.classList.add("show");
+    });
+  });
+
+  logoutBtn.addEventListener("click", function(){
+    fetch("./api/mitglied-logout.php", {method: "POST"}).then(function(){ showLoggedOut(); }).catch(function(){ showLoggedOut(); });
+  });
+
+  function formatDatum(wert){
+    if(!wert) return "";
+    // Apps Script liefert Datumswerte als ISO-String (z.B. 2026-08-16T00:00:00.000Z).
+    var match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(wert));
+    if(match) return match[3] + "." + match[2] + "." + match[1];
+    return String(wert);
+  }
+
+  searchForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    statusBox.className = "";
+    statusBox.textContent = "";
+    resultBox.className = "result";
+    resultBox.innerHTML = "";
+    searchSubmit.disabled = true;
+    searchSubmit.innerHTML = '<span class="spinner"></span>Wird geprüft …';
+
+    fetch("./api/mitglied-suche.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        vorname: document.getElementById("f-vorname").value,
+        nachname: document.getElementById("f-nachname").value
+      })
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
+    }).then(function(result){
+      searchSubmit.disabled = false;
+      searchSubmit.textContent = "Prüfen";
+
+      if(result.status === 401){
+        showLoggedOut();
+        return;
+      }
+      if(!result.ok || !result.data || !result.data.success){
+        statusBox.textContent = (result.data && result.data.message) || "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+        statusBox.className = "show err";
+        return;
+      }
+
+      if(result.data.gefunden){
+        var treffer = result.data.treffer[0];
+        var html = '<div class="badge">✓ Ist Mitglied</div>';
+        html += '<div class="details">' + escapeHtml(treffer.vorname) + ' ' + escapeHtml(treffer.nachname);
+        if(treffer.mitgliedsnr) html += ' · Mitgliedsnr. ' + escapeHtml(String(treffer.mitgliedsnr));
+        if(treffer.eintritt) html += '<br>Eintritt: ' + escapeHtml(formatDatum(treffer.eintritt));
+        html += '</div>';
+        if(treffer.gekuendigtJahresende){
+          html += '<div class="warn">⚠ Hat zum Jahresende gekündigt - ist aber noch bis 31.12. Mitglied.</div>';
+        }
+        if(result.data.treffer.length > 1){
+          html += '<div class="warn">⚠ ' + result.data.treffer.length + ' Treffer mit ähnlichem Namen gefunden - bitte im Zweifel den Kassenwart fragen.</div>';
+        }
+        resultBox.innerHTML = html;
+        resultBox.className = "result show ja";
+      } else {
+        resultBox.innerHTML = '<div class="badge">✗ Nicht gefunden</div><div class="details">Kein Mitglied mit diesem Namen in der Liste. Bitte Schreibweise prüfen oder auf die Online-Anmeldung hinweisen.</div>';
+        resultBox.className = "result show nein";
+      }
+    }).catch(function(){
+      searchSubmit.disabled = false;
+      searchSubmit.textContent = "Prüfen";
+      statusBox.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      statusBox.className = "show err";
+    });
+  });
+
+  function escapeHtml(str){
+    var div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+})();
+</script>
+</body>
+</html>

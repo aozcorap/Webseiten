@@ -80,14 +80,17 @@ bleibt dabei gleich).
     `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE`) – im Zweifel beim
     E-Mail-Hosting/Plesk-Postfach-Einstellungen nachsehen (übliche Werte:
     Port 587 + `tls`, oder Port 465 + `ssl`).
-  - `NOTIFY_EMAIL` → E-Mail-Adresse, die bei jeder neuen Anmeldung eine Kopie
-    bekommt (z. B. Kassenwart@boxring-wetterau.de).
-  - `MEMBER_CC_EMAIL` → **Go-Live-Schalter.** Steht auf CC der Willkommensmail
-    ans neue Mitglied und im "Bei Fragen"-Text derselben Mail. In der
-    Testphase auf `Kontakt@boxring-wetterau.de` gesetzt. Sobald live
-    geschaltet wird: hier einfach `define('MEMBER_CC_EMAIL', NOTIFY_EMAIL);`
-    eintragen (oder direkt die gewünschte Adresse) - das genügt, CC und
-    Mailtext ziehen automatisch nach.
+  - `NOTIFY_EMAIL` → Kassenwart-Adresse. Wird als Reply-To auf allen
+    Vereins-Mails gesetzt und im "Bei Fragen"-Text der Willkommensmail
+    genannt.
+  - `SMTP_FROM_EMAIL` → Absender der Willkommensmail (aktuell Kassenwart, da
+    er fachlich zuständig ist).
+  - `MEMBER_CC_EMAIL` → CC-Empfänger der Willkommensmail ans neue Mitglied
+    (aktuell Kontakt@boxring-wetterau.de), unabhängig von Absender/"Bei
+    Fragen"-Kontakt oben.
+  - `ADMIN_PASSWORD` → Geteiltes Passwort für den Trainer-Adminbereich
+    (`mitglied-check.html`, siehe Abschnitt 6). Unbedingt durch ein eigenes
+    Passwort ersetzen.
 
   **Wichtig:** `config.php` enthält Passwörter und darf **nicht** ins
   Git-Repo eingecheckt werden (steht bereits in `.gitignore`). Diese Datei
@@ -104,6 +107,21 @@ bleibt dabei gleich).
    `error_log`-Ausgabe je nach Hosting-Konfiguration) – das Skript schreibt
    dort verständliche Fehlermeldungen zu jedem der drei Schritte
    (Sheet/PDF/Mail).
+
+## 6. Trainer-Adminbereich (Mitglied-Check)
+
+Trainer können unter `https://www.boxring-wetterau.de/mitglied-check.html`
+während des Trainings per Vor-/Nachname prüfen, ob jemand bereits Mitglied
+ist (Login mit `ADMIN_PASSWORD` aus `config.php`, gilt für alle Trainer
+gemeinsam). Angezeigt werden nur Name, Mitgliedsnummer und Eintrittsdatum -
+keine Bankverbindung, Adresse oder Kontaktdaten.
+
+Voraussetzung: Das Apps Script (`api/apps-script/mitgliederliste.gs`) muss
+die aktuelle Version mit der `sucheMitglied`-Funktion enthalten. Falls die
+Suche mit "Suche fehlgeschlagen" abbricht, obwohl der Login klappt: im Sheet
+unter *Erweiterungen → Apps Script* prüfen, ob der Code aktuell ist, und bei
+Bedarf über *Bereitstellen → Bereitstellungen verwalten* eine neue Version
+veröffentlichen (siehe Abschnitt 3 oben - gleiche Vorgehensweise).
 
 ## Hinweis zur Sicherheit
 

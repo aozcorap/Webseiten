@@ -56,6 +56,14 @@ function doPost(e) {
       return jsonResponse({ success: false, message: 'Kein Tabellenblatt gefunden' });
     }
 
+    // Mitglied-Check (Trainer-Adminbereich, api/mitglied-suche.php): sucht
+    // nur Vor-/Nachname ab und gibt bewusst NUR unkritische Eckdaten zurueck
+    // (keine IBAN/Adresse/Telefon/Mail/Geburtstag) - Trainer sollen lediglich
+    // pruefen koennen, ob jemand Mitglied ist, nicht die volle Kartei sehen.
+    if (payload.action === 'search') {
+      return jsonResponse(sucheMitglied(sheet, payload.vorname, payload.nachname));
+    }
+
     var row = payload.row;
     if (!Array.isArray(row)) {
       return jsonResponse({ success: false, message: 'row fehlt oder ist kein Array' });
@@ -73,6 +81,50 @@ function doPost(e) {
   } catch (err) {
     return jsonResponse({ success: false, message: String(err) });
   }
+}
+
+function sucheMitglied(sheet, vorname, nachname) {
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) {
+    return { success: true, gefunden: false, treffer: [] };
+  }
+  // Spalten A:R = 18 Spalten (siehe SETUP.md fuer die vollstaendige Reihenfolge).
+  var values = sheet.getRange(2, 1, lastRow - 1, 18).getValues();
+  var qVorname = normalisiere(vorname);
+  var qNachname = normalisiere(nachname);
+
+  var treffer = [];
+  values.forEach(function (r) {
+    if (normalisiere(r[2]) === qVorname && normalisiere(r[3]) === qNachname) {
+      treffer.push(zeileZuTreffer(r));
+    }
+  });
+
+  // Fallback bei keinem exakten Treffer: tolerantere Teilstring-Suche, falls
+  // sich z.B. jemand beim Tippen waehrend des Trainings vertippt hat.
+  if (treffer.length === 0 && qVorname !== '' && qNachname !== '') {
+    values.forEach(function (r) {
+      if (normalisiere(r[2]).indexOf(qVorname) !== -1 && normalisiere(r[3]).indexOf(qNachname) !== -1) {
+        treffer.push(zeileZuTreffer(r));
+      }
+    });
+  }
+
+  return { success: true, gefunden: treffer.length > 0, treffer: treffer };
+}
+
+function normalisiere(wert) {
+  return String(wert || '').trim().toLowerCase();
+}
+
+function zeileZuTreffer(r) {
+  return {
+    vorname: r[2],
+    nachname: r[3],
+    mitgliedsnr: r[6],
+    eintritt: r[16],
+    gekuendigtJahresende: !!r[0],
+  };
 }
 
 /** Erzwingt Text-Speicherung per fuehrendem Apostroph, damit fuehrende Nullen erhalten bleiben. */

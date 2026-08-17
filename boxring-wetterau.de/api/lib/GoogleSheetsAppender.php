@@ -25,10 +25,33 @@ final class GoogleSheetsAppender
      */
     public function appendRow(array $row): int
     {
-        $body = json_encode([
-            'secret' => $this->sharedSecret,
-            'row' => array_values($row),
-        ], JSON_UNESCAPED_UNICODE);
+        $data = $this->call(['row' => array_values($row)]);
+
+        return (int) $data['mitgliedsnr'];
+    }
+
+    /**
+     * Sucht im Sheet nach Vor-/Nachname (Mitglied-Check im Trainer-
+     * Adminbereich, siehe api/mitglied-suche.php). Liefert bewusst nur
+     * unkritische Eckdaten je Treffer (vorname, nachname, mitgliedsnr,
+     * eintritt, gekuendigtJahresende) - keine IBAN/Adresse/Kontaktdaten.
+     *
+     * @return array{gefunden: bool, treffer: list<array<string, mixed>>}
+     */
+    public function search(string $vorname, string $nachname): array
+    {
+        $data = $this->call(['action' => 'search', 'vorname' => $vorname, 'nachname' => $nachname]);
+
+        return [
+            'gefunden' => (bool) ($data['gefunden'] ?? false),
+            'treffer' => is_array($data['treffer'] ?? null) ? $data['treffer'] : [],
+        ];
+    }
+
+    /** @param array<string, mixed> $payload */
+    private function call(array $payload): array
+    {
+        $body = json_encode(['secret' => $this->sharedSecret] + $payload, JSON_UNESCAPED_UNICODE);
 
         // Apps-Script-Web-Apps antworten auf den POST zunaechst mit einem 302
         // auf eine script.googleusercontent.com-URL, die die eigentliche
@@ -50,7 +73,7 @@ final class GoogleSheetsAppender
             throw new RuntimeException("Apps Script meldet Fehler: $message (Antwort: $response)");
         }
 
-        return (int) $data['mitgliedsnr'];
+        return $data;
     }
 
     private function postAndGetRedirect(string $url, string $body): string

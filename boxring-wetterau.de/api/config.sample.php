@@ -41,3 +41,11 @@ define('GOOGLE_SHEETS_WEBAPP_URL', 'https://script.google.com/macros/s/AKfycbzrR
 // gesetzt). Schuetzt den Endpunkt, da die Web-App-URL oeffentlich erreichbar
 // ist (Zugriff "Jeder").
 define('GOOGLE_SHEETS_WEBAPP_SECRET', 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ');
+
+// --- Trainer-Adminbereich (mitglied-check.html): Mitglied-Check waehrend
+// des Trainings, ob eine Person bereits online/schriftlich angemeldet ist ---
+
+// Geteiltes Passwort fuer alle Trainer (keine einzelnen Nutzerkonten - fuer
+// den Zweck unverhaeltnismaessig). Unbedingt durch ein eigenes, langes
+// Passwort ersetzen, bevor der Adminbereich live geht.
+define('ADMIN_PASSWORD', 'HIER-EIGENES-PASSWORT-EINTRAGEN');
