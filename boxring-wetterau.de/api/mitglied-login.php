@@ -2,8 +2,9 @@
 declare(strict_types=1);
 
 /**
- * Login fuer den Trainer-Adminbereich (mitglied-check.html). Ein geteiltes
- * Trainer-Passwort statt Nutzerkonten - siehe AdminSession.php.
+ * Login fuer den Trainer-Adminbereich (mitglied-check.html). Ein geteilter
+ * Benutzername + ein geteiltes Passwort statt einzelner Nutzerkonten -
+ * siehe AdminSession.php.
  */
 
 error_reporting(E_ALL);
@@ -31,13 +32,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 }
 
 $input = json_decode((string) file_get_contents('php://input'), true);
+$username = is_array($input) && isset($input['username']) && is_string($input['username']) ? $input['username'] : '';
 $password = is_array($input) && isset($input['password']) && is_string($input['password']) ? $input['password'] : '';
 
-if ($password === '' || !hash_equals(ADMIN_PASSWORD, $password)) {
-    // Kleine kuenstliche Verzoegerung gegen simples Passwort-Erraten per Skript.
+if ($username === '' || $password === '' || !hash_equals(ADMIN_USERNAME, $username) || !hash_equals(ADMIN_PASSWORD, $password)) {
+    // Kleine kuenstliche Verzoegerung gegen simples Erraten per Skript.
     usleep(500_000);
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Passwort falsch.']);
+    echo json_encode(['success' => false, 'message' => 'Benutzername oder Passwort falsch.']);
     exit;
 }
 

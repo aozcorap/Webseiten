@@ -45,7 +45,7 @@ define('GOOGLE_SHEETS_WEBAPP_SECRET', 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rX
 // --- Trainer-Adminbereich (mitglied-check.html): Mitglied-Check waehrend
 // des Trainings, ob eine Person bereits online/schriftlich angemeldet ist ---
 
-// Geteiltes Passwort fuer alle Trainer (keine einzelnen Nutzerkonten - fuer
-// den Zweck unverhaeltnismaessig). Unbedingt durch ein eigenes, langes
-// Passwort ersetzen, bevor der Adminbereich live geht.
+// Geteilter Benutzername + geteiltes Passwort fuer alle Trainer (keine
+// einzelnen Nutzerkonten - fuer den Zweck unverhaeltnismaessig).
+define('ADMIN_USERNAME', 'HIER-EIGENEN-BENUTZERNAMEN-EINTRAGEN');
 define('ADMIN_PASSWORD', 'HIER-EIGENES-PASSWORT-EINTRAGEN');
