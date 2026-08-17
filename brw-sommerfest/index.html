@@ -644,7 +644,7 @@
             salat: r.salat,
             kuchen: r.kuchen,
             anmerkung: r.anmerkung,
-            pfandBezahlt: true,
+            pfandBezahlt: r.pfand_art !== 'Offen',
             pfandBetrag: r.pfand_betrag,
             pfandArt: r.pfand_art
           };
