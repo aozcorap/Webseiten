@@ -68,20 +68,22 @@
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
-## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-16, Ende Session)
-- [ ] `MEMBER_CC_EMAIL`-Go-Live-Schalter in `api/config.php` von der Testphase
-      (`Kontakt@`) auf `NOTIFY_EMAIL` (Kassenwart) umstellen, sobald endgültig
-      live geschaltet wird.
-- [ ] Beim Go-Live: Button/Link "Jetzt Mitglied werden" auf der Startseite
-      (index.html) wieder einbauen, der zu mitglied-werden.html führt. Der
-      Link wurde waehrend der Entwicklung/Testphase bewusst entfernt (siehe
-      Commit "Verlinkung zum Anmeldeformular von der Startseite entfernen"),
-      damit die Seite ohne sichtbaren Einstiegspunkt nicht versehentlich vor
-      dem Go-Live von echten Interessenten gefunden/genutzt wird. Ohne
-      diesen Schritt bleibt das fertige Formular fuer Besucher unauffindbar,
-      selbst wenn Mailversand/Sheet/PDF technisch bereit sind.
+## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-17, Go-Live)
+- [ ] Trainer-Zugangsdaten für `mitglied-check.html` (`brw-trainer` /
+      `brw-trainer`) sind bewusst simpel gewählt - bei Bedarf in
+      `api/config.php` (`ADMIN_USERNAME`/`ADMIN_PASSWORD`) durch etwas
+      Sichereres ersetzen.
 
-**Entschieden/erledigt in dieser Session:**
+**Entschieden/erledigt beim Go-Live (2026-08-17):**
+- Willkommensmail-Absender auf Kassenwart@ umgestellt, CC bleibt Kontakt@,
+  "Bei Fragen"-Text verweist auf den Kassenwart.
+- "Mitglied werden"-Link in Navigation + CTA-Button auf der Startseite
+  wieder eingebaut (war waehrend der Testphase bewusst entfernt).
+- Neuer Trainer-Adminbereich (`mitglied-check.html`, im Footer verlinkt):
+  Mitglied-Check per Name gegen die Google-Sheet-Mitgliederliste, ohne
+  sensible Daten (IBAN/Adresse/Kontakt) preiszugeben.
+
+**Entschieden/erledigt in der vorherigen Session:**
 - Praxistest durch den Kassenwart erfolgreich durchlaufen (mehrere Runden
   über reale, per Formular generierte PDFs Feedback erhalten und behoben:
   BIC-Feld raus, Telefon/PLZ mit führender Null in Google Sheet, deutsches
