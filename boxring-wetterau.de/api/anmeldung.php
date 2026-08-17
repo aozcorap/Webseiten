@@ -173,8 +173,8 @@ try {
         '<p>Wir freuen uns auf dich im Training!</p>' .
         '<p>Sportliche Grüße,<br>Boxring Wetterau 1983 e.V.</p>',
         htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
-        MEMBER_CC_EMAIL,
-        MEMBER_CC_EMAIL
+        NOTIFY_EMAIL,
+        NOTIFY_EMAIL
     );
     Mailer::send(
         $data['email'],

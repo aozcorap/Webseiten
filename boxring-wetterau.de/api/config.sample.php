@@ -13,20 +13,21 @@ define('SMTP_PORT', 587);
 define('SMTP_SECURE', 'tls'); // 'tls' (Port meist 587) oder 'ssl' (Port meist 465)
 define('SMTP_USER', 'info@boxring-wetterau.de');
 define('SMTP_PASS', 'HIER-PASSWORT-EINTRAGEN');
-define('SMTP_FROM_EMAIL', 'info@boxring-wetterau.de');
+// Absender der Willkommensmail ans neue Mitglied: der Kassenwart, da er
+// fachlich zustaendig ist (Beitrag/SEPA-Einzug) und Rueckfragen direkt
+// beantworten kann.
+define('SMTP_FROM_EMAIL', 'Kassenwart@boxring-wetterau.de');
 define('SMTP_FROM_NAME', 'Boxring Wetterau 1983 e.V.');
 
-// Reply-To fuer alle Vereins-Mails + Kontaktadresse im Fehlerfall.
+// Reply-To fuer alle Vereins-Mails + "Bei Fragen"-Kontaktadresse im
+// Willkommensmailtext + Kontaktadresse im Fehlerfall.
 define('NOTIFY_EMAIL', 'Kassenwart@boxring-wetterau.de');
 
 // Basis-Adresse fuer MEMBER_CC_EMAIL (siehe unten).
 define('CONTACT_EMAIL', 'Kontakt@boxring-wetterau.de');
 
-// CC-Empfaenger + "Bei Fragen"-Kontaktadresse in der Willkommensmail ans neue
-// Mitglied. EINZIGE Stelle, die beim Go-Live umgestellt werden muss: aktuell
-// (Testphase) Kontakt@, danach auf NOTIFY_EMAIL (Kassenwart) aendern - wird
-// dann automatisch an beiden Stellen (CC-Header + Mailtext) uebernommen,
-// da im Code nur noch diese eine Konstante referenziert wird.
+// CC-Empfaenger der Willkommensmail ans neue Mitglied (zur Kenntnisnahme
+// durch den Verein, unabhaengig vom Absender/"Bei Fragen"-Kontakt oben).
 define('MEMBER_CC_EMAIL', CONTACT_EMAIL);
 
 // --- Google Sheets: Speicherung der Anmeldungen (via Apps Script, siehe
