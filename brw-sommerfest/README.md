@@ -43,10 +43,18 @@ mitbringen).
 - **Wichtig:** Reiner clientseitiger Zugangsschutz (Passwort steht im
   Seitenquelltext) – kein Hochsicherheits-Login, aber ausreichend für ein
   internes Vereins-Tool ohne sensible Zahlungsdaten dahinter.
-- Die Anmeldungsliste ist ein statisches JavaScript-Array im Seitencode
-  (`ANMELDUNGEN` in `index.html`), da die Seite rein statisch ist (kein
-  Server, keine Datenbank). Pfand-Status (bar oder PayPal bezahlt, Betrag)
-  wird pro Anmeldung mitgeführt. Es gibt keine automatische Live-Anbindung
-  an eingehende E-Mails – Claude aktualisiert die Liste bei Bedarf und
-  deployt die Seite neu. Bei Bedarf einfach nachfragen ("Adminliste
-  aktualisieren").
+- Die Anmeldungen liegen in Supabase (Tabelle `anmeldungen`, Projekt
+  „brw-sommerfest"). Das öffentliche Formular schreibt beim Absenden
+  automatisch, der Admin-Bereich liest live (Auto-Refresh alle 15 Sek.).
+- Im Admin-Bereich können manuell neue Anmeldungen hinzugefügt ("+
+  Anmeldung hinzufügen") und bestehende gelöscht werden ("Löschen"-Button
+  je Zeile, mit Bestätigungsabfrage) – z. B. für Barzahler, die sich
+  persönlich angemeldet haben, oder um Dubletten zu entfernen.
+- **Sicherheitshinweis:** Die Supabase-Tabelle nutzt einen öffentlichen
+  „publishable key" mit Row-Level-Security-Policies, die `INSERT`,
+  `SELECT` und `DELETE` für jeden erlauben, der den Key kennt (er steht im
+  Seitenquelltext, wie der öffentliche Zugangsschutz auch). Löschen/Ändern
+  ist also nicht wirklich an das Admin-Passwort gekoppelt, sondern nur
+  UI-seitig dahinter versteckt. Für ein internes Vereins-Tool ohne
+  sensible Zahlungsdaten als Trade-off akzeptiert – bei Bedarf (z. B. bei
+  Vandalismus) Claude ansprechen, um die Policies zu verschärfen.
