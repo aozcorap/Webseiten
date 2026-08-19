@@ -49,3 +49,12 @@ define('GOOGLE_SHEETS_WEBAPP_SECRET', 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rX
 // einzelnen Nutzerkonten - fuer den Zweck unverhaeltnismaessig).
 define('ADMIN_USERNAME', 'HIER-EIGENEN-BENUTZERNAMEN-EINTRAGEN');
 define('ADMIN_PASSWORD', 'HIER-EIGENES-PASSWORT-EINTRAGEN');
+
+// --- Trainer-Zeiterfassung (trainer-zeiterfassung.html): individuelle
+// Trainer-Accounts, Stundenerfassung + monatliche Abrechnung per Mail an den
+// Kassenwart (NOTIFY_EMAIL oben). Genehmigung neuer Trainer erfolgt per
+// Bestaetigungslink in einer E-Mail an NOTIFY_EMAIL, kein separates Passwort
+// noetig. ---
+
+// Verguetung pro voller Trainingsstunde, gilt fuer alle Trainer gleich.
+define('TRAINER_STUNDENSATZ', 20.0);

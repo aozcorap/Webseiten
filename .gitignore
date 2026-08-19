@@ -1,3 +1,8 @@
 # Secrets fuer die Mitglieder-Anmeldung (boxring-wetterau.de) - niemals einchecken.
 boxring-wetterau.de/api/config.php
 boxring-wetterau.de/secrets/
+
+# Laufzeitdaten der Trainer-Zeiterfassung (Accounts, Stunden, Abrechnungen) -
+# personenbezogene Daten, gehoeren nicht ins Repo. Ordner selbst bleibt ueber
+# .gitkeep erhalten.
+boxring-wetterau.de/api/data/*.json
