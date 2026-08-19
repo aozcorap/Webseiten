@@ -58,6 +58,8 @@ TrainerStore::setTrainerStatus($trainer['id'], $neuerStatus);
 $name = $trainer['vorname'] . ' ' . $trainer['nachname'];
 
 try {
+    $signatur = '<p>Sportliche Gruesse,<br>Boxring Wetterau 1983 e.V.</p>';
+
     if ($neuerStatus === 'aktiv') {
         Mailer::send(
             $trainer['email'],
@@ -66,6 +68,7 @@ try {
             '<p>Hallo ' . htmlspecialchars($trainer['vorname'], ENT_QUOTES, 'UTF-8') . ',</p>'
                 . '<p>dein Account fuer die Trainer-Zeiterfassung wurde freigeschaltet. Du kannst dich jetzt einloggen und deine Trainingsstunden eintragen:</p>'
                 . '<p><a href="https://www.boxring-wetterau.de/trainer-zeiterfassung.html">Zur Zeiterfassung</a></p>'
+                . $signatur
         );
     } else {
         Mailer::send(
@@ -73,7 +76,9 @@ try {
             $name,
             'Trainer-Zugang zur Zeiterfassung',
             '<p>Hallo ' . htmlspecialchars($trainer['vorname'], ENT_QUOTES, 'UTF-8') . ',</p>'
-                . '<p>deine Registrierung fuer die Trainer-Zeiterfassung wurde leider nicht bestaetigt. Bei Fragen melde dich gerne unter <a href="mailto:' . NOTIFY_EMAIL . '">' . NOTIFY_EMAIL . '</a>.</p>'
+                . '<p>deine Registrierung fuer die Trainer-Zeiterfassung wurde leider nicht bestaetigt.</p>'
+                . '<p>Bei Rueckfragen wende dich bitte an den Vorstand oder Kassenwart: <a href="mailto:' . NOTIFY_EMAIL . '">' . NOTIFY_EMAIL . '</a>.</p>'
+                . $signatur
         );
     }
 } catch (Throwable $e) {

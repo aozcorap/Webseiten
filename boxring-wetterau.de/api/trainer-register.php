@@ -86,11 +86,19 @@ $ablehnenUrl = $baseUrl . '?token=' . $approveToken . '&aktion=ablehnen';
 // Genehmigungslink nie irgendwo ankam - der wuerde die E-Mail-Adresse
 // dauerhaft fuer eine erneute Registrierung blockieren.
 try {
+    // Buttons als Tabelle statt inline-block nebeneinander - robuster in
+    // E-Mail-Clients (z.B. Outlook ignoriert inline-block teils komplett).
+    // Bewusst auffaellig (Grossbuchstaben, Haekchen/Kreuz-Symbol, deutliche
+    // Farbflaechen), damit auf den ersten Blick klar ist: hier ist eine
+    // Entscheidung noetig, nicht nur eine Info-Mail.
     $bodyHtml = sprintf(
         '<p>Hallo,</p>' .
         '<p><strong>%s %s</strong> (%s) hat sich fuer die Trainer-Zeiterfassung registriert und wartet auf Freigabe.</p>' .
-        '<p><a href="%s" style="display:inline-block;background:#4caf50;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;margin-right:12px;">Trainer bestaetigen</a>' .
-        '<a href="%s" style="display:inline-block;background:#e8394f;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;">Ablehnen</a></p>' .
+        '<p style="font-weight:700;margin-bottom:12px;">Bitte jetzt entscheiden:</p>' .
+        '<table cellpadding="0" cellspacing="0" style="margin-bottom:16px;"><tr>' .
+        '<td style="padding-right:12px;"><a href="%s" style="display:inline-block;background:#2e9e4f;color:#ffffff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.3px;">✓ TRAINER BESTAETIGEN</a></td>' .
+        '<td><a href="%s" style="display:inline-block;background:#e8394f;color:#ffffff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.3px;">✗ ABLEHNEN</a></td>' .
+        '</tr></table>' .
         '<p>Der Link ist 30 Tage gueltig.</p>',
         htmlspecialchars($vorname, ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($nachname, ENT_QUOTES, 'UTF-8'),
