@@ -57,4 +57,30 @@ define('ADMIN_PASSWORD', 'HIER-EIGENES-PASSWORT-EINTRAGEN');
 // noetig. ---
 
 // Verguetung pro voller Trainingsstunde, gilt fuer alle Trainer gleich.
+// Fuer HAUPTTRAINER_EMAIL (siehe unten) gilt dieser Satz als BRUTTO inkl.
+// 19% MwSt. (er ist umsatzsteuerpflichtig, bekommt eine echte PDF-Rechnung
+// statt einer einfachen Text-Mail) - bei allen anderen Trainern ist es ein
+// einfacher Betrag ohne MwSt-Berechnung.
 define('TRAINER_STUNDENSATZ', 20.0);
+
+// --- PDF-Rechnung fuer den Haupttrainer (RechnungBuilder.php) ---
+// E-Mail-Adresse des Haupttrainers - stimmt mit seinem Trainer-Account
+// ueberein. Nur fuer diese eine Adresse wird beim Abrechnen eine echte
+// PDF-Rechnung erzeugt (an den Kassenwart, CC an ihn selbst) statt der
+// einfachen Text-Mail, die alle anderen Trainer bekommen.
+define('HAUPTTRAINER_EMAIL', 'ahmet@ozcorapci.de');
+
+define('HAUPTTRAINER_NAME', 'HIER-NAME-EINTRAGEN');
+define('HAUPTTRAINER_STRASSE', 'HIER-STRASSE-HAUSNUMMER-EINTRAGEN');
+define('HAUPTTRAINER_PLZ_ORT', 'HIER-PLZ-ORT-EINTRAGEN');
+define('HAUPTTRAINER_ORT', 'HIER-NUR-ORT-EINTRAGEN'); // fuer "Ort, den TT. Monat JJJJ" auf der Rechnung
+
+define('HAUPTTRAINER_BANKNAME', 'HIER-BANKNAME-EINTRAGEN');
+define('HAUPTTRAINER_IBAN', 'HIER-IBAN-EINTRAGEN');
+define('HAUPTTRAINER_BIC', 'HIER-BIC-EINTRAGEN');
+define('HAUPTTRAINER_STEUERNUMMER', 'HIER-STEUERNUMMER-EINTRAGEN');
+
+// Rechnungsempfaenger-Adressblock (Verein) - wie auf der Beispielrechnung.
+define('VEREIN_RECHNUNGSNAME', 'Boxring Wetterau');
+define('VEREIN_RECHNUNGSSTRASSE', 'Hospitalgasse 36');
+define('VEREIN_RECHNUNGSORT', '61169 Friedberg');

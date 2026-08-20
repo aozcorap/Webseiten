@@ -18,6 +18,7 @@ require_once __DIR__ . '/lib/TrainerSession.php';
 require_once __DIR__ . '/lib/TrainerStore.php';
 require_once __DIR__ . '/lib/Mailer.php';
 require_once __DIR__ . '/lib/JsonResponse.php';
+require_once __DIR__ . '/lib/RechnungBuilder.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -79,36 +80,58 @@ $betrag = round($stundenGesamt * TRAINER_STUNDENSATZ, 2);
 
 $monatsName = (new DateTimeImmutable($monat . '-01'))->format('m/Y');
 $name = $trainer['vorname'] . ' ' . $trainer['nachname'];
-
-$zeilen = '';
-foreach ($eintraege as $eintrag) {
-    $tagFormatiert = (new DateTimeImmutable($eintrag['datum']))->format('d.m.Y');
-    $zeilen .= '<tr><td style="padding:4px 12px 4px 0;">' . htmlspecialchars($tagFormatiert, ENT_QUOTES, 'UTF-8') . '</td><td style="padding:4px 0;">' . $eintrag['stunden'] . ' Std.</td></tr>';
-}
-
-$bodyHtml = sprintf(
-    '<p>Hallo,</p>' .
-    '<p><strong>%s</strong> rechnet die Trainerstunden fuer <strong>%s</strong> ab:</p>' .
-    '<table style="border-collapse:collapse;">%s</table>' .
-    '<p><strong>Gesamt: %d Stunden × %s €/Std. = %s €</strong></p>' .
-    '<p>Sportliche Gruesse,<br>Boxring Wetterau 1983 e.V. – Trainer-Zeiterfassung</p>',
-    htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
-    htmlspecialchars($monatsName, ENT_QUOTES, 'UTF-8'),
-    $zeilen,
-    $stundenGesamt,
-    number_format(TRAINER_STUNDENSATZ, 2, ',', '.'),
-    number_format($betrag, 2, ',', '.')
-);
+$istHaupttrainer = strcasecmp($trainer['email'], HAUPTTRAINER_EMAIL) === 0;
 
 try {
-    Mailer::send(
-        NOTIFY_EMAIL,
-        'Kassenwart',
-        'Trainerabrechnung ' . $monatsName . ' – ' . $name,
-        $bodyHtml,
-        null,
-        [$trainer['email']]
-    );
+    if ($istHaupttrainer) {
+        // Haupttrainer ist umsatzsteuerpflichtig und bekommt eine echte
+        // PDF-Rechnung statt der einfachen Text-Mail - nur an den
+        // Kassenwart (er ist selbst der Rechnungssteller), CC an sich
+        // selbst fuer die eigene Buchhaltung.
+        $rechnungPdf = RechnungBuilder::build([
+            'monat' => $monat,
+            'stunden' => $stundenGesamt,
+            'betragBrutto' => $betrag,
+            'rechnungsdatum' => new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')),
+        ]);
+        Mailer::send(
+            NOTIFY_EMAIL,
+            'Kassenwart',
+            'Rechnung Trainerstunden ' . $monatsName . ' – ' . $name,
+            '<p>Hallo,</p><p>im Anhang die Rechnung für die Trainerstunden ' . htmlspecialchars($monatsName, ENT_QUOTES, 'UTF-8') . '.</p><p>Sportliche Grüße,<br>' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</p>',
+            ['name' => 'Rechnung', 'content' => $rechnungPdf, 'filename' => 'Rechnung-' . str_replace('-', '', $monat) . '_BRW.pdf'],
+            [$trainer['email']]
+        );
+    } else {
+        $zeilen = '';
+        foreach ($eintraege as $eintrag) {
+            $tagFormatiert = (new DateTimeImmutable($eintrag['datum']))->format('d.m.Y');
+            $zeilen .= '<tr><td style="padding:4px 12px 4px 0;">' . htmlspecialchars($tagFormatiert, ENT_QUOTES, 'UTF-8') . '</td><td style="padding:4px 0;">' . $eintrag['stunden'] . ' Std.</td></tr>';
+        }
+
+        $bodyHtml = sprintf(
+            '<p>Hallo,</p>' .
+            '<p><strong>%s</strong> rechnet die Trainerstunden fuer <strong>%s</strong> ab:</p>' .
+            '<table style="border-collapse:collapse;">%s</table>' .
+            '<p><strong>Gesamt: %d Stunden × %s €/Std. = %s €</strong></p>' .
+            '<p>Sportliche Gruesse,<br>Boxring Wetterau 1983 e.V. – Trainer-Zeiterfassung</p>',
+            htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($monatsName, ENT_QUOTES, 'UTF-8'),
+            $zeilen,
+            $stundenGesamt,
+            number_format(TRAINER_STUNDENSATZ, 2, ',', '.'),
+            number_format($betrag, 2, ',', '.')
+        );
+
+        Mailer::send(
+            NOTIFY_EMAIL,
+            'Kassenwart',
+            'Trainerabrechnung ' . $monatsName . ' – ' . $name,
+            $bodyHtml,
+            null,
+            [$trainer['email']]
+        );
+    }
 } catch (Throwable $e) {
     error_log('trainer-abrechnen.php: Mail fehlgeschlagen: ' . $e->getMessage());
     // Reservierung wieder aufheben, damit der Trainer es erneut versuchen kann statt dauerhaft ausgesperrt zu sein.
