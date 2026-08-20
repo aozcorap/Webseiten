@@ -6,3 +6,7 @@ boxring-wetterau.de/secrets/
 # personenbezogene Daten, gehoeren nicht ins Repo. Ordner selbst bleibt ueber
 # .gitkeep erhalten.
 boxring-wetterau.de/api/data/*.json
+
+# Einmal-Debug-Werkzeuge mit eingebettetem Secret - nur manuell auf den Server
+# hochladen, nach Gebrauch wieder loeschen, nie ins Repo einchecken.
+boxring-wetterau.de/api/dev-*.php
