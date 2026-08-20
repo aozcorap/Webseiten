@@ -113,26 +113,32 @@ final class RechnungBuilder
         $pdf->Cell($spalten[0], 8, '1', 1, 0, 'C');
         $pdf->Cell($spalten[1], 8, 'Trainerstunden', 1, 0, 'L');
         $pdf->Cell($spalten[2], 8, (string) $daten['stunden'], 1, 0, 'C');
-        $pdf->Cell($spalten[3], 8, self::geld($stundensatzNetto), 1, 0, 'R');
-        $pdf->Cell($spalten[4], 8, self::geld($betragNetto), 1, 0, 'R');
+        self::geldZelle($pdf, $spalten[3], 8, self::geld($stundensatzNetto));
+        self::geldZelle($pdf, $spalten[4], 8, self::geld($betragNetto));
 
         $summenBreite = $spalten[0] + $spalten[1] + $spalten[2] + $spalten[3];
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->SetXY(20, $tabelleY + $kopfHoehe + 8);
         $pdf->Cell($summenBreite, 8, 'Summe Netto', 1, 0, 'L');
-        $pdf->Cell($spalten[4], 8, self::geld($betragNetto), 1, 0, 'R');
+        self::geldZelle($pdf, $spalten[4], 8, self::geld($betragNetto));
 
         $pdf->SetFont('Helvetica', '', 10);
         $pdf->SetXY(20, $tabelleY + $kopfHoehe + 16);
         $pdf->Cell($summenBreite, 8, 'MwSt. (' . round(self::MWST_SATZ * 100) . '%)', 1, 0, 'L');
-        $pdf->Cell($spalten[4], 8, self::geld($mwstBetrag), 1, 0, 'R');
+        self::geldZelle($pdf, $spalten[4], 8, self::geld($mwstBetrag));
 
         $pdf->SetFillColor(222, 234, 250);
         $pdf->SetTextColor(30, 70, 150);
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->SetXY(20, $tabelleY + $kopfHoehe + 24);
         $pdf->Cell($summenBreite, 8, 'Summe Brutto', 1, 0, 'L', true);
-        $pdf->Cell($spalten[4], 8, self::geld($betragBrutto), 1, 0, 'R', true);
+        self::geldZelle($pdf, $spalten[4], 8, self::geld($betragBrutto), true);
+
+        // Aeusserer Rahmen der Gesamttabelle bewusst dicker als die duennen
+        // inneren Trennlinien zwischen den Zellen - klassisches Tabellen-Layout.
+        $pdf->SetLineWidth(0.6);
+        $pdf->Rect(20, $tabelleY, array_sum($spalten), $kopfHoehe + 32, 'D');
+        $pdf->SetLineWidth(0.2);
 
         // --- Abschlusstext ---
         $pdf->SetTextColor(20, 20, 20);
@@ -179,6 +185,23 @@ final class RechnungBuilder
     private static function geld(float $betrag): string
     {
         return self::t(number_format($betrag, 2, ',', '.') . ' €');
+    }
+
+    /**
+     * Tabellenzelle fuer rechtsbuendige Betraege mit mehr Innenabstand zum
+     * rechten Rand als der FPDF-Standard (~1mm) - sonst kleben die Zahlen
+     * fast am Rahmen. $cMargin ist in dieser FPDF-Version protected, daher
+     * hier manuell: Rahmen/Fuellung mit voller Breite zeichnen, Text danach
+     * in einer schmaleren, unsichtbaren Zelle rechtsbuendig platzieren.
+     */
+    private static function geldZelle(FPDF $pdf, float $w, float $h, string $text, bool $fuellen = false): void
+    {
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+        $pdf->Cell($w, $h, '', 1, 0, '', $fuellen);
+        $pdf->SetXY($x, $y);
+        $pdf->Cell($w - 3, $h, $text, 0, 0, 'R');
+        $pdf->SetXY($x + $w, $y);
     }
 
     /** Zeichnet eine Tabellenzelle mit mehreren, vertikal zentrierten Textzeilen (fuer zweizeilige Tabellenkoepfe). */
