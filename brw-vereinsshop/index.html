@@ -208,6 +208,18 @@ body{
 .card-price{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
 .card-desc{font-size:12px;line-height:1.45;color:var(--ink-soft);margin:6px 0 0;}
 
+.color-mode{display:flex;gap:8px;margin-top:6px;}
+.color-swatch{
+  display:flex;align-items:center;gap:6px;
+  border:1px solid var(--line);background:var(--surface);
+  color:var(--ink-soft);font-size:11.5px;font-weight:600;
+  padding:4px 10px 4px 6px;cursor:pointer;border-radius:999px;
+}
+.color-swatch span{
+  width:14px;height:14px;border-radius:50%;flex-shrink:0;
+  background:var(--sw);border:1px solid var(--line);
+}
+.color-swatch.active{border-color:var(--ink);color:var(--ink);font-weight:700;}
 .size-mode{display:flex;gap:4px;margin-top:2px;}
 .size-mode-tab{
   border:1px solid var(--line);background:var(--surface);
@@ -381,7 +393,7 @@ body{
 
     <div class="collection-row">
       <h2>Artikel dieser Bestellrunde</h2>
-      <span>Größen XS–XXL, Kindergrößen 116–176 pro Artikel wählbar · auf Anfrage auch in Weiß lieferbar</span>
+      <span>Größen XS–XXL, Kindergrößen 116–176 · Farbe Schwarz oder Weiß pro Artikel wählbar</span>
     </div>
 
     <div class="grid" id="productGrid"></div>
@@ -413,7 +425,7 @@ body{
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
-          <tr><th>Bestellnr.</th><th>Datum</th><th>Mitglied</th><th>Artikel</th><th>Größe</th><th>Preis</th></tr>
+          <tr><th>Bestellnr.</th><th>Datum</th><th>Mitglied</th><th>Artikel</th><th>Größe / Farbe</th><th>Preis</th></tr>
         </thead>
         <tbody id="adminTableBody"></tbody>
       </table>
@@ -500,13 +512,13 @@ const PRODUCTS = [
     desc:"Zuverlässige Spielerhose mit Climacool-Technologie, elastischem Bund und sportlich-bequemem Schnitt."},
   {id:"hoody", name:"Entrada 26 Hoody", price:44.95, crest:{x:55.5,y:38.2},
     desc:"Bequemes Freizeit-Hoody aus Baumwollmix mit Kängurutasche und verstellbarer Kapuze."},
-  {id:"sweatshirt", name:"Entrada 26 Training Sweatshirt Blau", price:39.95, crest:{x:62.3,y:39.9},
+  {id:"sweatshirt", name:"Entrada 26 Training Sweatshirt", price:39.95, crest:{x:62.3,y:39.9},
     desc:"Trainings-Sweatshirt mit Stehkragen, Half-Zip und Climacool-Technologie für aktive Kühlung."},
   {id:"jacke", name:"Entrada 26 Trainingsjacke", price:39.95, crest:{x:62.5,y:37.2},
     desc:"Trainingsjacke mit Stehkragen, Mesh-Einsatz zur Belüftung und durchgehendem Reißverschluss."},
   {id:"tshirt", name:"Entrada 26 T-Shirt", price:24.95, crest:{x:56.7,y:37.5},
     desc:"Lässiges Freizeitshirt aus Baumwolle, Regular Fit mit gesticktem Logo."},
-  {id:"trikot", name:"Entrada 26 Trikot Schwarz", price:17.95, crest:{x:65.7,y:26.7},
+  {id:"trikot", name:"Entrada 26 Trikot", price:17.95, crest:{x:65.7,y:26.7},
     desc:"Spieltrikot mit Climacool-Technologie, Slim Fit und kontrastfarbenen Ärmelbündchen."},
   {id:"winterjacke", name:"Entrada 26 Padded Winterjacke", price:84.95, crest:{x:57.5,y:39.9},
     desc:"Leicht wattierte Winterjacke mit durchgehendem Reißverschluss — ideal für die Seitenlinie."},
@@ -548,6 +560,10 @@ function renderGrid(){
         <div class="card-price">${fmt(p.price)}</div>
         <p class="card-desc">${p.desc}</p>
       </div>
+      <div class="color-mode" role="group" aria-label="Farbe für ${p.name}">
+        <button type="button" class="color-swatch active" data-color="Schwarz" style="--sw:#161514" aria-label="Schwarz"><span></span>Schwarz</button>
+        <button type="button" class="color-swatch" data-color="Weiß" style="--sw:#ffffff" aria-label="Weiß"><span></span>Weiß</button>
+      </div>
       <div class="size-mode" role="group" aria-label="Größentyp für ${p.name}">
         <button type="button" class="size-mode-tab active" data-mode="adult">Erwachsene</button>
         <button type="button" class="size-mode-tab" data-mode="kids">Kinder</button>
@@ -581,8 +597,17 @@ function wireCards(){
     const sizesEl = card.querySelector(".sizes");
     let selectedSize = null;
     let mode = "adult";
+    let color = "Schwarz";
 
     card.querySelector(".card-art").addEventListener("click", () => openLightbox(id));
+
+    card.querySelectorAll(".color-swatch").forEach(swatch => {
+      swatch.addEventListener("click", () => {
+        card.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("active"));
+        swatch.classList.add("active");
+        color = swatch.dataset.color;
+      });
+    });
 
     function renderSizeChips(){
       const list = mode === "kids" ? KID_SIZES : SIZES;
@@ -618,8 +643,9 @@ function wireCards(){
 
     addBtn.addEventListener("click", () => {
       if(!selectedSize) return;
-      const label = mode === "kids" ? `${selectedSize} (Kinder)` : selectedSize;
-      cart.push({...product, size: label, key: id + selectedSize + mode + Math.random()});
+      const sizeLabel = mode === "kids" ? `${selectedSize} (Kinder)` : selectedSize;
+      const label = `${sizeLabel} · ${color}`;
+      cart.push({...product, size: label, key: id + selectedSize + mode + color + Math.random()});
       renderCart();
       openCart();
       addBtn.textContent = "Hinzugefügt ✓";
@@ -767,7 +793,7 @@ function renderAdminTable(){
   ).join("");
 }
 function exportOrdersCsv(){
-  const rows = [["Bestellnr.","Datum","Mitglied","Artikel","Größe","Preis"]];
+  const rows = [["Bestellnr.","Datum","Mitglied","Artikel","Größe / Farbe","Preis"]];
   ORDERS.forEach(order => {
     order.items.forEach(item => {
       rows.push([order.id, order.date, order.member, item.name, item.size, item.price.toFixed(2).replace(".",",")]);
