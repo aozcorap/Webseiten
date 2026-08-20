@@ -92,49 +92,52 @@ final class RechnungBuilder
             $monatName . ' ' . $jahr . ' angefallen:'
         ));
 
-        // --- Tabelle ---
+        // --- Tabelle (Spaltenbreiten/Kopfzeilen an die echte Vorlage angelehnt) ---
         $tabelleY = $pdf->GetY() + 6;
-        $spalten = [10, 70, 30, 30, 30]; // Position, Beschreibung, Std., Satz, Summe
-        $koepfe = ['Pos.', 'Beschreibung', 'Std.', 'Satz', 'Summe'];
+        $spalten = [15, 65, 30, 30, 30]; // Position, Beschreibung, Geleistete Stunden, Stundensatz, Summe
+        $koepfe = [['Position'], ['Beschreibung'], ['Geleistete', 'Stunden'], ['Stunden-', 'satz'], ['Summe']];
+        $kopfHoehe = 12;
 
         $pdf->SetFillColor(222, 234, 250);
         $pdf->SetTextColor(30, 70, 150);
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->SetXY(20, $tabelleY);
-        foreach ($koepfe as $i => $kopf) {
-            $pdf->Cell($spalten[$i], 8, self::t($kopf), 1, 0, $i === 1 ? 'L' : 'C', true);
+        $x = 20;
+        foreach ($koepfe as $i => $zeilen) {
+            self::mehrzeiligeZelle($pdf, $x, $tabelleY, $spalten[$i], $kopfHoehe, $zeilen, $i === 1 ? 'L' : 'C', true);
+            $x += $spalten[$i];
         }
 
         $pdf->SetTextColor(20, 20, 20);
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->SetXY(20, $tabelleY + 8);
+        $pdf->SetXY(20, $tabelleY + $kopfHoehe);
         $pdf->Cell($spalten[0], 8, '1', 1, 0, 'C');
         $pdf->Cell($spalten[1], 8, 'Trainerstunden', 1, 0, 'L');
         $pdf->Cell($spalten[2], 8, (string) $daten['stunden'], 1, 0, 'C');
-        $pdf->Cell($spalten[3], 8, number_format($stundensatzNetto, 2, ',', '.') . ' EUR', 1, 0, 'R');
-        $pdf->Cell($spalten[4], 8, number_format($betragNetto, 2, ',', '.') . ' EUR', 1, 0, 'R');
+        $pdf->Cell($spalten[3], 8, self::geld($stundensatzNetto), 1, 0, 'R');
+        $pdf->Cell($spalten[4], 8, self::geld($betragNetto), 1, 0, 'R');
 
+        $summenBreite = $spalten[0] + $spalten[1] + $spalten[2] + $spalten[3];
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->SetXY(20, $tabelleY + 16);
-        $pdf->Cell($spalten[0] + $spalten[1] + $spalten[2] + $spalten[3], 8, 'Summe Netto', 1, 0, 'L');
-        $pdf->Cell($spalten[4], 8, number_format($betragNetto, 2, ',', '.') . ' EUR', 1, 0, 'R');
+        $pdf->SetXY(20, $tabelleY + $kopfHoehe + 8);
+        $pdf->Cell($summenBreite, 8, 'Summe Netto', 1, 0, 'L');
+        $pdf->Cell($spalten[4], 8, self::geld($betragNetto), 1, 0, 'R');
 
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->SetXY(20, $tabelleY + 24);
-        $pdf->Cell($spalten[0] + $spalten[1] + $spalten[2] + $spalten[3], 8, 'MwSt. (' . round(self::MWST_SATZ * 100) . '%)', 1, 0, 'L');
-        $pdf->Cell($spalten[4], 8, number_format($mwstBetrag, 2, ',', '.') . ' EUR', 1, 0, 'R');
+        $pdf->SetXY(20, $tabelleY + $kopfHoehe + 16);
+        $pdf->Cell($summenBreite, 8, 'MwSt. (' . round(self::MWST_SATZ * 100) . '%)', 1, 0, 'L');
+        $pdf->Cell($spalten[4], 8, self::geld($mwstBetrag), 1, 0, 'R');
 
         $pdf->SetFillColor(222, 234, 250);
         $pdf->SetTextColor(30, 70, 150);
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->SetXY(20, $tabelleY + 32);
-        $pdf->Cell($spalten[0] + $spalten[1] + $spalten[2] + $spalten[3], 8, 'Summe Brutto', 1, 0, 'L', true);
-        $pdf->Cell($spalten[4], 8, number_format($betragBrutto, 2, ',', '.') . ' EUR', 1, 0, 'R', true);
+        $pdf->SetXY(20, $tabelleY + $kopfHoehe + 24);
+        $pdf->Cell($summenBreite, 8, 'Summe Brutto', 1, 0, 'L', true);
+        $pdf->Cell($spalten[4], 8, self::geld($betragBrutto), 1, 0, 'R', true);
 
         // --- Abschlusstext ---
         $pdf->SetTextColor(20, 20, 20);
         $pdf->SetFont('Helvetica', '', 11);
-        $pdf->SetXY(20, $tabelleY + 48);
+        $pdf->SetXY(20, $tabelleY + $kopfHoehe + 24 + 8 + 8);
         $pdf->MultiCell(170, 5.5, 'Ich bitte, den Rechnungsbetrag binnen 14 Tage auf das u.g. Konto zu ueberweisen.');
         $pdf->Ln(4);
         $pdf->SetX(20);
@@ -170,6 +173,24 @@ final class RechnungBuilder
     private static function t(string $text): string
     {
         return iconv('UTF-8', 'CP1252//TRANSLIT', $text);
+    }
+
+    /** Betrag mit echtem Euro-Zeichen statt "EUR" (CP1252 kennt € auf Code 0x80, FPDF-Kernschriften stellen es korrekt dar). */
+    private static function geld(float $betrag): string
+    {
+        return self::t(number_format($betrag, 2, ',', '.') . ' €');
+    }
+
+    /** Zeichnet eine Tabellenzelle mit mehreren, vertikal zentrierten Textzeilen (fuer zweizeilige Tabellenkoepfe). */
+    private static function mehrzeiligeZelle(FPDF $pdf, float $x, float $y, float $w, float $h, array $zeilen, string $align, bool $fuellen): void
+    {
+        $pdf->Rect($x, $y, $w, $h, $fuellen ? 'DF' : 'D');
+        $zeilenHoehe = 4.2;
+        $startY = $y + ($h - count($zeilen) * $zeilenHoehe) / 2;
+        foreach ($zeilen as $i => $zeile) {
+            $pdf->SetXY($x, $startY + $i * $zeilenHoehe);
+            $pdf->Cell($w, $zeilenHoehe, self::t($zeile), 0, 0, $align);
+        }
     }
 
     private static function datumLangText(DateTimeImmutable $datum): string
