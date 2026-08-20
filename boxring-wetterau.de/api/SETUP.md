@@ -123,6 +123,40 @@ unter *Erweiterungen → Apps Script* prüfen, ob der Code aktuell ist, und bei
 Bedarf über *Bereitstellen → Bereitstellungen verwalten* eine neue Version
 veröffentlichen (siehe Abschnitt 3 oben - gleiche Vorgehensweise).
 
+## 7. Trainer-Zeiterfassung
+
+Unter `https://www.boxring-wetterau.de/trainer-zeiterfassung.html` können
+sich Trainer mit eigenem Account (E-Mail + Passwort) registrieren, ihre
+Trainingsstunden eintragen und abgeschlossene Vormonate abrechnen. Anders als
+beim Mitglied-Check (Abschnitt 6) hat hier jeder Trainer einen eigenen
+Account statt eines geteilten Passworts.
+
+**Ablauf:**
+1. Trainer registriert sich mit Vorname, Nachname, E-Mail, Passwort.
+2. Der Vorstand/Kassenwart (`NOTIFY_EMAIL` aus `config.php`) bekommt eine
+   E-Mail mit einem Bestätigen/Ablehnen-Link - ein Klick genügt, kein
+   eigener Login nötig. Der Trainer bekommt danach eine Benachrichtigung per
+   Mail.
+3. Freigeschaltete Trainer können sich einloggen und für jeden Tag volle
+   Trainingsstunden eintragen (auch für den laufenden Monat).
+4. Abrechnen geht nur für einen bereits abgeschlossenen Vormonat, nie für
+   den aktuellen Monat, und pro Monat nur einmal. Dabei geht eine E-Mail mit
+   Tagesliste, Stunden-Summe und Betrag an den Kassenwart (`NOTIFY_EMAIL`),
+   mit Kopie an den Trainer selbst. Der Monat ist danach gesperrt.
+
+**Konfiguration:** `TRAINER_STUNDENSATZ` in `config.php` (Vergütung pro
+voller Stunde, aktuell 20,- € für alle Trainer gleich).
+
+**Speicherung:** Bewusst keine eigene Datenbank - Accounts, Stunden und
+Abrechnungen liegen als JSON-Dateien in `api/data/` (durch `.htaccess` von
+außen gesperrt, siehe `api/data/.htaccess`). Der Ordner muss beim Deployment
+mit hochgeladen und beschreibbar sein (Standard-Dateiberechtigungen reichen
+i. d. R.).
+
+**Hinweis:** Für den Haupttrainer ist perspektivisch eine PDF-Rechnung statt
+der einfachen Abrechnungs-Mail geplant - das ist noch nicht umgesetzt, aktuell
+läuft jeder Trainer (inkl. Haupttrainer) über den oben beschriebenen Weg.
+
 ## Hinweis zur Sicherheit
 
 Selbst wenn ein Schritt fehlschlägt (z. B. Google Sheets nicht erreichbar),

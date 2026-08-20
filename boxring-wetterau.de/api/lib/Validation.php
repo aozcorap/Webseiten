@@ -44,6 +44,13 @@ final class Validation
         return $d !== false && $d->format('Y-m-d') === $date;
     }
 
+    /** Format YYYY-MM (fuer die Monatsauswahl in der Trainer-Zeiterfassung). */
+    public static function monatValid(string $monat): bool
+    {
+        $d = DateTime::createFromFormat('Y-m', $monat);
+        return $d !== false && $d->format('Y-m') === $monat;
+    }
+
     /** Schneidet Whitespace, wandelt leere Strings zu null. */
     public static function clean(?string $value): ?string
     {
