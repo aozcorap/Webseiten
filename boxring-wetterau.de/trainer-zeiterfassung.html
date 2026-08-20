@@ -46,15 +46,34 @@
   #status.show{display:block;}
   #status.err{background:rgba(232,57,79,0.12);color:#f2a4ae;border:1px solid rgba(232,57,79,0.3);}
   #status.ok{background:rgba(76,175,80,0.12);color:#8fd694;border:1px solid rgba(76,175,80,0.35);}
-  .day-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid rgba(242,237,232,0.06);}
-  .day-row:last-child{border-bottom:none;}
-  .day-row .day-label{font-size:14px;color:#c4bdb5;}
-  .day-row .day-label.today{color:#f2ede8;font-weight:700;}
-  .day-row input{width:90px;text-align:center;}
   .abrechnung-info{border-radius:14px;padding:20px;margin-bottom:20px;background:rgba(76,175,80,0.12);border:1px solid rgba(76,175,80,0.35);}
   .abrechnung-info .badge{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:0.3px;color:#8fd694;margin:0 0 6px;}
   .abrechnung-info .details{font-size:14px;color:#c4bdb5;line-height:1.6;}
-  .summary{display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-size:15px;font-weight:700;}
+  .summary{display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-size:15px;font-weight:700;border-top:1px solid rgba(242,237,232,0.06);margin-top:4px;}
+
+  .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;}
+  .cal-nav-btn{background:none;border:1px solid rgba(242,237,232,0.3);color:#f2ede8;border-radius:999px;width:38px;height:38px;flex-shrink:0;cursor:pointer;font-size:16px;font-family:inherit;display:flex;align-items:center;justify-content:center;}
+  .cal-nav-btn:hover{border-color:#e8394f;color:#e8394f;}
+  .cal-nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
+  .cal-title{font-family:'Anton',sans-serif;font-size:clamp(17px,3vw,21px);text-transform:uppercase;letter-spacing:0.3px;text-align:center;}
+  .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px;}
+  .cal-weekdays span{text-align:center;font-size:11px;font-weight:700;letter-spacing:0.4px;color:#8f887f;text-transform:uppercase;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .cal-day{aspect-ratio:1;border-radius:10px;border:1px solid rgba(242,237,232,0.08);background:#111110;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;padding:4px;font-family:inherit;color:inherit;}
+  .cal-day:hover:not(:disabled){border-color:#e8394f;}
+  .cal-day:disabled{opacity:0.3;cursor:not-allowed;}
+  .cal-day.empty{visibility:hidden;pointer-events:none;}
+  .cal-day.today{border-color:#e8394f;border-width:2px;}
+  .cal-day .num{font-size:clamp(12px,2.6vw,14px);color:#c4bdb5;}
+  .cal-day .std{font-size:11px;font-weight:700;color:#8fd694;background:rgba(76,175,80,0.16);border-radius:999px;padding:1px 7px;white-space:nowrap;}
+  .cal-day.hat-std{border-color:rgba(76,175,80,0.4);}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,9,8,0.7);display:flex;align-items:center;justify-content:center;z-index:200;padding:24px;}
+  .modal-overlay.hidden{display:none;}
+  .modal-card{background:#191817;border-radius:20px;padding:28px;max-width:320px;width:100%;border:1px solid rgba(242,237,232,0.1);}
+  .modal-card h3{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:0.3px;margin:0 0 20px;}
+  .modal-actions{display:flex;gap:10px;margin-top:20px;}
+  .modal-actions .bw-submit{margin-top:0;}
 </style>
 </head>
 <body>
@@ -125,23 +144,40 @@
   <div id="app-card" style="display:none;">
     <div class="bw-card">
       <h2>Stunden erfassen</h2>
-      <p class="hint">Nur volle Stunden. Der aktuelle Monat kann eingetragen, aber erst im Folgemonat abgerechnet werden.</p>
-      <div class="bw-field" style="margin-bottom:0;">
-        <label for="monat-auswahl">Monat</label>
-        <input type="month" id="monat-auswahl">
+      <p class="hint">Auf einen Tag klicken und die Stunden eintragen. Nur volle Stunden. Der aktuelle Monat kann erfasst, aber erst im Folgemonat abgerechnet werden.</p>
+
+      <div class="cal-header">
+        <button type="button" class="cal-nav-btn" id="cal-prev" aria-label="Vorheriger Monat">←</button>
+        <div class="cal-title" id="cal-title">Monat</div>
+        <button type="button" class="cal-nav-btn" id="cal-next" aria-label="Nächster Monat">→</button>
       </div>
+      <div class="cal-weekdays"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div>
+      <div class="cal-grid" id="cal-grid"></div>
     </div>
 
     <div class="bw-card" id="abrechnung-card" style="display:none;"></div>
 
     <div class="bw-card">
-      <div id="tage-liste"></div>
       <div class="summary"><span>Summe</span><span id="monat-summe">0 Std.</span></div>
       <div id="status"></div>
       <button type="button" class="bw-submit" id="abrechnen-btn" style="margin-top:16px;display:none;">Monat abrechnen</button>
     </div>
   </div>
 </main>
+
+<div class="modal-overlay hidden" id="tag-modal">
+  <div class="modal-card">
+    <h3 id="tag-modal-titel">Stunden eintragen</h3>
+    <div class="bw-field" style="margin-bottom:0;">
+      <label for="tag-modal-stunden">Stunden (volle Zahl)</label>
+      <input type="number" id="tag-modal-stunden" min="0" max="24" step="1" placeholder="0">
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="bw-submit secondary" id="tag-modal-abbrechen">Abbrechen</button>
+      <button type="button" class="bw-submit" id="tag-modal-speichern">Speichern</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -160,16 +196,24 @@
   var registerError = document.getElementById("register-error");
   var registerSubmit = document.getElementById("register-submit");
 
-  var monatAuswahl = document.getElementById("monat-auswahl");
-  var tageListe = document.getElementById("tage-liste");
+  var calTitle = document.getElementById("cal-title");
+  var calGrid = document.getElementById("cal-grid");
+  var calPrev = document.getElementById("cal-prev");
+  var calNext = document.getElementById("cal-next");
   var monatSumme = document.getElementById("monat-summe");
   var statusBox = document.getElementById("status");
   var abrechnenBtn = document.getElementById("abrechnen-btn");
   var abrechnungCard = document.getElementById("abrechnung-card");
 
-  var STUNDENSATZ = null; // wird nicht clientseitig verlaesslich gebraucht, Server berechnet den Betrag verbindlich.
-  var eintraegeCache = {};
+  var tagModal = document.getElementById("tag-modal");
+  var tagModalTitel = document.getElementById("tag-modal-titel");
+  var tagModalStunden = document.getElementById("tag-modal-stunden");
+  var tagModalAbbrechen = document.getElementById("tag-modal-abbrechen");
+  var tagModalSpeichern = document.getElementById("tag-modal-speichern");
+  var modalDatum = null;
+
   var monatGesperrt = false;
+  var aktuellesJahr, aktuellerMonatNr; // 1-12, der gerade angezeigte Monat
 
   // Lokales Datum statt toISOString() (UTC) - sonst stimmt "heute" rund um
   // Mitternacht (00-02 Uhr deutscher Zeit) nicht mit der Europe/Berlin-
@@ -179,6 +223,9 @@
     return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }
   var aktuellerMonat = heuteIso().slice(0, 7);
+  var MONATSNAMEN = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+  function monatKey(jahr, monatNr){ return jahr + "-" + String(monatNr).padStart(2, "0"); }
 
   tabLogin.addEventListener("click", function(){
     tabLogin.classList.add("active");
@@ -197,8 +244,13 @@
     authCard.style.display = "none";
     appCard.style.display = "block";
     logoutBtn.style.display = "inline-block";
-    if(!monatAuswahl.value){ monatAuswahl.value = aktuellerMonat; }
-    ladeMonat(monatAuswahl.value);
+    if(aktuellesJahr === undefined){
+      var heute = new Date();
+      aktuellesJahr = heute.getFullYear();
+      aktuellerMonatNr = heute.getMonth() + 1;
+    }
+    calNext.disabled = monatKey(aktuellesJahr, aktuellerMonatNr) >= aktuellerMonat;
+    ladeMonat(monatKey(aktuellesJahr, aktuellerMonatNr));
   }
   function showLoggedOut(){
     authCard.style.display = "block";
@@ -285,54 +337,90 @@
     fetch("./api/trainer-logout.php", {method: "POST"}).then(function(){ showLoggedOut(); }).catch(function(){ showLoggedOut(); });
   });
 
-  var WOCHENTAGE = ["So","Mo","Di","Mi","Do","Fr","Sa"];
-
   function anzahlTageImMonat(monat){
     var teile = monat.split("-");
     return new Date(parseInt(teile[0], 10), parseInt(teile[1], 10), 0).getDate();
   }
 
-  function renderTage(monat, eintraege){
+  /** Montag=0 .. Sonntag=6, statt JS-Standard Sonntag=0 .. Samstag=6. */
+  function wochentagMontagsBasis(datum){
+    return (new Date(datum + "T12:00:00").getDay() + 6) % 7;
+  }
+
+  function renderKalender(monat, eintraege){
     var stundenProTag = {};
     eintraege.forEach(function(e){ stundenProTag[e.datum] = e.stunden; });
 
+    var teile = monat.split("-");
+    calTitle.textContent = MONATSNAMEN[parseInt(teile[1], 10) - 1] + " " + teile[0];
+
     var anzahlTage = anzahlTageImMonat(monat);
     var heute = heuteIso();
-    var html = "";
+    var ersterTagOffset = wochentagMontagsBasis(monat + "-01");
     var summe = 0;
+    var html = "";
+
+    for(var i = 0; i < ersterTagOffset; i++){
+      html += '<button type="button" class="cal-day empty" disabled></button>';
+    }
+
     for(var tag = 1; tag <= anzahlTage; tag++){
       var tagStr = String(tag).padStart(2, "0");
       var datum = monat + "-" + tagStr;
-      if(datum > heute && !monatGesperrt){
-        break; // keine Eingabefelder fuer die Zukunft anzeigen
-      }
-      var wochentag = WOCHENTAGE[new Date(monat + "-" + tagStr + "T12:00:00").getDay()];
       var wert = stundenProTag[datum] || 0;
       summe += wert;
       var isHeute = datum === heute;
-      html += '<div class="day-row">' +
-        '<span class="day-label' + (isHeute ? ' today' : '') + '">' + tagStr + '.' + monat.slice(5,7) + '. (' + wochentag + ')' + (isHeute ? ' – heute' : '') + '</span>' +
-        '<input type="number" min="0" max="24" step="1" data-datum="' + datum + '" value="' + (wert || "") + '" placeholder="0"' + (monatGesperrt ? ' disabled' : '') + '>' +
-        '</div>';
+      var istZukunft = datum > heute;
+      var deaktiviert = istZukunft || monatGesperrt;
+      var klassen = "cal-day" + (isHeute ? " today" : "") + (wert > 0 ? " hat-std" : "");
+      html += '<button type="button" class="' + klassen + '" data-datum="' + datum + '"' + (deaktiviert ? " disabled" : "") + '>' +
+        '<span class="num">' + tag + '</span>' +
+        (wert > 0 ? '<span class="std">' + wert + ' Std.</span>' : '') +
+        '</button>';
     }
-    tageListe.innerHTML = html;
+
+    calGrid.innerHTML = html;
     monatSumme.textContent = summe + " Std.";
 
-    tageListe.querySelectorAll("input[data-datum]").forEach(function(input){
-      input.addEventListener("change", function(){
-        speichereStunden(input.dataset.datum, input);
+    calGrid.querySelectorAll("button[data-datum]:not(:disabled)").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        oeffneTagModal(btn.dataset.datum, stundenProTag[btn.dataset.datum] || 0);
       });
     });
   }
 
-  function speichereStunden(datum, input){
+  function oeffneTagModal(datum, aktuellerWert){
+    modalDatum = datum;
+    var teile = datum.split("-");
+    tagModalTitel.textContent = "Stunden am " + teile[2] + "." + teile[1] + "." + teile[0];
+    tagModalStunden.value = aktuellerWert || "";
+    tagModal.classList.remove("hidden");
+    tagModalStunden.focus();
+  }
+
+  function schliesseTagModal(){
+    tagModal.classList.add("hidden");
+    modalDatum = null;
+  }
+
+  tagModalAbbrechen.addEventListener("click", schliesseTagModal);
+  tagModal.addEventListener("click", function(evt){
+    if(evt.target === tagModal){ schliesseTagModal(); }
+  });
+
+  tagModalSpeichern.addEventListener("click", function(){
+    if(!modalDatum) return;
+    speichereStunden(modalDatum, tagModalStunden.value);
+  });
+
+  function speichereStunden(datum, roherWert){
     statusBox.className = "";
     statusBox.textContent = "";
-    var stunden = parseInt(input.value, 10);
+    var stunden = parseInt(roherWert, 10);
     if(isNaN(stunden) || stunden < 0){ stunden = 0; }
     if(stunden > 24){ stunden = 24; }
-    input.value = stunden || "";
-    input.disabled = true;
+    tagModalSpeichern.disabled = true;
+    tagModalSpeichern.textContent = "Speichert …";
 
     fetch("./api/trainer-stunden.php", {
       method: "POST",
@@ -341,16 +429,19 @@
     }).then(function(res){
       return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
     }).then(function(result){
-      input.disabled = false;
-      if(result.status === 401){ showLoggedOut(); return; }
+      tagModalSpeichern.disabled = false;
+      tagModalSpeichern.textContent = "Speichern";
+      if(result.status === 401){ schliesseTagModal(); showLoggedOut(); return; }
       if(!result.ok || !result.data || !result.data.success){
         statusBox.textContent = (result.data && result.data.message) || "Speichern fehlgeschlagen.";
         statusBox.className = "show err";
         return;
       }
-      ladeMonat(monatAuswahl.value);
+      schliesseTagModal();
+      ladeMonat(monatKey(aktuellesJahr, aktuellerMonatNr));
     }).catch(function(){
-      input.disabled = false;
+      tagModalSpeichern.disabled = false;
+      tagModalSpeichern.textContent = "Speichern";
       statusBox.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
       statusBox.className = "show err";
     });
@@ -370,8 +461,7 @@
       }
 
       monatGesperrt = !!result.data.abgerechnet;
-      eintraegeCache[monat] = result.data.eintraege;
-      renderTage(monat, result.data.eintraege);
+      renderKalender(monat, result.data.eintraege);
 
       if(monatGesperrt){
         var a = result.data.abrechnung;
@@ -400,12 +490,19 @@
     });
   }
 
-  monatAuswahl.addEventListener("change", function(){
-    if(monatAuswahl.value){ ladeMonat(monatAuswahl.value); }
-  });
+  function gehZuMonat(richtung){
+    aktuellerMonatNr += richtung;
+    if(aktuellerMonatNr > 12){ aktuellerMonatNr = 1; aktuellesJahr++; }
+    if(aktuellerMonatNr < 1){ aktuellerMonatNr = 12; aktuellesJahr--; }
+    calNext.disabled = monatKey(aktuellesJahr, aktuellerMonatNr) >= aktuellerMonat;
+    ladeMonat(monatKey(aktuellesJahr, aktuellerMonatNr));
+  }
+  calPrev.addEventListener("click", function(){ gehZuMonat(-1); });
+  calNext.addEventListener("click", function(){ if(!calNext.disabled){ gehZuMonat(1); } });
 
   abrechnenBtn.addEventListener("click", function(){
-    if(!confirm("Monat " + monatAuswahl.value + " jetzt abrechnen? Der Kassenwart bekommt eine E-Mail, danach kann der Monat nicht mehr geändert werden.")) return;
+    var monat = monatKey(aktuellesJahr, aktuellerMonatNr);
+    if(!confirm("Monat " + monat + " jetzt abrechnen? Der Kassenwart bekommt eine E-Mail, danach kann der Monat nicht mehr geändert werden.")) return;
     statusBox.className = "";
     statusBox.textContent = "";
     abrechnenBtn.disabled = true;
@@ -413,7 +510,7 @@
     fetch("./api/trainer-abrechnen.php", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({monat: monatAuswahl.value})
+      body: JSON.stringify({monat: monat})
     }).then(function(res){
       return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
     }).then(function(result){
@@ -427,7 +524,7 @@
       }
       statusBox.textContent = "Abrechnung verschickt: " + result.data.stunden + " Std. · " + result.data.betrag.toFixed(2).replace(".", ",") + " €.";
       statusBox.className = "show ok";
-      ladeMonat(monatAuswahl.value);
+      ladeMonat(monat);
     }).catch(function(){
       abrechnenBtn.disabled = false;
       abrechnenBtn.textContent = "Monat abrechnen";
