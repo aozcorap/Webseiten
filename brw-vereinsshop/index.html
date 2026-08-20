@@ -291,6 +291,21 @@ body{
   display:flex;align-items:center;justify-content:center;gap:6px;
 }
 .btn-paypal:hover{filter:brightness(0.96);}
+.btn-transfer{
+  width:100%;background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);padding:12px;font-size:13.5px;font-weight:700;
+  border-radius:var(--radius);cursor:pointer;margin-top:8px;
+}
+.btn-transfer:hover{background:var(--surface-2);}
+.transfer-details{
+  display:none;text-align:left;margin-top:14px;padding:14px 16px;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2);
+}
+.transfer-details.open{display:block;}
+.transfer-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:5px 0;border-bottom:1px solid var(--line);}
+.transfer-row:last-of-type{border-bottom:none;}
+.transfer-row span{color:var(--ink-soft);}
+.transfer-row strong{font-variant-numeric:tabular-nums;text-align:right;}
 .cart-note{font-size:11px;color:var(--ink-faint);text-align:center;margin-top:10px;}
 .admin-hint{text-align:left;max-width:60ch;margin:0 0 18px;font-size:12.5px;}
 .scrim{
@@ -395,7 +410,7 @@ body{
       <div>
         <div class="eyebrow">Entrada 26 Kollektion</div>
         <h1 class="hdisplay">Trainingsausstattung<br>für den Verein bestellen</h1>
-        <p>Größe wählen, in den Warenkorb legen, mit PayPal bezahlen. Bestellungen gehen direkt an die Zeugwart:in — Lieferung ins Vereinsheim.</p>
+        <p>Größe wählen, in den Warenkorb legen, per PayPal oder Überweisung bezahlen. Bestellungen gehen direkt an die Zeugwart:in — Lieferung ins Vereinsheim.</p>
       </div>
     </div>
 
@@ -433,7 +448,7 @@ body{
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
-          <tr><th>Bestellnr.</th><th>Datum</th><th>Mitglied</th><th>Artikel</th><th>Größe / Farbe</th><th>Preis</th></tr>
+          <tr><th>Bestellnr.</th><th>Datum</th><th>Mitglied</th><th>Artikel</th><th>Größe / Farbe</th><th>Preis</th><th>Zahlungsart</th></tr>
         </thead>
         <tbody id="adminTableBody"></tbody>
       </table>
@@ -457,11 +472,8 @@ body{
   </div>
   <div class="cart-foot">
     <div class="cart-total-row"><span>Gesamt</span><span id="cartTotal">0,00 €</span></div>
-    <button class="btn-paypal">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="#003087"><path d="M7 3h7.2c3 0 5.1 1.7 4.6 4.8-.5 3.6-3 5.4-6.4 5.4H9.8l-1 6H5l3-16zm3.1 8.3h1.7c1.7 0 2.9-.8 3.2-2.6.3-1.9-.7-2.6-2.4-2.6h-1.6l-.9 5.2z"/></svg>
-      Mit PayPal bezahlen
-    </button>
-    <div class="cart-note">Demo-Entwurf — Zahlung ist noch nicht angebunden.</div>
+    <button class="btn-add modal-btn" id="checkoutBtn">Bestellung abschicken</button>
+    <div class="cart-note">Zahlungsart (PayPal oder Überweisung) wählst du im nächsten Schritt.</div>
   </div>
 </div>
 
@@ -481,11 +493,20 @@ body{
     <p class="confirm-sub">Bestellnummer <strong id="confirmOrderId"></strong></p>
     <div class="confirm-items" id="confirmItems"></div>
     <div class="confirm-total-row"><span>Gesamt</span><span id="confirmTotal"></span></div>
-    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung bei PayPal abgeschlossen ist. Du erhältst dafür automatisch eine Zahlungsbestätigung von PayPal per E-Mail.</p>
+    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung eingegangen ist. Bitte wähle eine Zahlungsart:</p>
     <button type="button" class="btn-paypal" id="confirmPayNow">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="#003087"><path d="M7 3h7.2c3 0 5.1 1.7 4.6 4.8-.5 3.6-3 5.4-6.4 5.4H9.8l-1 6H5l3-16zm3.1 8.3h1.7c1.7 0 2.9-.8 3.2-2.6.3-1.9-.7-2.6-2.4-2.6h-1.6l-.9 5.2z"/></svg>
       Jetzt bei PayPal bezahlen
     </button>
+    <button type="button" class="btn-transfer" id="confirmShowTransfer">Per Überweisung bezahlen</button>
+    <div class="transfer-details" id="transferDetails">
+      <div class="transfer-row"><span>Empfänger</span><strong>Ahmet Özcorapci</strong></div>
+      <div class="transfer-row"><span>IBAN</span><strong id="transferIban">DE41 3002 0900 0403 6606 66</strong></div>
+      <div class="transfer-row"><span>Betrag</span><strong id="transferAmount"></strong></div>
+      <div class="transfer-row"><span>Verwendungszweck</span><strong id="transferPurpose"></strong></div>
+      <button type="button" class="btn-add modal-btn" id="transferCopyIban">IBAN kopieren</button>
+      <p class="cart-note">Bitte überweise den Betrag zeitnah mit dem angegebenen Verwendungszweck.</p>
+    </div>
     <button type="button" class="btn-add modal-btn" id="confirmBackToShop">Weiter einkaufen</button>
   </div>
 </div>
@@ -744,6 +765,7 @@ function checkout(){
     date: `${pad(today.getDate())}.${pad(today.getMonth()+1)}.${today.getFullYear()}`,
     member: name,
     items: cart.map(i => ({name:i.name, size:i.size, price:i.price})),
+    paymentMethod: "offen",
   };
   ORDERS.push(order);
   cart.length = 0;
@@ -771,8 +793,23 @@ function checkout(){
 function closeCheckoutConfirm(){
   document.getElementById("checkoutConfirm").classList.remove("open");
 }
+function showTransferDetails(){
+  if(!lastOrder) return;
+  const total = lastOrder.items.reduce((sum,i) => sum + i.price, 0);
+  document.getElementById("transferAmount").textContent = fmt(total);
+  document.getElementById("transferPurpose").textContent = `${lastOrder.id} ${lastOrder.member}`;
+  document.getElementById("transferDetails").classList.add("open");
+  lastOrder.paymentMethod = "Überweisung";
+  if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
+}
+function copyTransferIban(){
+  const iban = document.getElementById("transferIban").textContent.replace(/\s/g,"");
+  navigator.clipboard?.writeText(iban);
+}
 function payWithPaypal(){
   if(!lastOrder) return;
+  lastOrder.paymentMethod = "PayPal";
+  if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
   const form = document.getElementById("paypalForm");
   form.querySelectorAll("input[data-line]").forEach(el => el.remove());
   lastOrder.items.forEach((item, idx) => {
@@ -806,7 +843,7 @@ function renderAdminTable(){
   const body = document.getElementById("adminTableBody");
   document.getElementById("adminOrderCount").textContent = ORDERS.length + " Bestellungen";
   if(ORDERS.length === 0){
-    body.innerHTML = '<tr class="admin-empty"><td colspan="6">Noch keine Bestellungen.</td></tr>';
+    body.innerHTML = '<tr class="admin-empty"><td colspan="7">Noch keine Bestellungen.</td></tr>';
     return;
   }
   body.innerHTML = ORDERS.slice().reverse().flatMap(order =>
@@ -818,15 +855,16 @@ function renderAdminTable(){
         <td>${item.name}</td>
         <td>${item.size}</td>
         <td>${fmt(item.price)}</td>
+        <td>${idx === 0 ? order.paymentMethod : ""}</td>
       </tr>
     `)
   ).join("");
 }
 function exportOrdersCsv(){
-  const rows = [["Bestellnr.","Datum","Mitglied","Artikel","Größe / Farbe","Preis"]];
+  const rows = [["Bestellnr.","Datum","Mitglied","Artikel","Größe / Farbe","Preis","Zahlungsart"]];
   ORDERS.forEach(order => {
     order.items.forEach(item => {
-      rows.push([order.id, order.date, order.member, item.name, item.size, item.price.toFixed(2).replace(".",",")]);
+      rows.push([order.id, order.date, order.member, item.name, item.size, item.price.toFixed(2).replace(".",","), order.paymentMethod]);
     });
   });
   const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(";")).join("\r\n");
@@ -901,10 +939,12 @@ document.addEventListener("keydown", e => {
   if(e.key === "Escape"){ closeLightbox(); closeCheckoutConfirm(); }
 });
 
-document.querySelector(".btn-paypal").addEventListener("click", checkout);
+document.getElementById("checkoutBtn").addEventListener("click", checkout);
 document.getElementById("confirmClose").addEventListener("click", closeCheckoutConfirm);
 document.getElementById("confirmBackToShop").addEventListener("click", closeCheckoutConfirm);
 document.getElementById("confirmPayNow").addEventListener("click", payWithPaypal);
+document.getElementById("confirmShowTransfer").addEventListener("click", showTransferDetails);
+document.getElementById("transferCopyIban").addEventListener("click", copyTransferIban);
 document.getElementById("checkoutConfirm").addEventListener("click", e => {
   if(e.target.id === "checkoutConfirm") closeCheckoutConfirm();
 });
