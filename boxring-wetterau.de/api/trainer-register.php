@@ -105,9 +105,14 @@ try {
         htmlspecialchars($genehmigenUrl, ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($ablehnenUrl, ENT_QUOTES, 'UTF-8')
     );
-    Mailer::send(NOTIFY_EMAIL, 'Kassenwart', 'Neue Trainer-Registrierung: ' . $vorname . ' ' . $nachname, $bodyHtml);
+    // Geht an Kassenwart UND Vorstand (CONTACT_EMAIL) - "Vorstand oder
+    // Kassenwart" soll beide in die Lage versetzen, freizugeben, nicht nur
+    // eine feste Adresse. Gleichrangige Empfaenger (additionalTo), nicht CC,
+    // damit z.B. Antworten nicht automatisch nur an einen von beiden gehen.
+    $genehmigungsEmpfaenger = strcasecmp(NOTIFY_EMAIL, CONTACT_EMAIL) !== 0 ? [CONTACT_EMAIL] : [];
+    Mailer::send(NOTIFY_EMAIL, 'Kassenwart', 'Neue Trainer-Registrierung: ' . $vorname . ' ' . $nachname, $bodyHtml, null, [], $genehmigungsEmpfaenger);
 } catch (Throwable $e) {
-    error_log('trainer-register.php: Mail an Kassenwart fehlgeschlagen: ' . $e->getMessage());
+    error_log('trainer-register.php: Mail an Kassenwart/Vorstand fehlgeschlagen: ' . $e->getMessage());
     respond(500, ['success' => false, 'message' => 'Registrierung konnte nicht abgeschlossen werden. Bitte versuch es erneut oder melde dich direkt unter ' . NOTIFY_EMAIL . '.']);
 }
 
