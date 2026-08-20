@@ -17,6 +17,7 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/TrainerSession.php';
 require_once __DIR__ . '/lib/TrainerStore.php';
+require_once __DIR__ . '/lib/JsonResponse.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -41,34 +42,32 @@ if ($trainer === null || $trainer['status'] !== 'aktiv') {
     exit;
 }
 
-function respond(int $httpCode, array $payload): void
+function respond(int $httpCode, array $payload): never
 {
-    http_response_code($httpCode);
-    echo json_encode($payload, JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-function monatValid(string $monat): bool
-{
-    return (bool) preg_match('/^\d{4}-\d{2}$/', $monat) && DateTime::createFromFormat('Y-m', $monat) !== false;
+    JsonResponse::send($httpCode, $payload);
 }
 
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
 if ($method === 'GET') {
     $monat = isset($_GET['monat']) && is_string($_GET['monat']) ? $_GET['monat'] : '';
-    if (!monatValid($monat)) {
+    if (!Validation::monatValid($monat)) {
         respond(400, ['success' => false, 'message' => 'Ungueltiger Monat.']);
     }
 
     $eintraege = TrainerStore::stundenFuerMonat($trainerId, $monat);
     $abrechnung = TrainerStore::abrechnungFuerMonat($trainerId, $monat);
+    // abgerechnetAm === null bedeutet: Reservierung laeuft noch, Mail wird
+    // gerade verschickt (siehe TrainerStore::abrechnungReservieren) - Monat
+    // ist zum Bearbeiten schon gesperrt, aber noch nicht "fertig abgerechnet".
+    $wirdGeradeAbgerechnet = $abrechnung !== null && $abrechnung['abgerechnetAm'] === null;
 
     respond(200, [
         'success' => true,
         'eintraege' => array_map(static fn($e) => ['datum' => $e['datum'], 'stunden' => $e['stunden']], $eintraege),
         'abgerechnet' => $abrechnung !== null,
-        'abrechnung' => $abrechnung,
+        'wirdGeradeAbgerechnet' => $wirdGeradeAbgerechnet,
+        'abrechnung' => $wirdGeradeAbgerechnet ? null : $abrechnung,
     ]);
 }
 

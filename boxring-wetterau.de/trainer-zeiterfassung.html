@@ -168,11 +168,17 @@
   var abrechnungCard = document.getElementById("abrechnung-card");
 
   var STUNDENSATZ = null; // wird nicht clientseitig verlaesslich gebraucht, Server berechnet den Betrag verbindlich.
-  var aktuellerMonat = new Date().toISOString().slice(0, 7);
   var eintraegeCache = {};
   var monatGesperrt = false;
 
-  function heuteIso(){ return new Date().toISOString().slice(0, 10); }
+  // Lokales Datum statt toISOString() (UTC) - sonst stimmt "heute" rund um
+  // Mitternacht (00-02 Uhr deutscher Zeit) nicht mit der Europe/Berlin-
+  // Berechnung im Backend (trainer-stunden.php/trainer-abrechnen.php) ueberein.
+  function heuteIso(){
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  var aktuellerMonat = heuteIso().slice(0, 7);
 
   tabLogin.addEventListener("click", function(){
     tabLogin.classList.add("active");
@@ -369,12 +375,19 @@
 
       if(monatGesperrt){
         var a = result.data.abrechnung;
-        var datumAbgerechnet = a && a.abgerechnetAm ? new Date(a.abgerechnetAm).toLocaleDateString("de-DE") : "";
         abrechnungCard.style.display = "block";
-        abrechnungCard.innerHTML = '<div class="abrechnung-info">' +
-          '<div class="badge">✓ Bereits abgerechnet</div>' +
-          '<div class="details">' + (a ? a.stunden : 0) + ' Std. · ' + (a ? a.betrag.toFixed(2).replace(".", ",") : "0,00") + ' € · abgerechnet am ' + datumAbgerechnet + '</div>' +
-          '</div>';
+        if(result.data.wirdGeradeAbgerechnet){
+          abrechnungCard.innerHTML = '<div class="abrechnung-info">' +
+            '<div class="badge">⏳ Abrechnung wird verschickt …</div>' +
+            '<div class="details">Bitte kurz warten und die Seite neu laden.</div>' +
+            '</div>';
+        } else {
+          var datumAbgerechnet = a && a.abgerechnetAm ? new Date(a.abgerechnetAm).toLocaleDateString("de-DE") : "";
+          abrechnungCard.innerHTML = '<div class="abrechnung-info">' +
+            '<div class="badge">✓ Bereits abgerechnet</div>' +
+            '<div class="details">' + (a ? a.stunden : 0) + ' Std. · ' + (a ? a.betrag.toFixed(2).replace(".", ",") : "0,00") + ' € · abgerechnet am ' + datumAbgerechnet + '</div>' +
+            '</div>';
+        }
         abrechnenBtn.style.display = "none";
       } else {
         abrechnungCard.style.display = "none";

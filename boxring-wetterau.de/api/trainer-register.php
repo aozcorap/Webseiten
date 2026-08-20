@@ -16,6 +16,7 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/TrainerStore.php';
 require_once __DIR__ . '/lib/Mailer.php';
+require_once __DIR__ . '/lib/JsonResponse.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -26,11 +27,9 @@ if (!is_file($configPath)) {
 }
 require_once $configPath;
 
-function respond(int $httpCode, array $payload): void
+function respond(int $httpCode, array $payload): never
 {
-    http_response_code($httpCode);
-    echo json_encode($payload, JSON_UNESCAPED_UNICODE);
-    exit;
+    JsonResponse::send($httpCode, $payload);
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
@@ -112,6 +111,12 @@ try {
     respond(500, ['success' => false, 'message' => 'Registrierung konnte nicht abgeschlossen werden. Bitte versuch es erneut oder melde dich direkt unter ' . NOTIFY_EMAIL . '.']);
 }
 
-TrainerStore::createTrainer($vorname, $nachname, $email, $passwordHash, $approveToken, $approveTokenExpiry);
+// Atomarer Check-and-Insert (siehe TrainerStore::createTrainerIfEmailFree) -
+// verhindert, dass zwei zeitgleiche Registrierungen mit derselben E-Mail
+// (Race zwischen dem findTrainerByEmail()-Check oben und dem Anlegen hier)
+// beide durchkommen und zwei Accounts fuer eine Adresse entstehen.
+if (TrainerStore::createTrainerIfEmailFree($vorname, $nachname, $email, $passwordHash, $approveToken, $approveTokenExpiry) === null) {
+    respond(422, ['success' => false, 'message' => 'Fuer diese E-Mail-Adresse existiert bereits ein Account. Bitte einloggen oder ' . NOTIFY_EMAIL . ' kontaktieren.']);
+}
 
 respond(200, ['success' => true]);

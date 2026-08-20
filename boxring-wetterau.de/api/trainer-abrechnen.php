@@ -17,6 +17,7 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/lib/TrainerSession.php';
 require_once __DIR__ . '/lib/TrainerStore.php';
 require_once __DIR__ . '/lib/Mailer.php';
+require_once __DIR__ . '/lib/JsonResponse.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -27,11 +28,9 @@ if (!is_file($configPath)) {
 }
 require_once $configPath;
 
-function respond(int $httpCode, array $payload): void
+function respond(int $httpCode, array $payload): never
 {
-    http_response_code($httpCode);
-    echo json_encode($payload, JSON_UNESCAPED_UNICODE);
-    exit;
+    JsonResponse::send($httpCode, $payload);
 }
 
 TrainerSession::start();
@@ -60,16 +59,20 @@ if ($monat >= $aktuellerMonat) {
     respond(422, ['success' => false, 'message' => 'Der aktuelle Monat kann erst im Folgemonat abgerechnet werden - bitte einen abgeschlossenen Vormonat waehlen.']);
 }
 
-if (TrainerStore::abrechnungFuerMonat($trainerId, $monat) !== null) {
-    respond(422, ['success' => false, 'message' => 'Dieser Monat wurde bereits abgerechnet.']);
-}
-
 $eintraege = TrainerStore::stundenFuerMonat($trainerId, $monat);
 usort($eintraege, static fn($a, $b) => $a['datum'] <=> $b['datum']);
 $stundenGesamt = array_sum(array_map(static fn($e) => $e['stunden'], $eintraege));
 
 if ($stundenGesamt <= 0) {
     respond(422, ['success' => false, 'message' => 'Fuer diesen Monat wurden keine Stunden erfasst.']);
+}
+
+// Reserviert den Monat ATOMAR, bevor die (langsame) Mail verschickt wird -
+// verhindert, dass zwei zeitgleiche Abrechnen-Klicks (Doppelklick, zwei
+// offene Tabs) beide die Mail verschicken, bevor einer von beiden merkt,
+// dass der andere schon abgerechnet hat.
+if (!TrainerStore::abrechnungReservieren($trainerId, $monat)) {
+    respond(422, ['success' => false, 'message' => 'Dieser Monat wurde bereits abgerechnet.']);
 }
 
 $betrag = round($stundenGesamt * TRAINER_STUNDENSATZ, 2);
@@ -108,13 +111,11 @@ try {
     );
 } catch (Throwable $e) {
     error_log('trainer-abrechnen.php: Mail fehlgeschlagen: ' . $e->getMessage());
+    // Reservierung wieder aufheben, damit der Trainer es erneut versuchen kann statt dauerhaft ausgesperrt zu sein.
+    TrainerStore::abrechnungStornieren($trainerId, $monat);
     respond(500, ['success' => false, 'message' => 'Abrechnung konnte nicht verschickt werden. Bitte versuch es erneut oder melde dich direkt unter ' . NOTIFY_EMAIL . '.']);
 }
 
-$angelegt = TrainerStore::abrechnungAnlegen($trainerId, $monat, $stundenGesamt, $betrag);
-if (!$angelegt) {
-    // Sehr seltener Fall (Doppelklick/Race) - Mail ist bereits raus, aber nicht doppelt als "erledigt" melden.
-    respond(422, ['success' => false, 'message' => 'Dieser Monat wurde bereits abgerechnet.']);
-}
+TrainerStore::abrechnungAbschliessen($trainerId, $monat, $stundenGesamt, $betrag);
 
 respond(200, ['success' => true, 'stunden' => $stundenGesamt, 'betrag' => $betrag]);

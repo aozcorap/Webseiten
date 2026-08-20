@@ -64,10 +64,24 @@ final class TrainerStore
         });
     }
 
-    /** @return array Der neu angelegte Trainer-Datensatz. */
-    public static function createTrainer(string $vorname, string $nachname, string $email, string $passwordHash, string $approveToken, string $approveTokenExpiry): array
+    /**
+     * Prueft (auf bereits existierende E-Mail) und legt den Trainer im
+     * selben Lock an - atomar, damit zwei zeitgleiche Registrierungen mit
+     * derselben E-Mail nicht beide durchkommen (TOCTOU-Race, waere bei
+     * getrennten find()/create()-Aufrufen moeglich). Gibt null zurueck,
+     * wenn die E-Mail bereits vergeben ist.
+     *
+     * @return array|null Der neu angelegte Trainer-Datensatz, oder null bei Doppel-E-Mail.
+     */
+    public static function createTrainerIfEmailFree(string $vorname, string $nachname, string $email, string $passwordHash, string $approveToken, string $approveTokenExpiry): ?array
     {
-        return self::withTrainers(function (array $data) use ($vorname, $nachname, $email, $passwordHash, $approveToken, $approveTokenExpiry) {
+        $emailLower = mb_strtolower($email);
+        return self::withTrainers(function (array $data) use ($vorname, $nachname, $email, $emailLower, $passwordHash, $approveToken, $approveTokenExpiry) {
+            foreach ($data['trainers'] as $trainer) {
+                if (mb_strtolower($trainer['email']) === $emailLower) {
+                    return [null, null];
+                }
+            }
             $id = $data['nextId'];
             $trainer = [
                 'id' => $id,
@@ -153,14 +167,17 @@ final class TrainerStore
     }
 
     /**
-     * Legt eine Abrechnung an - schlaegt fehl (gibt false zurueck), falls
-     * fuer diesen Trainer/Monat bereits abgerechnet wurde. So ist
-     * ausgeschlossen, dass durch einen doppelten Klick zweimal fuer
-     * denselben Monat abgerechnet wird ("wir zahlen nur 1x pro Monat").
+     * Reserviert den Monat fuer eine Abrechnung, BEVOR die (langsame) Mail
+     * verschickt wird - schlaegt fehl (gibt false zurueck), falls fuer
+     * diesen Trainer/Monat bereits abgerechnet wurde oder eine Reservierung
+     * laeuft. So koennen zwei zeitgleiche Abrechnen-Klicks nicht beide die
+     * Mail verschicken (TOCTOU-Race): nur einer bekommt die Reservierung,
+     * der andere bricht sofort ab, statt erst nach dem Mailversand zu
+     * merken, dass er zu spaet war ("wir zahlen nur 1x pro Monat").
      */
-    public static function abrechnungAnlegen(int $trainerId, string $monat, int $stunden, float $betrag): bool
+    public static function abrechnungReservieren(int $trainerId, string $monat): bool
     {
-        return JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat, $stunden, $betrag) {
+        return JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat) {
             foreach ($data['abrechnungen'] as $abrechnung) {
                 if ($abrechnung['trainerId'] === $trainerId && $abrechnung['monat'] === $monat) {
                     return [null, false];
@@ -169,11 +186,38 @@ final class TrainerStore
             $data['abrechnungen'][] = [
                 'trainerId' => $trainerId,
                 'monat' => $monat,
-                'stunden' => $stunden,
-                'betrag' => $betrag,
-                'abgerechnetAm' => (new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')))->format('c'),
+                'stunden' => null,
+                'betrag' => null,
+                'abgerechnetAm' => null, // null = Reservierung laeuft noch, Mail wird gerade verschickt
             ];
             return [$data, true];
+        });
+    }
+
+    /** Schliesst eine Reservierung nach erfolgreichem Mailversand ab. */
+    public static function abrechnungAbschliessen(int $trainerId, string $monat, int $stunden, float $betrag): void
+    {
+        JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat, $stunden, $betrag) {
+            foreach ($data['abrechnungen'] as &$abrechnung) {
+                if ($abrechnung['trainerId'] === $trainerId && $abrechnung['monat'] === $monat) {
+                    $abrechnung['stunden'] = $stunden;
+                    $abrechnung['betrag'] = $betrag;
+                    $abrechnung['abgerechnetAm'] = (new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')))->format('c');
+                }
+            }
+            unset($abrechnung);
+            return [$data, null];
+        });
+    }
+
+    /** Macht eine Reservierung rueckgaengig, falls der Mailversand fehlgeschlagen ist - der Trainer kann es dann erneut versuchen. */
+    public static function abrechnungStornieren(int $trainerId, string $monat): void
+    {
+        JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat) {
+            $data['abrechnungen'] = array_values(array_filter($data['abrechnungen'], function ($abrechnung) use ($trainerId, $monat) {
+                return !($abrechnung['trainerId'] === $trainerId && $abrechnung['monat'] === $monat);
+            }));
+            return [$data, null];
         });
     }
 }
