@@ -176,13 +176,17 @@ try {
         NOTIFY_EMAIL,
         NOTIFY_EMAIL
     );
+    // CC: Kontaktadresse des Vereins + Kassenwart (Absender bekommt sonst
+    // selbst keine digitale Kopie der Anmeldung/des PDFs). Doppelte Adresse
+    // vermeiden, falls beide Konstanten in config.php identisch sind.
+    $ccEmails = array_values(array_unique(array_map('strtolower', [MEMBER_CC_EMAIL, NOTIFY_EMAIL])));
     Mailer::send(
         $data['email'],
         $data['vorname'] . ' ' . $data['name'],
         'Willkommen beim Boxring Wetterau 1983 e.V.!',
         $bodyHtml,
         $pdfContent !== null ? ['name' => 'Aufnahmeantrag', 'content' => $pdfContent, 'filename' => $pdfFilename] : null,
-        [MEMBER_CC_EMAIL]
+        $ccEmails
     );
     $memberMailOk = true;
 } catch (Throwable $e) {
@@ -190,10 +194,11 @@ try {
 }
 
 // Bewusst KEINE separate interne Benachrichtigungsmail: Die CC auf der
-// Willkommensmail (MEMBER_CC_EMAIL) ist die einzige Benachrichtigung an den
-// Verein. Zwei getrennte Mails an teils dieselben Adressen fuehrten sonst zu
-// doppeltem Empfang (z.B. wenn Kontakt@ auf ein persoenliches Postfach
-// weiterleitet, das gleichzeitig als CC/Empfaenger eingetragen ist).
+// Willkommensmail (MEMBER_CC_EMAIL + NOTIFY_EMAIL/Kassenwart) ist die einzige
+// Benachrichtigung an den Verein. Zwei getrennte Mails an teils dieselben
+// Adressen fuehrten sonst zu doppeltem Empfang (z.B. wenn Kontakt@ auf ein
+// persoenliches Postfach weiterleitet, das gleichzeitig als CC/Empfaenger
+// eingetragen ist).
 
 $sheetOk = false;
 try {

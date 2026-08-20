@@ -28,6 +28,9 @@ define('CONTACT_EMAIL', 'Kontakt@boxring-wetterau.de');
 
 // CC-Empfaenger der Willkommensmail ans neue Mitglied (zur Kenntnisnahme
 // durch den Verein, unabhaengig vom Absender/"Bei Fragen"-Kontakt oben).
+// Der Kassenwart (NOTIFY_EMAIL) wird in anmeldung.php zusaetzlich in CC
+// gesetzt, damit er trotz Versands ueber SMTP_FROM_EMAIL eine eigene
+// digitale Kopie des PDFs erhaelt.
 define('MEMBER_CC_EMAIL', CONTACT_EMAIL);
 
 // --- Google Sheets: Speicherung der Anmeldungen (via Apps Script, siehe
