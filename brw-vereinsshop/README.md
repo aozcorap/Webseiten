@@ -14,8 +14,11 @@ Zahlungsanbindung.
   abgefragt.
 - **Bestellung**: Katalog mit Größenauswahl (XS–XXL), Sammelbestell-Fenster
   statt laufender Einzelbestellungen.
-- **Bezahlung**: PayPal Checkout, Bestellung wird erst nach Zahlungseingang
-  bestätigt.
+- **Bezahlung**: PayPal.me (`paypal.me/ahmetozc`, gebührenfrei per „Geld an
+  Freunde & Familie senden") oder Überweisung (IBAN wird angezeigt). Beides
+  läuft ohne Backend — die Seite selbst weiß nicht, ob wirklich gezahlt
+  wurde; der Abgleich passiert manuell über PayPal-Aktivität bzw.
+  Kontoauszug, per Bestellnummer + Name als Notiz/Verwendungszweck.
 - **Admin**: Bestellliste + CSV-Export für die Zeugwart:in.
 
 ## Geplanter Stack (für die echte Umsetzung)

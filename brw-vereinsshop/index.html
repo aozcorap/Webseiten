@@ -297,6 +297,12 @@ body{
   border-radius:var(--radius);cursor:pointer;margin-top:8px;
 }
 .btn-transfer:hover{background:var(--surface-2);}
+.paypal-note{font-size:11.5px;color:var(--ink-faint);text-align:center;margin-top:8px;}
+.paypal-warning{
+  background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--radius);
+  padding:11px 13px;margin-top:10px;font-size:12.5px;color:var(--ink);text-align:left;line-height:1.5;
+}
+.paypal-warning strong{color:var(--accent-hover);}
 .transfer-details{
   display:none;text-align:left;margin-top:14px;padding:14px 16px;
   border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2);
@@ -498,6 +504,10 @@ body{
       <svg width="16" height="16" viewBox="0 0 24 24" fill="#003087"><path d="M7 3h7.2c3 0 5.1 1.7 4.6 4.8-.5 3.6-3 5.4-6.4 5.4H9.8l-1 6H5l3-16zm3.1 8.3h1.7c1.7 0 2.9-.8 3.2-2.6.3-1.9-.7-2.6-2.4-2.6h-1.6l-.9 5.2z"/></svg>
       Jetzt bei PayPal bezahlen
     </button>
+    <div class="paypal-note">Öffnet <code>paypal.me/ahmetozc</code> in einem neuen Tab.</div>
+    <div class="paypal-warning">
+      <strong>Wichtig, damit der volle Betrag ankommt:</strong> Bei PayPal „Geld an Freunde &amp; Familie senden" wählen und mit PayPal-Guthaben oder Bankkonto zahlen — nicht per Kreditkarte, sonst zieht PayPal eine Gebühr ab. Bitte Bestellnummer und Name als Notiz angeben.
+    </div>
     <button type="button" class="btn-transfer" id="confirmShowTransfer">Per Überweisung bezahlen</button>
     <div class="transfer-details" id="transferDetails">
       <div class="transfer-row"><span>Empfänger</span><strong>Ahmet Özcorapci</strong></div>
@@ -510,14 +520,6 @@ body{
     <button type="button" class="btn-add modal-btn" id="confirmBackToShop">Weiter einkaufen</button>
   </div>
 </div>
-
-<form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="display:none;">
-  <input type="hidden" name="cmd" value="_cart">
-  <input type="hidden" name="upload" value="1">
-  <input type="hidden" name="business" value="ahmet@ozcorapci.de">
-  <input type="hidden" name="currency_code" value="EUR">
-  <input type="hidden" name="no_shipping" value="1">
-</form>
 
 <script>
 const IMAGES = {
@@ -806,36 +808,17 @@ function copyTransferIban(){
   const iban = document.getElementById("transferIban").textContent.replace(/\s/g,"");
   navigator.clipboard?.writeText(iban);
 }
+const PAYPAL_ME = "ahmetozc";
 function payWithPaypal(){
   if(!lastOrder) return;
+  const total = lastOrder.items.reduce((sum,i) => sum + i.price, 0);
+  // PayPal.me statt klassischem Website-Payments-Standard-Formular: das lief als
+  // Waren-/Dienstleistungszahlung und hat Gebühren berechnet. Über PayPal.me kann
+  // die zahlende Person "Geld an Freunde & Familie senden" wählen – gebührenfrei.
+  // Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
+  window.open(`https://www.paypal.me/${PAYPAL_ME}/${total.toFixed(2)}EUR`, "_blank", "noopener");
   lastOrder.paymentMethod = "PayPal";
   if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
-  const form = document.getElementById("paypalForm");
-  form.querySelectorAll("input[data-line]").forEach(el => el.remove());
-  lastOrder.items.forEach((item, idx) => {
-    const n = idx + 1;
-    const fields = {
-      [`item_name_${n}`]: `${item.name} – Größe ${item.size}`,
-      [`item_number_${n}`]: item.size,
-      [`amount_${n}`]: item.price.toFixed(2),
-      [`quantity_${n}`]: 1,
-    };
-    Object.entries(fields).forEach(([name, value]) => {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = name;
-      input.value = value;
-      input.dataset.line = "1";
-      form.appendChild(input);
-    });
-  });
-  const custom = document.createElement("input");
-  custom.type = "hidden";
-  custom.name = "custom";
-  custom.value = `Bestellnummer ${lastOrder.id} — Besteller:in: ${lastOrder.member}`;
-  custom.dataset.line = "1";
-  form.appendChild(custom);
-  form.submit();
 }
 
 /* ---- admin ---- */
