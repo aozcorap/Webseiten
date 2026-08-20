@@ -206,6 +206,7 @@ body{
 }
 .card-title{font-size:14.5px;font-weight:700;line-height:1.3;}
 .card-price{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+.card-desc{font-size:12px;line-height:1.45;color:var(--ink-soft);margin:6px 0 0;}
 
 .size-mode{display:flex;gap:4px;margin-top:2px;}
 .size-mode-tab{
@@ -380,7 +381,7 @@ body{
 
     <div class="collection-row">
       <h2>Artikel dieser Bestellrunde</h2>
-      <span>Größen XS–XXL, Kindergrößen 116–176 pro Artikel wählbar</span>
+      <span>Größen XS–XXL, Kindergrößen 116–176 pro Artikel wählbar · auf Anfrage auch in Weiß lieferbar</span>
     </div>
 
     <div class="grid" id="productGrid"></div>
@@ -493,15 +494,24 @@ const CLUB_CREST = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cgo8c3
 
 
 const PRODUCTS = [
-  {id:"hose", name:"Entrada 26 Trainingshose", price:39.95},
-  {id:"short", name:"Entrada 26 Short", price:17.95},
-  {id:"hoody", name:"Entrada 26 Hoody", price:44.95, crest:{x:55.5,y:38.2}},
-  {id:"sweatshirt", name:"Entrada 26 Training Sweatshirt Blau", price:39.95, crest:{x:62.3,y:39.9}},
-  {id:"jacke", name:"Entrada 26 Trainingsjacke", price:39.95, crest:{x:62.5,y:37.2}},
-  {id:"tshirt", name:"Entrada 26 T-Shirt", price:24.95, crest:{x:56.7,y:37.5}},
-  {id:"trikot", name:"Entrada 26 Trikot Schwarz", price:17.95, crest:{x:65.7,y:26.7}},
-  {id:"winterjacke", name:"Entrada 26 Padded Winterjacke", price:84.95, crest:{x:57.5,y:39.9}},
-  {id:"tshirt-d", name:"Entrada 26 T-Shirt Damen", price:24.95, crest:{x:59,y:37}},
+  {id:"hose", name:"Entrada 26 Trainingshose", price:39.95,
+    desc:"Zuverlässige Trainingshose mit Climacool-Technologie, Regular Fit (Carrot Cut) und zwei Reißverschlusstaschen."},
+  {id:"short", name:"Entrada 26 Short", price:17.95,
+    desc:"Zuverlässige Spielerhose mit Climacool-Technologie, elastischem Bund und sportlich-bequemem Schnitt."},
+  {id:"hoody", name:"Entrada 26 Hoody", price:44.95, crest:{x:55.5,y:38.2},
+    desc:"Bequemes Freizeit-Hoody aus Baumwollmix mit Kängurutasche und verstellbarer Kapuze."},
+  {id:"sweatshirt", name:"Entrada 26 Training Sweatshirt Blau", price:39.95, crest:{x:62.3,y:39.9},
+    desc:"Trainings-Sweatshirt mit Stehkragen, Half-Zip und Climacool-Technologie für aktive Kühlung."},
+  {id:"jacke", name:"Entrada 26 Trainingsjacke", price:39.95, crest:{x:62.5,y:37.2},
+    desc:"Trainingsjacke mit Stehkragen, Mesh-Einsatz zur Belüftung und durchgehendem Reißverschluss."},
+  {id:"tshirt", name:"Entrada 26 T-Shirt", price:24.95, crest:{x:56.7,y:37.5},
+    desc:"Lässiges Freizeitshirt aus Baumwolle, Regular Fit mit gesticktem Logo."},
+  {id:"trikot", name:"Entrada 26 Trikot Schwarz", price:17.95, crest:{x:65.7,y:26.7},
+    desc:"Spieltrikot mit Climacool-Technologie, Slim Fit und kontrastfarbenen Ärmelbündchen."},
+  {id:"winterjacke", name:"Entrada 26 Padded Winterjacke", price:84.95, crest:{x:57.5,y:39.9},
+    desc:"Leicht wattierte Winterjacke mit durchgehendem Reißverschluss — ideal für die Seitenlinie."},
+  {id:"tshirt-d", name:"Entrada 26 T-Shirt Damen", price:24.95, crest:{x:59,y:37},
+    desc:"Freizeitshirt für Damen aus Baumwolle, tailliert geschnitten mit gesticktem Logo."},
 ];
 const CLUB_CREST_SIZE = 15.5;
 
@@ -536,6 +546,7 @@ function renderGrid(){
       <div>
         <div class="card-title">${p.name}</div>
         <div class="card-price">${fmt(p.price)}</div>
+        <p class="card-desc">${p.desc}</p>
       </div>
       <div class="size-mode" role="group" aria-label="Größentyp für ${p.name}">
         <button type="button" class="size-mode-tab active" data-mode="adult">Erwachsene</button>
