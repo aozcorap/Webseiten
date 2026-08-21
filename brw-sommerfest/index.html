@@ -893,43 +893,5 @@
 })();
 </script>
 
-<script>
-// Supabase-Keepalive: Supabase pausiert Projekte automatisch nach 7 Tagen ohne
-// Aktivität. Damit das Projekt "brw-sommerfest" nicht einschläft, schreibt und
-// löscht der Browser hier alle 5 Tage (bei jemandem, der die Seite besucht)
-// einen Dummy-Eintrag in der eigens dafür angelegten Tabelle "_keepalive".
-// Läuft im Hintergrund, ohne dass jemand etwas davon merkt.
-(function(){
-  var SUPABASE_URL = 'https://ifnxmioxixqffrsbghnb.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_-YynMu3ptMQDVBvyQWL9JQ_K3QhmFPm';
-  var STORAGE_KEY = 'brwSommerfestKeepaliveAt';
-  var INTERVAL_MS = 5 * 24 * 60 * 60 * 1000; // 5 Tage
-
-  var last = Number(localStorage.getItem(STORAGE_KEY) || 0);
-  if (Date.now() - last < INTERVAL_MS) return;
-
-  var headers = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': 'Bearer ' + SUPABASE_KEY,
-    'Content-Type': 'application/json'
-  };
-
-  fetch(SUPABASE_URL + '/rest/v1/_keepalive', {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({})
-  }).then(function(){
-    localStorage.setItem(STORAGE_KEY, String(Date.now()));
-    // alte Einträge wieder aufräumen, damit die Tabelle nicht wächst
-    return fetch(SUPABASE_URL + '/rest/v1/_keepalive?created_at=lt.' + encodeURIComponent(new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()), {
-      method: 'DELETE',
-      headers: headers
-    });
-  }).catch(function(){
-    // still im Hintergrund scheitern lassen, kein Nutzer betroffen
-  });
-})();
-</script>
-
 </body>
 </html>
