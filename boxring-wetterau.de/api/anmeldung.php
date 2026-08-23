@@ -209,14 +209,14 @@ try {
     // Nachname, IBAN, Beitrag, Mitgliedsnr, Mandatsref, Zahlungspflichtiger,
     // Strasse, PLZ, Ort, Beruf, Telefon, Mail, Geburtstag, Eintritt,
     // Anmeldegebuehr Zahldatum. Mitgliedsnr wird vom Apps Script vergeben
-    // (Platzhalter '' hier wird dort ueberschrieben). Mandatsref/
-    // Anmeldegebuehr-Zahldatum bleiben leer - die vergibt/pflegt der
-    // Kassenwart von Hand. Online-Anmeldungen sind immer "aktive" - die
-    // Unterscheidung Aktiv/Passiv gibt es fuer neue Mitglieder nicht mehr,
-    // das war nur eine Alt-Kategorie im Bestand.
+    // (Platzhalter '' hier wird dort ueberschrieben). Anmeldegebuehr-
+    // Zahldatum bleibt leer - das pflegt der Kassenwart von Hand.
+    // Online-Anmeldungen sind immer "aktive" - die Unterscheidung
+    // Aktiv/Passiv gibt es fuer neue Mitglieder nicht mehr, das war nur eine
+    // Alt-Kategorie im Bestand.
     $status = 'aktive';
     $zahlungspflichtiger = $data['kontoinhaber_gleich_antragsteller'] === 'ja'
-        ? ''
+        ? $data['vorname'] . ' ' . $data['name']
         : ($data['kontoinhaber_name'] ?? '');
 
     $neueMitgliedsnr = $sheets->appendRow([
@@ -227,7 +227,7 @@ try {
         $data['iban'],
         Beitrag::jahresbetrag($data['beitrag']),
         '',
-        '',
+        $data['unterschrift_datum'],
         $zahlungspflichtiger,
         trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? '')),
         $data['plz'],
