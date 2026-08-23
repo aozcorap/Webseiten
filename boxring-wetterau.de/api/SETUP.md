@@ -27,8 +27,9 @@ Zahldatum:
 
 Die Sheet-ID ist bereits in `config.sample.php` eingetragen. Neue
 Online-Anmeldungen werden von `anmeldung.php` als neue Zeile mit exakt dieser
-Spaltenreihenfolge angehängt (Mitgliedsnr/Mandatsref/Anmeldegebühr-Zahldatum
-bleiben leer, die vergibt/pflegt der Kassenwart weiterhin von Hand).
+Spaltenreihenfolge angehängt (Mitgliedsnr wird automatisch vergeben,
+Mandatsref bekommt das Unterschriftsdatum aus dem Formular; Anmeldegebühr-
+Zahldatum bleibt leer, das pflegt der Kassenwart weiterhin von Hand).
 
 **Hinweis zur Vollständigkeit:** Aus der Original-Excel wurden nur die für
 den laufenden Betrieb nötigen Spalten übernommen. Die detaillierte
