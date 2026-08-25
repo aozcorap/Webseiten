@@ -239,6 +239,8 @@
   .yes{color:#1f7a3d;font-weight:700;}
   .no{color:var(--text-dim);}
   .pfand-open{color:var(--accent-hover);font-weight:700;}
+  .pfand-cell{display:flex;flex-direction:column;gap:4px;}
+  .pfand-select{font-size:11.5px;padding:3px 6px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);}
 
   .empty{padding:44px 24px;text-align:center;}
   .empty .big{font-size:36px;margin-bottom:8px;}
@@ -571,10 +573,28 @@
         salat: data.salat,
         kuchen: data.kuchen,
         anmerkung: data.anmerkung || null,
-        pfand_betrag: (data.personen * 5).toFixed(2).replace('.', ',') + ' €',
-        pfand_art: 'PayPal'
+        // Status startet als "Offen": das Öffnen der PayPal-Seite ist keine
+        // Zahlungsbestätigung (Zahlung kann fehlschlagen) - der Vorstand
+        // stellt den Status im Admin-Bereich nachträglich auf Bar/PayPal um,
+        // sobald das Geld tatsächlich angekommen ist.
+        pfand_betrag: null,
+        pfand_art: 'Offen'
       })
     });
+  }
+
+  // Zusaetzliche Benachrichtigungsmail (ueber denselben Mailserver wie die
+  // Mitgliedsanmeldung auf boxring-wetterau.de), damit die Anmeldung nicht nur
+  // in Supabase steht, sondern auch als E-Mail zum Nachtracking ankommt (z.B.
+  // wenn die PayPal-Zahlung technisch nicht durchgeht). Bewusst "fire and
+  // forget": Supabase ist die eigentliche Datenquelle, ein Fehler hier soll
+  // die Anmeldung nicht blockieren.
+  function notifyByMail(data){
+    fetch('https://www.boxring-wetterau.de/api/sommerfest-notify.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function(){});
   }
 
   // PayPal.me statt klassischem "Jetzt kaufen"-Button (_xclick): der lief als
@@ -636,6 +656,7 @@
     createAnmeldung(anmeldungData).then(function(res){
       if (res.ok) {
         status.innerHTML = 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+        notifyByMail(anmeldungData);
       } else {
         status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
         submitting = false;
@@ -791,9 +812,17 @@
       table.style.display = '';
       empty.style.display = 'none';
       body.innerHTML = ANMELDUNGEN.map(function(a){
-        var pfandCell = a.pfandBezahlt
-          ? '<span class="yes">' + esc(a.pfandBetrag) + ' (' + esc(a.pfandArt) + ')</span>'
-          : '<span class="pfand-open">Offen</span>';
+        var currentArt = a.pfandArt || 'Offen';
+        var pfandCell = '<div class="pfand-cell">'
+          + (a.pfandBezahlt
+              ? '<span class="yes">' + esc(a.pfandBetrag) + '</span>'
+              : '<span class="pfand-open">Offen</span>')
+          + '<select class="pfand-select" data-id="' + esc(a.id) + '" data-personen="' + esc(a.personen) + '">'
+          + ['Offen', 'Bar', 'PayPal'].map(function(opt){
+              return '<option value="' + opt + '"' + (opt === currentArt ? ' selected' : '') + '>' + (opt === 'Offen' ? 'Offen' : opt + ' bezahlt') + '</option>';
+            }).join('')
+          + '</select>'
+          + '</div>';
         return '<tr>'
           + '<td>' + esc(a.datum) + '</td>'
           + '<td class="name">' + esc(a.name) + '</td>'
@@ -820,6 +849,33 @@
     document.getElementById('statKuchen').textContent = ANMELDUNGEN.filter(function(a){ return a.kuchen; }).length;
     document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
   }
+
+  document.getElementById('dataBody').addEventListener('change', function(e){
+    var select = e.target.closest('.pfand-select');
+    if (!select) return;
+    var id = select.getAttribute('data-id');
+    var personen = parseInt(select.getAttribute('data-personen'), 10) || 1;
+    var pfandArt = select.value;
+    var pfandBetrag = pfandArt === 'Offen' ? null : (personen * 5).toFixed(2).replace('.', ',') + ' €';
+
+    select.disabled = true;
+    fetch(SUPABASE_URL + '/rest/v1/anmeldungen?id=eq.' + encodeURIComponent(id), {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ pfand_art: pfandArt, pfand_betrag: pfandBetrag })
+    }).then(function(res){
+      if (!res.ok) throw new Error('Fehler beim Speichern');
+      render(false);
+    }).catch(function(){
+      alert('Status konnte nicht geändert werden. Bitte erneut versuchen.');
+      select.disabled = false;
+    });
+  });
 
   document.getElementById('dataBody').addEventListener('click', function(e){
     var btn = e.target.closest('.delete-btn');

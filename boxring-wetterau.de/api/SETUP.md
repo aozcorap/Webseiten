@@ -158,6 +158,16 @@ i. d. R.).
 der einfachen Abrechnungs-Mail geplant - das ist noch nicht umgesetzt, aktuell
 läuft jeder Trainer (inkl. Haupttrainer) über den oben beschriebenen Weg.
 
+## 8. Sommerfest-Benachrichtigungsmail
+
+Die Sommerfest-Anmeldeseite (`brw-sommerfest/`, gehostet auf GitHub Pages)
+schickt bei jeder Anmeldung eine kurze Info-Mail an `NOTIFY_EMAIL` über
+`api/sommerfest-notify.php`. Nutzt dieselbe SMTP-Konfiguration wie oben (kein
+zusätzliches Setup nötig) – die Datei muss nur zusammen mit den anderen
+`api/`-Dateien auf den Server hochgeladen werden. Die eigentliche Anmeldung
+liegt weiterhin in Supabase; diese Mail ist nur ein zusätzlicher Hinweis
+fürs Nachtracking (z. B. bei PayPal-Zahlungsproblemen).
+
 ## Hinweis zur Sicherheit
 
 Selbst wenn ein Schritt fehlschlägt (z. B. Google Sheets nicht erreichbar),
