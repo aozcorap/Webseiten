@@ -55,11 +55,19 @@ mitbringen).
   Anmeldung hinzufügen") und bestehende gelöscht werden ("Löschen"-Button
   je Zeile, mit Bestätigungsabfrage) – z. B. für Barzahler, die sich
   persönlich angemeldet haben, oder um Dubletten zu entfernen.
+- Pfand-Status pro Zeile per Dropdown änderbar (Offen / Bar bezahlt / PayPal
+  bezahlt). Über das öffentliche Formular eingehende Anmeldungen starten
+  bewusst als "Offen" (das Öffnen der PayPal-Seite ist keine
+  Zahlungsbestätigung – die Zahlung kann technisch fehlschlagen). Der
+  Vorstand stellt den Status nachträglich um, sobald das Pfand tatsächlich
+  angekommen ist (bar oder per PayPal bestätigt); der Betrag (Personen × 5 €)
+  wird dabei automatisch mitgesetzt bzw. beim Zurückstellen auf "Offen"
+  wieder entfernt.
 - **Sicherheitshinweis:** Die Supabase-Tabelle nutzt einen öffentlichen
   „publishable key" mit Row-Level-Security-Policies, die `INSERT`,
-  `SELECT` und `DELETE` für jeden erlauben, der den Key kennt (er steht im
-  Seitenquelltext, wie der öffentliche Zugangsschutz auch). Löschen/Ändern
-  ist also nicht wirklich an das Admin-Passwort gekoppelt, sondern nur
-  UI-seitig dahinter versteckt. Für ein internes Vereins-Tool ohne
-  sensible Zahlungsdaten als Trade-off akzeptiert – bei Bedarf (z. B. bei
-  Vandalismus) Claude ansprechen, um die Policies zu verschärfen.
+  `SELECT`, `UPDATE` und `DELETE` für jeden erlauben, der den Key kennt (er
+  steht im Seitenquelltext, wie der öffentliche Zugangsschutz auch).
+  Löschen/Ändern ist also nicht wirklich an das Admin-Passwort gekoppelt,
+  sondern nur UI-seitig dahinter versteckt. Für ein internes Vereins-Tool
+  ohne sensible Zahlungsdaten als Trade-off akzeptiert – bei Bedarf (z. B.
+  bei Vandalismus) Claude ansprechen, um die Policies zu verschärfen.
