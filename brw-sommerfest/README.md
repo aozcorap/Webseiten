@@ -21,9 +21,14 @@ Live auf GitHub Pages: https://aozcorap.github.io/Webseiten/brw-sommerfest/
   PayPal selbst gehostete Bezahlseite, kein eigenes Backend nötig. Wird bei
   tatsächlicher Teilnahme zurückerstattet.
 - Wegbeschreibung-Sektion (Adresse, Anfahrt Auto/ÖPNV, Google-Maps-Embed).
-- Formular öffnet beim Absenden zusätzlich das E-Mail-Programm (`mailto:`)
-  mit den eingegebenen Daten als Nachricht – die Anmeldung geht strukturiert
-  per E-Mail an ahmet@ozcorapci.de.
+- Nach jeder erfolgreichen Anmeldung schickt die Seite zusätzlich automatisch
+  eine kurze Benachrichtigungsmail (Name, Personen, Vegetarisch, Salat/Kuchen,
+  Pfand-Betrag) über `boxring-wetterau.de/api/sommerfest-notify.php` – denselben
+  SMTP-Versand, der auch für die Mitgliedsanmeldung genutzt wird. Kein Reply-nötig,
+  reine Info-Mail zum Nachtracking (z. B. wenn die PayPal-Zahlung technisch nicht
+  durchgeht). Läuft "fire and forget" im Hintergrund; Supabase bleibt die
+  eigentliche Datenquelle, ein Fehler beim Mailversand blockiert die Anmeldung
+  nicht.
 - Eigene Kopien von Logo/Fonts unter `assets/`, damit der Ordner
   unabhängig vom Rest des Repos auf GitHub Pages funktioniert.
 - Wichtig: Veranstaltungsort Sommerfest (Brüder-Grimm-Weg, Friedberg-Dorheim)

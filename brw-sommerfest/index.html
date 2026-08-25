@@ -577,6 +577,20 @@
     });
   }
 
+  // Zusaetzliche Benachrichtigungsmail (ueber denselben Mailserver wie die
+  // Mitgliedsanmeldung auf boxring-wetterau.de), damit die Anmeldung nicht nur
+  // in Supabase steht, sondern auch als E-Mail zum Nachtracking ankommt (z.B.
+  // wenn die PayPal-Zahlung technisch nicht durchgeht). Bewusst "fire and
+  // forget": Supabase ist die eigentliche Datenquelle, ein Fehler hier soll
+  // die Anmeldung nicht blockieren.
+  function notifyByMail(data){
+    fetch('https://www.boxring-wetterau.de/api/sommerfest-notify.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function(){});
+  }
+
   // PayPal.me statt klassischem "Jetzt kaufen"-Button (_xclick): der lief als
   // Waren-/Dienstleistungszahlung und hat Gebühren berechnet. Über PayPal.me kann
   // die zahlende Person "Geld an Freunde & Familie senden" wählen – gebührenfrei.
@@ -636,6 +650,7 @@
     createAnmeldung(anmeldungData).then(function(res){
       if (res.ok) {
         status.innerHTML = 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+        notifyByMail(anmeldungData);
       } else {
         status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
         submitting = false;
