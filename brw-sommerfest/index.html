@@ -590,7 +590,7 @@
   // forget": Supabase ist die eigentliche Datenquelle, ein Fehler hier soll
   // die Anmeldung nicht blockieren.
   function notifyByMail(data){
-    fetch('https://www.boxring-wetterau.de/api/sommerfest-notify.php', {
+    fetch('https://www.boxring-wetterau.de/api/sommerfestnotify.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

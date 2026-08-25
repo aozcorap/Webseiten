@@ -23,7 +23,7 @@ Live auf GitHub Pages: https://aozcorap.github.io/Webseiten/brw-sommerfest/
 - Wegbeschreibung-Sektion (Adresse, Anfahrt Auto/ÖPNV, Google-Maps-Embed).
 - Nach jeder erfolgreichen Anmeldung schickt die Seite zusätzlich automatisch
   eine kurze Benachrichtigungsmail (Name, Personen, Vegetarisch, Salat/Kuchen,
-  Pfand-Betrag) über `boxring-wetterau.de/api/sommerfest-notify.php` – denselben
+  Pfand-Betrag) über `boxring-wetterau.de/api/sommerfestnotify.php` – denselben
   SMTP-Versand, der auch für die Mitgliedsanmeldung genutzt wird. Kein Reply-nötig,
   reine Info-Mail zum Nachtracking (z. B. wenn die PayPal-Zahlung technisch nicht
   durchgeht). Läuft "fire and forget" im Hintergrund; Supabase bleibt die

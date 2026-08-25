@@ -162,7 +162,7 @@ läuft jeder Trainer (inkl. Haupttrainer) über den oben beschriebenen Weg.
 
 Die Sommerfest-Anmeldeseite (`brw-sommerfest/`, gehostet auf GitHub Pages)
 schickt bei jeder Anmeldung eine kurze Info-Mail an `NOTIFY_EMAIL` über
-`api/sommerfest-notify.php`. Nutzt dieselbe SMTP-Konfiguration wie oben (kein
+`api/sommerfestnotify.php`. Nutzt dieselbe SMTP-Konfiguration wie oben (kein
 zusätzliches Setup nötig) – die Datei muss nur zusammen mit den anderen
 `api/`-Dateien auf den Server hochgeladen werden. Die eigentliche Anmeldung
 liegt weiterhin in Supabase; diese Mail ist nur ein zusätzlicher Hinweis
