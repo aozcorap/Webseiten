@@ -93,7 +93,7 @@ $bodyHtml = '<p>Neue Sommerfest-Anmeldung:</p><p>' . implode('<br>', array_map(
 )) . '</p><p>Details und Pfand-Status wie gewohnt im Admin-Bereich der Sommerfest-Seite.</p>';
 
 try {
-    Mailer::send(NOTIFY_EMAIL, 'Boxring Wetterau 1983 e.V.', 'Neue Sommerfest-Anmeldung: ' . $name, $bodyHtml);
+    Mailer::send(CONTACT_EMAIL, 'Boxring Wetterau 1983 e.V.', 'Neue Sommerfest-Anmeldung: ' . $name, $bodyHtml);
     respond(200, ['success' => true]);
 } catch (Throwable $e) {
     error_log('sommerfest-notify.php: Mail fehlgeschlagen: ' . $e->getMessage());
