@@ -278,8 +278,8 @@
     <div class="bw-error" id="f-datenschutz-error">Bitte bestätigen.</div>
 
     <button type="submit" class="bw-submit" id="f-submit">Anmeldung absenden</button>
-    <div id="bw-form-status" role="status"></div>
   </form>
+  <div id="bw-form-status" role="status"></div>
 </main>
 
 <footer style="background:#161514;color:#8f887f;padding:40px clamp(20px,4vw,48px);border-top:1px solid rgba(242,237,232,0.08);">
@@ -519,7 +519,24 @@
       return res.json().then(function(data){ return {ok: res.ok, data: data}; });
     }).then(function(result){
       if(result.ok && result.data && result.data.success){
-        statusBox.textContent = "Danke! Deine Anmeldung ist bei uns eingegangen. Du bekommst dein ausgefülltes Formular in Kürze per E-Mail als PDF zugeschickt.";
+        var dankeText = "Danke! Deine Anmeldung ist bei uns eingegangen. Du bekommst dein ausgefülltes Formular in Kürze per E-Mail als PDF zugeschickt.";
+        var whatsappUrl = result.data.whatsappGroupUrl;
+        if(whatsappUrl){
+          statusBox.textContent = "";
+          var dankeP = document.createElement("p");
+          dankeP.textContent = dankeText;
+          var whatsappP = document.createElement("p");
+          var whatsappLink = document.createElement("a");
+          whatsappLink.href = whatsappUrl;
+          whatsappLink.target = "_blank";
+          whatsappLink.rel = "noopener";
+          whatsappLink.textContent = "Jetzt unserer WhatsApp-Gruppe beitreten";
+          whatsappP.appendChild(whatsappLink);
+          statusBox.appendChild(dankeP);
+          statusBox.appendChild(whatsappP);
+        } else {
+          statusBox.textContent = dankeText;
+        }
         statusBox.className = "show ok";
         form.reset();
         form.style.display = "none";
