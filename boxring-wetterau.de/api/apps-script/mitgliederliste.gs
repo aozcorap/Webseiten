@@ -57,9 +57,10 @@ function doPost(e) {
     }
 
     // Mitglied-Check (Trainer-Adminbereich, api/mitglied-suche.php): sucht
-    // nur Vor-/Nachname ab und gibt bewusst NUR unkritische Eckdaten zurueck
-    // (keine IBAN/Adresse/Telefon/Mail/Geburtstag) - Trainer sollen lediglich
-    // pruefen koennen, ob jemand Mitglied ist, nicht die volle Kartei sehen.
+    // Vor- und/oder Nachname (jeweils optional, per Teilstring) ab und gibt
+    // bewusst NUR unkritische Eckdaten zurueck (keine IBAN/Adresse/Telefon/
+    // Mail/Geburtstag) - Trainer sollen lediglich pruefen koennen, ob jemand
+    // Mitglied ist, nicht die volle Kartei sehen.
     if (payload.action === 'search') {
       return jsonResponse(sucheMitglied(sheet, payload.vorname, payload.nachname));
     }
@@ -93,22 +94,17 @@ function sucheMitglied(sheet, vorname, nachname) {
   var qVorname = normalisiere(vorname);
   var qNachname = normalisiere(nachname);
 
+  // Vor- und Nachname sind unabhaengig voneinander optional (leerer String =
+  // Feld ignorieren) und werden jeweils per Teilstring abgeglichen, z.B.
+  // "ali" findet alle Alis, Alinas, Alis-Nachnamen usw.
   var treffer = [];
   values.forEach(function (r) {
-    if (normalisiere(r[2]) === qVorname && normalisiere(r[3]) === qNachname) {
+    var vornameOk = qVorname === '' || normalisiere(r[2]).indexOf(qVorname) !== -1;
+    var nachnameOk = qNachname === '' || normalisiere(r[3]).indexOf(qNachname) !== -1;
+    if (vornameOk && nachnameOk) {
       treffer.push(zeileZuTreffer(r));
     }
   });
-
-  // Fallback bei keinem exakten Treffer: tolerantere Teilstring-Suche, falls
-  // sich z.B. jemand beim Tippen waehrend des Trainings vertippt hat.
-  if (treffer.length === 0 && qVorname !== '' && qNachname !== '') {
-    values.forEach(function (r) {
-      if (normalisiere(r[2]).indexOf(qVorname) !== -1 && normalisiere(r[3]).indexOf(qNachname) !== -1) {
-        treffer.push(zeileZuTreffer(r));
-      }
-    });
-  }
 
   return { success: true, gefunden: treffer.length > 0, treffer: treffer };
 }
