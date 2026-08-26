@@ -31,8 +31,10 @@ final class GoogleSheetsAppender
     }
 
     /**
-     * Sucht im Sheet nach Vor-/Nachname (Mitglied-Check im Trainer-
-     * Adminbereich, siehe api/mitglied-suche.php). Liefert bewusst nur
+     * Sucht im Sheet nach Vor- und/oder Nachname (Mitglied-Check im Trainer-
+     * Adminbereich, siehe api/mitglied-suche.php). Beide Parameter sind
+     * unabhaengig voneinander optional (leerer String = Feld ignorieren) und
+     * werden im Apps Script per Teilstring abgeglichen. Liefert bewusst nur
      * unkritische Eckdaten je Treffer (vorname, nachname, mitgliedsnr,
      * eintritt, gekuendigtJahresende) - keine IBAN/Adresse/Kontaktdaten.
      *

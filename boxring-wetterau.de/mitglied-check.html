@@ -88,18 +88,19 @@
 
   <div class="bw-card" id="search-card" style="display:none;">
     <h2>Mitglied suchen</h2>
-    <p class="hint">Vor- und Nachname eingeben und mit der Mitgliederliste abgleichen.</p>
+    <p class="hint">Vor- und/oder Nachname eingeben (auch Anfangsbuchstaben genügen) und mit der Mitgliederliste abgleichen.</p>
     <form id="search-form">
       <div class="bw-row">
         <div class="bw-field">
           <label for="f-vorname">Vorname</label>
-          <input type="text" id="f-vorname" name="vorname" required autocomplete="off">
+          <input type="text" id="f-vorname" name="vorname" autocomplete="off">
         </div>
         <div class="bw-field">
           <label for="f-nachname">Nachname</label>
-          <input type="text" id="f-nachname" name="nachname" required autocomplete="off">
+          <input type="text" id="f-nachname" name="nachname" autocomplete="off">
         </div>
       </div>
+      <div class="bw-error" id="search-error" style="margin-bottom:12px;">Bitte Vor- oder Nachnamen eingeben.</div>
       <button type="submit" class="bw-submit" id="search-submit">Prüfen</button>
     </form>
     <div id="status"></div>
@@ -119,6 +120,7 @@
   var loginSubmit = document.getElementById("login-submit");
   var searchForm = document.getElementById("search-form");
   var searchSubmit = document.getElementById("search-submit");
+  var searchError = document.getElementById("search-error");
   var statusBox = document.getElementById("status");
   var resultBox = document.getElementById("result");
 
@@ -183,10 +185,19 @@
 
   searchForm.addEventListener("submit", function(evt){
     evt.preventDefault();
+    searchError.classList.remove("show");
     statusBox.className = "";
     statusBox.textContent = "";
     resultBox.className = "result";
     resultBox.innerHTML = "";
+
+    var vorname = document.getElementById("f-vorname").value.trim();
+    var nachname = document.getElementById("f-nachname").value.trim();
+    if(!vorname && !nachname){
+      searchError.classList.add("show");
+      return;
+    }
+
     searchSubmit.disabled = true;
     searchSubmit.innerHTML = '<span class="spinner"></span>Wird geprüft …';
 
@@ -194,8 +205,8 @@
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        vorname: document.getElementById("f-vorname").value,
-        nachname: document.getElementById("f-nachname").value
+        vorname: vorname,
+        nachname: nachname
       })
     }).then(function(res){
       return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
@@ -214,18 +225,18 @@
       }
 
       if(result.data.gefunden){
-        var treffer = result.data.treffer[0];
-        var html = '<div class="badge">✓ Ist Mitglied</div>';
-        html += '<div class="details">' + escapeHtml(treffer.vorname) + ' ' + escapeHtml(treffer.nachname);
-        if(treffer.mitgliedsnr) html += ' · Mitgliedsnr. ' + escapeHtml(String(treffer.mitgliedsnr));
-        if(treffer.eintritt) html += '<br>Eintritt: ' + escapeHtml(formatDatum(treffer.eintritt));
-        html += '</div>';
-        if(treffer.gekuendigtJahresende){
-          html += '<div class="warn">⚠ Hat zum Jahresende gekündigt - ist aber noch bis 31.12. Mitglied.</div>';
-        }
-        if(result.data.treffer.length > 1){
-          html += '<div class="warn">⚠ ' + result.data.treffer.length + ' Treffer mit ähnlichem Namen gefunden - bitte im Zweifel den Kassenwart fragen.</div>';
-        }
+        var alleTreffer = result.data.treffer;
+        var html = '<div class="badge">✓ ' + (alleTreffer.length > 1 ? alleTreffer.length + ' Mitglieder gefunden' : 'Ist Mitglied') + '</div>';
+        alleTreffer.forEach(function(treffer, i){
+          html += '<div class="details"' + (i > 0 ? ' style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(242,237,232,0.12);"' : '') + '>';
+          html += escapeHtml(treffer.vorname) + ' ' + escapeHtml(treffer.nachname);
+          if(treffer.mitgliedsnr) html += ' · Mitgliedsnr. ' + escapeHtml(String(treffer.mitgliedsnr));
+          if(treffer.eintritt) html += '<br>Eintritt: ' + escapeHtml(formatDatum(treffer.eintritt));
+          if(treffer.gekuendigtJahresende){
+            html += '<div class="warn">⚠ Hat zum Jahresende gekündigt - ist aber noch bis 31.12. Mitglied.</div>';
+          }
+          html += '</div>';
+        });
         resultBox.innerHTML = html;
         resultBox.className = "result show ja";
       } else {

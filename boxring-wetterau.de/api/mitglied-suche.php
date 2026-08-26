@@ -2,11 +2,11 @@
 declare(strict_types=1);
 
 /**
- * Sucht ein Mitglied per Vor-/Nachname in "Boxring Wetterau -
- * Mitgliederliste" (Google Sheet), fuer den Trainer-Adminbereich
- * (mitglied-check.html). Nur nach Login (AdminSession) erreichbar.
- * Liefert bewusst nur unkritische Eckdaten - siehe
- * GoogleSheetsAppender::search() und mitgliederliste.gs.
+ * Sucht ein Mitglied per Vor- und/oder Nachname (Teilstring, jeweils
+ * optional) in "Boxring Wetterau - Mitgliederliste" (Google Sheet), fuer
+ * den Trainer-Adminbereich (mitglied-check.html). Nur nach Login
+ * (AdminSession) erreichbar. Liefert bewusst nur unkritische Eckdaten -
+ * siehe GoogleSheetsAppender::search() und mitgliederliste.gs.
  */
 
 error_reporting(E_ALL);
@@ -45,15 +45,15 @@ $input = json_decode((string) file_get_contents('php://input'), true);
 $vorname = Validation::clean(is_array($input) && isset($input['vorname']) && is_string($input['vorname']) ? $input['vorname'] : null);
 $nachname = Validation::clean(is_array($input) && isset($input['nachname']) && is_string($input['nachname']) ? $input['nachname'] : null);
 
-if ($vorname === null || $nachname === null) {
+if ($vorname === null && $nachname === null) {
     http_response_code(422);
-    echo json_encode(['success' => false, 'message' => 'Bitte Vor- und Nachnamen angeben.']);
+    echo json_encode(['success' => false, 'message' => 'Bitte Vor- oder Nachnamen angeben.']);
     exit;
 }
 
 try {
     $sheets = new GoogleSheetsAppender(GOOGLE_SHEETS_WEBAPP_URL, GOOGLE_SHEETS_WEBAPP_SECRET);
-    $result = $sheets->search($vorname, $nachname);
+    $result = $sheets->search($vorname ?? '', $nachname ?? '');
     echo json_encode([
         'success' => true,
         'gefunden' => $result['gefunden'],
