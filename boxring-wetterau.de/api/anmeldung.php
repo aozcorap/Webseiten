@@ -163,16 +163,29 @@ $pdfFilename = 'Aufnahmeantrag-' . preg_replace('/[^A-Za-z0-9_-]/', '', $data['n
 
 $memberMailOk = false;
 try {
+    // WHATSAPP_GROUP_INVITE_URL ist optional (nur in config.php gesetzt, wenn
+    // ein Einladungslink hinterlegt wurde) - Willkommensmail funktioniert auch
+    // ohne. Kein automatischer Gruppenbeitritt moeglich: WhatsApp erlaubt nur,
+    // dass das neue Mitglied den Link selbst anklickt und beitritt.
+    $whatsappHinweis = '';
+    if (defined('WHATSAPP_GROUP_INVITE_URL') && WHATSAPP_GROUP_INVITE_URL !== '') {
+        $whatsappUrl = htmlspecialchars(WHATSAPP_GROUP_INVITE_URL, ENT_QUOTES, 'UTF-8');
+        $whatsappHinweis = '<p>Damit du nichts verpasst, komm gerne auch direkt in unsere WhatsApp-Gruppe: ' .
+            '<a href="' . $whatsappUrl . '">' . $whatsappUrl . '</a></p>';
+    }
+
     $bodyHtml = sprintf(
         '<p>Hallo %s,</p>' .
         '<p>herzlich willkommen im Boxring Wetterau 1983 e.V.! Wir freuen uns sehr, dass du jetzt Teil unseres Vereins bist.</p>' .
         '<p>Im Anhang findest du dein ausgefülltes Aufnahmeformular als PDF – bitte einmal in Ruhe gegenprüfen, ob alle Angaben stimmen.</p>' .
         '<p>Eine Sache noch in eigener Sache: Die einmalige Aufnahmegebühr von 20,- Euro wird zusammen mit deinem ersten ' .
         'Mitgliedsbeitrag automatisch per SEPA-Lastschrift von dem angegebenen Konto eingezogen.</p>' .
+        '%s' .
         '<p>Bei Fragen melde dich jederzeit gerne unter <a href="mailto:%s">%s</a>.</p>' .
         '<p>Wir freuen uns auf dich im Training!</p>' .
         '<p>Sportliche Grüße,<br>Boxring Wetterau 1983 e.V.</p>',
         htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
+        $whatsappHinweis,
         NOTIFY_EMAIL,
         NOTIFY_EMAIL
     );
@@ -245,7 +258,10 @@ try {
 }
 
 if ($sheetOk || $memberMailOk) {
-    respond(200, ['success' => true]);
+    respond(200, [
+        'success' => true,
+        'whatsappGroupUrl' => (defined('WHATSAPP_GROUP_INVITE_URL') && WHATSAPP_GROUP_INVITE_URL !== '') ? WHATSAPP_GROUP_INVITE_URL : null,
+    ]);
 }
 
 respond(500, ['success' => false, 'message' => 'Deine Anmeldung konnte nicht verarbeitet werden. Bitte versuch es erneut oder melde dich direkt unter ' . NOTIFY_EMAIL . '.']);

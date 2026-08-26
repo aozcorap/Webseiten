@@ -33,6 +33,12 @@ define('CONTACT_EMAIL', 'Kontakt@boxring-wetterau.de');
 // digitale Kopie des PDFs erhaelt.
 define('MEMBER_CC_EMAIL', CONTACT_EMAIL);
 
+// Einladungslink zur WhatsApp-Gruppe des Vereins (Gruppeninfo -> "Einladung
+// per Link senden"). Wird in der Willkommensmail ans neue Mitglied verlinkt.
+// Kein API-Schluessel noetig - WhatsApp erlaubt keinen automatischen Beitritt,
+// nur den Klick auf einen Einladungslink durch das Mitglied selbst.
+define('WHATSAPP_GROUP_INVITE_URL', 'https://chat.whatsapp.com/HIER-EINLADUNGSLINK-EINTRAGEN');
+
 // --- Google Sheets: Speicherung der Anmeldungen (via Apps Script, siehe
 // api/apps-script/mitgliederliste.gs - kein Google-Cloud-Projekt noetig) ---
 

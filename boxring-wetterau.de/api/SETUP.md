@@ -89,6 +89,12 @@ bleibt dabei gleich).
   - `MEMBER_CC_EMAIL` → CC-Empfänger der Willkommensmail ans neue Mitglied
     (aktuell Kontakt@boxring-wetterau.de), unabhängig von Absender/"Bei
     Fragen"-Kontakt oben.
+  - `WHATSAPP_GROUP_INVITE_URL` → Einladungslink der Vereins-WhatsApp-Gruppe
+    (WhatsApp-Gruppe → Gruppeninfo → "Einladung per Link senden"). Optional:
+    ohne diese Konstante wird einfach kein WhatsApp-Hinweis angezeigt/verschickt.
+    Ein automatischer Gruppenbeitritt ist über keine WhatsApp-API möglich –
+    das neue Mitglied muss den Link selbst anklicken. Der Link erscheint in
+    der Willkommensmail und direkt auf der Bestätigungsseite nach dem Absenden.
   - `ADMIN_PASSWORD` → Geteiltes Passwort für den Trainer-Adminbereich
     (`mitglied-check.html`, siehe Abschnitt 6). Unbedingt durch ein eigenes
     Passwort ersetzen.
