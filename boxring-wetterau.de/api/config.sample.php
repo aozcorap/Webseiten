@@ -44,12 +44,12 @@ define('WHATSAPP_GROUP_INVITE_URL', 'https://chat.whatsapp.com/HIER-EINLADUNGSLI
 
 // Die Web-App-URL, die man nach dem Bereitstellen des Apps Scripts bekommt
 // (endet auf ".../exec"). Siehe Anleitung oben im .gs-File.
-define('GOOGLE_SHEETS_WEBAPP_URL', 'https://script.google.com/macros/s/AKfycbzrR-ml8fjyAZhd5C4-fm2iljHoWoEVO9I4-IvLnZ7oRskA3M1xkFGM1sdKZSaqKgr0/exec');
+define('GOOGLE_SHEETS_WEBAPP_URL', 'https://script.google.com/macros/s/HIER-DEPLOYMENT-ID-EINTRAGEN/exec');
 
 // Muss EXAKT mit SHARED_SECRET im Apps Script uebereinstimmen (dort selbst
 // gesetzt). Schuetzt den Endpunkt, da die Web-App-URL oeffentlich erreichbar
 // ist (Zugriff "Jeder").
-define('GOOGLE_SHEETS_WEBAPP_SECRET', 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ');
+define('GOOGLE_SHEETS_WEBAPP_SECRET', 'HIER-EIGENES-ZUFALLSPASSWORT-EINTRAGEN');
 
 // --- Trainer-Adminbereich (mitglied-check.html): Mitglied-Check waehrend
 // des Trainings, ob eine Person bereits online/schriftlich angemeldet ist ---

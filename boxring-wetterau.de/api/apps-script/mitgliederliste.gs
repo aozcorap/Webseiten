@@ -30,7 +30,7 @@
  * "Bereitstellen" (die URL bleibt dabei gleich).
  */
 
-var SHARED_SECRET = 'RcY_ogqOfuZqECmOGqcDA-FC16eQnqkyGJ2AcU0rXHQ';
+var SHARED_SECRET = 'HIER-EIGENES-ZUFALLSPASSWORT-EINTRAGEN';
 var MITGLIEDSNR_SPALTE = 7; // Spalte G
 
 // Spalten, die trotz rein numerischem Inhalt IMMER als Text gespeichert
