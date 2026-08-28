@@ -25,7 +25,9 @@ Abgestimmt auf das **neue** Firmenlogo (Rot/Anthrazit auf Weiß, Slogan „Mein 
 | `--brand-text` | `#C0201A` | dunklerer Rotton für kleinen Text auf Hell (Kontrast) |
 | `--ink` | `#2B2B2B` | Logo-Anthrazit, Fließtext und Überschriften |
 
-Neutraltöne bewusst in reinem Grau ohne Blau- oder Warmstich, passend zum Anthrazit des Logos. Die drei roten Quadrate des Logos kehren als Bildmarke im Header/Footer und als Marker der Abschnittslabels wieder.
+Neutraltöne bewusst in reinem Grau ohne Blau- oder Warmstich, passend zum Anthrazit des Logos. Die roten Quadrate des Logos kehren als Marker der Abschnittslabels wieder.
+
+**Kein Dark Mode.** Die Seite ist bewusst einthemig hell. Das Logo ist Schwarz/Rot auf Weiß gezeichnet: auf dunklem Grund verschwinden Schriftzug, Haus und Slogan, und eine weiße Trägerfläche darunter wirkt als Fremdkörper. Deshalb sind auch Footer und Kopfbereich hell gehalten; dunkel bleiben nur der schmale Kontaktstreifen ganz oben, das Hero-Foto und der Kontaktblock — dort steht kein Logo.
 
 ### Logo
 
@@ -40,11 +42,36 @@ Das Logo ist für hellen Grund gezeichnet — Schrift, Haus und Slogan sind schw
 Eine echte Vektorfassung gibt es nicht — auch im PDF ist das Logo ein Pixelbild. Für großformatige Anwendungen (Fahrzeugbeschriftung, Bauschild) müsste beim Grafiker eine SVG- oder EPS-Datei angefragt werden.
 
 Die Reihenfolge der Leistungen folgt der Gewichtung des Logos: Trockenbau, Bodenverlegung, Innenausbau zuerst, danach die Oberflächen-Gewerke.
-- Getestet in Chromium bei 320–1920 px (kein horizontales Scrollen) sowie im Dark Mode.
+- Getestet in Chromium bei 320–1920 px (kein horizontales Scrollen).
 
 ### Vor einem Livegang zu klären
 
-- **Bildmaterial**: aktuell lizenzfreie Platzhalterfotos (Pexels-Lizenz). Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung.
+- **Bildmaterial**: aktuell Platzhalterfotos von Pexels. Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung. Zur Rechtslage siehe unten.
 - **Ungeprüfte Angaben** im Entwurf: „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk", „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer". Mit dem Kunden gegenprüfen.
 - **Kontaktformular** sendet noch nicht (kein Endpunkt angebunden).
 - **Impressum und Datenschutzerklärung** fehlen noch (Footer-Links zeigen ins Leere).
+
+## Bildrechte
+
+Alle acht Fotos stammen von [Pexels](https://www.pexels.com/license/). Die Lizenz erlaubt kommerzielle Nutzung und Bearbeitung und verlangt keine Namensnennung.
+
+Sie deckt allerdings **kein Model Release** ab. Bei erkennbaren Personen greift in Deutschland zusätzlich das Recht am eigenen Bild (§ 22 KUG), und bei werblicher Nutzung — nichts anderes ist eine Firmenwebsite — wird das strenger bewertet als bei redaktioneller. Verschärfend kommt hinzu, dass die Fotos im Seitenkontext nahelegen, es handele sich um Mitarbeiter des Betriebs.
+
+Deshalb wurden die drei Motive mit erkennbaren Personen ausgetauscht. Der aktuelle Bestand kommt ohne erkennbare Personen aus:
+
+| Verwendung | Pexels-ID | Motiv |
+|---|---|---|
+| Hero | [7865621](https://www.pexels.com/photo/empty-interior-with-white-walls-and-wooden-floor-7865621/) | fertiger heller Raum, weiße Wände, Holzboden |
+| Trockenbau | [6474313](https://www.pexels.com/photo/wooden-materials-in-a-room-6474313/) | Gipskartondecke mit verspachtelten Fugen, Gerüst |
+| Bodenverlegung | [16641359](https://www.pexels.com/photo/an-empty-room-in-a-modern-house-16641359/) | Raum mit verlegtem Holzboden |
+| Innenausbau | [6180674](https://www.pexels.com/photo/modern-interior-of-comfortable-living-room-6180674/) | eingerichteter Wohnraum |
+| Maler- und Lackierarbeiten | [7218011](https://www.pexels.com/photo/people-painting-the-wall-7218011/) | Hand mit Farbrolle |
+| Putztechniken | [994164](https://www.pexels.com/photo/person-holding-paint-roller-while-painting-the-wall-994164/) | Hand mit Farbrolle an der Wand |
+| Tapezierarbeiten | [3316922](https://www.pexels.com/photo/white-and-brown-modern-living-room-interior-design-3316922/) | eingerichteter Wohnraum |
+| Betriebs-Sektion | [5493653](https://www.pexels.com/photo/back-view-of-a-person-painting-the-wall-using-a-painting-brush-roller-5493653/) | Maler von hinten, Helm — kein Gesicht, keine erkennbaren Merkmale |
+
+Zwei Motive zeigen nur eine Hand, eines eine Person von hinten mit Helm. Erkennbarkeit im Sinne des KUG setzt voraus, dass Bekannte die Person wiedererkennen würden — Gesicht, aber auch Tattoos, Frisur oder andere auffällige Merkmale. Keines davon ist hier gegeben.
+
+Unabhängig davon bleiben die Fotos Platzhalter und sollten vor dem Livegang durch eigene Aufnahmen ersetzt werden.
+
+Das Firmenlogo ist Eigentum des Kunden und von dieser Betrachtung nicht berührt.
