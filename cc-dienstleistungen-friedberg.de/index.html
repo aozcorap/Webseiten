@@ -394,24 +394,24 @@
     align-items:start;margin-top:40px;
   }
   .contact-lede{color:#ADADAD;margin-top:16px;max-width:44ch;font-size:1.06rem;}
-  .contact-cards{display:grid;gap:14px;margin-top:30px;}
-  .ccard{
-    display:flex;gap:15px;align-items:center;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.09);
-    border-radius:6px;padding:17px 19px;
-    text-decoration:none;
-    transition:background .16s,border-color .16s;
+  /* Beantwortet, was vor dem Absenden zaehlt - statt Kontaktdaten zu
+     wiederholen, die schon in Topbar und Footer stehen. */
+  .contact-points{margin-top:30px;display:grid;gap:16px;}
+  .contact-points li{display:flex;gap:14px;align-items:flex-start;}
+  .contact-points .cp-ico{
+    width:38px;height:38px;flex:none;border-radius:6px;
+    background:rgba(255,107,95,.14);color:#FF6B5F;
+    display:grid;place-items:center;margin-top:1px;
   }
-  .ccard:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22);}
-  .ccard-ico{
-    width:42px;height:42px;flex:none;border-radius:5px;
-    background:var(--brand);color:var(--on-brand);display:grid;place-items:center;
+  .contact-points .cp-ico svg{width:19px;height:19px;}
+  .contact-points b{display:block;font-family:'Archivo',sans-serif;font-weight:700;color:#fff;font-size:1.02rem;}
+  .contact-points span{display:block;color:#ADADAD;font-size:.94rem;margin-top:2px;}
+  .contact-alt{
+    margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);
+    font-size:.96rem;color:#ADADAD;
   }
-  .ccard-ico svg{width:20px;height:20px;}
-  .ccard-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
-  .ccard-label{display:block;font-size:.8rem;letter-spacing:.11em;text-transform:uppercase;color:#909090;font-weight:600;line-height:1.2;}
-  .ccard-val{display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:1.06rem;color:#fff;line-height:1.25;overflow-wrap:anywhere;}
+  .contact-alt a{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+  .contact-alt a:hover{color:#FF6B5F;}
 
   .form-panel{
     background:var(--card);border-radius:8px;padding:clamp(24px,3.2vw,34px);
@@ -424,6 +424,7 @@
     display:block;font-family:'Archivo',sans-serif;font-weight:600;
     font-size:.92rem;color:var(--ink);margin-bottom:6px;
   }
+  .field-optional{font-weight:400;color:var(--ink-faint);}
   .field input,.field select,.field textarea{
     width:100%;font:inherit;font-size:1rem;
     padding:11px 13px;border-radius:5px;
@@ -579,8 +580,8 @@
       <h1>Trockenbau, Böden und Innenausbau <span class="hl">in der Wetterau.</span></h1>
       <p class="hero-lede">Von der einzelnen Wand bis zum kompletten Raum: Trockenbau, Bodenverlegung und Innenausbau, dazu Maler-, Putz- und Tapezierarbeiten — alles aus einer Hand, mit festem Preis vor Auftragsstart.</p>
       <div class="hero-actions">
-        <a class="btn btn-brand btn-lg" href="tel:+4960311609098"><svg><use href="#ph"/></svg>06031 160 90 98</a>
-        <a class="btn btn-onphoto btn-lg" href="#kontakt">Kostenloses Angebot</a>
+        <a class="btn btn-brand btn-lg" href="tel:+4960311609098"><svg><use href="#ph"/></svg>Jetzt anrufen</a>
+        <a class="btn btn-onphoto btn-lg" href="#kontakt">Angebot per E-Mail</a>
       </div>
       <ul class="hero-points">
         <li><svg><use href="#check"/></svg>Festpreis-Angebot</li>
@@ -800,25 +801,22 @@
         <div>
           <p class="eyebrow">Kontakt</p>
           <h2>Angebot anfordern</h2>
-          <p class="contact-lede">Rufen Sie an oder schreiben Sie kurz, was ansteht. Wir melden uns in der Regel innerhalb eines Werktags zurück.</p>
-          <div class="contact-cards">
-            <a class="ccard" href="tel:+4960311609098">
-              <span class="ccard-ico"><svg><use href="#ph"/></svg></span>
-              <span class="ccard-text"><span class="ccard-label">Festnetz</span><span class="ccard-val">06031 160 90 98</span></span>
-            </a>
-            <a class="ccard" href="tel:+4915233680542">
-              <span class="ccard-ico"><svg><use href="#wa"/></svg></span>
-              <span class="ccard-text"><span class="ccard-label">Mobil &amp; WhatsApp</span><span class="ccard-val">0152 336 805 42</span></span>
-            </a>
-            <a class="ccard" href="mailto:info@cc-dienstleistungen-friedberg.de">
-              <span class="ccard-ico"><svg><use href="#mail"/></svg></span>
-              <span class="ccard-text"><span class="ccard-label">E-Mail</span><span class="ccard-val" style="font-size:.95rem;">info@cc-dienstleistungen-friedberg.de</span></span>
-            </a>
-            <a class="ccard" href="https://maps.google.com/?q=Münzweg+2,+61169+Friedberg" target="_blank" rel="noopener">
-              <span class="ccard-ico"><svg><use href="#pin"/></svg></span>
-              <span class="ccard-text"><span class="ccard-label">Adresse</span><span class="ccard-val">Münzweg 2, 61169 Friedberg</span></span>
-            </a>
-          </div>
+          <p class="contact-lede">Füllen Sie das Formular aus oder rufen Sie an — Ihr unverbindliches Angebot bekommen Sie innerhalb eines Werktags per E-Mail.</p>
+          <ul class="contact-points">
+            <li>
+              <span class="cp-ico"><svg><use href="#clock"/></svg></span>
+              <span><b>Rückmeldung am selben Werktag</b><span>Kein Callcenter — Sie hören von der Person, die den Auftrag auch übernimmt.</span></span>
+            </li>
+            <li>
+              <span class="cp-ico"><svg><use href="#euro"/></svg></span>
+              <span><b>Festpreis vor Auftragsstart</b><span>Ihr Angebot ist schriftlich und verbindlich, keine Überraschungen danach.</span></span>
+            </li>
+            <li>
+              <span class="cp-ico"><svg><use href="#pin"/></svg></span>
+              <span><b>Kostenlose Besichtigung vor Ort</b><span>In Friedberg und der Wetterau — unverbindlich, bevor irgendetwas beauftragt wird.</span></span>
+            </li>
+          </ul>
+          <p class="contact-alt">Lieber gleich sprechen? <a href="tel:+4960311609098">06031 160 90 98</a> oder <a href="tel:+4915233680542">WhatsApp 0152 336 805 42</a>.</p>
         </div>
 
         <div class="form-panel">
@@ -831,28 +829,34 @@
                 <input id="f-name" type="text" placeholder="Ihr Name" required>
               </div>
               <div class="field">
-                <label for="f-tel">Telefon</label>
-                <input id="f-tel" type="tel" placeholder="Für Rückruf" required>
+                <label for="f-mail">E-Mail</label>
+                <input id="f-mail" type="email" placeholder="Für Ihr Angebot" required>
               </div>
             </div>
-            <div class="field">
-              <label for="f-leist">Worum geht es?</label>
-              <select id="f-leist">
-                <option>Trockenbau</option>
-                <option>Bodenverlegung</option>
-                <option>Innenausbau</option>
-                <option>Maler- &amp; Lackierarbeiten</option>
-                <option>Putztechniken</option>
-                <option>Tapezierarbeiten</option>
-                <option>Mehrere Gewerke / Komplettrenovierung</option>
-              </select>
+            <div class="field-row">
+              <div class="field">
+                <label for="f-tel">Telefon <span class="field-optional">(optional)</span></label>
+                <input id="f-tel" type="tel" placeholder="Für Rückruf">
+              </div>
+              <div class="field">
+                <label for="f-leist">Worum geht es?</label>
+                <select id="f-leist">
+                  <option>Trockenbau</option>
+                  <option>Bodenverlegung</option>
+                  <option>Innenausbau</option>
+                  <option>Maler- &amp; Lackierarbeiten</option>
+                  <option>Putztechniken</option>
+                  <option>Tapezierarbeiten</option>
+                  <option>Mehrere Gewerke / Komplettrenovierung</option>
+                </select>
+              </div>
             </div>
             <div class="field">
               <label for="f-msg">Kurze Beschreibung</label>
               <textarea id="f-msg" placeholder="Z. B. Wohnzimmer 25 m², Wände und Decke streichen, Laminat neu"></textarea>
             </div>
             <button class="btn btn-brand" type="submit">Anfrage abschicken</button>
-            <p class="form-note">Ihre Angaben werden ausschließlich zur Bearbeitung der Anfrage verwendet.</p>
+            <p class="form-note">Sie erhalten Ihr Angebot an die angegebene E-Mail-Adresse. Ihre Angaben werden ausschließlich zur Bearbeitung der Anfrage verwendet.</p>
           </form>
         </div>
       </div>
