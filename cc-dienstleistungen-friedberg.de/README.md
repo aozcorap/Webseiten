@@ -44,7 +44,32 @@ Die Reihenfolge der Leistungen folgt der Gewichtung des Logos: Trockenbau, Boden
 
 ### Vor einem Livegang zu klären
 
-- **Bildmaterial**: aktuell lizenzfreie Platzhalterfotos (Pexels-Lizenz). Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung.
+- **Bildmaterial**: aktuell Platzhalterfotos von Pexels. Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung. Zur Rechtslage siehe unten.
 - **Ungeprüfte Angaben** im Entwurf: „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk", „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer". Mit dem Kunden gegenprüfen.
 - **Kontaktformular** sendet noch nicht (kein Endpunkt angebunden).
 - **Impressum und Datenschutzerklärung** fehlen noch (Footer-Links zeigen ins Leere).
+
+## Bildrechte
+
+Alle acht Fotos stammen von [Pexels](https://www.pexels.com/license/). Die Lizenz erlaubt kommerzielle Nutzung und Bearbeitung und verlangt keine Namensnennung. Verwendete Bilder:
+
+| Verwendung | Pexels-ID | Person erkennbar |
+|---|---|---|
+| Hero | [36153946](https://www.pexels.com/photo/construction-workers-painting-interior-walls-36153946/) | **ja** — zwei Handwerker, Gesichter sichtbar |
+| Trockenbau | [11427524](https://www.pexels.com/photo/man-doing-construction-work-inside-house-11427524/) | **ja** — Handwerker im Profil |
+| Bodenverlegung | [4263067](https://www.pexels.com/photo/crop-man-installing-laminate-flooring-4263067/) | Grenzfall — kein Gesicht, aber markante Tattoos |
+| Betrieb (Maler an der Decke) | [5493653](https://www.pexels.com/photo/back-view-of-a-person-painting-the-wall-using-a-painting-brush-roller-5493653/) | nein — von hinten, Helm |
+| Maler- und Lackierarbeiten | [7218011](https://www.pexels.com/photo/people-painting-the-wall-7218011/) | nein — nur Hand |
+| Putztechniken | [994164](https://www.pexels.com/photo/person-holding-paint-roller-while-painting-the-wall-994164/) | nein — nur Hand |
+| Innenausbau | [6180674](https://www.pexels.com/photo/modern-interior-of-comfortable-living-room-6180674/) | nein — leerer Raum |
+| Tapezierarbeiten | [3316922](https://www.pexels.com/photo/white-and-brown-modern-living-room-interior-design-3316922/) | nein — leerer Raum |
+
+### Offener Punkt für den Livegang
+
+Die Pexels-Lizenz deckt nur das Urheberrecht des Fotografen ab, sie liefert **kein Model Release**. Bei erkennbaren Personen greift in Deutschland zusätzlich das Recht am eigenen Bild (§ 22 KUG), und bei werblicher Nutzung — nichts anderes ist eine Firmenwebsite — wird das strenger bewertet als bei redaktioneller. Verschärfend kommt hinzu, dass die Fotos im Seitenkontext nahelegen, es handele sich um Mitarbeiter des Betriebs.
+
+Betroffen sind die drei oben markierten Bilder. Erkennbarkeit endet dabei nicht beim Gesicht: auch Tattoos, Frisur oder andere auffällige Merkmale genügen, wenn Bekannte die Person wiedererkennen würden.
+
+Für den Pitch ist der Stand unkritisch. Vor dem öffentlichen Livegang sollten die Fotos ohnehin durch eigene Aufnahmen ersetzt werden — das erledigt diesen Punkt gleich mit.
+
+Das Firmenlogo ist Eigentum des Kunden und von dieser Betrachtung nicht berührt.
