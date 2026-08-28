@@ -48,3 +48,8 @@ Redesign-Entwurf für die Website von CC Dienstleistungen (Serkan Çimen), Handw
 ### [everlast-entwuerfe](everlast-entwuerfe/) & [everlast-ai-landingpage](everlast-ai-landingpage/)
 Vorstufen zu buerokollege-ai: drei Design-Entwürfe (dunkel/hell/kräftig) sowie eine erste, verworfene Überarbeitung. Nicht mehr aktiv gepflegt, siehe [.claude/STATE.md](.claude/STATE.md) für Details.
 
+
+## Arbeitsweise
+
+- **[CLAUDE.md](CLAUDE.md)** — verbindliche Regeln für alle Projekte (Design-Token, echte Inhalte, Mobil zuerst, Barrierefreiheit)
+- **[`.claude/skills/kunden-pitch/`](.claude/skills/kunden-pitch/SKILL.md)** — Ablauf für Kundenprojekte: Bestandsaufnahme der alten Seite → Brief → drei Entwurfsrichtungen → Design-System → Bau → Qualitäts-Review
