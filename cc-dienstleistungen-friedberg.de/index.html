@@ -1,4 +1,15 @@
-<title>CC Dienstleistungen</title>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CC Dienstleistungen — Trockenbau, Bodenverlegung und Innenausbau in Friedberg</title>
+<meta name="description" content="Trockenbau, Bodenverlegung und Innenausbau in Friedberg und der Wetterau. Dazu Maler-, Putz- und Tapezierarbeiten — alles aus einer Hand, mit festem Preis vor Auftragsstart.">
+<meta name="theme-color" content="#D9261C">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="CC Dienstleistungen — Trockenbau, Bodenverlegung und Innenausbau in Friedberg">
+<meta property="og:description" content="Trockenbau, Bodenverlegung und Innenausbau in Friedberg und der Wetterau. Dazu Maler-, Putz- und Tapezierarbeiten — alles aus einer Hand, mit festem Preis vor Auftragsstart.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -27,7 +38,9 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  /* Alle rem-Groessen haengen an der Wurzel. 16px Browserstandard ist fuer
+     Fliesstext zu knapp, deshalb hier angehoben statt klassenweise. */
+  html{font-size:17px;scroll-behavior:smooth;}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
@@ -37,7 +50,7 @@
     background:var(--bg);
     color:var(--ink);
     font-family:'Source Sans 3', system-ui, -apple-system, sans-serif;
-    font-size:17px;
+    font-size:1.06rem;
     line-height:1.62;
     -webkit-font-smoothing:antialiased;
   }
@@ -59,7 +72,7 @@
   .wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(18px,4vw,40px);}
   .eyebrow{
     font-family:'Archivo',sans-serif;
-    font-size:.76rem;font-weight:700;
+    font-size:.8rem;font-weight:700;
     letter-spacing:.16em;text-transform:uppercase;
     color:var(--brand-text);
     display:flex;align-items:center;gap:10px;
@@ -70,7 +83,7 @@
   .topbar{
     background:var(--bg-deep);
     color:#CACACA;
-    font-size:.83rem;
+    font-size:.88rem;
   }
   .topbar-row{
     display:flex;justify-content:space-between;align-items:center;
@@ -98,7 +111,7 @@
   .foot-logo{display:block;width:200px;height:auto;}
   nav.main{display:flex;gap:30px;}
   nav.main a{
-    text-decoration:none;font-weight:600;font-size:.97rem;color:var(--ink-soft);
+    text-decoration:none;font-weight:600;font-size:1rem;color:var(--ink-soft);
     padding-block:6px;border-bottom:2.5px solid transparent;
     transition:color .15s,border-color .15s;
   }
@@ -108,7 +121,7 @@
 
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:9px;
-    font-family:'Archivo',sans-serif;font-weight:700;font-size:.95rem;
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:1rem;
     letter-spacing:-.005em;
     padding:13px 24px;border-radius:4px;text-decoration:none;
     border:2px solid transparent;white-space:nowrap;
@@ -150,12 +163,12 @@
     display:inline-flex;align-items:center;gap:9px;
     background:var(--brand);color:var(--on-brand);
     font-family:'Archivo',sans-serif;font-weight:700;
-    font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;
+    font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;
     padding:7px 14px;border-radius:3px;
   }
   .hero h1{
     color:#fff;
-    font-size:clamp(2.15rem,4.9vw,3.7rem);
+    font-size:clamp(2.05rem,4.9vw,3.45rem);
     font-weight:800;
     max-width:16ch;
     margin-top:22px;
@@ -170,7 +183,7 @@
   }
   .hero-points li{
     display:flex;align-items:center;gap:9px;
-    color:#E0E0E0;font-weight:600;font-size:.95rem;
+    color:#E0E0E0;font-weight:600;font-size:1rem;
   }
   .hero-points svg{width:19px;height:19px;color:#F0392B;flex:none;}
 
@@ -186,7 +199,9 @@
     padding:26px clamp(14px,2vw,26px);
     display:flex;gap:14px;align-items:flex-start;
     border-left:1px solid var(--line);
+    min-width:0;   /* sonst sprengt langer Text das 1fr-Raster */
   }
+  .usp-item > div{min-width:0;}
   .usp-item:first-child{border-left:none;}
   .usp-ico{
     width:40px;height:40px;flex:none;border-radius:5px;
@@ -195,11 +210,11 @@
   }
   .usp-ico svg{width:21px;height:21px;}
   .usp-title{
-    font-family:'Archivo',sans-serif;font-weight:700;font-size:1rem;
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:1.06rem;
     letter-spacing:-.01em;
   }
-  .usp-desc{font-size:.88rem;color:var(--ink-soft);margin-top:2px;line-height:1.45;}
-  @media (max-width:860px){
+  .usp-desc{font-size:.95rem;color:var(--ink-soft);margin-top:2px;line-height:1.45;}
+  @media (max-width:1000px){
     .usp-grid{grid-template-columns:1fr 1fr;}
     .usp-item:nth-child(3){border-left:none;}
     .usp-item:nth-child(n+3){border-top:1px solid var(--line);}
@@ -217,10 +232,11 @@
   .sec-head.center{margin-inline:auto;text-align:center;}
   .sec-head.center .eyebrow{justify-content:center;}
   .sec-head h2{
-    font-size:clamp(1.75rem,3.6vw,2.5rem);
+    font-size:clamp(1.65rem,3.6vw,2.32rem);
     margin-top:14px;
   }
-  .sec-head p{margin-top:14px;color:var(--ink-soft);font-size:1.05rem;}
+  /* :not(.eyebrow), sonst schlaegt diese Regel das Abschnittslabel */
+  .sec-head p:not(.eyebrow){margin-top:14px;color:var(--ink-soft);font-size:1.1rem;}
 
   /* ============ LEISTUNGEN ============ */
   .svc-grid{
@@ -245,12 +261,12 @@
     position:absolute;left:0;bottom:0;
     background:var(--brand);color:var(--on-brand);
     font-family:'Archivo',sans-serif;font-weight:700;
-    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    font-size:.77rem;letter-spacing:.12em;text-transform:uppercase;
     padding:6px 13px;
   }
   .svc-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1;}
   .svc-body h3{font-size:1.22rem;}
-  .svc-body p{color:var(--ink-soft);font-size:.96rem;}
+  .svc-body p{color:var(--ink-soft);font-size:1rem;}
   .svc-more{
     margin-top:auto;padding-top:14px;
     font-family:'Archivo',sans-serif;font-weight:700;font-size:.88rem;
@@ -300,8 +316,8 @@
     font-size:2.1rem;line-height:1;letter-spacing:-.03em;
   }
   .about-stat span{font-size:.85rem;font-weight:600;opacity:.9;}
-  .about-body h2{font-size:clamp(1.7rem,3.4vw,2.35rem);margin-top:14px;}
-  .about-body p{color:var(--ink-soft);margin-top:16px;max-width:56ch;}
+  .about-body h2{font-size:clamp(1.6rem,3.4vw,2.2rem);margin-top:14px;}
+  .about-body p{color:var(--ink-soft);margin-top:16px;max-width:56ch;font-size:1.06rem;}
   .about-list{margin-top:24px;display:grid;gap:11px;}
   .about-list li{display:flex;gap:11px;align-items:flex-start;font-weight:500;}
   .about-list svg{width:20px;height:20px;color:var(--brand);flex:none;margin-top:3px;}
@@ -316,7 +332,7 @@
     display:flex;align-items:center;gap:14px;
   }
   .sig-name{font-family:'Archivo',sans-serif;font-weight:700;font-size:1.05rem;}
-  .sig-role{font-size:.9rem;color:var(--ink-faint);}
+  .sig-role{font-size:.97rem;color:var(--ink-faint);}
   @media (max-width:820px){ .about{grid-template-columns:1fr;} .about-photo img{aspect-ratio:4/3;} }
 
   /* ============ ABLAUF ============ */
@@ -339,7 +355,7 @@
   .steps > .step:last-child::after{display:none;}
   @media (max-width:820px){ .step::after{display:none;} }
   .step h3{font-size:1.2rem;margin-top:10px;}
-  .step p{color:var(--ink-soft);font-size:.96rem;margin-top:8px;}
+  .step p{color:var(--ink-soft);font-size:1rem;margin-top:8px;}
   @media (max-width:820px){ .steps{grid-template-columns:1fr;} }
 
   /* ============ REFERENZEN ============ */
@@ -362,7 +378,7 @@
     position:absolute;left:0;right:0;bottom:0;
     background:linear-gradient(0deg,rgba(10,13,16,.85),transparent);
     color:#fff;padding:26px 16px 13px;
-    font-family:'Archivo',sans-serif;font-weight:600;font-size:.9rem;
+    font-family:'Archivo',sans-serif;font-weight:600;font-size:.95rem;
   }
   /* 8/3 traegt bei vier wie bei zwei Spalten: die breite Kachel ist doppelt
      so breit, bleibt damit aber gleich hoch wie die schmalen daneben. */
@@ -372,12 +388,12 @@
   .contact{background:var(--bg-deep);color:#EDEDED;}
   .contact .eyebrow{color:#FF6B5F;}
   .contact .eyebrow::before{background:#FF6B5F;}
-  .contact h2{color:#fff;font-size:clamp(1.75rem,3.6vw,2.5rem);margin-top:14px;}
+  .contact h2{color:#fff;font-size:clamp(1.65rem,3.6vw,2.32rem);margin-top:14px;}
   .contact-grid{
     display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,64px);
     align-items:start;margin-top:40px;
   }
-  .contact-lede{color:#ADADAD;margin-top:16px;max-width:44ch;}
+  .contact-lede{color:#ADADAD;margin-top:16px;max-width:44ch;font-size:1.06rem;}
   .contact-cards{display:grid;gap:14px;margin-top:30px;}
   .ccard{
     display:flex;gap:15px;align-items:center;
@@ -394,7 +410,7 @@
   }
   .ccard-ico svg{width:20px;height:20px;}
   .ccard-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
-  .ccard-label{display:block;font-size:.75rem;letter-spacing:.11em;text-transform:uppercase;color:#909090;font-weight:600;line-height:1.2;}
+  .ccard-label{display:block;font-size:.8rem;letter-spacing:.11em;text-transform:uppercase;color:#909090;font-weight:600;line-height:1.2;}
   .ccard-val{display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:1.06rem;color:#fff;line-height:1.25;overflow-wrap:anywhere;}
 
   .form-panel{
@@ -402,14 +418,14 @@
     box-shadow:var(--shadow-md);
   }
   .form-panel h3{font-size:1.35rem;color:var(--ink);}
-  .form-panel > p{color:var(--ink-soft);font-size:.94rem;margin-top:7px;}
+  .form-panel > p{color:var(--ink-soft);font-size:1rem;margin-top:7px;}
   .field{margin-top:16px;}
   .field label{
     display:block;font-family:'Archivo',sans-serif;font-weight:600;
-    font-size:.85rem;color:var(--ink);margin-bottom:6px;
+    font-size:.92rem;color:var(--ink);margin-bottom:6px;
   }
   .field input,.field select,.field textarea{
-    width:100%;font:inherit;font-size:.97rem;
+    width:100%;font:inherit;font-size:1rem;
     padding:11px 13px;border-radius:5px;
     border:1.5px solid var(--line-strong);
     background:var(--bg);color:var(--ink);
@@ -420,17 +436,17 @@
   }
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   .form-panel .btn{width:100%;margin-top:20px;}
-  .form-note{font-size:.8rem;color:var(--ink-faint);margin-top:12px;line-height:1.5;}
+  .form-note{font-size:.88rem;color:var(--ink-faint);margin-top:12px;line-height:1.5;}
   @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} .field-row{grid-template-columns:1fr;} }
 
   /* ============ FOOTER ============ */
-  footer{background:var(--bg-alt);color:var(--ink-soft);font-size:.92rem;border-top:1px solid var(--line);}
+  footer{background:var(--bg-alt);color:var(--ink-soft);font-size:.98rem;border-top:1px solid var(--line);}
   .foot-grid{
     display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;
     padding-block:52px 40px;
   }
   .foot-grid h4{
-    font-family:'Archivo',sans-serif;font-weight:700;font-size:.82rem;
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:.86rem;
     letter-spacing:.13em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;
   }
   .foot-brand{margin-bottom:18px;}
@@ -441,7 +457,7 @@
     border-top:1px solid var(--line);
     padding-block:20px;
     display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    font-size:.85rem;color:var(--ink-faint);
+    font-size:.92rem;color:var(--ink-faint);
   }
   .foot-bottom nav{display:flex;gap:22px;}
   .foot-bottom a{text-decoration:none;}
@@ -492,7 +508,8 @@
     .header-cta{display:none;}
   }
 </style>
-
+</head>
+<body>
 <svg class="defs" aria-hidden="true">
   <symbol id="ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.6h3.1l1.6 4.6-2.1 1.5a12.3 12.3 0 0 0 5.5 5.5l1.5-2.1 4.6 1.6v3.1c0 1.1-1 2.1-2.1 2.1C10.1 19.9 4.1 13.9 4.1 5.7c0-1.1 1-2.1 2.1-2.1Z"/></symbol>
   <symbol id="mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.6 6.6 8.4 6 8.4-6"/></symbol>
@@ -872,3 +889,5 @@
     </div>
   </div>
 </footer>
+</body>
+</html>
