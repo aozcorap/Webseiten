@@ -104,10 +104,10 @@
   }
   .header-row{
     display:flex;align-items:center;justify-content:space-between;
-    gap:20px;padding-block:10px;
+    gap:20px;padding-block:8px;
   }
   .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
-  .brand-logo{display:block;width:232px;height:auto;}
+  .brand-logo{display:block;width:120px;height:auto;}
   .foot-logo{display:block;width:200px;height:auto;}
   nav.main{display:flex;gap:30px;}
   nav.main a{
@@ -466,7 +466,7 @@
 
   /* ============ MOBILE-FEINSCHLIFF (bewusst am Ende: gewinnt die Kaskade) ============ */
   @media (max-width:1090px){
-    .brand-logo{width:196px;}
+    .brand-logo{width:108px;}
     nav.main{gap:22px;}
     nav.main a{font-size:.92rem;}
     .header-cta{padding:11px 17px;font-size:.9rem;}
@@ -495,18 +495,32 @@
     .foot-grid h4{font-size:.9rem;}
     .topbar{font-size:.92rem;}
     .header-row{gap:12px;}
-    .brand-logo{width:168px;}
+    .brand-logo{width:96px;}
     .hero-actions .btn{width:100%;}
     .hero-points{gap:9px 20px;}
   }
   @media (max-width:400px){
-    .brand-logo{width:138px;}
+    .brand-logo{width:82px;}
     .topbar{font-size:.88rem;}
     .header-cta{padding:10px 13px;font-size:.85rem;}
   }
   @media (max-width:340px){
     .header-cta{display:none;}
   }
+
+  /* ============ ANKER-SCROLL ============ */
+  /* header.site ist sticky; ohne scroll-padding-top landen #top und die
+     Sektions-Anker unter dem Header versteckt (Logo-Klick, Menuepunkte,
+     Telefon-CTA -> #kontakt). Werte sind die gemessene Kopfbereich-Hoehe
+     (Topbar + Header-Zeile) je Breite, mit Sicherheitsabstand nach oben
+     abgerundet. Reihenfolge absteigend: die schmalste zutreffende Regel
+     gewinnt zuletzt in der Kaskade.
+  */
+  html{scroll-padding-top:150px;}
+  @media (max-width:1000px){ html{scroll-padding-top:178px;} }
+  @media (max-width:720px){  html{scroll-padding-top:138px;} }
+  @media (max-width:520px){  html{scroll-padding-top:178px;} }
+  @media (max-width:400px){  html{scroll-padding-top:198px;} }
 </style>
 </head>
 <body>
@@ -550,8 +564,8 @@
       <a href="#referenzen">Referenzen</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
-    <a class="btn btn-brand header-cta" href="#kontakt">
-      <svg><use href="#ph"/></svg><span class="cta-long">Angebot anfordern</span><span class="cta-short">Anfragen</span>
+    <a class="btn btn-brand header-cta" href="tel:+4960311609098">
+      <svg><use href="#ph"/></svg><span class="cta-long">Jetzt anrufen</span><span class="cta-short">Anrufen</span>
     </a>
   </div>
 </header>
