@@ -85,6 +85,20 @@ Kostet rund 330 KB zusätzlich pro Seite (Base64-Overhead eingerechnet) — vert
 
 **Datenschutzerklärung** ist auf den tatsächlichen Stand dieses Entwurfs zugeschnitten (keine Cookies, keine Analyse-Dienste, selbst gehostete Schriften, GitHub-Pages-Hosting für die Entwurfsphase, Google-Maps-Link statt -Einbettung). Zwei Stellen sind als `[TODO: Vor dem Livegang aktualisieren]` markiert: der Hosting-Abschnitt (muss auf den echten Webspace umgeschrieben werden) und der Formular-Abschnitt (das Kontaktformular hat noch keinen Versand-Endpunkt — es werden aktuell tatsächlich keine Daten übertragen, der Text beschreibt den Zielzustand nach Anbindung).
 
+### Agenten-Review (Code, SEO, Recht/Datenschutz)
+
+Vor der Auslieferung von drei unabhängigen Agenten parallel geprüft. Reale Befunde, alle behoben:
+
+- **Formularfelder ohne `name`-Attribut** — nur `id` gesetzt, kein `name`. Beim Anbinden an einen echten Endpunkt wären die Werte nicht oder ohne erkennbaren Feldnamen angekommen. Ergänzt.
+- **„WhatsApp"-Link führte zum Telefonwähler statt zu WhatsApp** — Text sagte „WhatsApp 0152 …", `href` war aber `tel:`. Auf `https://wa.me/4915233680542` korrigiert.
+- **`§ 5 TMG`-Verweis im Impressum veraltet** — das TMG wurde zum 14. Mai 2024 vom Digitale-Dienste-Gesetz (DDG) abgelöst. Auf `§ 5 DDG` bzw. `§§ 7–10 DDG` aktualisiert, mit kurzer Erklärung im Text.
+- **`twitter:image` und `og:url` fehlten** in den Meta-Tags aller drei Seiten — ergänzt.
+- **Title/Description der Startseite zu lang** (79 / 175 Zeichen) für eine saubere Darstellung in Suchergebnissen — auf 54 / 132 Zeichen gekürzt.
+
+Sonst nichts Kritisches: keine doppelten IDs, alle internen Anker und Datei-Links funktionieren, alle Formularfelder haben zugehörige `<label>`, alle Bilder sinnvolle Alt-Texte, JSON-LD ist syntaktisch valide und schema.org-konform, EU-Streitschlichtungs-Hinweis korrekt ohne die seit Juli 2025 eingestellte OS-Plattform formuliert, Datenschutztext deckungsgleich mit der technischen Realität (0 externe Anfragen, Kontaktformular ehrlich als noch nicht angebunden beschrieben).
+
+**Wichtig:** Dieser Review ersetzt keine anwaltliche Prüfung. Vor dem echten Go-Live sollten Impressum und Datenschutzerklärung von einem Anwalt oder der zuständigen Handwerkskammer gegengelesen werden — insbesondere wegen der noch offenen Handwerkskammer-Angabe.
+
 ### Vor einem Livegang zu klären
 
 - **Bildmaterial**: aktuell Platzhalterfotos von Pexels. Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung. Zur Rechtslage siehe unten.
