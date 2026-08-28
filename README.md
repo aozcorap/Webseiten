@@ -39,9 +39,11 @@ Landingpage "BüroKollege.AI" — 30 Tage kostenlos testen, digitaler Kollege f�
 - Wettbewerber: kiwerk.ai (echtes Produkt, echte Kundenstimmen, offene Preise) — eigene Positionierung dagegen noch offen
 
 ### [cc-dienstleistungen-friedberg.de](cc-dienstleistungen-friedberg.de/README.md)
-Platzhalter-Ordner für ein anstehendes komplettes Redesign der Website von CC Dienstleistungen (Serkan Çimen), Handwerksbetrieb für Maler-, Lackier- und Ausbauarbeiten in Friedberg (Hessen).
+Redesign-Entwurf für die Website von CC Dienstleistungen (Serkan Çimen), Handwerksbetrieb für Maler-, Lackier- und Ausbauarbeiten in Friedberg (Hessen) — Pitch-Grundlage für ein Kundengespräch, kein Produktivsystem.
 
-- Redesign noch nicht begonnen, aktuell nur README mit Kontext zur Live-Seite
+- Einseitige Firmenseite mit Foto-Hero, Leistungen als Foto-Karten, Ablauf, Referenzgalerie und Kontaktformular
+- Bilder sind lizenzfreie Platzhalter (Pexels), vor einem Launch durch eigene Fotos zu ersetzen
+- Details und offene Punkte: siehe [cc-dienstleistungen-friedberg.de/README.md](cc-dienstleistungen-friedberg.de/README.md)
 
 ### [everlast-entwuerfe](everlast-entwuerfe/) & [everlast-ai-landingpage](everlast-ai-landingpage/)
 Vorstufen zu buerokollege-ai: drei Design-Entwürfe (dunkel/hell/kräftig) sowie eine erste, verworfene Überarbeitung. Nicht mehr aktiv gepflegt, siehe [.claude/STATE.md](.claude/STATE.md) für Details.
