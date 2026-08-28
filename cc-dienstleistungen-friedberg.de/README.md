@@ -55,12 +55,57 @@ Die Reihenfolge der Leistungen folgt der Gewichtung des Logos: Trockenbau, Boden
 - **Vier generische Kontaktkarten im Kontaktbereich** (Festnetz, Mobil & WhatsApp, E-Mail, Adresse) wiederholten nur, was bereits in Topbar und Footer steht, ohne dem Kunden bei der Entscheidung zu helfen. Ersetzt durch drei Nutzenaussagen (Rückmeldung am selben Werktag, Festpreis vor Auftragsstart, kostenlose Besichtigung vor Ort) plus eine schlanke Zeile „Lieber gleich sprechen?" mit Telefon- und WhatsApp-Link für alle, die das Formular überspringen wollen.
 - **Galerie**: Das Seitenverhältnis liegt auf der Kachel, nicht auf dem Bild. Die breite Kachel bekommt `8/3` statt `4/3`, weil sie doppelt so breit ist — sonst wächst sie auch doppelt in die Höhe und sprengt die Zeile.
 
+### SEO-Basics
+
+Bewusst nur die Grundlagen, keine Kampagne:
+
+- **Meta-Tags** je Seite: eigener `<title>`, `<meta name="description">`, Open Graph (`og:title`, `og:description`, `og:image`, `og:type`, `og:locale`, `og:site_name`) und Twitter-Card-Tags. `og:image` nutzt einen zugeschnittenen Ausschnitt des Hero-Fotos (1200×630, eingebettet) — wichtig schon jetzt, weil ein per WhatsApp verschickter Pitch-Link damit eine Vorschau zeigt.
+- **`<meta name="robots" content="noindex, nofollow">`** auf allen drei Seiten. Das ist bewusst *keine* SEO-Maßnahme für die Zielseite, sondern eine Sicherung für die Entwurfsphase: Diese Kopie läuft unter `aozcorap.github.io/...`, nicht unter der echten Domain. Ohne `noindex` könnte Google sie indexieren und später mit der echten Seite unter `cc-dienstleistungen-friedberg.de` als Duplicate Content konkurrieren. **Vor dem echten Livegang entfernen** (in allen drei `<head>`-Bereichen).
+- **`rel="canonical"`** zeigt bereits auf `https://cc-dienstleistungen-friedberg.de/…` — die vermutete Zieladresse. Beim tatsächlichen Go-Live prüfen, ob das noch stimmt.
+- **Strukturierte Daten** (JSON-LD, `HomeAndConstructionBusiness`) auf der Startseite: Name, Adresse, Telefon, E-Mail, Einsatzgebiet, Öffnungszeiten, Leistungen als `Offer`-Liste. Es werden ausschließlich Angaben verwendet, die ohnehin sichtbar auf der Seite stehen — nichts Neues behauptet. Das schließt die weiter unten gelisteten ungeprüften Angaben ein (`foundingDate: "2012"`, Öffnungszeiten): vor dem Livegang zusammen mit dem übrigen Text gegenprüfen.
+- **Favicon** eingebettet (die drei roten Logo-Quadrate als eigenständige 64×64-Marke, kein Downscale des vollen Logos).
+- Überschriften-Hierarchie sauber (ein `h1` pro Seite), `lang="de"`, sprechende Alt-Texte an allen Fotos — war größtenteils schon vorher in Ordnung.
+- **Kein `robots.txt` / `sitemap.xml`** im Ordner: Diese Dateien wirken nur am Domain-Root, und der Root dieses Repos wird von allen Projekten gemeinsam genutzt (`aozcorap.github.io/Webseiten/…`). Eine Datei hier hätte keine Wirkung und ein Root-`robots.txt` würde andere Kundenprojekte im selben Repo mit betreffen. Nachzuholen, sobald die Seite einen eigenen Domain-Root hat.
+
+### Schriften: selbst gehostet statt Google Fonts
+
+Die Seite lud Archivo und Source Sans 3 zuvor direkt von `fonts.googleapis.com`/`fonts.gstatic.com`. Das ist in Deutschland ein bekanntes Abmahnrisiko: Der Aufruf überträgt die Besucher-IP ohne Einwilligung an Google-Server (u. a. LG München I, Az. 3 O 17493/20 — IP-Übertragung als DSGVO-Verstoß gewertet).
+
+Alle 8 benötigten Schnitte (Archivo 500/600/700/800, Source Sans 3 400/500/600/700, jeweils der lateinische Subset `U+0000-00FF`, deckt deutsche Umlaute ab) sind jetzt als WOFF2 lokal eingebettet (`@font-face` mit `data:`-URI, siehe `fonts/manifest.json` als Referenz der Originaldateien). **Ergebnis: Die Seite baut keine einzige externe Verbindung mehr auf** — mit Playwright nachgemessen (`page.on('request', …)` bei `networkidle`): 0 externe Anfragen auf allen drei Seiten. Das ist auch der Grund, warum kein Cookie-Banner nötig ist (siehe Datenschutzerklärung).
+
+Kostet rund 330 KB zusätzlich pro Seite (Base64-Overhead eingerechnet) — vertretbar angesichts der ohnehin eingebetteten Fotos.
+
+### Impressum & Datenschutz als echte Unterseiten
+
+`impressum.html` und `datenschutz.html` liegen jetzt als eigenständige Seiten neben `index.html`, im selben Design (eigene, schlankere Kopie des Kopf-/Fußbereichs — bewusst dupliziert statt eines Includes, passend zur Repo-Konvention „reines HTML, kein Build-Schritt"). Footer-Links auf allen drei Seiten zeigen jetzt wirklich dorthin, die aktive Seite ist im Footer per `aria-current="page"` fett hervorgehoben.
+
+**Impressum** enthält die real bekannten Angaben (Name, Anschrift, Telefon, E-Mail aus der bisherigen Live-Seite). Sichtbar als `[TODO: Kunde liefert]` markiert, weil nicht bekannt bzw. bewusst nicht übernommen:
+- **USt-IdNr.** — auf der alten Seite stand eine *Steuernummer*. Die ist keine Pflichtangabe im Impressum und wird aus Vorsicht **nicht** übernommen (öffentlich einsehbare Steuernummern sind unüblich und teils missbrauchsanfällig); stattdessen nach der USt-IdNr. gefragt.
+- **Handwerkskammer + Eintragungsnummer in der Handwerksrolle** — Malerhandwerk ist zulassungspflichtig (Anlage A HwO), die Kammer-Angabe ist damit Pflicht, fehlt aber noch.
+
+**Datenschutzerklärung** ist auf den tatsächlichen Stand dieses Entwurfs zugeschnitten (keine Cookies, keine Analyse-Dienste, selbst gehostete Schriften, GitHub-Pages-Hosting für die Entwurfsphase, Google-Maps-Link statt -Einbettung). Zwei Stellen sind als `[TODO: Vor dem Livegang aktualisieren]` markiert: der Hosting-Abschnitt (muss auf den echten Webspace umgeschrieben werden) und der Formular-Abschnitt (das Kontaktformular hat noch keinen Versand-Endpunkt — es werden aktuell tatsächlich keine Daten übertragen, der Text beschreibt den Zielzustand nach Anbindung).
+
+### Agenten-Review (Code, SEO, Recht/Datenschutz)
+
+Vor der Auslieferung von drei unabhängigen Agenten parallel geprüft. Reale Befunde, alle behoben:
+
+- **Formularfelder ohne `name`-Attribut** — nur `id` gesetzt, kein `name`. Beim Anbinden an einen echten Endpunkt wären die Werte nicht oder ohne erkennbaren Feldnamen angekommen. Ergänzt.
+- **„WhatsApp"-Link führte zum Telefonwähler statt zu WhatsApp** — Text sagte „WhatsApp 0152 …", `href` war aber `tel:`. Auf `https://wa.me/4915233680542` korrigiert.
+- **`§ 5 TMG`-Verweis im Impressum veraltet** — das TMG wurde zum 14. Mai 2024 vom Digitale-Dienste-Gesetz (DDG) abgelöst. Auf `§ 5 DDG` bzw. `§§ 7–10 DDG` aktualisiert, mit kurzer Erklärung im Text.
+- **`twitter:image` und `og:url` fehlten** in den Meta-Tags aller drei Seiten — ergänzt.
+- **Title/Description der Startseite zu lang** (79 / 175 Zeichen) für eine saubere Darstellung in Suchergebnissen — auf 54 / 132 Zeichen gekürzt.
+
+Sonst nichts Kritisches: keine doppelten IDs, alle internen Anker und Datei-Links funktionieren, alle Formularfelder haben zugehörige `<label>`, alle Bilder sinnvolle Alt-Texte, JSON-LD ist syntaktisch valide und schema.org-konform, EU-Streitschlichtungs-Hinweis korrekt ohne die seit Juli 2025 eingestellte OS-Plattform formuliert, Datenschutztext deckungsgleich mit der technischen Realität (0 externe Anfragen, Kontaktformular ehrlich als noch nicht angebunden beschrieben).
+
+**Wichtig:** Dieser Review ersetzt keine anwaltliche Prüfung. Vor dem echten Go-Live sollten Impressum und Datenschutzerklärung von einem Anwalt oder der zuständigen Handwerkskammer gegengelesen werden — insbesondere wegen der noch offenen Handwerkskammer-Angabe.
+
 ### Vor einem Livegang zu klären
 
 - **Bildmaterial**: aktuell Platzhalterfotos von Pexels. Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung. Zur Rechtslage siehe unten.
-- **Ungeprüfte Angaben** im Entwurf: „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk", „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer". Mit dem Kunden gegenprüfen.
+- **Ungeprüfte Angaben** im Entwurf: „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk", „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer" — dieselben Werte stecken jetzt auch im JSON-LD, siehe SEO-Abschnitt.
 - **Kontaktformular** sendet noch nicht (kein Endpunkt angebunden).
-- **Impressum und Datenschutzerklärung** fehlen noch (Footer-Links zeigen ins Leere).
+- **Impressum**: USt-IdNr. und Handwerkskammer-Eintrag fehlen noch (siehe oben).
+- **`noindex`-Tag** vor dem echten Go-Live aus allen drei Seiten entfernen (siehe SEO-Abschnitt).
 
 ## Bildrechte
 
