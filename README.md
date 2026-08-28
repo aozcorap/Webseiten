@@ -43,7 +43,7 @@ Redesign-Entwurf für die Website von CC Dienstleistungen (Serkan Çimen), Handw
 
 - Einseitige Firmenseite mit Foto-Hero, Leistungen als Foto-Karten, Ablauf, Referenzgalerie und Kontaktformular
 - Bilder sind lizenzfreie Platzhalter (Pexels), vor einem Launch durch eigene Fotos zu ersetzen
-- Details und offene Punkte: siehe [cc-dienstleistungen-friedberg.de/README.md](cc-dienstleistungen-friedberg.de/README.md)
+- Details siehe [cc-dienstleistungen-friedberg.de/README.md](cc-dienstleistungen-friedberg.de/README.md), offene Punkte siehe [OFFENE-PUNKTE-cc-dienstleistungen-friedberg.md](OFFENE-PUNKTE-cc-dienstleistungen-friedberg.md)
 
 ### [everlast-entwuerfe](everlast-entwuerfe/) & [everlast-ai-landingpage](everlast-ai-landingpage/)
 Vorstufen zu buerokollege-ai: drei Design-Entwürfe (dunkel/hell/kräftig) sowie eine erste, verworfene Überarbeitung. Nicht mehr aktiv gepflegt, siehe [.claude/STATE.md](.claude/STATE.md) für Details.
