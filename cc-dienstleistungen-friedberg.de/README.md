@@ -43,6 +43,8 @@ Eine echte Vektorfassung gibt es nicht — auch im PDF ist das Logo ein Pixelbil
 
 Die Reihenfolge der Leistungen folgt der Gewichtung des Logos: Trockenbau, Bodenverlegung, Innenausbau zuerst, danach die Oberflächen-Gewerke.
 - Getestet in Chromium bei 320–1920 px (kein horizontales Scrollen).
+- **Schriftgrößen auf schmalen Schirmen**: unterhalb 620 px wird die Wurzelgröße auf 17,5 px angehoben, statt einzelne Klassen nachzujustieren. Alle `rem`-Angaben hängen an der Wurzel, nicht an `body` — dadurch skaliert der gesamte Textsatz gleichmäßig mit. Kleinster Text auf dem Handy: 14 px statt vorher 12 px.
+- **Galerie**: Das Seitenverhältnis liegt auf der Kachel, nicht auf dem Bild. Die breite Kachel bekommt `8/3` statt `4/3`, weil sie doppelt so breit ist — sonst wächst sie auch doppelt in die Höhe und sprengt die Zeile.
 
 ### Vor einem Livegang zu klären
 
