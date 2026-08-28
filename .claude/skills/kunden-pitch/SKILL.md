@@ -16,6 +16,30 @@ Arbeite die Phasen der Reihe nach ab. Phase 1 ist nicht optional: ohne
 Bestandsaufnahme entsteht generisches Zeug, und genau das ist das Problem,
 das dieser Skill loest.
 
+## Umfang klaeren
+
+Zwei Faelle, unterschiedlich viel Arbeit:
+
+**Voller Pitch** - der Kunde soll ueberzeugt werden. Alle Phasen, drei
+Entwurfsrichtungen. Das ist der Normalfall bei einer echten Anfrage.
+
+**Schneller Einzelentwurf** - du willst nur sehen, wie es aussehen koennte.
+Phase 3 auf eine Richtung reduzieren, alles andere bleibt. Besonders Phase 1
+und Phase 6 nicht ueberspringen: ohne Bestandsaufnahme wird es generisch,
+ohne Review bleiben die Fehler drin.
+
+Im Zweifel nachfragen, welcher der beiden Faelle gemeint ist.
+
+## Dateien in diesem Skill
+
+| Datei | Wofuer |
+|---|---|
+| `references/basis.css` | Token und Grundgestaltung. Kopieren, vier Stellen anpassen. |
+| `references/muster.md` | Fertiges Markup je Sektion. Zusammensetzen statt erfinden. |
+| `references/richtungen.md` | Die drei Entwurfsrichtungen, Farbe je Gewerk, Schriftpaare. |
+| `references/handwerk.md` | Was bei Handwerkskunden Anfragen erzeugt. |
+| `references/qualitaet.md` | Kill-Kriterien fuer den Review vor der Praesentation. |
+
 ## Phase 1 - Bestandsaufnahme
 
 Bevor irgendetwas gebaut wird, die alte Seite des Kunden auslesen. Ohne
@@ -85,25 +109,42 @@ Look, nicht die Gewohnheit.
 
 Erst Token, dann Bau. Nie umgekehrt.
 
-Lege pro Entwurf einen `:root`-Block an: Farben, Typo-Skala, Abstands-Skala,
-Radien. Danach nur noch Variablen verwenden - kein einziger Hex-Wert und
-kein einziger `px`-Wert im Markup.
+Kopiere `references/basis.css` in das Projekt. Darin stecken bereits eine
+abgestimmte Typo-Skala, eine Abstands-Skala, Fokus-Zustaende, einheitliche
+Bildformate, die mobile Anrufleiste und `prefers-reduced-motion`.
+
+Anzupassen sind genau vier Stellen, alle im `:root`-Block markiert: Farben,
+Schriftpaar, Radius und Seitenbreite. Alles andere bleibt unveraendert - die
+Skalen sind aufeinander abgestimmt, und einzeln veraenderte Werte zerstoeren
+genau den Rhythmus, der eine Seite professionell wirken laesst.
+
+Danach ausschliesslich Variablen verwenden: kein Hex-Wert und kein loser
+Pixelwert im Markup.
 
 Farbe leitet sich aus dem Betrieb ab, nicht aus einer Palette von der
-Stange. Ein Malerbetrieb darf Farbe zeigen. Ein Schreiner lebt von Holztoenen
-und Materialfotos. Ein Dachdecker von Anthrazit und Himmel. Falls der Kunde
-ein Logo hat, kommt die Primaerfarbe von dort.
-
-Typografie: ein Paar, nicht drei Schriften. Konkrete Vorschlaege nach
-Gewerk in `references/richtungen.md`.
+Stange. Ein Malerbetrieb darf Farbe zeigen. Ein Schreiner lebt von
+Holztoenen. Ein Dachdecker von Anthrazit und Himmel. Hat der Kunde ein Logo,
+kommt die Primaerfarbe von dort. Anhaltspunkte je Gewerk und die
+Schriftpaare: `references/richtungen.md`.
 
 ## Phase 5 - Bau
 
 Statisches HTML/CSS/JS, passend zum Rest dieses Repos. Kein Framework.
 
-Umfang: Eine Seite, die ueberzeugt, hat mindestens Hero, Leistungen im
-Detail, Referenzen mit Bildern, Ueber-den-Betrieb, Ablauf, Einzugsgebiet,
-Kontakt, Footer. Drei Sektionen sehen nach Demo aus, nicht nach Website.
+Setze die Seite aus den Bausteinen in `references/muster.md` zusammen, statt
+Sektionen neu zu erfinden. Dort steht fuer jeden Abschnitt fertiges Markup -
+Hero, Vertrauensleiste, Leistungen, Referenzen, Ablauf, Kontakt, Anrufleiste,
+Footer. Das ist der Unterschied zwischen einem brauchbaren ersten Wurf und
+fuenf Korrekturschleifen.
+
+Besondere Aufmerksamkeit gilt den Leistungen. Der Standardreflex sind drei
+gleich grosse Karten mit Piktogramm - genau das laesst eine Seite generiert
+aussehen. `references/muster.md` zeigt die Alternative: jede Leistung als
+eigener Block mit echtem Foto, Seite wechselnd.
+
+Umfang: mindestens Hero, Vertrauensleiste, Leistungen, Referenzen, Ablauf,
+Betrieb, Einzugsgebiet, Kontakt, Footer. Drei Sektionen sehen nach Demo aus,
+nicht nach Website.
 
 Inhalte kommen ausschliesslich aus `BESTANDSAUFNAHME.md`. Kein Lorem ipsum,
 keine erfundenen Referenzen, keine erfundenen Bewertungen. Fehlt echter
