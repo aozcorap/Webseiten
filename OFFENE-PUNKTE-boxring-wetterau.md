@@ -339,9 +339,19 @@
   immer automatisch eine Pull Request erstellen, ohne extra nachzufragen.
 
 ## Hintergrund-Infos für nächste Session
-- Deploy-Workflow: Code lebt im GitHub-Repo aozcorap/Webseiten, Branch master.
+- **KRITISCH – Deploy-Zielverzeichnis (nicht nochmal danach fragen!):**
   Live-Seite läuft NICHT über GitHub Pages, sondern eigenes Hosting
-  (Strothmann IT, Plesk) – Uploads erfolgen manuell per FTP durch den Nutzer.
+  (Strothmann IT, Plesk) – Uploads erfolgen manuell per FTP/Plesk-File-Manager
+  durch den Nutzer. `boxring-wetterau.de` ist in Plesk nur ein **Alias** auf
+  die Hauptdomain **`boxring-woelfersheim.de`** (Domain-Tausch bei Strothmann
+  IT beantragt, aber Stand 2026-08-29 noch NICHT vollzogen – Punkt bleibt
+  offen, siehe oben). Hochgeladen werden muss deshalb IMMER unter
+  **`boxring-woelfersheim.de/httpdocs/`** (nicht unter einem separaten
+  "boxring-wetterau.de"-Eintrag in Plesk, falls dort einer sichtbar ist).
+  Am 2026-08-29 kam es dadurch zu einem falschen Deploy-Fehlalarm (Vereinsshop-
+  Menüpunkt fehlte live) – Code war korrekt, der Upload hatte nur das falsche
+  Zielverzeichnis erreicht. Code lebt im GitHub-Repo aozcorap/Webseiten,
+  Branch master.
 - Framework-Eigenheit: Seite nutzt ein React-basiertes "dc-runtime"-Template-
   System (x-dc/sc-for/sc-if in support.js). Alles, was on-page sichtbar/
   crawlbar sein soll, MUSS innerhalb von <x-dc>...</x-dc> stehen (String-
