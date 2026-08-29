@@ -13,7 +13,7 @@ Leistungen: Trockenbau, Maler- und Lackierarbeiten, Raumgestaltung, Innenausbau,
 **Redesign-Entwurf steht** (`index.html`) — Pitch-Grundlage für das Kundengespräch, kein Produktivsystem.
 
 - Einzelne, eigenständige `index.html`: Bilder sind als Data-URI eingebettet, nur die Schriften (Archivo, Source Sans 3) kommen von Google Fonts. Läuft ohne Build-Schritt auf jedem Webspace.
-- Aufbau orientiert an gängigen Handwerker-Seiten: Topbar, Hero mit Foto, USP-Leiste, Leistungen als Foto-Karten, Betriebs-Sektion, Ablauf in 3 Schritten, Referenzgalerie, Kontakt mit Formular, mehrspaltiger Footer.
+- Aufbau orientiert an gängigen Handwerker-Seiten: Topbar, Hero mit Foto, USP-Leiste, Leistungen als Foto-Karten, Betriebs-Sektion, Ablauf in 3 Schritten, Referenzgalerie, Kontakt mit Formular, schlanker Footer (nur Kontaktblock).
 
 ### Farbschema
 
@@ -31,13 +31,13 @@ Neutraltöne bewusst in reinem Grau ohne Blau- oder Warmstich, passend zum Anthr
 
 ### Logo
 
-Das Firmenlogo steht vollständig in Header und Footer.
+Das Firmenlogo steht im Header aller drei Seiten. Im Footer stand es zunächst auch, wurde aber auf Kundenwunsch entfernt — der Footer zeigt jetzt nur noch den Kontaktblock (siehe Kundenkorrekturen unten).
 
 Quelldateien im Ordner: `logo CC Dienstleistungen 2026.pdf` (vom Kunden) und `logo CC Dienstleistungen 2026.jpg` (340 × 226 px).
 
-Verwendet wird die Fassung aus dem PDF, nicht das JPEG: darin steckt dasselbe Motiv mit 873 × 562 px und einer eigenen Transparenzmaske. Das eingebettete Bild ist ein **CMYK-JPEG mit Adobe-Marker** — die Werte liegen dort invertiert vor und müssen vor der Umwandlung nach RGB zurückgedreht werden, sonst kippen die Farben (Haus wird rosa, Rot verschwindet). Die freigestellte Fassung liegt als `assets/logo.png`; in `index.html` ist sie auf 560 px Breite herunterskaliert als Data-URI eingebettet (~20 KB).
+Verwendet wird die Fassung aus dem PDF, nicht das JPEG: darin steckt dasselbe Motiv mit 873 × 562 px und einer eigenen Transparenzmaske. Das eingebettete Bild ist ein **CMYK-JPEG mit Adobe-Marker** — die Werte liegen dort invertiert vor und müssen vor der Umwandlung nach RGB zurückgedreht werden, sonst kippen die Farben (Haus wird rosa, Rot verschwindet). Die freigestellte Fassung liegt als `assets/logo.png`; im Header ist sie auf 560 px Breite herunterskaliert als Data-URI eingebettet (~20 KB).
 
-Das Logo ist für hellen Grund gezeichnet — Schrift, Haus und Slogan sind schwarz und verschwinden auf dunklem Untergrund. Deshalb liegt es in Header und Footer auf einer weißen Fläche mit etwas Innenabstand: im Hellmodus fällt die nicht auf, im Dunkelmodus und im dunklen Footer trägt sie das Logo.
+Das Logo ist für hellen Grund gezeichnet — Schrift, Haus und Slogan sind schwarz und verschwinden auf dunklem Untergrund. Deshalb liegt es im Header auf einer weißen Fläche mit etwas Innenabstand.
 
 Eine echte Vektorfassung gibt es nicht — auch im PDF ist das Logo ein Pixelbild. Für großformatige Anwendungen (Fahrzeugbeschriftung, Bauschild) müsste beim Grafiker eine SVG- oder EPS-Datei angefragt werden.
 
@@ -112,6 +112,7 @@ Sonst nichts Kritisches: keine doppelten IDs, alle internen Anker und Datei-Link
 - **Nur noch Handynummer**: Die Festnetznummer (06031 160 90 98) ist von allen drei Seiten entfernt, inklusive Impressum. Sämtliche Anruf-Links, Telefonanzeigen und der JSON-LD-Eintrag zeigen jetzt ausschließlich auf die Handynummer 0152 336 805 42.
 - **Neue Kontakt-E-Mail**: `serkan@gmail.info` ersetzt überall `info@cc-dienstleistungen-friedberg.de` (Formular-Hinweis, Footer, Topbar, Impressum, Datenschutzerklärung, JSON-LD).
 - **Einwilligungs-Checkbox im Kontaktformular**: Pflichtfeld „Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung dieser Anfrage zu", verlinkt auf `datenschutz.html`. Die Datenschutzerklärung nennt dafür jetzt zusätzlich Art. 6 Abs. 1 lit. a DSGVO als Rechtsgrundlage neben der Vertragserfüllung nach lit. b.
+- **Footer verschlankt**: Logo-Spalte und Leistungen-Spalte im Footer der Startseite entfernt (wirkten zu wuchtig), nur der Kontaktblock bleibt. Betrifft ausschließlich `index.html` — Impressum und Datenschutzerklärung hatten ohnehin schon einen schlanken Footer ohne Logo.
 
 ## Bildrechte
 
