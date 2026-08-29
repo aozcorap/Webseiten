@@ -9,14 +9,12 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
 
 ## Offen
 
-- [ ] **Bildmaterial**: aktuell lizenzfreie Platzhalterfotos von Pexels.
-      Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten
-      ersetzen – größter verbleibender Qualitätssprung.
 - [ ] **Ungeprüfte Angaben** im Entwurf mit dem Kunden gegenchecken:
-      „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk",
       „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00 Uhr",
       „Festpreis-Angebot", „eigenes Team, keine Subunternehmer". Dieselben
-      Werte stecken auch im JSON-LD auf der Startseite.
+      Werte stecken auch im JSON-LD auf der Startseite. (Gründungsjahr und
+      Jahre im Handwerk sind vom Kunden bereits bestätigt, siehe Entscheidung
+      unten.)
 - [ ] **Kontaktformular** hat noch keinen echten Versand-Endpunkt (aktuell
       nur clientseitige Demo-Anzeige beim Absenden, es werden keine Daten
       übertragen oder gespeichert).
@@ -40,6 +38,30 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
       vor dem echten Go-Live. Der bereits durchgeführte Agenten-Review
       (Code, SEO, Recht/Datenschutz – siehe README) ist eine technische
       Plausibilitätsprüfung, keine Rechtsberatung.
+
+## Entscheidung
+
+- **Bildmaterial bleibt Pexels**: Der Kunde hat entschieden, die lizenzfreien
+  Pexels-Platzhalterfotos dauerhaft zu übernehmen, keine eigenen Fotos.
+  Bildrechte-Doku in `cc-dienstleistungen-friedberg.de/README.md` bleibt
+  gültig (kommerzielle Nutzung erlaubt, kein Model Release nötig, da keine
+  erkennbaren Personen).
+- **Gründungsjahr korrigiert**: 2011 statt 2012 (Kundenangabe), „Jahre im
+  Handwerk" entsprechend von 12+ auf 15+ angehoben. Betrifft Hero-Badge,
+  About-Sektion und JSON-LD auf der Startseite.
+- **Festnetznummer entfernt**: Der Kunde nutzt nur noch die Handynummer
+  (0152 336 805 42). Alle Anruf-Links, Telefonanzeigen und der
+  JSON-LD-Eintrag auf allen drei Seiten zeigen jetzt ausschließlich diese
+  Nummer; die Festnetznummer 06031 160 90 98 kommt auf der Seite nicht mehr
+  vor (auch nicht im Impressum).
+- **E-Mail-Adresse geändert**: Kontakt läuft jetzt über `serkan@gmail.info`
+  statt `info@cc-dienstleistungen-friedberg.de` (Formular-Anzeige, Footer,
+  Topbar, Impressum, Datenschutzerklärung, JSON-LD).
+- **Einwilligungs-Checkbox im Kontaktformular** ergänzt: Pflicht-Checkbox
+  „Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung
+  meiner Angaben zur Bearbeitung dieser Anfrage zu" mit Link auf
+  `datenschutz.html`. Datenschutzerklärung entsprechend um Art. 6 Abs. 1
+  lit. a DSGVO als zusätzliche Rechtsgrundlage ergänzt.
 
 ## Bereits erledigt (diese Session)
 
