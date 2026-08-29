@@ -101,7 +101,6 @@ Sonst nichts Kritisches: keine doppelten IDs, alle internen Anker und Datei-Link
 
 ### Vor einem Livegang zu klären
 
-- **Bildmaterial**: aktuell Platzhalterfotos von Pexels. Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten ersetzen — das ist der größte verbleibende Qualitätssprung. Zur Rechtslage siehe unten.
 - **Ungeprüfte Angaben** im Entwurf: „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk", „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer" — dieselben Werte stecken jetzt auch im JSON-LD, siehe SEO-Abschnitt.
 - **Kontaktformular** sendet noch nicht (kein Endpunkt angebunden).
 - **Impressum**: USt-IdNr. und Handwerkskammer-Eintrag fehlen noch (siehe oben).
@@ -128,6 +127,6 @@ Deshalb wurden die drei Motive mit erkennbaren Personen ausgetauscht. Der aktuel
 
 Zwei Motive zeigen nur eine Hand, eines eine Person von hinten mit Helm. Erkennbarkeit im Sinne des KUG setzt voraus, dass Bekannte die Person wiedererkennen würden — Gesicht, aber auch Tattoos, Frisur oder andere auffällige Merkmale. Keines davon ist hier gegeben.
 
-Unabhängig davon bleiben die Fotos Platzhalter und sollten vor dem Livegang durch eigene Aufnahmen ersetzt werden.
+Der Kunde hat entschieden, die Pexels-Fotos dauerhaft zu übernehmen — keine eigenen Aufnahmen geplant.
 
 Das Firmenlogo ist Eigentum des Kunden und von dieser Betrachtung nicht berührt.

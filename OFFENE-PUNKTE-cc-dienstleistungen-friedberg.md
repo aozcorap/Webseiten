@@ -9,9 +9,6 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
 
 ## Offen
 
-- [ ] **Bildmaterial**: aktuell lizenzfreie Platzhalterfotos von Pexels.
-      Vor dem Launch durch eigene Fotos von Baustellen und fertigen Arbeiten
-      ersetzen – größter verbleibender Qualitätssprung.
 - [ ] **Ungeprüfte Angaben** im Entwurf mit dem Kunden gegenchecken:
       „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk",
       „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00 Uhr",
@@ -40,6 +37,14 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
       vor dem echten Go-Live. Der bereits durchgeführte Agenten-Review
       (Code, SEO, Recht/Datenschutz – siehe README) ist eine technische
       Plausibilitätsprüfung, keine Rechtsberatung.
+
+## Entscheidung
+
+- **Bildmaterial bleibt Pexels**: Der Kunde hat entschieden, die lizenzfreien
+  Pexels-Platzhalterfotos dauerhaft zu übernehmen, keine eigenen Fotos.
+  Bildrechte-Doku in `cc-dienstleistungen-friedberg.de/README.md` bleibt
+  gültig (kommerzielle Nutzung erlaubt, kein Model Release nötig, da keine
+  erkennbaren Personen).
 
 ## Bereits erledigt (diese Session)
 
