@@ -113,6 +113,7 @@ Sonst nichts Kritisches: keine doppelten IDs, alle internen Anker und Datei-Link
 - **Neue Kontakt-E-Mail**: `serkan@gmail.info` ersetzt überall `info@cc-dienstleistungen-friedberg.de` (Formular-Hinweis, Footer, Topbar, Impressum, Datenschutzerklärung, JSON-LD).
 - **Einwilligungs-Checkbox im Kontaktformular**: Pflichtfeld „Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung dieser Anfrage zu", verlinkt auf `datenschutz.html`. Die Datenschutzerklärung nennt dafür jetzt zusätzlich Art. 6 Abs. 1 lit. a DSGVO als Rechtsgrundlage neben der Vertragserfüllung nach lit. b.
 - **Footer verschlankt**: Logo-Spalte und Leistungen-Spalte im Footer der Startseite entfernt (wirkten zu wuchtig), nur der Kontaktblock bleibt. Betrifft ausschließlich `index.html` — Impressum und Datenschutzerklärung hatten ohnehin schon einen schlanken Footer ohne Logo.
+- **Footer noch kompakter**: Der Kontaktblock war weiterhin zu hoch (Überschrift „Kontakt" plus vier gestapelte Zeilen). Jetzt eine einzige, umbrechende Zeile mit „·" als Trennzeichen (Adresse · Telefon · E-Mail · Öffnungszeiten), Innenabstände und Schriftgröße reduziert. Nimmt auf dem Handy jetzt drei statt sieben Zeilen ein.
 
 ## Bildrechte
 
