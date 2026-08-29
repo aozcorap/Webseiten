@@ -101,10 +101,17 @@ Sonst nichts Kritisches: keine doppelten IDs, alle internen Anker und Datei-Link
 
 ### Vor einem Livegang zu klären
 
-- **Ungeprüfte Angaben** im Entwurf: „Handwerksbetrieb seit 2012", „12+ Jahre im Handwerk", „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer" — dieselben Werte stecken jetzt auch im JSON-LD, siehe SEO-Abschnitt.
-- **Kontaktformular** sendet noch nicht (kein Endpunkt angebunden).
+- **Ungeprüfte Angaben** im Entwurf: „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00", „Festpreis-Angebot", „eigenes Team, keine Subunternehmer" — dieselben Werte stecken jetzt auch im JSON-LD, siehe SEO-Abschnitt. (Gründungsjahr 2011 und „15+ Jahre im Handwerk" sind vom Kunden bereits bestätigt.)
+- **Kontaktformular** sendet noch nicht (kein Endpunkt angebunden). Die Pflicht-Checkbox zur Einwilligung in die Datenverarbeitung ist bereits im Markup vorhanden.
 - **Impressum**: USt-IdNr. und Handwerkskammer-Eintrag fehlen noch (siehe oben).
 - **`noindex`-Tag** vor dem echten Go-Live aus allen drei Seiten entfernen (siehe SEO-Abschnitt).
+
+### Kundenkorrekturen (diese Session)
+
+- **Gründungsjahr**: 2011 statt 2012 (Hero-Badge, About-Sektion, JSON-LD). „12+ Jahre im Handwerk" entsprechend auf „15+" angehoben.
+- **Nur noch Handynummer**: Die Festnetznummer (06031 160 90 98) ist von allen drei Seiten entfernt, inklusive Impressum. Sämtliche Anruf-Links, Telefonanzeigen und der JSON-LD-Eintrag zeigen jetzt ausschließlich auf die Handynummer 0152 336 805 42.
+- **Neue Kontakt-E-Mail**: `serkan@gmail.info` ersetzt überall `info@cc-dienstleistungen-friedberg.de` (Formular-Hinweis, Footer, Topbar, Impressum, Datenschutzerklärung, JSON-LD).
+- **Einwilligungs-Checkbox im Kontaktformular**: Pflichtfeld „Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung dieser Anfrage zu", verlinkt auf `datenschutz.html`. Die Datenschutzerklärung nennt dafür jetzt zusätzlich Art. 6 Abs. 1 lit. a DSGVO als Rechtsgrundlage neben der Vertragserfüllung nach lit. b.
 
 ## Bildrechte
 
