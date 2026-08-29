@@ -1,11 +1,12 @@
-# Vereinsausstatter – Entwurf
+# Vereinsshop
 
-Klickbarer Entwurf (`index.html`) für einen Mini-Shop, in dem Vereinsmitglieder
-Kleidung aus der adidas-Entrada-26-Kollektion in ihrer Größe bestellen und
-bezahlen können. Basiert auf dem Angebot TP-O-10003449 von eleven teamsports
-(Stand August 2026); die Entrada-22-Kollektion wurde ersetzt, da sie nicht
-mehr lieferbar ist. Reines Frontend-Mockup, kein Backend, keine echte
-Zahlungsanbindung.
+Single-File-Shop (`index.html`), in dem Vereinsmitglieder Kleidung aus der
+adidas-Entrada-26-Kollektion in ihrer Größe bestellen und bezahlen können.
+Basiert auf dem Angebot TP-O-10003449 von eleven teamsports (Stand August
+2026); die Entrada-22-Kollektion wurde ersetzt, da sie nicht mehr lieferbar
+ist. Live unter `www.boxring-wetterau.de/shop/`, verlinkt im Hauptmenü der
+Vereinsseite als "Vereinsshop". Reines Frontend ohne eigenes Backend — siehe
+Zahlung/Admin unten für die Details, wie das ohne Server funktioniert.
 
 ## Konzept
 
@@ -20,13 +21,6 @@ Zahlungsanbindung.
   wurde; der Abgleich passiert manuell über PayPal-Aktivität bzw.
   Kontoauszug, per Bestellnummer + Name als Notiz/Verwendungszweck.
 - **Admin**: Bestellliste + CSV-Export für die Zeugwart:in.
-
-## Geplanter Stack (für die echte Umsetzung)
-
-- Frontend: Next.js/React, responsive
-- Backend: Node.js API + Postgres
-- Zahlung: PayPal Checkout SDK
-- Hosting: Vercel/Netlify
 
 ## Produktbilder
 

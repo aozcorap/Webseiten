@@ -32,8 +32,6 @@ jobs:
           cp -r aralia-ballroom.de/. _site/aralia-ballroom.de/
           mkdir -p _site/brw-sommerfest
           cp -r brw-sommerfest/. _site/brw-sommerfest/
-          mkdir -p _site/brw-vereinsshop
-          cp -r brw-vereinsshop/. _site/brw-vereinsshop/
           mkdir -p _site/cc-dienstleistungen-friedberg.de
           cp -r cc-dienstleistungen-friedberg.de/. _site/cc-dienstleistungen-friedberg.de/
 
