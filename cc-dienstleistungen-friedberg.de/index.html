@@ -477,22 +477,21 @@
   @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} .field-row{grid-template-columns:1fr;} }
 
   /* ============ FOOTER ============ */
-  footer{background:var(--bg-alt);color:var(--ink-soft);font-size:.98rem;border-top:1px solid var(--line);}
+  footer{background:var(--bg-alt);color:var(--ink-soft);font-size:.92rem;border-top:1px solid var(--line);}
   .foot-grid{
-    padding-block:32px 24px;
+    padding-block:18px;
   }
-  .foot-grid h4{
-    font-family:'Archivo',sans-serif;font-weight:700;font-size:.86rem;
-    letter-spacing:.13em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;
+  .foot-grid ul{
+    display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;list-style:none;
   }
-  .foot-grid ul{display:grid;gap:9px;}
+  .foot-grid li:not(:last-child)::after{content:"·";margin-left:10px;color:var(--ink-faint);}
   .foot-grid a{text-decoration:none;}
   .foot-grid a:hover{color:var(--brand-text);}
   .foot-bottom{
     border-top:1px solid var(--line);
-    padding-block:20px;
+    padding-block:14px;
     display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    font-size:.92rem;color:var(--ink-faint);
+    font-size:.88rem;color:var(--ink-faint);
   }
   .foot-bottom nav{display:flex;gap:22px;}
   .foot-bottom a{text-decoration:none;}
@@ -524,9 +523,6 @@
     .about-stat span{font-size:.95rem;}
     .sig-role{font-size:.97rem;}
     .gallery figcaption{font-size:.97rem;}
-    footer{font-size:1rem;}
-    .foot-bottom{font-size:.95rem;}
-    .foot-grid h4{font-size:.9rem;}
     .topbar{font-size:.92rem;}
     .header-row{gap:12px;}
     .brand-logo{width:96px;}
@@ -905,15 +901,12 @@
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <h4>Kontakt</h4>
-        <ul>
-          <li>Münzweg 2<br>61169 Friedberg (Hessen)</li>
-          <li><a href="tel:+4915233680542">0152 336 805 42</a></li>
-          <li><a href="mailto:serkan@gmail.info">serkan@gmail.info</a></li>
-          <li>Mo–Fr 7:00–17:00 Uhr</li>
-        </ul>
-      </div>
+      <ul>
+        <li>Münzweg 2, 61169 Friedberg (Hessen)</li>
+        <li><a href="tel:+4915233680542">0152 336 805 42</a></li>
+        <li><a href="mailto:serkan@gmail.info">serkan@gmail.info</a></li>
+        <li>Mo–Fr 7:00–17:00 Uhr</li>
+      </ul>
     </div>
     <div class="wrap" style="padding-inline:0;">
       <div class="foot-bottom">
