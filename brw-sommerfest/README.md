@@ -71,3 +71,29 @@ mitbringen).
   sondern nur UI-seitig dahinter versteckt. Für ein internes Vereins-Tool
   ohne sensible Zahlungsdaten als Trade-off akzeptiert – bei Bedarf (z. B.
   bei Vandalismus) Claude ansprechen, um die Policies zu verschärfen.
+
+## Supabase-Keepalive
+
+Supabase pausiert Projekte automatisch nach 7 Tagen ohne Aktivität
+(anschließend 90 Tage Frist zum Entpausieren, danach nur noch Datenexport
+möglich). Damit das Projekt „brw-sommerfest" (`ifnxmioxixqffrsbghnb`) nicht
+mangels Website-Besuchen einschläft, läuft **direkt in der Datenbank** ein
+`pg_cron`-Job – unabhängig von Website-Traffic, GitHub Actions oder
+sonstigen externen Diensten:
+
+- **Extensions:** `pg_cron` und `pg_net` (Database → Extensions)
+- **Funktion:** `public.keepalive_ping()` (Database → Functions) – schreibt
+  einen Dummy-Eintrag in die Tabelle `_keepalive`, löscht Einträge älter als
+  1 Tag, und feuert zusätzlich einen echten HTTP-Request per `pg_net` gegen
+  die eigene REST-API (`GET /rest/v1/_keepalive`), da Supabase Aktivität
+  primär über API-Traffic misst, nicht nur über interne DB-Queries.
+- **Zeitplan:** Cron-Job `supabase-keepalive`, `0 3 */5 * *` (alle 5 Tage,
+  03:00 UTC) – einsehbar unter Database → Cron Jobs.
+- **Tabelle `_keepalive`:** getrennt von den echten Anmeldedaten, RLS
+  aktiviert, Policies erlauben dem `publishable key` nur `INSERT` und das
+  Löschen alter Zeilen (kein `SELECT`).
+
+Kein Code im Repo nötig, kein Deployment – die gesamte Logik lebt in
+Supabase selbst (Migrationen: `create_keepalive_table`,
+`keepalive_public_policies`, `enable_pg_cron_and_pg_net`,
+`create_keepalive_function`, `fix_keepalive_http_endpoint`).
