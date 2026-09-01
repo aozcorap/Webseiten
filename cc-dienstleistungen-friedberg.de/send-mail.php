@@ -60,5 +60,13 @@ $headers = "From: Website Kontaktformular <no-reply@cc-dienstleistungen-friedber
 
 $erfolg = mail($empfaenger, $betreff, $text, $headers);
 
+if (!$erfolg && isset($_GET['debug'])) {
+    $fehler = error_get_last();
+    file_put_contents(__DIR__ . '/mail-debug.log',
+        date('c') . ' sendmail_path=' . ini_get('sendmail_path')
+        . ' letzter_fehler=' . json_encode($fehler) . "\n",
+        FILE_APPEND);
+}
+
 header('Location: /?formular=' . ($erfolg ? 'danke' : 'fehler') . '#kontakt');
 exit;
