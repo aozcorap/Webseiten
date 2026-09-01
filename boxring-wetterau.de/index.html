@@ -101,6 +101,35 @@
 
     /* Erfolge-Teaser: auf dem Handy nur die 2 neuesten zeigen (sonst zu lang) */
     #erfolge [style*="grid-template-columns"] > *:nth-child(n+3) { display: none !important; }
+
+    /* Hero: Insta-Link und Stat-Kacheln (1983 / 12-88 / 5x) auf dem Handy raus */
+    #insta-link,
+    #hero-stats { display: none !important; }
+
+    /* Ueber uns: Feature-Karten (Training fuer alle Level, Mitglied im HABV) auf dem Handy raus */
+    #about-points { display: none !important; }
+
+    /* Trainingsplan: Zeilenabstaende auf dem Handy kompakter */
+    #training [style*="gap:10px"] { gap: 2px !important; }
+    #training [style*="padding:12px 0"] { padding: 6px 0 !important; }
+
+    /* Mitgliedschaft: Beitragskarten auf dem Handy kompakter (kleinere Schrift/Abstaende) */
+    #mitgliedschaft [style*="grid-template-columns:1fr"] { gap: 12px !important; }
+    #mitgliedschaft [style*="padding:36px"] { padding: 20px !important; }
+    #mitgliedschaft [style*="font-size:44px"] { font-size: 32px !important; margin-bottom: 6px !important; }
+    #mitgliedschaft [style*="margin-bottom:12px"] { margin-bottom: 6px !important; }
+
+    /* Standort: auf dem Handy nur Adresse und Karte zeigen */
+    .standort-extra { display: none !important; }
+
+    /* Vorstand: auf dem Handy komplett raus */
+    #vorstand { display: none !important; }
+
+    /* Haeufige Fragen: kompaktere Abstaende, kleinere Antwort-Schrift */
+    #faq [style*="gap:20px"] { gap: 10px !important; }
+    #faq [style*="padding:24px 28px"] { padding: 14px 16px !important; }
+    #faq h3[style*="margin:0 0 8px"] { margin: 0 0 4px !important; }
+    #faq p[style*="font-size:15px"] { font-size: 13px !important; }
   }
 </style>
 <script type="application/ld+json">
@@ -241,7 +270,7 @@
       <div style="background:rgba(232,57,79,0.12);border:1px solid rgba(232,57,79,0.35);color:#f2ede8;padding:16px 28px;border-radius:16px;font-size:15px;line-height:1.5;max-width:420px;">
         <strong style="color:#e8394f;">Keine Anmeldung nötig.</strong> Einfach Dienstags oder Donnerstags um 19 Uhr zum Probetraining vorbeikommen.
       </div>
-      <a href="https://www.instagram.com/boxringwetterau/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;color:#c4bdb5;font-weight:600;font-size:15px;min-height:44px;">
+      <a id="insta-link" href="https://www.instagram.com/boxringwetterau/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;color:#c4bdb5;font-weight:600;font-size:15px;min-height:44px;">
         <div style="width:32px;height:32px;border-radius:50%;background:#1c1b19;border:1px solid rgba(242,237,232,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4bdb5" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="#c4bdb5" stroke="none"></circle></svg>
         </div>
@@ -249,7 +278,7 @@
       </a>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:80px;padding-top:56px;border-top:1px solid rgba(242,237,232,0.1);max-width:700px;">
+    <div id="hero-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:80px;padding-top:56px;border-top:1px solid rgba(242,237,232,0.1);max-width:700px;">
       <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
         <div>
           <div style="font-family:'Anton',sans-serif;font-size:40px;color:#e8394f;">{{ s.num }}</div>
@@ -266,7 +295,7 @@
       <h2 style="font-family:'Anton',sans-serif;font-size:34px;line-height:1.05;text-transform:uppercase;margin:0 0 24px;max-width:480px;">Euer verlässlicher Verein für Amateurboxen in der Wetterau</h2>
       <p style="font-size:17px;line-height:1.7;color:#c4bdb5;max-width:480px;">Seit 1983 bilden wir Anfänger und Fortgeschrittene aus – mit Fokus auf Disziplin, Technik und Fairness. Ob Fitnessboxen oder Wettkampfvorbereitung: bei uns ist jeder willkommen.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:24px;">
+    <div id="about-points" style="display:flex;flex-direction:column;gap:24px;">
       <sc-for list="{{ aboutPoints }}" as="p" hint-placeholder-count="2">
         <div style="display:flex;gap:16px;padding:24px;background:#191817;border-radius:16px;border:1px solid rgba(242,237,232,0.06);">
           <div style="width:28px;height:28px;flex:none;border-radius:50%;background:#e8394f;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;">✓</div>
@@ -303,7 +332,7 @@
     </div>
   </section>
 
-  <section style="padding:100px 48px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:flex-start;">
+  <section id="mitgliedschaft" style="padding:100px 48px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:flex-start;">
     <div>
       <div style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Mitgliedschaft</div>
       <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 56px;max-width:600px;">Jahresbeitrag, keine versteckten Kosten.</h2>
@@ -358,20 +387,20 @@
 
   <section id="standort" style="padding:100px 48px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
     <div>
-      <div style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Standort</div>
-      <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 24px;">Trainiert wird in Friedberg.</h2>
-      <div style="font-weight:700;font-size:17px;margin-bottom:8px;">Ehemalige Montessori-Schule</div>
+      <div class="standort-extra" style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Standort</div>
+      <h2 class="standort-extra" style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 24px;">Trainiert wird in Friedberg.</h2>
+      <div class="standort-extra" style="font-weight:700;font-size:17px;margin-bottom:8px;">Ehemalige Montessori-Schule</div>
       <div style="color:#c4bdb5;font-size:16px;line-height:1.6;margin-bottom:20px;">Maria-Montessori-Weg 2<br>61169 Friedberg</div>
-      <div style="color:#c4bdb5;font-size:16px;line-height:1.6;margin-bottom:20px;">Telefon: <a href="tel:+491732609937">0173 2609937</a></div>
-      <div style="font-size:14px;color:#8f887f;margin-bottom:20px;">Mitglied im HABV – Hessischer Amateur-Boxverband e.V.</div>
-      <p style="font-size:14px;color:#8f887f;line-height:1.6;max-width:420px;">Unsere Mitglieder kommen aus Friedberg und der gesamten Wetterau – u.a. aus Bad Nauheim, Karben, Rosbach v. d. Höhe, Butzbach, Ober-Mörlen, Wölfersheim, Florstadt, Reichelsheim, Münzenberg, Wöllstadt, Rockenberg, Nidda, Altenstadt, Hungen, Ranstadt, Niddatal und Echzell.</p>
+      <div class="standort-extra" style="color:#c4bdb5;font-size:16px;line-height:1.6;margin-bottom:20px;">Telefon: <a href="tel:+491732609937">0173 2609937</a></div>
+      <div class="standort-extra" style="font-size:14px;color:#8f887f;margin-bottom:20px;">Mitglied im HABV – Hessischer Amateur-Boxverband e.V.</div>
+      <p class="standort-extra" style="font-size:14px;color:#8f887f;line-height:1.6;max-width:420px;">Unsere Mitglieder kommen aus Friedberg und der gesamten Wetterau – u.a. aus Bad Nauheim, Karben, Rosbach v. d. Höhe, Butzbach, Ober-Mörlen, Wölfersheim, Florstadt, Reichelsheim, Münzenberg, Wöllstadt, Rockenberg, Nidda, Altenstadt, Hungen, Ranstadt, Niddatal und Echzell.</p>
     </div>
     <div style="aspect-ratio:4/3;border-radius:20px;overflow:hidden;border:1px solid rgba(242,237,232,0.06);filter:grayscale(1) invert(0.92) contrast(0.9);">
       <iframe src="https://www.google.com/maps?q=Maria-Montessori-Weg+2,+61169+Friedberg&output=embed" title="Standort Boxring Wetterau, Maria-Montessori-Weg 2, 61169 Friedberg" style="width:100%;height:100%;border:0;" loading="lazy"></iframe>
     </div>
   </section>
 
-  <section style="padding:100px 48px;background:#161514;">
+  <section id="vorstand" style="padding:100px 48px;background:#161514;">
     <div style="max-width:1200px;margin:0 auto;">
       <div style="font-family:'Anton',sans-serif;font-size:52px;color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Der Vorstand</div>
       <h2 style="font-family:'Anton',sans-serif;font-size:34px;text-transform:uppercase;margin:0 0 56px;">Ehrenamtlich im Einsatz.</h2>
