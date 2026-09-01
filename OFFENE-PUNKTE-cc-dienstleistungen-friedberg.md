@@ -6,14 +6,6 @@ Webspace). Details zu Design, Bildrechten, SEO und Agenten-Review: siehe
 
 ## Offen
 
-- [ ] **Anwaltlicher Gegencheck** von Impressum und Datenschutzerklärung.
-      Der bereits durchgeführte Agenten-Review (Code, SEO, Recht/Daten-
-      schutz – siehe README) ist eine technische Plausibilitätsprüfung,
-      keine Rechtsberatung. **Risiko-Entscheidung des Kunden**: Seite geht
-      ohne diesen Check live, Risiko wird bewusst in Kauf genommen.
-- [ ] **Aufräumen auf dem Webspace**: `mail-debug.log` (Debug-Ausgabe beim
-      Testen des Kontaktformulars) löschen und das SMTP-Passwort bei IONOS
-      ändern, da es im Chatverlauf mit Claude stand.
 - [ ] **Google Business Profil** einrichten (Google Maps/Local-Pack-
       Eintrag). Für Handwerksbetriebe der wichtigste Hebel bei lokalen
       Suchanfragen wie „Trockenbau Friedberg" – wichtiger als die Website
