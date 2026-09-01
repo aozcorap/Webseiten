@@ -10,3 +10,7 @@ boxring-wetterau.de/api/data/*.json
 # Einmal-Debug-Werkzeuge mit eingebettetem Secret - nur manuell auf den Server
 # hochladen, nach Gebrauch wieder loeschen, nie ins Repo einchecken.
 boxring-wetterau.de/api/dev-*.php
+
+# SMTP-Zugangsdaten fuer den Kontaktformular-Versand - niemals einchecken,
+# nur manuell auf den IONOS-Webspace hochladen.
+cc-dienstleistungen-friedberg.de/smtpconfig.php

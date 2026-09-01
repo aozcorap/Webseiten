@@ -1,43 +1,59 @@
-# Offene Punkte – CC Dienstleistungen Redesign (Stand 2026-08-28, Ende Session)
+# Offene Punkte – CC Dienstleistungen Redesign (Stand 2026-09-01, Go-Live erfolgt)
 
-Redesign-Entwurf liegt in `cc-dienstleistungen-friedberg.de/` (`index.html`,
-`impressum.html`, `datenschutz.html`), live unter
-https://aozcorap.github.io/Webseiten/cc-dienstleistungen-friedberg.de/ —
-Pitch-Grundlage für das Kundengespräch, kein Produktivsystem. Details zu
-Design, Bildrechten, SEO und Agenten-Review: siehe
+Seite ist **live** unter https://cc-dienstleistungen-friedberg.de/ (IONOS-
+Webspace). Details zu Design, Bildrechten, SEO und Agenten-Review: siehe
 [cc-dienstleistungen-friedberg.de/README.md](cc-dienstleistungen-friedberg.de/README.md).
 
 ## Offen
 
-- [ ] **Ungeprüfte Angaben** im Entwurf mit dem Kunden gegenchecken:
-      „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00 Uhr",
-      „Festpreis-Angebot", „eigenes Team, keine Subunternehmer". Dieselben
-      Werte stecken auch im JSON-LD auf der Startseite. (Gründungsjahr und
-      Jahre im Handwerk sind vom Kunden bereits bestätigt, siehe Entscheidung
-      unten.)
-- [ ] **Kontaktformular** hat noch keinen echten Versand-Endpunkt (aktuell
-      nur clientseitige Demo-Anzeige beim Absenden, es werden keine Daten
-      übertragen oder gespeichert).
-- [ ] **Impressum**: USt-IdNr. fehlt (eine früher öffentlich gezeigte
-      Steuernummer wurde bewusst nicht übernommen). Handwerkskammer +
-      Eintragungsnummer in der Handwerksrolle fehlen – Pflichtangabe, da
-      Malerhandwerk zulassungspflichtig ist (Anlage A HwO).
-- [ ] **Datenschutzerklärung**: Hosting-Abschnitt beschreibt aktuell
-      GitHub Pages (Entwurfsphase) – vor Go-Live auf den echten Webspace
-      umschreiben. Formular-Abschnitt nach Anbindung eines echten
-      Endpunkts ergänzen (inkl. möglichem Auftragsverarbeiter).
-- [ ] **`noindex`-Meta-Tag** auf allen drei Seiten entfernen, sobald die
-      Seite unter der echten Domain live geht (aktuell bewusst gesetzt,
-      um Duplicate-Content-Konflikte mit der bestehenden Live-Seite unter
-      cc-dienstleistungen-friedberg.de zu vermeiden).
-- [ ] **Logo** liegt nur als Pixelbild vor (aus dem vom Kunden gelieferten
-      PDF extrahiert), keine Vektordatei. Für Großformat-Anwendungen
-      (Fahrzeugbeschriftung, Bauschild) müsste beim Grafiker eine SVG-
-      oder EPS-Datei angefragt werden.
-- [ ] **Anwaltlicher Gegencheck** von Impressum und Datenschutzerklärung
-      vor dem echten Go-Live. Der bereits durchgeführte Agenten-Review
-      (Code, SEO, Recht/Datenschutz – siehe README) ist eine technische
-      Plausibilitätsprüfung, keine Rechtsberatung.
+- [ ] **Google Business Profil** einrichten (Google Maps/Local-Pack-
+      Eintrag). Für Handwerksbetriebe der wichtigste Hebel bei lokalen
+      Suchanfragen wie „Trockenbau Friedberg" – wichtiger als die Website
+      selbst. Braucht einen Google-Account und eine Adressverifizierung
+      (Postkarte oder Anruf durch Google), kann nicht von hier aus erledigt
+      werden.
+- [ ] **Echte Kundenbewertungen** einholen und einbinden (z. B. Google-
+      Rezensionen verlinken, `aggregateRating` im JSON-LD ergänzen sobald
+      es echte Bewertungen gibt). Aktuell keine vorhanden – laut CLAUDE.md-
+      Regel dürfen hier keine erfundenen Zahlen stehen.
+- [ ] **Sitemap-Status in der Google Search Console prüfen**: wurde am
+      01.09.2026 eingereicht, Status stand kurz danach auf „Konnte nicht
+      abgerufen werden" (vermutlich nur, weil Google sie noch nicht
+      abgeholt hatte – die Datei selbst ist erreichbar). Nach 1–2 Tagen
+      nochmal nachschauen, ob sich der Status auf „Erfolgreich" ändert.
+
+## SEO nach Go-Live ergänzt (2026-09-01)
+
+- Geo-Koordinaten im JSON-LD ergänzt (`geo`-Feld), `areaServed` von
+  reinem Text auf strukturierten `GeoCircle` mit 40 km Radius umgestellt
+  – wichtig für Umkreissuchen.
+- `sitemap.xml` und `robots.txt` angelegt und in der Google Search
+  Console eingereicht, Domain dort per HTML-Datei-Verifizierung bestätigt
+  (ohne DNS-Änderung, um die Mail-Einträge nicht zu gefährden).
+
+## Erledigt beim Go-Live (2026-09-01)
+
+- Kontaktformular an echten Versand angebunden: eigener minimaler
+  SMTP-Client (`smtpmailer.php`) gegen `smtp.ionos.de` mit Login über das
+  Postfach `info@cc-dienstleistungen-friedberg.de`. Zugangsdaten liegen in
+  `smtpconfig.php`, bewusst nicht im Git-Repo (siehe `.gitignore`), nur
+  manuell auf dem Webspace.
+- Kontakt-E-Mail-Adresse korrigiert: `serkan@gmail.info` war ein
+  Tippfehler (Domain existiert nicht, kein MX-Record) – jetzt überall
+  `info@cc-dienstleistungen-friedberg.de`.
+- Datenschutzerklärung: Hosting-Abschnitt beschreibt jetzt IONOS statt
+  GitHub Pages, Formular-Abschnitt auf den echten SMTP-Versand angepasst.
+- `noindex`-Meta-Tag von allen drei Seiten entfernt.
+- Alte Website auf dem Webspace gesichert (Zip-Backup) und durch den
+  Redesign-Entwurf ersetzt.
+
+## Geschlossen (Kunde hat entschieden)
+
+- **Ungeprüfte Angaben** (Umkreis, Öffnungszeiten, Festpreis, eigenes Team) –
+  vom Kunden bestätigt.
+- **USt-IdNr. / Handwerkskammer-Eintragung im Impressum** – bewusst
+  weggelassen, stand auf der alten Seite auch nicht drauf.
+- **Logo nur als Pixelbild** – kein Thema, Vektordatei nicht nötig.
 
 ## Entscheidung
 
@@ -54,9 +70,12 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
   JSON-LD-Eintrag auf allen drei Seiten zeigen jetzt ausschließlich diese
   Nummer; die Festnetznummer 06031 160 90 98 kommt auf der Seite nicht mehr
   vor (auch nicht im Impressum).
-- **E-Mail-Adresse geändert**: Kontakt läuft jetzt über `serkan@gmail.info`
-  statt `info@cc-dienstleistungen-friedberg.de` (Formular-Anzeige, Footer,
-  Topbar, Impressum, Datenschutzerklärung, JSON-LD).
+- **E-Mail-Adresse korrigiert**: Zwischenzeitlich stand überall
+  `serkan@gmail.info` (Formular-Anzeige, Footer, Topbar, Impressum,
+  Datenschutzerklärung, JSON-LD) — das war ein Tippfehler, die Domain
+  `gmail.info` existiert nicht (kein MX-Record), Mails dorthin wären
+  unzustellbar gewesen. Korrigiert auf das echte Postfach
+  `info@cc-dienstleistungen-friedberg.de`.
 - **Einwilligungs-Checkbox im Kontaktformular** ergänzt: Pflicht-Checkbox
   „Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung
   meiner Angaben zur Bearbeitung dieser Anfrage zu" mit Link auf

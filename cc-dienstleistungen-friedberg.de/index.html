@@ -7,11 +7,6 @@
 <meta name="description" content="Trockenbau, Bodenverlegung und Innenausbau in Friedberg und der Wetterau — alles aus einer Hand, mit festem Preis vor Auftragsstart.">
 <meta name="theme-color" content="#D9261C">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAxklEQVR4nO3YwQ2AIBBEUbQOz9p/OXq2D20BMcwn4b+zZoeJB9lSJM1sSQ069+358vxx3ZFsa2LI18O3vtOiewF/DpIoIfIFjMwC6AA0C6AD0CyADkCzADoAzQLoALTuBfy51SVuhJEvoOUgqeuwpLm5E0wMcScIvFvLP0E6AM0C6AA0C6AD0CyADkCzADoAzQJ6D3AnWNwJShqXO8HEEHeCwLu1/BOkA9AsgA5AswA6AM0C6AA0C6AD0Cyg9wB3gsWdoKRxvRrqPF66cdxEAAAAAElFTkSuQmCC">
-<!-- Entwurfsphase: bewusst von der Indexierung ausgeschlossen, solange die
-     Seite nicht unter der echten Domain live ist (Duplicate-Content- und
-     Verwechslungsgefahr mit der bestehenden Live-Seite). Vor dem
-     tatsaechlichen Go-Live entfernen. -->
-<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://cc-dienstleistungen-friedberg.de/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_DE">
@@ -440,6 +435,12 @@
     background:var(--card);border-radius:8px;padding:clamp(24px,3.2vw,34px);
     box-shadow:var(--shadow-md);
   }
+  .field-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .form-status{
+    border-radius:6px;padding:12px 14px;margin-bottom:16px;font-size:.92rem;
+  }
+  .form-status.ok{background:#E9F6EC;color:#1E5B2B;border:1.5px solid #BEE3C4;}
+  .form-status.err{background:#FBEAEA;color:#7A2020;border:1.5px solid #F0C4C4;}
   .form-panel h3{font-size:1.35rem;color:var(--ink);}
   .form-panel > p{color:var(--ink-soft);font-size:1rem;margin-top:7px;}
   .field{margin-top:16px;}
@@ -552,7 +553,7 @@
   @media (max-width:520px){  html{scroll-padding-top:178px;} }
   @media (max-width:400px){  html{scroll-padding-top:198px;} }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "CC Dienstleistungen", "founder": {"@type": "Person", "name": "Serkan Çimen"}, "foundingDate": "2011", "address": {"@type": "PostalAddress", "streetAddress": "Münzweg 2", "postalCode": "61169", "addressLocality": "Friedberg (Hessen)", "addressCountry": "DE"}, "telephone": "+49 152 33680542", "email": "serkan@gmail.info", "areaServed": "Friedberg und Wetteraukreis", "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "17:00"}, "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Trockenbau"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Bodenverlegung"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Innenausbau"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Maler- und Lackierarbeiten"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Putztechniken"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Tapezierarbeiten"}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "CC Dienstleistungen", "founder": {"@type": "Person", "name": "Serkan Çimen"}, "foundingDate": "2011", "address": {"@type": "PostalAddress", "streetAddress": "Münzweg 2", "postalCode": "61169", "addressLocality": "Friedberg (Hessen)", "addressCountry": "DE"}, "geo": {"@type": "GeoCoordinates", "latitude": 50.3405, "longitude": 8.7422}, "telephone": "+49 152 33680542", "email": "info@cc-dienstleistungen-friedberg.de", "areaServed": {"@type": "GeoCircle", "geoMidpoint": {"@type": "GeoCoordinates", "latitude": 50.3405, "longitude": 8.7422}, "geoRadius": "40000"}, "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "17:00"}, "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Trockenbau"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Bodenverlegung"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Innenausbau"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Maler- und Lackierarbeiten"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Putztechniken"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Tapezierarbeiten"}}]}</script>
 </head>
 <body>
 <svg class="defs" aria-hidden="true">
@@ -573,7 +574,7 @@
   <div class="wrap topbar-row">
     <ul>
       <li><svg><use href="#ph"/></svg><a href="tel:+4915233680542">0152 336 805 42</a></li>
-      <li><svg><use href="#mail"/></svg><a href="mailto:serkan@gmail.info">serkan@gmail.info</a></li>
+      <li><svg><use href="#mail"/></svg><a href="mailto:info@cc-dienstleistungen-friedberg.de">info@cc-dienstleistungen-friedberg.de</a></li>
     </ul>
     <ul class="topbar-right">
       <li><svg><use href="#pin"/></svg>Münzweg 2, 61169 Friedberg</li>
@@ -852,7 +853,9 @@
         <div class="form-panel">
           <h3>Anfrage senden</h3>
           <p>Kurz ausfüllen — wir melden uns zurück.</p>
-          <form onsubmit="event.preventDefault();this.querySelector('.btn').textContent='Danke! (Demo — noch nicht angebunden)';">
+          <div id="form-status" class="form-status" hidden></div>
+          <form action="kontaktversand.php" method="post">
+            <input type="text" name="website" class="field-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="field-row">
               <div class="field">
                 <label for="f-name">Name</label>
@@ -904,7 +907,7 @@
       <ul>
         <li>Münzweg 2, 61169 Friedberg (Hessen)</li>
         <li><a href="tel:+4915233680542">0152 336 805 42</a></li>
-        <li><a href="mailto:serkan@gmail.info">serkan@gmail.info</a></li>
+        <li><a href="mailto:info@cc-dienstleistungen-friedberg.de">info@cc-dienstleistungen-friedberg.de</a></li>
         <li>Mo–Fr 7:00–17:00 Uhr</li>
       </ul>
     </div>
@@ -919,5 +922,22 @@
     </div>
   </div>
 </footer>
+<script>
+(function(){
+  var status = new URLSearchParams(location.search).get('formular');
+  var box = document.getElementById('form-status');
+  if (!box || !status) return;
+  if (status === 'danke') {
+    box.textContent = 'Danke für Ihre Anfrage! Wir melden uns so schnell wie möglich.';
+    box.className = 'form-status ok';
+  } else if (status === 'fehler') {
+    box.textContent = 'Da ist etwas schiefgelaufen. Bitte rufen Sie uns kurz an oder versuchen Sie es später erneut.';
+    box.className = 'form-status err';
+  } else {
+    return;
+  }
+  box.hidden = false;
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cc-dienstleistungen-friedberg.de/sitemap.xml
