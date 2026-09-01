@@ -4,7 +4,7 @@ declare(strict_types=1);
 require __DIR__ . '/smtpmailer.php';
 $smtpConfig = require __DIR__ . '/smtpconfig.php';
 
-$empfaenger = 'serkan@gmail.info';
+$empfaenger = 'info@cc-dienstleistungen-friedberg.de';
 
 function feld(string $name): string {
     return trim((string)($_POST[$name] ?? ''));
