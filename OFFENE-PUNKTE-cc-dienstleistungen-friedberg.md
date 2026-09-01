@@ -52,9 +52,12 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
   JSON-LD-Eintrag auf allen drei Seiten zeigen jetzt ausschließlich diese
   Nummer; die Festnetznummer 06031 160 90 98 kommt auf der Seite nicht mehr
   vor (auch nicht im Impressum).
-- **E-Mail-Adresse geändert**: Kontakt läuft jetzt über `serkan@gmail.info`
-  statt `info@cc-dienstleistungen-friedberg.de` (Formular-Anzeige, Footer,
-  Topbar, Impressum, Datenschutzerklärung, JSON-LD).
+- **E-Mail-Adresse korrigiert**: Zwischenzeitlich stand überall
+  `serkan@gmail.info` (Formular-Anzeige, Footer, Topbar, Impressum,
+  Datenschutzerklärung, JSON-LD) — das war ein Tippfehler, die Domain
+  `gmail.info` existiert nicht (kein MX-Record), Mails dorthin wären
+  unzustellbar gewesen. Korrigiert auf das echte Postfach
+  `info@cc-dienstleistungen-friedberg.de`.
 - **Einwilligungs-Checkbox im Kontaktformular** ergänzt: Pflicht-Checkbox
   „Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung
   meiner Angaben zur Bearbeitung dieser Anfrage zu" mit Link auf
