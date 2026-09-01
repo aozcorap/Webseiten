@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . '/smtp-mailer.php';
-$smtpConfig = require __DIR__ . '/smtp-config.php';
+require __DIR__ . '/smtpmailer.php';
+$smtpConfig = require __DIR__ . '/smtpconfig.php';
 
 $empfaenger = 'serkan@gmail.info';
 
