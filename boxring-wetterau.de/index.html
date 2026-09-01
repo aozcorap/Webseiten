@@ -83,6 +83,8 @@
      nach dem Doppelpunkt abgedeckt, da Inline-Style-Serialisierung das nicht
      garantiert konsistent haelt. */
   [style*="grid-template-columns"] > * { min-width: 0; }
+  /* Erfolge-Teaser: nie mehr als 4 zeigen (Desktop/Tablet) */
+  #erfolge [style*="grid-template-columns"] > *:nth-child(n+5) { display: none !important; }
   @media screen and (max-width: 1024px) {
     [style*="grid-template-columns: repeat(4"],
     [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
