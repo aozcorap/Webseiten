@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+require __DIR__ . '/smtp-mailer.php';
+$smtpConfig = require __DIR__ . '/smtp-config.php';
+
 $empfaenger = 'serkan@gmail.info';
 
 function feld(string $name): string {
@@ -54,18 +57,16 @@ $text = "Neue Anfrage über das Kontaktformular\n\n"
     . "Leistung: " . ($leistung !== '' ? $leistung : '–') . "\n\n"
     . "Nachricht:\n{$nachricht}\n";
 
-$headers = "From: Website Kontaktformular <no-reply@cc-dienstleistungen-friedberg.de>\r\n"
-    . "Reply-To: {$email}\r\n"
-    . "Content-Type: text/plain; charset=UTF-8";
-
-$erfolg = mail($empfaenger, $betreff, $text, $headers);
-
-if (!$erfolg && isset($_GET['debug'])) {
-    $fehler = error_get_last();
-    file_put_contents(__DIR__ . '/mail-debug.log',
-        date('c') . ' sendmail_path=' . ini_get('sendmail_path')
-        . ' letzter_fehler=' . json_encode($fehler) . "\n",
-        FILE_APPEND);
+try {
+    smtp_send($smtpConfig, $empfaenger, $betreff, $text, $email);
+    $erfolg = true;
+} catch (RuntimeException $e) {
+    $erfolg = false;
+    if (isset($_GET['debug'])) {
+        file_put_contents(__DIR__ . '/mail-debug.log',
+            date('c') . ' ' . $e->getMessage() . "\n",
+            FILE_APPEND);
+    }
 }
 
 header('Location: /?formular=' . ($erfolg ? 'danke' : 'fehler') . '#kontakt');
