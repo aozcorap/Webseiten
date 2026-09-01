@@ -12,8 +12,32 @@ Webspace). Details zu Design, Bildrechten, SEO und Agenten-Review: siehe
       keine Rechtsberatung. **Risiko-Entscheidung des Kunden**: Seite geht
       ohne diesen Check live, Risiko wird bewusst in Kauf genommen.
 - [ ] **Aufräumen auf dem Webspace**: `mail-debug.log` (Debug-Ausgabe beim
-      Testen des Kontaktformulars) und das SMTP-Testpasswort ändern, da es
-      im Chatverlauf mit Claude stand.
+      Testen des Kontaktformulars) löschen und das SMTP-Passwort bei IONOS
+      ändern, da es im Chatverlauf mit Claude stand.
+- [ ] **Google Business Profil** einrichten (Google Maps/Local-Pack-
+      Eintrag). Für Handwerksbetriebe der wichtigste Hebel bei lokalen
+      Suchanfragen wie „Trockenbau Friedberg" – wichtiger als die Website
+      selbst. Braucht einen Google-Account und eine Adressverifizierung
+      (Postkarte oder Anruf durch Google), kann nicht von hier aus erledigt
+      werden.
+- [ ] **Echte Kundenbewertungen** einholen und einbinden (z. B. Google-
+      Rezensionen verlinken, `aggregateRating` im JSON-LD ergänzen sobald
+      es echte Bewertungen gibt). Aktuell keine vorhanden – laut CLAUDE.md-
+      Regel dürfen hier keine erfundenen Zahlen stehen.
+- [ ] **Sitemap-Status in der Google Search Console prüfen**: wurde am
+      01.09.2026 eingereicht, Status stand kurz danach auf „Konnte nicht
+      abgerufen werden" (vermutlich nur, weil Google sie noch nicht
+      abgeholt hatte – die Datei selbst ist erreichbar). Nach 1–2 Tagen
+      nochmal nachschauen, ob sich der Status auf „Erfolgreich" ändert.
+
+## SEO nach Go-Live ergänzt (2026-09-01)
+
+- Geo-Koordinaten im JSON-LD ergänzt (`geo`-Feld), `areaServed` von
+  reinem Text auf strukturierten `GeoCircle` mit 40 km Radius umgestellt
+  – wichtig für Umkreissuchen.
+- `sitemap.xml` und `robots.txt` angelegt und in der Google Search
+  Console eingereicht, Domain dort per HTML-Datei-Verifizierung bestätigt
+  (ohne DNS-Änderung, um die Mail-Einträge nicht zu gefährden).
 
 ## Erledigt beim Go-Live (2026-09-01)
 
