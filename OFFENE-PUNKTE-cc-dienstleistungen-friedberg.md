@@ -9,35 +9,33 @@ Design, Bildrechten, SEO und Agenten-Review: siehe
 
 ## Offen
 
-- [ ] **Ungeprüfte Angaben** im Entwurf mit dem Kunden gegenchecken:
-      „Umkreis 40 km", Öffnungszeiten „Mo–Fr 7:00–17:00 Uhr",
-      „Festpreis-Angebot", „eigenes Team, keine Subunternehmer". Dieselben
-      Werte stecken auch im JSON-LD auf der Startseite. (Gründungsjahr und
-      Jahre im Handwerk sind vom Kunden bereits bestätigt, siehe Entscheidung
-      unten.)
-- [ ] **Kontaktformular** hat noch keinen echten Versand-Endpunkt (aktuell
-      nur clientseitige Demo-Anzeige beim Absenden, es werden keine Daten
-      übertragen oder gespeichert).
-- [ ] **Impressum**: USt-IdNr. fehlt (eine früher öffentlich gezeigte
-      Steuernummer wurde bewusst nicht übernommen). Handwerkskammer +
-      Eintragungsnummer in der Handwerksrolle fehlen – Pflichtangabe, da
-      Malerhandwerk zulassungspflichtig ist (Anlage A HwO).
+- [ ] **Kontaktformular** hat noch keinen echten Versand-Endpunkt. Aktuell
+      zeigt der Button beim Absenden nur "Danke! (Demo)" – es wird keine
+      E-Mail verschickt und nichts gespeichert. Für den echten Betrieb
+      braucht es einen Versand-Endpunkt (z. B. Formspree oder ein
+      Mailserver-Skript), der die Anfrage tatsächlich an den Kunden
+      zustellt.
 - [ ] **Datenschutzerklärung**: Hosting-Abschnitt beschreibt aktuell
-      GitHub Pages (Entwurfsphase) – vor Go-Live auf den echten Webspace
-      umschreiben. Formular-Abschnitt nach Anbindung eines echten
-      Endpunkts ergänzen (inkl. möglichem Auftragsverarbeiter).
+      GitHub Pages (Entwurfsphase, mit sichtbarem `[TODO]`) – vor Go-Live
+      auf den echten Webspace umschreiben. Formular-Abschnitt nach
+      Anbindung eines echten Endpunkts ergänzen (inkl. möglichem
+      Auftragsverarbeiter).
 - [ ] **`noindex`-Meta-Tag** auf allen drei Seiten entfernen, sobald die
-      Seite unter der echten Domain live geht (aktuell bewusst gesetzt,
-      um Duplicate-Content-Konflikte mit der bestehenden Live-Seite unter
-      cc-dienstleistungen-friedberg.de zu vermeiden).
-- [ ] **Logo** liegt nur als Pixelbild vor (aus dem vom Kunden gelieferten
-      PDF extrahiert), keine Vektordatei. Für Großformat-Anwendungen
-      (Fahrzeugbeschriftung, Bauschild) müsste beim Grafiker eine SVG-
-      oder EPS-Datei angefragt werden.
+      Seite unter der echten Domain live geht. Verhindert aktuell, dass
+      Google diesen Entwurf neben der bestehenden Live-Seite unter
+      cc-dienstleistungen-friedberg.de als Duplicate Content indexiert.
 - [ ] **Anwaltlicher Gegencheck** von Impressum und Datenschutzerklärung
       vor dem echten Go-Live. Der bereits durchgeführte Agenten-Review
       (Code, SEO, Recht/Datenschutz – siehe README) ist eine technische
       Plausibilitätsprüfung, keine Rechtsberatung.
+
+## Geschlossen (Kunde hat entschieden)
+
+- **Ungeprüfte Angaben** (Umkreis, Öffnungszeiten, Festpreis, eigenes Team) –
+  vom Kunden bestätigt.
+- **USt-IdNr. / Handwerkskammer-Eintragung im Impressum** – bewusst
+  weggelassen, stand auf der alten Seite auch nicht drauf.
+- **Logo nur als Pixelbild** – kein Thema, Vektordatei nicht nötig.
 
 ## Entscheidung
 
