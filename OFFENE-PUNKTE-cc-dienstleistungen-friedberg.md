@@ -1,33 +1,35 @@
-# Offene Punkte – CC Dienstleistungen Redesign (Stand 2026-08-28, Ende Session)
+# Offene Punkte – CC Dienstleistungen Redesign (Stand 2026-09-01, Go-Live erfolgt)
 
-Redesign-Entwurf liegt in `cc-dienstleistungen-friedberg.de/` (`index.html`,
-`impressum.html`, `datenschutz.html`), live unter
-https://aozcorap.github.io/Webseiten/cc-dienstleistungen-friedberg.de/ —
-Pitch-Grundlage für das Kundengespräch, kein Produktivsystem. Details zu
-Design, Bildrechten, SEO und Agenten-Review: siehe
+Seite ist **live** unter https://cc-dienstleistungen-friedberg.de/ (IONOS-
+Webspace). Details zu Design, Bildrechten, SEO und Agenten-Review: siehe
 [cc-dienstleistungen-friedberg.de/README.md](cc-dienstleistungen-friedberg.de/README.md).
 
 ## Offen
 
-- [ ] **Kontaktformular** hat noch keinen echten Versand-Endpunkt. Aktuell
-      zeigt der Button beim Absenden nur "Danke! (Demo)" – es wird keine
-      E-Mail verschickt und nichts gespeichert. Für den echten Betrieb
-      braucht es einen Versand-Endpunkt (z. B. Formspree oder ein
-      Mailserver-Skript), der die Anfrage tatsächlich an den Kunden
-      zustellt.
-- [ ] **Datenschutzerklärung**: Hosting-Abschnitt beschreibt aktuell
-      GitHub Pages (Entwurfsphase, mit sichtbarem `[TODO]`) – vor Go-Live
-      auf den echten Webspace umschreiben. Formular-Abschnitt nach
-      Anbindung eines echten Endpunkts ergänzen (inkl. möglichem
-      Auftragsverarbeiter).
-- [ ] **`noindex`-Meta-Tag** auf allen drei Seiten entfernen, sobald die
-      Seite unter der echten Domain live geht. Verhindert aktuell, dass
-      Google diesen Entwurf neben der bestehenden Live-Seite unter
-      cc-dienstleistungen-friedberg.de als Duplicate Content indexiert.
-- [ ] **Anwaltlicher Gegencheck** von Impressum und Datenschutzerklärung
-      vor dem echten Go-Live. Der bereits durchgeführte Agenten-Review
-      (Code, SEO, Recht/Datenschutz – siehe README) ist eine technische
-      Plausibilitätsprüfung, keine Rechtsberatung.
+- [ ] **Anwaltlicher Gegencheck** von Impressum und Datenschutzerklärung.
+      Der bereits durchgeführte Agenten-Review (Code, SEO, Recht/Daten-
+      schutz – siehe README) ist eine technische Plausibilitätsprüfung,
+      keine Rechtsberatung. **Risiko-Entscheidung des Kunden**: Seite geht
+      ohne diesen Check live, Risiko wird bewusst in Kauf genommen.
+- [ ] **Aufräumen auf dem Webspace**: `mail-debug.log` (Debug-Ausgabe beim
+      Testen des Kontaktformulars) und das SMTP-Testpasswort ändern, da es
+      im Chatverlauf mit Claude stand.
+
+## Erledigt beim Go-Live (2026-09-01)
+
+- Kontaktformular an echten Versand angebunden: eigener minimaler
+  SMTP-Client (`smtpmailer.php`) gegen `smtp.ionos.de` mit Login über das
+  Postfach `info@cc-dienstleistungen-friedberg.de`. Zugangsdaten liegen in
+  `smtpconfig.php`, bewusst nicht im Git-Repo (siehe `.gitignore`), nur
+  manuell auf dem Webspace.
+- Kontakt-E-Mail-Adresse korrigiert: `serkan@gmail.info` war ein
+  Tippfehler (Domain existiert nicht, kein MX-Record) – jetzt überall
+  `info@cc-dienstleistungen-friedberg.de`.
+- Datenschutzerklärung: Hosting-Abschnitt beschreibt jetzt IONOS statt
+  GitHub Pages, Formular-Abschnitt auf den echten SMTP-Versand angepasst.
+- `noindex`-Meta-Tag von allen drei Seiten entfernt.
+- Alte Website auf dem Webspace gesichert (Zip-Backup) und durch den
+  Redesign-Entwurf ersetzt.
 
 ## Geschlossen (Kunde hat entschieden)
 
