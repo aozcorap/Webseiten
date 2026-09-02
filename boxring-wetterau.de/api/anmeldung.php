@@ -255,6 +255,56 @@ try {
     $sheetOk = true;
 } catch (Throwable $e) {
     error_log('anmeldung.php: Google Sheets append fehlgeschlagen: ' . $e->getMessage());
+
+    // Eintrag ins Sheet fehlgeschlagen - Kassenwart per Alarm-Mail informieren,
+    // damit die Anmeldung nicht unbemerkt fehlt (Mitglied hat trotzdem seine
+    // Willkommensmail bekommen, siehe $memberMailOk oben, glaubt also faelschlich
+    // an eine vollstaendige Anmeldung).
+    try {
+        $alarmBodyHtml = sprintf(
+            '<p><strong>Achtung:</strong> Eine Online-Anmeldung konnte nicht automatisch in die ' .
+            'Google-Sheet-Mitgliederliste eingetragen werden. Bitte manuell nachtragen.</p>' .
+            '<p><strong>Fehler:</strong> %s</p>' .
+            '<table cellpadding="4" cellspacing="0" border="1" style="border-collapse:collapse;">' .
+            '<tr><td>Name</td><td>%s %s</td></tr>' .
+            '<tr><td>E-Mail</td><td>%s</td></tr>' .
+            '<tr><td>Telefon</td><td>%s</td></tr>' .
+            '<tr><td>Straße</td><td>%s %s</td></tr>' .
+            '<tr><td>PLZ/Ort</td><td>%s %s</td></tr>' .
+            '<tr><td>Geburtstag</td><td>%s</td></tr>' .
+            '<tr><td>IBAN</td><td>%s</td></tr>' .
+            '<tr><td>Beitrag</td><td>%s</td></tr>' .
+            '<tr><td>Eintrittsdatum</td><td>%s</td></tr>' .
+            '</table>' .
+            '<p>Das vollstaendige Aufnahmeformular liegt als PDF-Anhang an der Willkommensmail ' .
+            'ans neue Mitglied bei (CC: %s).</p>',
+            htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['email'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['telefon'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['strasse'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['hausnummer'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['plz'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['ort'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['geburtstag'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['iban'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['beitrag'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($data['unterschrift_datum'] ?? '', ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars(NOTIFY_EMAIL, ENT_QUOTES, 'UTF-8')
+        );
+        Mailer::send(
+            NOTIFY_EMAIL,
+            'Boxring Wetterau 1983 e.V.',
+            'ALARM: Online-Anmeldung nicht im Sheet eingetragen',
+            $alarmBodyHtml,
+            null,
+            [],
+            [MEMBER_CC_EMAIL]
+        );
+    } catch (Throwable $mailError) {
+        error_log('anmeldung.php: Alarm-Mail fehlgeschlagen: ' . $mailError->getMessage());
+    }
 }
 
 if ($sheetOk || $memberMailOk) {
