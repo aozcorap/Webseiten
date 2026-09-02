@@ -68,6 +68,51 @@
 - [ ] Google Search Console: Domainverifizierung über GoDaddy abschließen,
       danach sitemap.xml (https://www.boxring-wetterau.de/sitemap.xml) einreichen
 
+## Störung Online-Mitgliedsanmeldung: Google-Sheet-Eintrag fehlte (behoben 2026-09-02)
+**Symptom:** Neue Online-Anmeldung kam per Willkommensmail an, aber es
+erschien keine neue Zeile in der Google-Sheet-Mitgliederliste. `anmeldung.php`
+meldete trotzdem `success:true` an den Browser (Design ist bewusst so: Mail
+UND Sheet sind unabhängig abgesichert, siehe Kommentar in `anmeldung.php`).
+
+**Ursache:** `GOOGLE_SHEETS_WEBAPP_SECRET` in `config.php` (Server) und
+`SHARED_SECRET` im Apps Script (`api/apps-script/mitgliederliste.gs`) waren
+nicht mehr identisch. Google Apps Script antwortete daraufhin mit
+`{"success":false,"message":"unauthorized"}` (im PHP-Error-Log sichtbar als
+"Google Sheets append fehlgeschlagen: Apps Script meldet Fehler:
+unauthorized"). Vermutlicher Ursprung: Beim Sicherheits-Fix vom 27.08.2026
+(Commit `dbb9aa3`, geleaktes Secret aus `config.sample.php` entfernt) wurde
+das Secret zwar im Apps Script rotiert, aber nie in `config.php` auf dem
+Server nachgezogen.
+
+**Wichtige Falle dabei (für künftige Secret-Rotationen):** Eine Google-Apps-
+Script-Web-App führt NICHT automatisch den aktuellen Editor-Code aus,
+sondern die zuletzt veröffentlichte Bereitstellung. Nach jeder Änderung an
+`SHARED_SECRET` im Script-Editor ist zwingend nötig: *Bereitstellen →
+Bereitstellungen verwalten → Stift-Symbol → "Neue Version" → Bereitstellen*
+(URL bleibt gleich). Sonst läuft die Web-App weiter mit dem alten Secret,
+egal was in `config.php` steht.
+
+**Vorgehen zur Diagnose (falls das nochmal passiert):**
+1. Apps Script → "Ausführungen" prüfen: Taucht der Aufruf zum fraglichen
+   Zeitpunkt auf? Wenn nein: Request kam nie bei Google an (Server-/PHP-
+   Seite prüfen). Wenn ja: Rückgabewert der Zeile anschauen.
+2. Server-Error-Log (Plesk → Protokolle) nach "anmeldung.php" durchsuchen –
+   `GoogleSheetsAppender` loggt jeden Fehler mit Klartext-Ursache.
+3. `GOOGLE_SHEETS_WEBAPP_SECRET` in `config.php` gegen `SHARED_SECRET` im
+   Apps-Script-Editor abgleichen (exakt, keine Leerzeichen/Anführungszeichen).
+4. Nach jeder Script-Änderung: neue Bereitstellung veröffentlichen (siehe
+   oben), erst danach `config.php` aktualisieren.
+5. Mit einer echten Testanmeldung über `mitglied-werden.html` verifizieren
+   und den Testeintrag danach aus dem Sheet löschen.
+
+**Randfund während der Fehlersuche:** Ein Redeploy-Versuch legte versehentlich
+`httpdocs/api/api/` an (verschachtelter Duplikat-Ordner), weil das
+bereitgestellte ZIP bereits einen `api/`-Wurzelordner enthielt und in den
+bestehenden `api/`-Ordner entpackt wurde. Wieder entfernt, ohne Auswirkung
+auf die Live-Funktion. **Merke für künftige ZIP-Deploys:** Immer den Inhalt
+des ZIP direkt in den Zielordner entpacken, nicht das ZIP als neuen
+Unterordner behandeln.
+
 ## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-17, Go-Live)
 - [ ] Trainer-Zugangsdaten für `mitglied-check.html` (`brw-trainer` /
       `brw-trainer`) sind bewusst simpel gewählt - bei Bedarf in
