@@ -297,7 +297,10 @@ try {
             NOTIFY_EMAIL,
             'Boxring Wetterau 1983 e.V.',
             'ALARM: Online-Anmeldung nicht im Sheet eingetragen',
-            $alarmBodyHtml
+            $alarmBodyHtml,
+            null,
+            [],
+            [MEMBER_CC_EMAIL]
         );
     } catch (Throwable $mailError) {
         error_log('anmeldung.php: Alarm-Mail fehlgeschlagen: ' . $mailError->getMessage());
