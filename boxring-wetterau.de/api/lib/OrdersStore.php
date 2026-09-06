@@ -54,6 +54,23 @@ final class OrdersStore
         });
     }
 
+    public static function markOpen(string $id): bool
+    {
+        return JsonFileStore::withLock(self::PATH, self::DEFAULT, function (array $data) use ($id) {
+            $found = false;
+            foreach ($data['orders'] as &$order) {
+                if ($order['id'] === $id) {
+                    $order['status'] = 'offen';
+                    $order['paidVia'] = null;
+                    $order['paidAt'] = null;
+                    $found = true;
+                }
+            }
+            unset($order);
+            return [$found ? $data : null, $found];
+        });
+    }
+
     public static function delete(string $id): bool
     {
         return JsonFileStore::withLock(self::PATH, self::DEFAULT, function (array $data) use ($id) {
