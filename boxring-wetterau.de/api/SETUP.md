@@ -174,6 +174,42 @@ zusätzliches Setup nötig) – die Datei muss nur zusammen mit den anderen
 liegt weiterhin in Supabase; diese Mail ist nur ein zusätzlicher Hinweis
 fürs Nachtracking (z. B. bei PayPal-Zahlungsproblemen).
 
+## 9. Vereinsshop
+
+Der Vereinsshop (`shop/index.html` + `api/bestellung.php`,
+`api/bestellungen.php`, `api/shop-login.php`, `api/shop-logout.php`,
+`api/shop-session.php`) braucht folgende zusätzliche Werte in `config.php`
+(siehe `config.sample.php` für die genaue Syntax):
+
+- `SHOP_IBAN`, `SHOP_KONTOINHABER` — Kontodaten für die Zahlungsart
+  Überweisung. Muss mit den im Shop selbst angezeigten Daten übereinstimmen.
+- `SHOP_NOTIFY_EMAIL` — Absender- und CC-Adresse der Bestellbestätigungsmail
+  (aktuell `ahmet@ozcorapci.de`, bewusst nicht `NOTIFY_EMAIL`/Kassenwart, da
+  dieser kurzlebige Shop direkt privat betreut wird).
+- `SHOP_ADMIN_USERNAME`, `SHOP_ADMIN_PASSWORD` — eigener Login für den
+  Shop-Admin-Bereich (Bestellungen inkl. Kunden-E-Mail-Adressen, Löschen,
+  Als-bezahlt-markieren, Reseller-Export). Bewusst getrennt vom
+  Trainer-Zugang (`ADMIN_USERNAME`/`ADMIN_PASSWORD`), da hier
+  personenbezogene Daten sichtbar sind.
+
+**Absender-Hinweis:** Der technische Mailversand läuft immer über das in
+`SMTP_HOST`/`SMTP_USER` hinterlegte Postfach, auch wenn `SHOP_NOTIFY_EMAIL`
+eine andere Domain ist. Das kann bei manchen Empfänger-Providern als
+SPF/DKIM-Mismatch auffallen (Spam-Verdacht). Nach jeder Änderung an
+`SHOP_NOTIFY_EMAIL` einmal per echter Testbestellung prüfen, ob die Mail
+sauber ankommt (auch im Spam-Ordner nachsehen).
+
+**Speicherung:** Bestellungen liegen wie die Trainer-Zeiterfassung (Abschnitt
+7) als JSON-Datei in `api/data/` (`orders.json`, durch `.htaccess` von außen
+gesperrt). Bestellnummern werden serverseitig fortlaufend vergeben. **Beim
+ZIP-Deployment darauf achten, dass `api/data/orders.json` nicht überschrieben
+oder der Ordner vorher geleert wird** - sonst gehen alle bis dahin
+gesammelten Bestellungen verloren.
+
+**Testen:** Eine Bestellung über `shop/index.html` abschicken, prüfen ob die
+Mail ankommt, danach unter `shop/index.html#admin` einloggen und die
+Testbestellung wieder löschen (sonst taucht sie im Reseller-Export auf).
+
 ## Hinweis zur Sicherheit
 
 Selbst wenn ein Schritt fehlschlägt (z. B. Google Sheets nicht erreichbar),
