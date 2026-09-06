@@ -334,7 +334,15 @@ body{
 }
 .text-input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
 .text-input.invalid{border-color:var(--danger);}
+.field-error{font-size:11.5px;color:var(--danger);margin:4px 0 0;display:none;}
+.field-error.show{display:block;}
+.payment-choice{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.payment-option{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft);cursor:pointer;}
+.payment-option input{accent-color:var(--accent);width:16px;height:16px;flex:none;}
+.checkout-error{margin-top:10px;font-size:12.5px;color:var(--danger);display:none;}
+.checkout-error.show{display:block;}
 .modal-btn{width:100%;padding:12px;margin-top:4px;}
+.modal-btn[disabled]{opacity:0.6;cursor:default;}
 
 /* ---- admin login ---- */
 #adminLogin{display:flex;justify-content:center;padding:64px 0;}
@@ -416,7 +424,7 @@ body{
       <div>
         <div class="eyebrow">Entrada 26 Kollektion</div>
         <h1 class="hdisplay">Trainingsausstattung<br>für den Verein bestellen</h1>
-        <p>Größe wählen, in den Warenkorb legen, per Überweisung bezahlen. Die Zeugwart:in wird über jede Bestellung informiert — Lieferung ins Vereinsheim.</p>
+        <p>Größe wählen, in den Warenkorb legen, per Überweisung oder bar im Training bezahlen. Die Zeugwart:in wird über jede Bestellung informiert — Lieferung ins Vereinsheim.</p>
       </div>
     </div>
 
@@ -454,7 +462,7 @@ body{
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
-          <tr><th>Bestellnr.</th><th>Datum</th><th>Mitglied</th><th>Artikel</th><th>Größe / Farbe</th><th>Preis</th><th>Zahlungsart</th></tr>
+          <tr><th>Bestellnr.</th><th>Datum</th><th>Mitglied</th><th>E-Mail</th><th>Artikel</th><th>Größe / Farbe</th><th>Preis</th><th>Zahlungsart</th></tr>
         </thead>
         <tbody id="adminTableBody"></tbody>
       </table>
@@ -475,11 +483,20 @@ body{
   <div class="checkout-name">
     <label for="checkoutName">Name für die Bestellung</label>
     <input class="text-input" id="checkoutName" type="text" placeholder="Vor- und Nachname" autocomplete="name">
+    <div class="field-error" id="checkoutNameError">Bitte gib deinen Namen ein.</div>
+    <label for="checkoutEmail" style="margin-top:14px;">E-Mail-Adresse</label>
+    <input class="text-input" id="checkoutEmail" type="email" placeholder="name@beispiel.de" autocomplete="email">
+    <div class="field-error" id="checkoutEmailError">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+    <div class="payment-choice">
+      <label class="payment-option"><input type="radio" name="paymentMethod" value="ueberweisung" checked> Banküberweisung</label>
+      <label class="payment-option"><input type="radio" name="paymentMethod" value="bar"> Bar im Training</label>
+    </div>
   </div>
   <div class="cart-foot">
     <div class="cart-total-row"><span>Gesamt</span><span id="cartTotal">0,00 €</span></div>
     <button class="btn-add modal-btn" id="checkoutBtn">Bestellung abschicken</button>
-    <div class="cart-note">Die Überweisungsdaten erhältst du im nächsten Schritt.</div>
+    <div class="checkout-error" id="checkoutSubmitError"></div>
+    <div class="cart-note">Die Zahlungsdetails erhältst du im nächsten Schritt und per Mail.</div>
   </div>
 </div>
 
@@ -499,8 +516,9 @@ body{
     <p class="confirm-sub">Bestellnummer <strong id="confirmOrderId"></strong></p>
     <div class="confirm-items" id="confirmItems"></div>
     <div class="confirm-total-row"><span>Gesamt</span><span id="confirmTotal"></span></div>
-    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung eingegangen ist. Bitte per Banküberweisung mit folgenden Daten bezahlen:</p>
-    <div class="transfer-details open" id="transferDetails">
+    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung eingegangen ist.</p>
+    <div class="transfer-details" id="transferDetails">
+      <p class="cart-note">Bitte per Banküberweisung mit folgenden Daten bezahlen:</p>
       <div class="transfer-row"><span>Empfänger</span><strong>Ahmet Özcorapci</strong></div>
       <div class="transfer-row"><span>IBAN</span><strong id="transferIban">DE41 3002 0900 0403 6606 66</strong></div>
       <div class="transfer-row"><span>Betrag</span><strong id="transferAmount"></strong></div>
@@ -508,6 +526,11 @@ body{
       <button type="button" class="btn-add modal-btn" id="transferCopyIban">IBAN kopieren</button>
       <p class="cart-note">Bitte überweise den Betrag zeitnah mit dem angegebenen Verwendungszweck.</p>
     </div>
+    <div class="transfer-details" id="cashDetails">
+      <p class="cart-note">Bitte <strong id="cashAmount"></strong> in bar beim nächsten Training bezahlen und dabei die Bestellnummer <strong id="cashOrderId"></strong> nennen.</p>
+    </div>
+    <p class="cart-note" id="confirmMailNote">Eine Bestätigung mit den Zahlungsdetails wurde an <strong id="confirmEmail"></strong> geschickt.</p>
+    <div class="checkout-error" id="confirmMailError">Die Bestätigungsmail konnte nicht verschickt werden. Bitte notiere dir die Bestellnummer und melde dich bei uns.</div>
     <button type="button" class="btn-add modal-btn" id="confirmBackToShop">Weiter einkaufen</button>
   </div>
 </div>
@@ -739,33 +762,9 @@ function closeCart(){
 }
 
 /* ---- checkout confirmation ---- */
-function checkout(){
-  if(cart.length === 0) return;
-  const nameInput = document.getElementById("checkoutName");
-  const name = nameInput.value.trim();
-  if(!name){
-    nameInput.classList.add("invalid");
-    nameInput.focus();
-    return;
-  }
-  nameInput.classList.remove("invalid");
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  orderSeq += 1;
-  const today = new Date();
-  const pad = n => String(n).padStart(2,"0");
-  const order = {
-    id: "BRW-" + orderSeq,
-    date: `${pad(today.getDate())}.${pad(today.getMonth()+1)}.${today.getFullYear()}`,
-    member: name,
-    items: cart.map(i => ({name:i.name, size:i.size, price:i.price})),
-    paymentMethod: "offen",
-  };
-  ORDERS.push(order);
-  cart.length = 0;
-  nameInput.value = "";
-  renderCart();
-  closeCart();
-
+function showConfirmation(order){
   document.getElementById("confirmOrderId").textContent = order.id;
   document.getElementById("confirmItems").innerHTML = order.items.map(i => `
     <div class="cart-item">
@@ -778,22 +777,106 @@ function checkout(){
   `).join("");
   const total = order.items.reduce((sum,i) => sum + i.price, 0);
   document.getElementById("confirmTotal").textContent = fmt(total);
+  document.getElementById("confirmEmail").textContent = order.email;
+  document.getElementById("confirmMailNote").style.display = "";
+  document.getElementById("confirmMailError").classList.remove("show");
   document.getElementById("checkoutConfirm").classList.add("open");
   lastOrder = order;
-  showTransferDetails();
+
+  const isTransfer = order.paymentMethod === "Überweisung";
+  document.getElementById("transferDetails").classList.toggle("open", isTransfer);
+  document.getElementById("cashDetails").classList.toggle("open", !isTransfer);
+  if(isTransfer){
+    document.getElementById("transferAmount").textContent = fmt(total);
+    document.getElementById("transferPurpose").textContent = `${order.id} ${order.member}`;
+  } else {
+    document.getElementById("cashAmount").textContent = fmt(total);
+    document.getElementById("cashOrderId").textContent = order.id;
+  }
+}
+
+async function checkout(){
+  if(cart.length === 0) return;
+  const nameInput = document.getElementById("checkoutName");
+  const emailInput = document.getElementById("checkoutEmail");
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+  let valid = true;
+  document.getElementById("checkoutNameError").classList.remove("show");
+  document.getElementById("checkoutEmailError").classList.remove("show");
+  if(!name){
+    nameInput.classList.add("invalid");
+    document.getElementById("checkoutNameError").classList.add("show");
+    valid = false;
+  }
+  if(!email || !EMAIL_PATTERN.test(email)){
+    emailInput.classList.add("invalid");
+    document.getElementById("checkoutEmailError").classList.add("show");
+    valid = false;
+  }
+  if(!valid){
+    (name ? emailInput : nameInput).focus();
+    return;
+  }
+  nameInput.classList.remove("invalid");
+  emailInput.classList.remove("invalid");
+
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  const submitError = document.getElementById("checkoutSubmitError");
+  submitError.classList.remove("show");
+  checkoutBtn.disabled = true;
+
+  orderSeq += 1;
+  const today = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  const order = {
+    id: "BRW-" + orderSeq,
+    date: `${pad(today.getDate())}.${pad(today.getMonth()+1)}.${today.getFullYear()}`,
+    member: name,
+    email: email,
+    items: cart.map(i => ({name:i.name, size:i.size, price:i.price})),
+    paymentMethod: paymentMethod === "bar" ? "Bar im Training" : "Überweisung",
+  };
+
+  try {
+    const res = await fetch("../api/bestellung.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        name: order.member,
+        email: order.email,
+        orderId: order.id,
+        paymentMethod: paymentMethod,
+        items: order.items,
+      }),
+    });
+    const data = await res.json().catch(() => null);
+    if(!res.ok || !data || data.success !== true){
+      throw new Error(data && data.message ? data.message : "Unbekannter Fehler beim Versand.");
+    }
+  } catch(err){
+    console.warn("Bestell-Bestätigungsmail fehlgeschlagen:", err);
+    checkoutBtn.disabled = false;
+    submitError.textContent = "Die Bestellung konnte nicht verschickt werden. Bitte prüfe deine Internetverbindung und versuche es erneut, oder melde dich direkt bei uns.";
+    submitError.classList.add("show");
+    return;
+  }
+
+  checkoutBtn.disabled = false;
+  ORDERS.push(order);
+  cart.length = 0;
+  nameInput.value = "";
+  emailInput.value = "";
+  renderCart();
+  closeCart();
+  showConfirmation(order);
 
   if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
 }
 function closeCheckoutConfirm(){
   document.getElementById("checkoutConfirm").classList.remove("open");
-}
-function showTransferDetails(){
-  if(!lastOrder) return;
-  const total = lastOrder.items.reduce((sum,i) => sum + i.price, 0);
-  document.getElementById("transferAmount").textContent = fmt(total);
-  document.getElementById("transferPurpose").textContent = `${lastOrder.id} ${lastOrder.member}`;
-  lastOrder.paymentMethod = "Überweisung";
-  if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
 }
 function copyTransferIban(){
   const iban = document.getElementById("transferIban").textContent.replace(/\s/g,"");
@@ -805,7 +888,7 @@ function renderAdminTable(){
   const body = document.getElementById("adminTableBody");
   document.getElementById("adminOrderCount").textContent = ORDERS.length + " Bestellungen";
   if(ORDERS.length === 0){
-    body.innerHTML = '<tr class="admin-empty"><td colspan="7">Noch keine Bestellungen.</td></tr>';
+    body.innerHTML = '<tr class="admin-empty"><td colspan="8">Noch keine Bestellungen.</td></tr>';
     return;
   }
   body.innerHTML = ORDERS.slice().reverse().flatMap(order =>
@@ -814,6 +897,7 @@ function renderAdminTable(){
         <td>${idx === 0 ? order.id : ""}</td>
         <td>${idx === 0 ? order.date : ""}</td>
         <td>${idx === 0 ? order.member : ""}</td>
+        <td>${idx === 0 ? order.email : ""}</td>
         <td>${item.name}</td>
         <td>${item.size}</td>
         <td>${fmt(item.price)}</td>
@@ -823,10 +907,10 @@ function renderAdminTable(){
   ).join("");
 }
 function exportOrdersCsv(){
-  const rows = [["Bestellnr.","Datum","Mitglied","Artikel","Größe / Farbe","Preis","Zahlungsart"]];
+  const rows = [["Bestellnr.","Datum","Mitglied","E-Mail","Artikel","Größe / Farbe","Preis","Zahlungsart"]];
   ORDERS.forEach(order => {
     order.items.forEach(item => {
-      rows.push([order.id, order.date, order.member, item.name, item.size, item.price.toFixed(2).replace(".",","), order.paymentMethod]);
+      rows.push([order.id, order.date, order.member, order.email, item.name, item.size, item.price.toFixed(2).replace(".",","), order.paymentMethod]);
     });
   });
   const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(";")).join("\r\n");
@@ -924,6 +1008,11 @@ document.getElementById("adminLoginForm").addEventListener("submit", e => {
 
 document.getElementById("checkoutName").addEventListener("input", () => {
   document.getElementById("checkoutName").classList.remove("invalid");
+  document.getElementById("checkoutNameError").classList.remove("show");
+});
+document.getElementById("checkoutEmail").addEventListener("input", () => {
+  document.getElementById("checkoutEmail").classList.remove("invalid");
+  document.getElementById("checkoutEmailError").classList.remove("show");
 });
 
 document.getElementById("brandLogo").src = CLUB_CREST;

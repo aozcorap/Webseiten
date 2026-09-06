@@ -51,6 +51,19 @@ define('GOOGLE_SHEETS_WEBAPP_URL', 'https://script.google.com/macros/s/HIER-DEPL
 // ist (Zugriff "Jeder").
 define('GOOGLE_SHEETS_WEBAPP_SECRET', 'HIER-EIGENES-ZUFALLSPASSWORT-EINTRAGEN');
 
+// --- Vereinsshop (shop/index.html, api/bestellung.php): Bestellbestaetigung
+// per Mail ---
+
+// Kontodaten fuer die Zahlungsart "Ueberweisung" im Shop - muss mit den im
+// Shop selbst angezeigten Daten uebereinstimmen (shop/index.html).
+define('SHOP_IBAN', 'DE41 3002 0900 0403 6606 66');
+define('SHOP_KONTOINHABER', 'Ahmet Özcorapci');
+
+// CC-Empfaenger der Bestellbestaetigung ans Mitglied (zur Kenntnisnahme durch
+// die Zeugwart:in). Standardmaessig NOTIFY_EMAIL, kann bei Bedarf auf eine
+// andere Adresse als die des Kassenwarts umgestellt werden.
+define('SHOP_NOTIFY_EMAIL', NOTIFY_EMAIL);
+
 // --- Trainer-Adminbereich (mitglied-check.html): Mitglied-Check waehrend
 // des Trainings, ob eine Person bereits online/schriftlich angemeldet ist ---
 
