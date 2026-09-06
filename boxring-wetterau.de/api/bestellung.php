@@ -150,9 +150,10 @@ if ($paymentMethod === 'ueberweisung') {
     );
 } else {
     $paymentHtml = sprintf(
-        '<p>Bitte bezahle den Betrag von <strong>%s</strong> in bar beim nächsten Training. ' .
+        '<p>Bitte bezahle den Betrag von <strong>%s</strong> in bar beim nächsten Training bei %s. ' .
         'Bitte dabei die Bestellnummer <strong>%s</strong> nennen.</p>',
         htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
+        htmlspecialchars(SHOP_KONTOINHABER, ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8')
     );
 }
@@ -172,8 +173,8 @@ $bodyHtml = sprintf(
     $itemsHtml,
     htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
     $paymentHtml,
-    htmlspecialchars(NOTIFY_EMAIL, ENT_QUOTES, 'UTF-8'),
-    htmlspecialchars(NOTIFY_EMAIL, ENT_QUOTES, 'UTF-8')
+    htmlspecialchars(SHOP_NOTIFY_EMAIL, ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars(SHOP_NOTIFY_EMAIL, ENT_QUOTES, 'UTF-8')
 );
 
 try {
@@ -183,7 +184,12 @@ try {
         'Deine Bestellung im Vereinsshop – ' . $orderId,
         $bodyHtml,
         null,
-        [SHOP_NOTIFY_EMAIL]
+        [SHOP_NOTIFY_EMAIL],
+        [],
+        SHOP_NOTIFY_EMAIL,
+        SHOP_KONTOINHABER,
+        SHOP_NOTIFY_EMAIL,
+        SHOP_KONTOINHABER
     );
 } catch (Throwable $e) {
     error_log('bestellung.php: Mailversand fehlgeschlagen: ' . $e->getMessage());
