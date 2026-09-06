@@ -14,6 +14,9 @@ final class Mailer
      * @param array{name:string,content:string,filename:string}|null $attachment
      * @param string[] $additionalTo weitere Empfaenger gleichrangig zu $toEmail (z.B. Kassenwart + Kontakt)
      * @param string[] $cc
+     * @param string|null $fromEmail Absenderadresse im "Von"-Feld - Achtung: muss zur SMTP_HOST-Domain
+     *     passen (SPF/DKIM), sonst landet die Mail beim Empfaenger im Spam oder wird vom SMTP-Server
+     *     abgelehnt. Wenn nicht gesetzt, wird SMTP_FROM_EMAIL verwendet (Default, sicher).
      */
     public static function send(
         string $toEmail,
@@ -22,7 +25,11 @@ final class Mailer
         string $bodyHtml,
         ?array $attachment = null,
         array $cc = [],
-        array $additionalTo = []
+        array $additionalTo = [],
+        ?string $fromEmail = null,
+        ?string $fromName = null,
+        ?string $replyToEmail = null,
+        ?string $replyToName = null
     ): void {
         $mail = new PHPMailer(true);
         try {
@@ -35,7 +42,7 @@ final class Mailer
             $mail->SMTPSecure = SMTP_SECURE; // 'tls' oder 'ssl'
             $mail->CharSet = 'UTF-8';
 
-            $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+            $mail->setFrom($fromEmail ?? SMTP_FROM_EMAIL, $fromName ?? SMTP_FROM_NAME);
             $mail->addAddress($toEmail, $toName);
             foreach ($additionalTo as $extraEmail) {
                 $mail->addAddress($extraEmail);
@@ -43,7 +50,7 @@ final class Mailer
             foreach ($cc as $ccEmail) {
                 $mail->addCC($ccEmail);
             }
-            $mail->addReplyTo(NOTIFY_EMAIL, 'Boxring Wetterau 1983 e.V.');
+            $mail->addReplyTo($replyToEmail ?? NOTIFY_EMAIL, $replyToName ?? 'Boxring Wetterau 1983 e.V.');
 
             $mail->isHTML(true);
             $mail->Subject = $subject;
