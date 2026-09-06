@@ -133,30 +133,29 @@ foreach ($cleanItems as $item) {
     );
 }
 
-if ($paymentMethod === 'ueberweisung') {
-    $paymentHtml = sprintf(
-        '<p>Bitte überweise den Betrag zeitnah auf folgendes Konto:</p>' .
-        '<table cellpadding="4" cellspacing="0" border="1" style="border-collapse:collapse;">' .
-        '<tr><td>Empfänger</td><td>%s</td></tr>' .
-        '<tr><td>IBAN</td><td>%s</td></tr>' .
-        '<tr><td>Betrag</td><td>%s</td></tr>' .
-        '<tr><td>Verwendungszweck</td><td>%s %s</td></tr>' .
-        '</table>',
-        htmlspecialchars(SHOP_KONTOINHABER, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars(SHOP_IBAN, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($name, ENT_QUOTES, 'UTF-8')
-    );
-} else {
-    $paymentHtml = sprintf(
-        '<p>Bitte bezahle den Betrag von <strong>%s</strong> in bar beim nächsten Training bei %s. ' .
-        'Bitte dabei die Bestellnummer <strong>%s</strong> nennen.</p>',
-        htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars(SHOP_KONTOINHABER, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8')
-    );
-}
+// Beide Zahlungswege werden immer genannt, unabhaengig von der im Checkout
+// gewaehlten Praeferenz - in der Praxis entscheiden sich manche Mitglieder
+// nachtraeglich um (z.B. Ueberweisung ausgewaehlt, zahlen dann doch lieber
+// bar im Training).
+$paymentHtml = sprintf(
+    '<p>Du kannst wahlweise überweisen oder bar im Training bezahlen:</p>' .
+    '<p><strong>Überweisung:</strong></p>' .
+    '<table cellpadding="4" cellspacing="0" border="1" style="border-collapse:collapse;">' .
+    '<tr><td>Empfänger</td><td>%s</td></tr>' .
+    '<tr><td>IBAN</td><td>%s</td></tr>' .
+    '<tr><td>Betrag</td><td>%s</td></tr>' .
+    '<tr><td>Verwendungszweck</td><td>%s %s</td></tr>' .
+    '</table>' .
+    '<p><strong>Oder bar im Training bei %s:</strong> Betrag %s, bitte dabei die Bestellnummer <strong>%s</strong> nennen.</p>',
+    htmlspecialchars(SHOP_KONTOINHABER, ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars(SHOP_IBAN, ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars(SHOP_KONTOINHABER, ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
+    htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8')
+);
 
 $bodyHtml = sprintf(
     '<p>Hallo %s,</p>' .

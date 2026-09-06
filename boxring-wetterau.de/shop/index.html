@@ -532,7 +532,7 @@ body{
     <div class="confirm-total-row"><span>Gesamt</span><span id="confirmTotal"></span></div>
     <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung eingegangen ist.</p>
     <div class="transfer-details" id="transferDetails">
-      <p class="cart-note">Bitte per Banküberweisung mit folgenden Daten bezahlen:</p>
+      <p class="cart-note">Du kannst wahlweise überweisen:</p>
       <div class="transfer-row"><span>Empfänger</span><strong>Ahmet Özcorapci</strong></div>
       <div class="transfer-row"><span>IBAN</span><strong id="transferIban">DE41 3002 0900 0403 6606 66</strong></div>
       <div class="transfer-row"><span>Betrag</span><strong id="transferAmount"></strong></div>
@@ -541,7 +541,7 @@ body{
       <p class="cart-note">Bitte überweise den Betrag zeitnah mit dem angegebenen Verwendungszweck.</p>
     </div>
     <div class="transfer-details" id="cashDetails">
-      <p class="cart-note">Bitte <strong id="cashAmount"></strong> in bar beim nächsten Training bei Ahmet Özcorapci bezahlen und dabei die Bestellnummer <strong id="cashOrderId"></strong> nennen.</p>
+      <p class="cart-note">Oder <strong id="cashAmount"></strong> bar beim nächsten Training bei Ahmet Özcorapci bezahlen und dabei die Bestellnummer <strong id="cashOrderId"></strong> nennen.</p>
     </div>
     <p class="cart-note" id="confirmMailNote">Eine Bestätigung mit den Zahlungsdetails wurde an <strong id="confirmEmail"></strong> geschickt.</p>
     <div class="checkout-error" id="confirmMailError">Die Bestätigungsmail konnte nicht verschickt werden. Bitte notiere dir die Bestellnummer und melde dich bei uns.</div>
@@ -800,16 +800,14 @@ function showConfirmation(order, mailErrorMessage){
   document.getElementById("checkoutConfirm").classList.add("open");
   lastOrder = order;
 
-  const isTransfer = order.paymentMethod === "Überweisung";
-  document.getElementById("transferDetails").classList.toggle("open", isTransfer);
-  document.getElementById("cashDetails").classList.toggle("open", !isTransfer);
-  if(isTransfer){
-    document.getElementById("transferAmount").textContent = fmt(total);
-    document.getElementById("transferPurpose").textContent = `${order.id} ${order.member}`;
-  } else {
-    document.getElementById("cashAmount").textContent = fmt(total);
-    document.getElementById("cashOrderId").textContent = order.id;
-  }
+  // Beide Zahlungswege werden immer angezeigt, unabhaengig von der Auswahl -
+  // manche Mitglieder entscheiden sich nachtraeglich um (siehe api/bestellung.php).
+  document.getElementById("transferDetails").classList.add("open");
+  document.getElementById("cashDetails").classList.add("open");
+  document.getElementById("transferAmount").textContent = fmt(total);
+  document.getElementById("transferPurpose").textContent = `${order.id} ${order.member}`;
+  document.getElementById("cashAmount").textContent = fmt(total);
+  document.getElementById("cashOrderId").textContent = order.id;
 }
 
 async function checkout(){
