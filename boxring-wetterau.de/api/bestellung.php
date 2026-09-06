@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 /**
- * Verarbeitet eine Shop-Bestellung aus shop/index.html: validiert und
- * verschickt die Zahlungsdetails (Überweisung oder Bar im Training) per
- * E-Mail an das bestellende Mitglied, mit CC an die Zeugwart:in, damit sie
- * ueber jede Bestellung informiert ist.
+ * Verarbeitet eine Shop-Bestellung aus shop/index.html: validiert, vergibt
+ * serverseitig eine Bestellnummer, speichert die Bestellung dauerhaft (siehe
+ * OrdersStore) und verschickt die Zahlungsdetails (Überweisung oder Bar im
+ * Training) per E-Mail an das bestellende Mitglied, mit CC an die
+ * Zeugwart:in, damit sie ueber jede Bestellung informiert ist.
+ *
+ * Die Bestellung wird VOR dem Mailversand gespeichert: schlaegt die Mail
+ * fehl, ist die Bestellung trotzdem im Adminbereich sichtbar und nicht
+ * verloren - nur die Benachrichtigung ist dann nachzuholen.
  *
  * Der Preis kommt unveraendert vom Client (kein Produktkatalog auf dem
  * Server) - fuer diesen kurzlebigen, vereinsinternen Shop bewusst in Kauf
@@ -19,6 +24,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/Mailer.php';
+require_once __DIR__ . '/lib/OrdersStore.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -53,7 +59,6 @@ if (!empty($input['website'])) {
 
 $name = Validation::clean(isset($input['name']) && is_string($input['name']) ? $input['name'] : null);
 $email = Validation::clean(isset($input['email']) && is_string($input['email']) ? $input['email'] : null);
-$orderId = Validation::clean(isset($input['orderId']) && is_string($input['orderId']) ? $input['orderId'] : null);
 $paymentMethod = Validation::clean(isset($input['paymentMethod']) && is_string($input['paymentMethod']) ? $input['paymentMethod'] : null);
 $items = isset($input['items']) && is_array($input['items']) ? $input['items'] : [];
 
@@ -63,9 +68,6 @@ if ($name === null) {
 }
 if ($email === null || !Validation::emailValid($email)) {
     $errors[] = 'E-Mail-Adresse ist ungueltig.';
-}
-if ($orderId === null) {
-    $errors[] = 'Bestellnummer fehlt.';
 }
 if (!in_array($paymentMethod, ['ueberweisung', 'bar'], true)) {
     $errors[] = 'Zahlungsart ist ungueltig.';
@@ -80,13 +82,25 @@ foreach ($items as $item) {
     if (!is_array($item)) {
         continue;
     }
+    $itemId = Validation::clean(isset($item['id']) && is_string($item['id']) ? $item['id'] : null);
     $itemName = Validation::clean(isset($item['name']) && is_string($item['name']) ? $item['name'] : null);
-    $itemSize = Validation::clean(isset($item['size']) && is_string($item['size']) ? $item['size'] : null);
+    $itemSize = Validation::clean(isset($item['sizeValue']) && is_string($item['sizeValue']) ? $item['sizeValue'] : null);
+    $itemLabel = Validation::clean(isset($item['size']) && is_string($item['size']) ? $item['size'] : null);
+    $itemColor = Validation::clean(isset($item['color']) && is_string($item['color']) ? $item['color'] : null);
+    $itemHasLogo = !empty($item['hasLogo']);
     $itemPrice = isset($item['price']) && is_numeric($item['price']) ? (float) $item['price'] : null;
     if ($itemName === null || $itemPrice === null || $itemPrice < 0) {
         continue;
     }
-    $cleanItems[] = ['name' => $itemName, 'size' => $itemSize ?? '-', 'price' => $itemPrice];
+    $cleanItems[] = [
+        'id' => $itemId ?? '-',
+        'name' => $itemName,
+        'size' => $itemSize ?? '-',
+        'label' => $itemLabel ?? ($itemSize ?? '-'),
+        'color' => $itemColor ?? '-',
+        'hasLogo' => $itemHasLogo,
+        'price' => $itemPrice,
+    ];
     $total += $itemPrice;
 }
 if (empty($cleanItems)) {
@@ -97,6 +111,16 @@ if (!empty($errors)) {
     respond(422, ['success' => false, 'message' => 'Bitte pruefe deine Angaben: ' . implode(' ', $errors)]);
 }
 
+$order = OrdersStore::create([
+    'member' => $name,
+    'email' => $email,
+    'items' => $cleanItems,
+    'total' => $total,
+    'paymentMethod' => $paymentMethod === 'ueberweisung' ? 'Überweisung' : 'Bar im Training',
+    'createdAt' => (new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')))->format('Y-m-d H:i:s'),
+]);
+$orderId = $order['id'];
+
 $fmt = static fn (float $n): string => number_format($n, 2, ',', '.') . ' €';
 
 $itemsHtml = '';
@@ -104,7 +128,7 @@ foreach ($cleanItems as $item) {
     $itemsHtml .= sprintf(
         '<tr><td>%s (Größe %s)</td><td style="text-align:right;">%s</td></tr>',
         htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($item['size'], ENT_QUOTES, 'UTF-8'),
+        htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($fmt($item['price']), ENT_QUOTES, 'UTF-8')
     );
 }
@@ -124,7 +148,6 @@ if ($paymentMethod === 'ueberweisung') {
         htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($name, ENT_QUOTES, 'UTF-8')
     );
-    $paymentMethodLabel = 'Überweisung';
 } else {
     $paymentHtml = sprintf(
         '<p>Bitte bezahle den Betrag von <strong>%s</strong> in bar beim nächsten Training. ' .
@@ -132,7 +155,6 @@ if ($paymentMethod === 'ueberweisung') {
         htmlspecialchars($fmt($total), ENT_QUOTES, 'UTF-8'),
         htmlspecialchars($orderId, ENT_QUOTES, 'UTF-8')
     );
-    $paymentMethodLabel = 'Bar im Training';
 }
 
 $bodyHtml = sprintf(
@@ -165,7 +187,12 @@ try {
     );
 } catch (Throwable $e) {
     error_log('bestellung.php: Mailversand fehlgeschlagen: ' . $e->getMessage());
-    respond(502, ['success' => false, 'message' => 'Die Bestätigungsmail konnte nicht verschickt werden. Bitte notiere dir die Bestellnummer ' . $orderId . ' und melde dich bei uns.']);
+    // Bestellung ist bereits gespeichert (siehe oben) - nur die Mail fehlt.
+    respond(502, [
+        'success' => false,
+        'orderId' => $orderId,
+        'message' => 'Deine Bestellung ' . $orderId . ' ist eingegangen, aber die Bestätigungsmail konnte nicht verschickt werden. Bitte notiere dir die Bestellnummer und melde dich bei uns.',
+    ]);
 }
 
-respond(200, ['success' => true]);
+respond(200, ['success' => true, 'orderId' => $orderId]);

@@ -64,6 +64,13 @@ define('SHOP_KONTOINHABER', 'Ahmet Özcorapci');
 // dieser Shop laeuft nur wenige Wochen und wird direkt von hier aus betreut.
 define('SHOP_NOTIFY_EMAIL', 'ahmet@ozcorapci.de');
 
+// Eigener Zugang fuer den Shop-Adminbereich (Bestellungen inkl. Kunden-
+// E-Mail-Adressen, Loeschen, Als-bezahlt-markieren, Reseller-Export) -
+// bewusst getrennt vom Trainer-Zugang (ADMIN_USERNAME/ADMIN_PASSWORD oben),
+// da hier personenbezogene Daten sichtbar sind.
+define('SHOP_ADMIN_USERNAME', 'Ahmet');
+define('SHOP_ADMIN_PASSWORD', 'HIER-EIGENES-PASSWORT-EINTRAGEN');
+
 // --- Trainer-Adminbereich (mitglied-check.html): Mitglied-Check waehrend
 // des Trainings, ob eine Person bereits online/schriftlich angemeldet ist ---
 
