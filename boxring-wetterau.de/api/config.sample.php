@@ -60,9 +60,9 @@ define('SHOP_IBAN', 'DE41 3002 0900 0403 6606 66');
 define('SHOP_KONTOINHABER', 'Ahmet Özcorapci');
 
 // CC-Empfaenger der Bestellbestaetigung ans Mitglied (zur Kenntnisnahme durch
-// die Zeugwart:in). Standardmaessig NOTIFY_EMAIL, kann bei Bedarf auf eine
-// andere Adresse als die des Kassenwarts umgestellt werden.
-define('SHOP_NOTIFY_EMAIL', NOTIFY_EMAIL);
+// die Zeugwart:in). Bewusst die Privatadresse statt NOTIFY_EMAIL (Kassenwart) -
+// dieser Shop laeuft nur wenige Wochen und wird direkt von hier aus betreut.
+define('SHOP_NOTIFY_EMAIL', 'ahmet@ozcorapci.de');
 
 // --- Trainer-Adminbereich (mitglied-check.html): Mitglied-Check waehrend
 // des Trainings, ob eine Person bereits online/schriftlich angemeldet ist ---
