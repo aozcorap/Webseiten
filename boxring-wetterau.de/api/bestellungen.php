@@ -107,6 +107,14 @@ if ($method === 'POST') {
         respondJson(200, ['success' => true]);
     }
 
+    if ($action === 'markOpen') {
+        $found = OrdersStore::markOpen($id);
+        if (!$found) {
+            respondJson(404, ['success' => false, 'message' => 'Bestellung nicht gefunden.']);
+        }
+        respondJson(200, ['success' => true]);
+    }
+
     if ($action === 'delete') {
         $found = OrdersStore::delete($id);
         if (!$found) {
