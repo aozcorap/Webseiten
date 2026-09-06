@@ -380,6 +380,7 @@ body{
 }
 .btn-mini:hover{background:var(--surface-2);}
 .btn-mini-danger{color:var(--danger);border-color:var(--danger);}
+.btn-mini-active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700;}
 .order-status{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap;}
 .order-status-offen{background:var(--accent-soft);color:var(--accent-hover);}
 .order-status-bezahlt{background:var(--surface-2);color:var(--ink-soft);}
@@ -931,10 +932,8 @@ function renderAdminTable(){
           ? `<span class="order-status order-status-bezahlt">Bezahlt (${order.paidVia})</span>`
           : `<span class="order-status order-status-offen">Offen</span>`) : ""}</td>
         <td>${idx === 0 ? `
-          ${order.status !== "bezahlt" ? `
-            <button type="button" class="btn-mini" data-mark-paid="${order.id}" data-paid-via="Überweisung">Bezahlt: Überweisung</button>
-            <button type="button" class="btn-mini" data-mark-paid="${order.id}" data-paid-via="Bar im Training">Bezahlt: Bar</button>
-          ` : ""}
+          <button type="button" class="btn-mini${order.status === "bezahlt" && order.paidVia === "Überweisung" ? " btn-mini-active" : ""}" data-mark-paid="${order.id}" data-paid-via="Überweisung">Bezahlt: Überweisung</button>
+          <button type="button" class="btn-mini${order.status === "bezahlt" && order.paidVia === "Bar im Training" ? " btn-mini-active" : ""}" data-mark-paid="${order.id}" data-paid-via="Bar im Training">Bezahlt: Bar</button>
           <button type="button" class="btn-mini btn-mini-danger" data-delete="${order.id}">Löschen</button>
         ` : ""}</td>
       </tr>
