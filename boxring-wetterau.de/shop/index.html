@@ -416,7 +416,7 @@ body{
       <div>
         <div class="eyebrow">Entrada 26 Kollektion</div>
         <h1 class="hdisplay">Trainingsausstattung<br>für den Verein bestellen</h1>
-        <p>Größe wählen, in den Warenkorb legen, per PayPal oder Überweisung bezahlen. Bestellungen gehen direkt an die Zeugwart:in — Lieferung ins Vereinsheim.</p>
+        <p>Größe wählen, in den Warenkorb legen, per PayPal oder Überweisung bezahlen. Die Zeugwart:in wird über jede Bestellung informiert — Lieferung ins Vereinsheim.</p>
       </div>
     </div>
 
@@ -450,7 +450,7 @@ body{
       <h2>Bestellliste — Zeugwart:in</h2>
       <span id="adminOrderCount">0 Bestellungen</span>
     </div>
-    <p class="cart-note admin-hint">Diese Übersicht zeigt nur Bestellungen aus der aktuellen Browser-Sitzung (Demo). Die verbindliche Übersicht — inkl. Zahlungsstatus — ist die PayPal-Aktivität von ahmet@ozcorapci.de: jede Zahlung enthält Artikel, Größe und die Bestellnummer/den Namen in der Notiz.</p>
+    <p class="cart-note admin-hint">Diese Übersicht zeigt nur Bestellungen aus der aktuellen Browser-Sitzung (Demo). Jede neue Bestellung wird zusätzlich per Mail gemeldet. Ob das Geld tatsächlich eingegangen ist, bitte immer mit PayPal-Aktivität bzw. Kontoauszug abgleichen — Bestellnummer und Name stehen im Verwendungszweck/in der Notiz.</p>
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
@@ -580,6 +580,26 @@ let orderSeq = 1000;
 let lastOrder = null;
 
 const ORDERS = [];
+
+/* Formular-Endpoint fuer die Bestell-Benachrichtigung per Mail (Formspree, kein eigenes Backend noetig). */
+const ORDER_NOTIFY_ENDPOINT = "https://formspree.io/f/FORMSPREE_ID_HIER_EINTRAGEN";
+function notifyNewOrder(order, total){
+  if(ORDER_NOTIFY_ENDPOINT.includes("FORMSPREE_ID_HIER_EINTRAGEN")) return;
+  fetch(ORDER_NOTIFY_ENDPOINT, {
+    method: "POST",
+    headers: {"Accept":"application/json","Content-Type":"application/json"},
+    body: JSON.stringify({
+      Bestellnummer: order.id,
+      Datum: order.date,
+      Mitglied: order.member,
+      Artikel: order.items.map(i => `${i.name} (Größe ${i.size})`).join(", "),
+      Summe: fmt(total)
+    })
+  }).catch(() => {
+    /* Kein Backend zum Nachliefern vorhanden - Bestellung bleibt trotzdem in der Admin-Uebersicht sichtbar. */
+    console.warn("Bestell-Benachrichtigung per Mail konnte nicht gesendet werden.");
+  });
+}
 
 function artFrameHTML(p, color){
   color = color || "Schwarz";
@@ -789,6 +809,7 @@ function checkout(){
   document.getElementById("confirmTotal").textContent = fmt(total);
   document.getElementById("checkoutConfirm").classList.add("open");
   lastOrder = order;
+  notifyNewOrder(order, total);
 
   if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
 }
@@ -888,7 +909,7 @@ function showAdminView(){
 }
 
 const ADMIN_USER = "Ahmet";
-const ADMIN_PASS = "Karayazgan1!";
+const ADMIN_PASS = "kDPwB54TskdiE9#";
 let adminUnlocked = false;
 function checkAdminAccess(){
   if(location.hash !== "#admin"){
