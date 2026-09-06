@@ -15,11 +15,14 @@ Zahlung/Admin unten für die Details, wie das ohne Server funktioniert.
   abgefragt.
 - **Bestellung**: Katalog mit Größenauswahl (XS–XXL), Sammelbestell-Fenster
   statt laufender Einzelbestellungen.
-- **Bezahlung**: PayPal.me (`paypal.me/ahmetozc`, gebührenfrei per „Geld an
-  Freunde & Familie senden") oder Überweisung (IBAN wird angezeigt). Beides
-  läuft ohne Backend — die Seite selbst weiß nicht, ob wirklich gezahlt
-  wurde; der Abgleich passiert manuell über PayPal-Aktivität bzw.
-  Kontoauszug, per Bestellnummer + Name als Notiz/Verwendungszweck.
+- **Bezahlung**: Ausschließlich Banküberweisung (IBAN wird nach der Bestellung
+  angezeigt). Läuft ohne Backend — die Seite selbst weiß nicht, ob wirklich
+  gezahlt wurde; der Abgleich passiert manuell über den Kontoauszug, per
+  Bestellnummer + Name als Verwendungszweck.
+- **Bestell-Benachrichtigung**: Bei jeder abgeschlossenen Bestellung wird per
+  Formspree (`ORDER_NOTIFY_ENDPOINT` in `index.html`) automatisch eine Mail
+  an die Zeugwart:in geschickt, damit sie parallel zum Kontoauszug weiß, was
+  reinkommen sollte.
 - **Admin**: Bestellliste + CSV-Export für die Zeugwart:in.
 
 ## Produktbilder

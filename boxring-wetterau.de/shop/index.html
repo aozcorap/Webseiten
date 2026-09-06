@@ -416,7 +416,7 @@ body{
       <div>
         <div class="eyebrow">Entrada 26 Kollektion</div>
         <h1 class="hdisplay">Trainingsausstattung<br>für den Verein bestellen</h1>
-        <p>Größe wählen, in den Warenkorb legen, per PayPal oder Überweisung bezahlen. Die Zeugwart:in wird über jede Bestellung informiert — Lieferung ins Vereinsheim.</p>
+        <p>Größe wählen, in den Warenkorb legen, per Überweisung bezahlen. Die Zeugwart:in wird über jede Bestellung informiert — Lieferung ins Vereinsheim.</p>
       </div>
     </div>
 
@@ -450,7 +450,7 @@ body{
       <h2>Bestellliste — Zeugwart:in</h2>
       <span id="adminOrderCount">0 Bestellungen</span>
     </div>
-    <p class="cart-note admin-hint">Diese Übersicht zeigt nur Bestellungen aus der aktuellen Browser-Sitzung (Demo). Jede neue Bestellung wird zusätzlich per Mail gemeldet. Ob das Geld tatsächlich eingegangen ist, bitte immer mit PayPal-Aktivität bzw. Kontoauszug abgleichen — Bestellnummer und Name stehen im Verwendungszweck/in der Notiz.</p>
+    <p class="cart-note admin-hint">Diese Übersicht zeigt nur Bestellungen aus der aktuellen Browser-Sitzung (Demo). Jede neue Bestellung wird zusätzlich per Mail gemeldet. Ob das Geld tatsächlich eingegangen ist, bitte immer mit dem Kontoauszug abgleichen — Bestellnummer und Name stehen im Verwendungszweck.</p>
     <div class="admin-table-wrap">
       <table class="admin-table">
         <thead>
@@ -479,7 +479,7 @@ body{
   <div class="cart-foot">
     <div class="cart-total-row"><span>Gesamt</span><span id="cartTotal">0,00 €</span></div>
     <button class="btn-add modal-btn" id="checkoutBtn">Bestellung abschicken</button>
-    <div class="cart-note">Zahlungsart (PayPal oder Überweisung) wählst du im nächsten Schritt.</div>
+    <div class="cart-note">Die Überweisungsdaten erhältst du im nächsten Schritt.</div>
   </div>
 </div>
 
@@ -499,17 +499,8 @@ body{
     <p class="confirm-sub">Bestellnummer <strong id="confirmOrderId"></strong></p>
     <div class="confirm-items" id="confirmItems"></div>
     <div class="confirm-total-row"><span>Gesamt</span><span id="confirmTotal"></span></div>
-    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung eingegangen ist. Bitte wähle eine Zahlungsart:</p>
-    <button type="button" class="btn-paypal" id="confirmPayNow">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="#003087"><path d="M7 3h7.2c3 0 5.1 1.7 4.6 4.8-.5 3.6-3 5.4-6.4 5.4H9.8l-1 6H5l3-16zm3.1 8.3h1.7c1.7 0 2.9-.8 3.2-2.6.3-1.9-.7-2.6-2.4-2.6h-1.6l-.9 5.2z"/></svg>
-      Jetzt bei PayPal bezahlen
-    </button>
-    <div class="paypal-note">Öffnet <code>paypal.me/ahmetozc</code> in einem neuen Tab.</div>
-    <div class="paypal-warning">
-      <strong>Wichtig, damit der volle Betrag ankommt:</strong> Bei PayPal „Geld an Freunde &amp; Familie senden" wählen und mit PayPal-Guthaben oder Bankkonto zahlen — nicht per Kreditkarte, sonst zieht PayPal eine Gebühr ab. Bitte Bestellnummer und Name als Notiz angeben.
-    </div>
-    <button type="button" class="btn-transfer" id="confirmShowTransfer">Per Überweisung bezahlen</button>
-    <div class="transfer-details" id="transferDetails">
+    <p class="cart-note">Die Bestellung ist erst verbindlich, sobald die Zahlung eingegangen ist. Bitte per Banküberweisung mit folgenden Daten bezahlen:</p>
+    <div class="transfer-details open" id="transferDetails">
       <div class="transfer-row"><span>Empfänger</span><strong>Ahmet Özcorapci</strong></div>
       <div class="transfer-row"><span>IBAN</span><strong id="transferIban">DE41 3002 0900 0403 6606 66</strong></div>
       <div class="transfer-row"><span>Betrag</span><strong id="transferAmount"></strong></div>
@@ -809,6 +800,7 @@ function checkout(){
   document.getElementById("confirmTotal").textContent = fmt(total);
   document.getElementById("checkoutConfirm").classList.add("open");
   lastOrder = order;
+  showTransferDetails();
   notifyNewOrder(order, total);
 
   if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
@@ -821,25 +813,12 @@ function showTransferDetails(){
   const total = lastOrder.items.reduce((sum,i) => sum + i.price, 0);
   document.getElementById("transferAmount").textContent = fmt(total);
   document.getElementById("transferPurpose").textContent = `${lastOrder.id} ${lastOrder.member}`;
-  document.getElementById("transferDetails").classList.add("open");
   lastOrder.paymentMethod = "Überweisung";
   if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
 }
 function copyTransferIban(){
   const iban = document.getElementById("transferIban").textContent.replace(/\s/g,"");
   navigator.clipboard?.writeText(iban);
-}
-const PAYPAL_ME = "ahmetozc";
-function payWithPaypal(){
-  if(!lastOrder) return;
-  const total = lastOrder.items.reduce((sum,i) => sum + i.price, 0);
-  // PayPal.me statt klassischem Website-Payments-Standard-Formular: das lief als
-  // Waren-/Dienstleistungszahlung und hat Gebühren berechnet. Über PayPal.me kann
-  // die zahlende Person "Geld an Freunde & Familie senden" wählen – gebührenfrei.
-  // Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
-  window.open(`https://www.paypal.me/${PAYPAL_ME}/${total.toFixed(2)}EUR`, "_blank", "noopener");
-  lastOrder.paymentMethod = "PayPal";
-  if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
 }
 
 /* ---- admin ---- */
@@ -946,8 +925,6 @@ document.addEventListener("keydown", e => {
 document.getElementById("checkoutBtn").addEventListener("click", checkout);
 document.getElementById("confirmClose").addEventListener("click", closeCheckoutConfirm);
 document.getElementById("confirmBackToShop").addEventListener("click", closeCheckoutConfirm);
-document.getElementById("confirmPayNow").addEventListener("click", payWithPaypal);
-document.getElementById("confirmShowTransfer").addEventListener("click", showTransferDetails);
 document.getElementById("transferCopyIban").addEventListener("click", copyTransferIban);
 document.getElementById("checkoutConfirm").addEventListener("click", e => {
   if(e.target.id === "checkoutConfirm") closeCheckoutConfirm();
