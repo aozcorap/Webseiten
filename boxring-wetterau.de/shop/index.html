@@ -854,12 +854,14 @@ async function checkout(){
     });
     const data = await res.json().catch(() => null);
     if(!res.ok || !data || data.success !== true){
-      throw new Error(data && data.message ? data.message : "Unbekannter Fehler beim Versand.");
+      throw new Error(data && data.message ? data.message : `Serverfehler (${res.status}).`);
     }
   } catch(err){
     console.warn("Bestell-Bestätigungsmail fehlgeschlagen:", err);
     checkoutBtn.disabled = false;
-    submitError.textContent = "Die Bestellung konnte nicht verschickt werden. Bitte prüfe deine Internetverbindung und versuche es erneut, oder melde dich direkt bei uns.";
+    submitError.textContent = err instanceof TypeError
+      ? "Die Bestellung konnte nicht verschickt werden. Bitte prüfe deine Internetverbindung und versuche es erneut."
+      : err.message;
     submitError.classList.add("show");
     return;
   }
