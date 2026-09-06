@@ -19,11 +19,10 @@ Zahlung/Admin unten für die Details, wie das ohne Server funktioniert.
   angezeigt). Läuft ohne Backend — die Seite selbst weiß nicht, ob wirklich
   gezahlt wurde; der Abgleich passiert manuell über den Kontoauszug, per
   Bestellnummer + Name als Verwendungszweck.
-- **Bestell-Benachrichtigung**: Bei jeder abgeschlossenen Bestellung wird per
-  Formspree (`ORDER_NOTIFY_ENDPOINT` in `index.html`) automatisch eine Mail
-  an die Zeugwart:in geschickt, damit sie parallel zum Kontoauszug weiß, was
-  reinkommen sollte.
-- **Admin**: Bestellliste + CSV-Export für die Zeugwart:in.
+- **Admin**: Bestellliste + CSV-Export für die Zeugwart:in. Es gibt keine
+  automatische Mail-Benachrichtigung bei neuer Bestellung — die Website hat
+  kein Backend, ein Drittanbieter dafür (z. B. Formspree) wurde bewusst nicht
+  eingebaut. Abgleich läuft ausschließlich über den Kontoauszug.
 
 ## Produktbilder
 

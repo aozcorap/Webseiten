@@ -572,26 +572,6 @@ let lastOrder = null;
 
 const ORDERS = [];
 
-/* Formular-Endpoint fuer die Bestell-Benachrichtigung per Mail (Formspree, kein eigenes Backend noetig). */
-const ORDER_NOTIFY_ENDPOINT = "https://formspree.io/f/FORMSPREE_ID_HIER_EINTRAGEN";
-function notifyNewOrder(order, total){
-  if(ORDER_NOTIFY_ENDPOINT.includes("FORMSPREE_ID_HIER_EINTRAGEN")) return;
-  fetch(ORDER_NOTIFY_ENDPOINT, {
-    method: "POST",
-    headers: {"Accept":"application/json","Content-Type":"application/json"},
-    body: JSON.stringify({
-      Bestellnummer: order.id,
-      Datum: order.date,
-      Mitglied: order.member,
-      Artikel: order.items.map(i => `${i.name} (Größe ${i.size})`).join(", "),
-      Summe: fmt(total)
-    })
-  }).catch(() => {
-    /* Kein Backend zum Nachliefern vorhanden - Bestellung bleibt trotzdem in der Admin-Uebersicht sichtbar. */
-    console.warn("Bestell-Benachrichtigung per Mail konnte nicht gesendet werden.");
-  });
-}
-
 function artFrameHTML(p, color){
   color = color || "Schwarz";
   const imgKey = color === "Weiß" ? `${p.id}-weiss` : p.id;
@@ -801,7 +781,6 @@ function checkout(){
   document.getElementById("checkoutConfirm").classList.add("open");
   lastOrder = order;
   showTransferDetails();
-  notifyNewOrder(order, total);
 
   if(document.getElementById("adminPanel").style.display !== "none") renderAdminTable();
 }
