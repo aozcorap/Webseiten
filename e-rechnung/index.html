@@ -211,9 +211,9 @@
     letter-spacing:-0.01em; color:#1A1005; background:linear-gradient(120deg,#FFB05C,var(--amber)); padding:9px 16px; border-radius:999px; margin-bottom:16px;}
   .countdown{display:flex; gap:28px; flex-wrap:wrap; margin:24px 0 26px; padding:18px 20px; border:1px solid rgba(255,157,61,0.35); border-radius:14px; background:rgba(255,157,61,0.08);}
   .countdown > div{border-left:2px solid var(--amber); padding-left:14px;}
-  .countdown b{display:block; font-family:'JetBrains Mono',monospace; font-size:clamp(24px,3vw,32px); font-weight:700; color:var(--amber); letter-spacing:-0.02em; margin-bottom:4px;}
+  .countdown b{display:block; font-family:'JetBrains Mono',monospace; font-size:clamp(17px,2.1vw,21px); font-weight:700; color:var(--amber); letter-spacing:-0.01em; margin-bottom:4px; white-space:nowrap;}
   .countdown span{font-size:12.8px; color:var(--muted-now); line-height:1.4; display:block; max-width:26ch;}
-  @media(max-width:480px){ .countdown{flex-direction:column; gap:16px;} }
+  @media(max-width:480px){ .countdown{flex-direction:column; gap:16px;} .countdown b{font-size:18px;} }
   h1{font-size:clamp(32px,4.4vw,52px); margin-bottom:18px;}
   .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(17px,1.9vw,20px); color:var(--text-now); max-width:60ch; margin-bottom:24px; line-height:1.6;}
@@ -542,7 +542,7 @@
     <div class="hero-bg-scrim"></div>
     <div class="hero-bg-cap">
       <div class="k" style="color:var(--amber);">⚠ Empfangspflicht läuft bereits</div>
-      <p>Ihre Kunden können Ihre PDF-Rechnung schon jetzt ablehnen.</p>
+      <p>Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen.</p>
     </div>
   </div>
 
@@ -550,22 +550,37 @@
     <div class="hero-inner" data-rev>
       <div class="alert-pill">⚠ Ein PDF ist keine E-Rechnung.</div>
       <span class="kick" style="color:var(--amber);">Warum Sie jetzt handeln müssen</span>
-      <h1>Schadensersatz. Verärgerte Kunden. Ein <span class="accent">Bußgeld</span> ist nicht ausgeschlossen.</h1>
-      <p class="lead">Sie sitzen in der Mitte einer Kette: Sie stellen Rechnungen an Ihre Kunden und empfangen Rechnungen von Ihren Lieferanten — beide Richtungen sind betroffen. Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Kunden dadurch ein finanzieller Nachteil, haften Sie ihm gegenüber. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — ohne Übergangsfrist, unabhängig vom Umsatz.</p>
+      <h1>Ihnen drohen Schadensersatz, verärgerte Gewerbekunden — und ein <span class="accent">Bußgeld</span> ist nicht ausgeschlossen.</h1>
+      <p class="lead">Sie sitzen in der Mitte einer Kette: Sie stellen Rechnungen an Ihre Gewerbekunden und empfangen Rechnungen von Ihren Lieferanten — beide Richtungen sind betroffen. Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen und zum Wettbewerber wechseln, der bereits E-Rechnung kann. Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil, haften Sie ihm gegenüber. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — ohne Übergangsfrist, unabhängig vom Umsatz.</p>
 
       <div class="countdown" id="countdown">
-        <div><b id="cd1">–</b><span>Tage bis zur Ausstellungspflicht bei &gt;800.000&nbsp;€ Vorjahresumsatz (1.1.2027)</span></div>
-        <div><b id="cd2">–</b><span>Tage bis zur Ausstellungspflicht für alle anderen (1.1.2028)</span></div>
+        <div><b id="cd1" class="mono">–</b><span>bis zur Ausstellungspflicht bei &gt;800.000&nbsp;€ Vorjahresumsatz (1.1.2027)</span></div>
+        <div><b id="cd2" class="mono">–</b><span>bis zur Ausstellungspflicht für alle anderen (1.1.2028)</span></div>
       </div>
       <script>
         (function(){
-          function daysUntil(iso){
-            var ms = new Date(iso+'T00:00:00') - new Date();
-            return Math.max(0, Math.ceil(ms / 86400000));
+          function pad(n){ return String(n).padStart(2,'0'); }
+          function format(ms){
+            if (ms <= 0) return '0 Tage 00:00:00';
+            var totalSec = Math.floor(ms/1000);
+            var days = Math.floor(totalSec / 86400);
+            var h = Math.floor((totalSec % 86400) / 3600);
+            var m = Math.floor((totalSec % 3600) / 60);
+            var s = totalSec % 60;
+            return days + ' Tage ' + pad(h) + ':' + pad(m) + ':' + pad(s);
           }
           var a = document.getElementById('cd1'), b = document.getElementById('cd2');
-          if (a) a.textContent = daysUntil('2027-01-01');
-          if (b) b.textContent = daysUntil('2028-01-01');
+          var t1 = new Date('2027-01-01T00:00:00') - 0;
+          var t2 = new Date('2028-01-01T00:00:00') - 0;
+          function tick(){
+            var now = Date.now();
+            if (a) a.textContent = format(t1 - now);
+            if (b) b.textContent = format(t2 - now);
+          }
+          tick();
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+            setInterval(tick, 1000);
+          }
         })();
       </script>
 
@@ -603,14 +618,14 @@
     <div class="objs" data-revs>
       <div class="obj">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3>
-        <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Kunden dadurch ein finanzieller Nachteil (z. B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
+        <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil (z. B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Kunde verliert den Vorsteuerabzug</h3>
-        <p>Sobald Ihre eigene Übergangsfrist abgelaufen ist und Ihre Rechnung nicht konform ist, streicht das Finanzamt Ihrem Kunden die Vorsteuer.</p>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Gewerbekunde verliert den Vorsteuerabzug</h3>
+        <p>Sobald Ihre eigene Übergangsfrist abgelaufen ist und Ihre Rechnung nicht konform ist, streicht das Finanzamt Ihrem Gewerbekunden die Vorsteuer.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Kunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
         <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen — oder er sucht sich einen Anbieter, der schon E-Rechnung kann.</p>
       </div>
       <div class="obj">
@@ -619,7 +634,7 @@
       </div>
       <div class="obj">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Kundenverlust an die Konkurrenz</h3>
-        <p>Ein verärgerter Kunde wechselt zum Anbieter, der es richtig macht.</p>
+        <p>Ein verärgerter Gewerbekunde wechselt zum Anbieter, der es richtig macht.</p>
       </div>
       <div class="obj">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Sie selbst verlieren den Vorsteuerabzug</h3>
@@ -629,7 +644,7 @@
 
     <div class="split-bar" data-rev>
       <h3>Die Kernbotschaft</h3>
-      <p>Bis zu Ihrer eigenen Frist (2027 bei über 800.000&nbsp;€ Vorjahresumsatz, 2028 für alle anderen) entscheiden Sie noch selbst über das Rechnungsformat. Danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß — mit Folgen für Sie und Ihren Kunden. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht, unabhängig vom Umsatz.</p>
+      <p>Bis zu Ihrer eigenen Frist (2027 bei über 800.000&nbsp;€ Vorjahresumsatz, 2028 für alle anderen) entscheiden Sie noch selbst über das Rechnungsformat. Danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß — mit Folgen für Sie und Ihre Gewerbekunden. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht, unabhängig vom Umsatz.</p>
     </div>
   </section>
 </div>
