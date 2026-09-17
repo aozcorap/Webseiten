@@ -171,6 +171,9 @@
   .nav-cta{background:var(--lime); color:#07090D; font-weight:600; font-size:14px; padding:11px 19px; border-radius:999px;
     transition:transform .18s, box-shadow .18s; display:inline-flex; align-items:center; min-height:42px; white-space:nowrap;}
   .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -6px rgba(196,248,42,0.5);}
+  .nav-countdown{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--amber); white-space:nowrap; letter-spacing:.01em;}
+  .nav-countdown b{font-weight:700;}
+  @media(max-width:640px){ .nav-countdown{display:none;} }
 
   @media(max-width:860px){
     .nav-toggle{display:flex; align-items:center; justify-content:center;}
@@ -546,6 +549,7 @@
       <a href="#faq">Fragen</a>
     </div>
     <div class="nav-actions">
+      <span class="nav-countdown" id="navCountdown">⏱ <b id="navCd">–</b> Tage bis 2027</span>
       <a href="#fcard" class="nav-cta">Anfragen</a>
       <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menü öffnen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -591,12 +595,14 @@
             return days + ' Tage ' + pad(h) + ':' + pad(m) + ':' + pad(s);
           }
           var a = document.getElementById('cd1'), b = document.getElementById('cd2');
+          var navCd = document.getElementById('navCd');
           var t1 = new Date('2027-01-01T00:00:00') - 0;
           var t2 = new Date('2028-01-01T00:00:00') - 0;
           function tick(){
             var now = Date.now();
             if (a) a.textContent = format(t1 - now);
             if (b) b.textContent = format(t2 - now);
+            if (navCd) navCd.textContent = Math.max(0, Math.ceil((t1 - now) / 86400000));
           }
           tick();
           if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -620,19 +626,12 @@
   </div>
 </section>
 
-<div class="ticker stage-2">
-  <div class="ticker-track">
-    <span>Empfangspflicht seit 1.1.2025 <i>///</i> Ausstellungspflicht ab 2027/2028 <i>///</i> Vorsteuerabzug-Risiko <i>///</i> Schadensersatzrisiko <i>///</i> Kundenverlust möglich <i>///</i> Word-Layout bleibt erhalten <i>///</i></span>
-    <span>Empfangspflicht seit 1.1.2025 <i>///</i> Ausstellungspflicht ab 2027/2028 <i>///</i> Vorsteuerabzug-Risiko <i>///</i> Schadensersatzrisiko <i>///</i> Kundenverlust möglich <i>///</i> Word-Layout bleibt erhalten <i>///</i></span>
-  </div>
-</div>
-
 <div class="wrap">
 
-  <!-- DIE 6 PAIN POINTS -->
+  <!-- DIE 4 PAIN POINTS -->
   <section id="risiken" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Sechs Gründe, warum Sie JETZT handeln müssen</span>
+      <span class="kick">Vier Gründe, warum Sie JETZT handeln müssen</span>
       <h2>Unabhängig vom eigenen Umsatz — diese Risiken bestehen für jeden B2B-Betrieb.</h2>
     </div>
 
@@ -642,30 +641,17 @@
         <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil (z.&nbsp;B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
       </div>
       <div class="obj">
-        <h3><span class="obj-num">02</span> Ihr Gewerbekunde verliert den Vorsteuerabzug</h3>
-        <p>Sobald die Übergangsfrist Ihres Gewerbekunden abgelaufen ist — z.&nbsp;B. weil er selbst über 800.000&nbsp;€ Vorjahresumsatz liegt und schon ab 2027 zur E-Rechnung verpflichtet ist — kann er von Ihnen eine konforme E-Rechnung verlangen. Ist Ihre Rechnung dann nicht konform, streicht das Finanzamt ihm die Vorsteuer. Ihr Gewerbekunde bleibt auf dieser Steuer sitzen — für ihn ein direkter, ungeplanter Kostenanstieg.</p>
+        <h3><span class="obj-num">02</span> Vorsteuerabzug-Risiko trifft beide Seiten</h3>
+        <p>Sobald die Übergangsfrist Ihres Gewerbekunden abgelaufen ist — z.&nbsp;B. weil er selbst über 800.000&nbsp;€ Vorjahresumsatz liegt und schon ab 2027 zur E-Rechnung verpflichtet ist —, kann er von Ihnen eine konforme E-Rechnung verlangen. Ist Ihre Rechnung dann nicht konform, streicht das Finanzamt ihm die Vorsteuer. Umgekehrt gilt dasselbe: Liefert Ihr Lieferant Ihnen keine korrekte E-Rechnung, verlieren Sie selbst die Vorsteuer.</p>
       </div>
       <div class="obj">
         <h3><span class="obj-num">03</span> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
         <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen oder kurzfristig auf eine E-Rechnung umstellen — oder er sucht sich gleich einen Anbieter, der schon E-Rechnung kann.</p>
       </div>
       <div class="obj">
-        <h3><span class="obj-num">04</span> Zahlungsverzögerung</h3>
-        <p>Eine abgelehnte Rechnung verzögert die Zahlung: Ihr Gewerbekunde zahlt oft erst, wenn eine korrekte E-Rechnung vorliegt. Skonto verfällt, Ihr Geld kommt später.</p>
+        <h3><span class="obj-num">04</span> Zahlungsverzögerung und Kundenverlust</h3>
+        <p>Eine abgelehnte Rechnung verzögert die Zahlung: Ihr Gewerbekunde zahlt oft erst, wenn eine korrekte E-Rechnung vorliegt, Skonto verfällt. Im schlimmsten Fall wechselt der verärgerte Kunde gleich ganz zum Anbieter, der es richtig macht.</p>
       </div>
-      <div class="obj">
-        <h3><span class="obj-num">05</span> Kundenverlust an die Konkurrenz</h3>
-        <p>Ein verärgerter Gewerbekunde wechselt zum Anbieter, der es richtig macht.</p>
-      </div>
-      <div class="obj">
-        <h3><span class="obj-num">06</span> Sie selbst verlieren den Vorsteuerabzug</h3>
-        <p>Dieselbe Falle, nur umgekehrt: Liefert Ihr Lieferant keine korrekte E-Rechnung, verlieren Sie die Vorsteuer. Und seit 1.1.2025 müssen Sie ohnehin E-Rechnungen empfangen und archivieren können — ohne Übergangsfrist, unabhängig vom eigenen Umsatz.</p>
-      </div>
-    </div>
-
-    <div class="split-bar kernbotschaft" data-rev>
-      <h3>Die Kernbotschaft</h3>
-      <p>Bis zu Ihrer eigenen Frist (<b>2027</b> bei über 800.000&nbsp;€ Vorjahresumsatz, <b>2028</b> für alle anderen) entscheiden Sie noch selbst über das Rechnungsformat. Danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß — mit Folgen für Sie und Ihre Gewerbekunden. Der Empfang einer E-Rechnung ist für Sie <span class="accent">schon jetzt Pflicht</span>, unabhängig vom Umsatz.</p>
     </div>
   </section>
 </div>
@@ -711,11 +697,9 @@
         </thead>
         <tbody>
           <tr><td>Word-Layout bleibt</td><td>✓</td><td>✗</td><td>✓</td></tr>
-          <tr><td>Umstellungs- und Schulungsaufwand</td><td>–</td><td>Hoch</td><td>Gering</td></tr>
           <tr><td>E-Rechnung konform</td><td>✗</td><td>✓</td><td>✓</td></tr>
           <tr><td>Vorsteuerabzug-Risiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
           <tr><td>Schadensersatz-/Bußgeldrisiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
-          <tr><td>Laufende Kosten</td><td>–</td><td>Ja</td><td>Ja</td></tr>
           <tr><td>Risiko Kundenverlust abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
           <tr class="fazit-row"><td>Fazit</td><td>Risiko bleibt, keine Lösung</td><td>Funktioniert, aber aufwändig</td><td>Funktioniert, ohne Umstellung</td></tr>
         </tbody>
@@ -741,21 +725,6 @@
       </div>
     </div>
 
-    <div class="fristen-table-wrap" data-rev style="overflow-x:auto; margin-top:var(--s4);">
-      <table class="fristen-table vergleich-table">
-        <caption class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Vorteile im Überblick: Umstieg auf Standardsoftware vs. Add-on für Word</caption>
-        <thead>
-          <tr><th scope="col">Vorteil</th><th scope="col">Umstieg auf Standardsoftware</th><th scope="col">Add-on für Word</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Technische Integration</td><td>Durch BüroKollege</td><td>Durch BüroKollege</td></tr>
-          <tr><td>Zusatzaufwand für Sie</td><td>Keiner</td><td>Keiner</td></tr>
-          <tr><td>Rechnungslayout</td><td>Neu in der Software aufgebaut</td><td>Bleibt zu 100&nbsp;% erhalten</td></tr>
-          <tr><td>E-Rechnung wird erzeugt</td><td>✓</td><td>✓ (mit einem Klick)</td></tr>
-          <tr><td>Empfang &amp; Archivierung von Lieferanten-Rechnungen nach GoBD</td><td>✓ inklusive</td><td>In Abstimmung mit Kunde</td></tr>
-        </tbody>
-      </table>
-    </div>
   </section>
 </div>
 
@@ -859,16 +828,8 @@
     </div>
     <div class="faq-list" data-revs>
       <details class="faq-item">
-        <summary>Muss ich meine Rechnungen schon jetzt als E-Rechnung ausstellen?</summary>
-        <p>Nein, noch nicht zwingend. Bei über 800.000&nbsp;€ Vorjahresumsatz gilt die Pflicht ab 1.1.2027, für alle anderen ab 1.1.2028. Bis dahin ist PDF/Papier nur mit Zustimmung des Empfängers weiter zulässig.</p>
-      </details>
-      <details class="faq-item">
         <summary>Muss ich E-Rechnungen schon jetzt empfangen können?</summary>
         <p>Ja. Seit 1.1.2025 müssen alle Unternehmen E-Rechnungen empfangen und archivieren können — ohne Übergangsfrist, unabhängig vom eigenen Umsatz.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Ich bin Kleinunternehmer — betrifft mich das trotzdem?</summary>
-        <p>Kleinunternehmer nach §19 UStG bzw. §34a UStDV sind von der Ausstellungspflicht dauerhaft befreit. Der Empfang bleibt trotzdem Pflicht.</p>
       </details>
       <details class="faq-item">
         <summary>Muss ich mein Rechnungslayout aufgeben, um konform zu werden?</summary>
