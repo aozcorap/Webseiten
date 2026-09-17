@@ -381,9 +381,16 @@
   .objs{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
   @media(max-width:860px){ .objs{grid-template-columns:1fr;} }
   .obj{border:1px solid var(--line-now); border-radius:16px; padding:28px 26px; background:rgba(255,255,255,0.02);}
-  .obj h3{font-size:17.5px; margin-bottom:11px; display:flex; gap:11px; align-items:flex-start;}
-  .obj h3 svg{width:19px; height:19px; color:var(--lime); flex-shrink:0; margin-top:2px;}
+  .obj h3{font-size:17.5px; margin-bottom:11px; display:flex; gap:13px; align-items:flex-start;}
+  .obj-num{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#07090D; background:var(--lime); flex-shrink:0;
+    width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-top:1px;}
   .obj p{color:var(--muted-now); font-size:15px; line-height:1.65;}
+
+  .kernbotschaft{text-align:center; max-width:780px; margin-left:auto; margin-right:auto; border-color:var(--line2-now);
+    border-top:3px solid var(--lime); background:linear-gradient(180deg, rgba(196,248,42,0.06), var(--bg-2));}
+  .kernbotschaft h3{font-size:22px; margin-bottom:14px;}
+  .kernbotschaft p{color:var(--text-now); font-size:16.5px; line-height:1.65; max-width:none;}
+  .kernbotschaft b{color:var(--lime);}
 
   /* TRUST */
   .trust{display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center;}
@@ -611,40 +618,40 @@
   <!-- DIE 6 PAIN POINTS -->
   <section id="risiken" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Die 6 größten Pain Points</span>
+      <span class="kick">SECHS GRÜNDE, WARUM SIE JETZT HANDELN MÜSSEN</span>
       <h2>Unabhängig vom eigenen Umsatz — diese Risiken bestehen für jeden B2B-Betrieb.</h2>
     </div>
 
     <div class="objs" data-revs>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3>
-        <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil (z. B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
+        <h3><span class="obj-num">01</span> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3>
+        <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil (z.&nbsp;B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Gewerbekunde verliert den Vorsteuerabzug</h3>
-        <p>Sobald Ihre eigene Übergangsfrist abgelaufen ist und Ihre Rechnung nicht konform ist, streicht das Finanzamt Ihrem Gewerbekunden die Vorsteuer.</p>
+        <h3><span class="obj-num">02</span> Ihr Gewerbekunde verliert den Vorsteuerabzug</h3>
+        <p>Sobald Ihre eigene Übergangsfrist abgelaufen ist und Ihre Rechnung nicht konform ist, streicht das Finanzamt Ihrem Gewerbekunden die Vorsteuer. Der Vorsteuerabzug erlaubt es ihm normalerweise, die in Ihrer Rechnung ausgewiesene Umsatzsteuer von seiner eigenen Steuerschuld abzuziehen — erkennt das Finanzamt die Rechnung nicht an, bleibt er auf dieser Steuer sitzen. Für ihn ein direkter, ungeplanter Kostenanstieg.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
-        <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen — oder er sucht sich einen Anbieter, der schon E-Rechnung kann.</p>
+        <h3><span class="obj-num">03</span> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
+        <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen oder kurzfristig auf eine E-Rechnung umstellen — oder er sucht sich gleich einen Anbieter, der schon E-Rechnung kann.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Zahlungsverzögerung</h3>
-        <p>Eine abgelehnte Rechnung verzögert die Zahlung. Skonto verfällt, Ihr Geld kommt später.</p>
+        <h3><span class="obj-num">04</span> Zahlungsverzögerung</h3>
+        <p>Eine abgelehnte Rechnung verzögert die Zahlung: Ihr Gewerbekunde zahlt oft erst, wenn eine korrekte E-Rechnung vorliegt. Skonto verfällt, Ihr Geld kommt später.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Kundenverlust an die Konkurrenz</h3>
+        <h3><span class="obj-num">05</span> Kundenverlust an die Konkurrenz</h3>
         <p>Ein verärgerter Gewerbekunde wechselt zum Anbieter, der es richtig macht.</p>
       </div>
       <div class="obj">
-        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Sie selbst verlieren den Vorsteuerabzug</h3>
+        <h3><span class="obj-num">06</span> Sie selbst verlieren den Vorsteuerabzug</h3>
         <p>Dieselbe Falle, nur umgekehrt: Liefert Ihr Lieferant keine korrekte E-Rechnung, verlieren Sie die Vorsteuer. Und seit 1.1.2025 müssen Sie ohnehin E-Rechnungen empfangen und archivieren können — ohne Übergangsfrist, unabhängig vom eigenen Umsatz.</p>
       </div>
     </div>
 
-    <div class="split-bar" data-rev>
+    <div class="split-bar kernbotschaft" data-rev>
       <h3>Die Kernbotschaft</h3>
-      <p>Bis zu Ihrer eigenen Frist (2027 bei über 800.000&nbsp;€ Vorjahresumsatz, 2028 für alle anderen) entscheiden Sie noch selbst über das Rechnungsformat. Danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß — mit Folgen für Sie und Ihre Gewerbekunden. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht, unabhängig vom Umsatz.</p>
+      <p>Bis zu Ihrer eigenen Frist (<b>2027</b> bei über 800.000&nbsp;€ Vorjahresumsatz, <b>2028</b> für alle anderen) entscheiden Sie noch selbst über das Rechnungsformat. Danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß — mit Folgen für Sie und Ihre Gewerbekunden. Der Empfang einer E-Rechnung ist für Sie <span class="accent">schon jetzt Pflicht</span>, unabhängig vom Umsatz.</p>
     </div>
   </section>
 </div>
