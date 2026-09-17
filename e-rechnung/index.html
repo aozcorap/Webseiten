@@ -286,6 +286,30 @@
   .split-bar{margin-top:var(--s5); border:1px solid var(--line-now); border-radius:18px; padding:34px; background:var(--bg-2);}
   @media(max-width:640px){ .split-bar{padding:24px 20px;} }
 
+  /* PREISE */
+  .price-toggle{display:inline-flex; gap:4px; padding:5px; border:1px solid var(--line-now); border-radius:999px; background:rgba(255,255,255,0.03); margin:0 auto var(--s5); }
+  .shead.mid + .price-toggle{display:flex; width:max-content;}
+  .ptab{font-family:inherit; font-size:14.5px; font-weight:600; padding:10px 22px; border-radius:999px; border:none; background:transparent; color:var(--muted-now); cursor:pointer; transition:background .18s, color .18s;}
+  .ptab.active{background:var(--lime); color:#07090D;}
+  .price-group-h{font-size:clamp(19px,2.2vw,23px); font-weight:700; letter-spacing:-0.02em; margin-bottom:18px; text-align:center;}
+  .price-setup{display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:26px; padding:16px 22px; border:1px solid var(--line-now); border-radius:14px; background:rgba(255,255,255,0.02); max-width:420px; margin-left:auto; margin-right:auto;}
+  .price-setup-label{font-size:14.5px; color:var(--muted-now);}
+  .price-setup-amount{font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--lime); font-size:16px;}
+  .price-cards{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:720px; margin:0 auto;}
+  .price-cards-3{grid-template-columns:repeat(3,1fr); max-width:none;}
+  @media(max-width:820px){ .price-cards, .price-cards-3{grid-template-columns:1fr;} }
+  .price-card{border:1px solid var(--line-now); border-radius:18px; padding:28px 26px; background:linear-gradient(180deg, var(--surface), var(--bg-2)); text-align:center;}
+  .price-card-hl{border-color:var(--lime); box-shadow:0 0 0 1px var(--lime) inset;}
+  .price-card h4{font-size:18px; margin-bottom:14px;}
+  .price-amount{display:flex; align-items:baseline; justify-content:center; gap:6px; margin-bottom:6px;}
+  .price-num{font-family:'JetBrains Mono',monospace; font-size:clamp(26px,3vw,32px); font-weight:700; color:var(--text-now); letter-spacing:-0.02em;}
+  .price-suffix{font-size:14px; color:var(--muted-now);}
+  .price-savings{font-size:12.5px; color:var(--lime); font-weight:600; margin-bottom:20px; min-height:16px;}
+  .price-savings.hidden{visibility:hidden;}
+  .price-feat{display:flex; flex-direction:column; gap:9px; text-align:left;}
+  .price-feat li{font-size:14px; color:var(--muted-now); line-height:1.5; padding-left:20px; position:relative;}
+  .price-feat li::before{content:'✓'; position:absolute; left:0; color:var(--lime); font-weight:700;}
+
   /* TABELLEN (Fristen, Vergleich) */
   .fristen-table{width:100%; min-width:560px; border-collapse:collapse; font-size:14.5px;}
   .fristen-table th, .fristen-table td{text-align:left; padding:14px 16px; border-bottom:1px solid var(--line-now); color:var(--muted-now); line-height:1.5;}
@@ -534,6 +558,7 @@
       <a href="#fristen">Betroffene Unternehmen</a>
       <a href="#loesung">Wege zur E-Rechnung</a>
       <a href="#wege-loesung">Die Lösung</a>
+      <a href="#preise">Preise</a>
       <a href="#faq">Fragen</a>
     </div>
     <div class="nav-actions">
@@ -751,6 +776,94 @@
 </div>
 
 <div class="wrap">
+  <!-- PREISE -->
+  <section id="preise" class="stage-1">
+    <div class="shead mid" data-rev>
+      <span class="kick">Preise</span>
+      <h2>Zwei Wege, transparente Preise.</h2>
+      <p>Alle Preise pro Monat, zzgl. MwSt. Standardmäßig zeigen wir den Jahresabo-Preis inkl. Ersparnis.</p>
+    </div>
+
+    <div class="price-toggle" role="group" aria-label="Abrechnungszeitraum" data-rev>
+      <button type="button" class="ptab active" data-mode="yearly" aria-pressed="true">Jahresabo</button>
+      <button type="button" class="ptab" data-mode="monthly" aria-pressed="false">Monatsabo</button>
+    </div>
+
+    <div class="price-group" data-revs>
+      <h3 class="price-group-h">Option 1 — Umstieg auf Standardsoftware</h3>
+      <div class="price-setup">
+        <span class="price-setup-label">Setup-Pauschale (einmalig)</span>
+        <span class="price-setup-amount">ab 490&nbsp;€</span>
+      </div>
+      <div class="price-cards">
+        <div class="price-card">
+          <h4>Betreuung Solo</h4>
+          <div class="price-amount"><span class="price-num" data-yearly="5,90" data-monthly="6,90">5,90&nbsp;€</span><span class="price-suffix">/Monat</span></div>
+          <div class="price-savings">Ersparnis 14,5&nbsp;% ggü. Monatsabo</div>
+          <ul class="price-feat">
+            <li>1 Nutzer</li>
+            <li>E-Mail-Support</li>
+            <li>Jährlicher GoBD-Konformitätscheck</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <h4>Betreuung Team</h4>
+          <div class="price-amount"><span class="price-num" data-yearly="11,90" data-monthly="14,90">11,90&nbsp;€</span><span class="price-suffix">/Monat</span></div>
+          <div class="price-savings">Ersparnis 20,1&nbsp;% ggü. Monatsabo</div>
+          <ul class="price-feat">
+            <li>Mehrere Nutzer</li>
+            <li>Telefon- + E-Mail-Support</li>
+            <li>Ansprechpartner bei Update-/Anbieterproblemen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-group" data-revs style="margin-top:var(--s5);">
+      <h3 class="price-group-h">Option 2 — Add-on für Word</h3>
+      <div class="price-cards price-cards-3">
+        <div class="price-card">
+          <h4>Solo</h4>
+          <div class="price-amount"><span class="price-num" data-yearly="6,90" data-monthly="8,90">6,90&nbsp;€</span><span class="price-suffix">/Monat</span></div>
+          <div class="price-savings">Ersparnis 22,5&nbsp;% ggü. Monatsabo</div>
+          <ul class="price-feat">
+            <li>Bis 30 Rechnungen/Monat</li>
+            <li>1 Nutzer</li>
+            <li>DE + EN Template</li>
+            <li>ZUGFeRD-Validierung</li>
+            <li>E-Mail-Support</li>
+          </ul>
+        </div>
+        <div class="price-card price-card-hl">
+          <h4>Standard</h4>
+          <div class="price-amount"><span class="price-num" data-yearly="9,90" data-monthly="14,90">9,90&nbsp;€</span><span class="price-suffix">/Monat</span></div>
+          <div class="price-savings">Ersparnis 33,6&nbsp;% ggü. Monatsabo</div>
+          <ul class="price-feat">
+            <li>Bis 150 Rechnungen/Monat</li>
+            <li>1 Nutzer</li>
+            <li>DE + EN Template</li>
+            <li>ZUGFeRD-Validierung</li>
+            <li>E-Mail-Support, priorisiert</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <h4>Business</h4>
+          <div class="price-amount"><span class="price-num" data-yearly="19,90" data-monthly="34,90">19,90&nbsp;€</span><span class="price-suffix">/Monat</span></div>
+          <div class="price-savings">Ersparnis 43,0&nbsp;% ggü. Monatsabo</div>
+          <ul class="price-feat">
+            <li>Unbegrenzt Rechnungen</li>
+            <li>Bis 5 Nutzer</li>
+            <li>DE + EN Template</li>
+            <li>ZUGFeRD-Validierung</li>
+            <li>Telefon- + E-Mail-Support, priorisiert</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
   <!-- FAQ -->
   <section id="faq" class="stage-1">
     <div class="shead" data-rev>
@@ -930,6 +1043,30 @@
     a.addEventListener('click', function(){
       menu.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+
+// Preise: Jahresabo/Monatsabo umschalten
+(function(){
+  var buttons = document.querySelectorAll('.ptab');
+  if (!buttons.length) return;
+  var nums = document.querySelectorAll('.price-num');
+  var savings = document.querySelectorAll('.price-savings');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var mode = btn.getAttribute('data-mode');
+      buttons.forEach(function(b){
+        var on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      nums.forEach(function(n){
+        n.textContent = n.getAttribute('data-' + mode) + ' €';
+      });
+      savings.forEach(function(s){
+        s.classList.toggle('hidden', mode !== 'yearly');
+      });
     });
   });
 })();
