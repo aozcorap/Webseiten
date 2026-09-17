@@ -293,6 +293,7 @@
   .fristen-table td:first-child, .fristen-table th:first-child{color:var(--text-now); font-weight:500;}
   .fristen-table th.hl, .fristen-table td.hl{background:var(--lime-dim); color:var(--text-now); font-weight:600;}
   .vergleich-table th:not(:first-child), .vergleich-table td:not(:first-child){text-align:center;}
+  .fristen-table tr.fazit-row td{color:var(--lime); font-weight:700;}
 
   /* ===== COMPACT SOLUTION (3 Kernpunkte) ===== */
   .compact-solution{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
@@ -531,7 +532,7 @@
     <div class="nav-links" id="navMenu">
       <a href="#risiken">Die Risiken</a>
       <a href="#fristen">Betroffene Unternehmen</a>
-      <a href="#loesung">Die Lösung</a>
+      <a href="#wege-loesung">Wege zur E-Rechnung</a>
       <a href="#faq">Fragen</a>
     </div>
     <div class="nav-actions">
@@ -706,12 +707,12 @@
           <tr><td>Schadensersatz-/Bußgeldrisiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
           <tr><td>Laufende Kosten</td><td>–</td><td>Ja</td><td>Ja</td></tr>
           <tr><td>Risiko Kundenverlust abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
-          <tr><td>Fazit</td><td>Risiko bleibt, keine Lösung</td><td>Funktioniert, aber aufwändig</td><td style="color:var(--lime); font-weight:600;">Funktioniert, ohne Umstellung</td></tr>
+          <tr class="fazit-row"><td>Fazit</td><td>Risiko bleibt, keine Lösung</td><td>Funktioniert, aber aufwändig</td><td>Funktioniert, ohne Umstellung</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="shead" data-rev style="margin-top:var(--s5);">
+    <div class="shead" id="wege-loesung" data-rev style="margin-top:var(--s5); scroll-margin-top:90px;">
       <span class="kick">Die Lösung</span>
       <h2>Beide Wege ohne Zusatzaufwand für Sie.</h2>
       <p>Ob Umstieg auf eine Standardsoftware oder Add-on für Word: BüroKollege übernimmt die komplette Integration, die technische Anbindung und den gesamten Ablauf. Sie müssen nichts selbst konfigurieren.</p>
