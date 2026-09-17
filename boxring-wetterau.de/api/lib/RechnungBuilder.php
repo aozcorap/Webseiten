@@ -23,7 +23,7 @@ final class RechnungBuilder
     ];
 
     /**
-     * @param array{monat:string,stunden:int,betragBrutto:float,rechnungsdatum:DateTimeImmutable} $daten
+     * @param array{monat:string,stunden:float,betragBrutto:float,rechnungsdatum:DateTimeImmutable} $daten
      */
     public static function build(array $daten): string
     {
@@ -112,7 +112,7 @@ final class RechnungBuilder
         $pdf->SetXY(20, $tabelleY + $kopfHoehe);
         $pdf->Cell($spalten[0], 8, '1', 1, 0, 'C');
         $pdf->Cell($spalten[1], 8, 'Trainerstunden', 1, 0, 'L');
-        $pdf->Cell($spalten[2], 8, (string) $daten['stunden'], 1, 0, 'C');
+        $pdf->Cell($spalten[2], 8, self::formatStunden($daten['stunden']), 1, 0, 'C');
         self::geldZelle($pdf, $spalten[3], 8, self::geld($stundensatzNetto));
         self::geldZelle($pdf, $spalten[4], 8, self::geld($betragNetto));
 
@@ -185,6 +185,12 @@ final class RechnungBuilder
     private static function geld(float $betrag): string
     {
         return self::t(number_format($betrag, 2, ',', '.') . ' €');
+    }
+
+    /** Formatiert Stunden mit Komma statt Punkt, ohne unnoetige Nachkommastellen (1 statt 1,00; 1,5 statt 1,50). */
+    private static function formatStunden(float $stunden): string
+    {
+        return rtrim(rtrim(number_format($stunden, 2, ',', ''), '0'), ',');
     }
 
     /**
