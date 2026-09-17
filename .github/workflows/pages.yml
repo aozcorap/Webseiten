@@ -34,6 +34,8 @@ jobs:
           cp -r brw-sommerfest/. _site/brw-sommerfest/
           mkdir -p _site/cc-dienstleistungen-friedberg.de
           cp -r cc-dienstleistungen-friedberg.de/. _site/cc-dienstleistungen-friedberg.de/
+          mkdir -p _site/e-rechnung
+          cp -r e-rechnung/. _site/e-rechnung/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
