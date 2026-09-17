@@ -207,6 +207,13 @@
   @media(max-width:820px){ .hero-bg{display:none;} }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
+  .alert-pill{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;
+    letter-spacing:-0.01em; color:#1A1005; background:linear-gradient(120deg,#FFB05C,var(--amber)); padding:9px 16px; border-radius:999px; margin-bottom:16px;}
+  .countdown{display:flex; gap:28px; flex-wrap:wrap; margin:24px 0 26px; padding:18px 20px; border:1px solid rgba(255,157,61,0.35); border-radius:14px; background:rgba(255,157,61,0.08);}
+  .countdown > div{border-left:2px solid var(--amber); padding-left:14px;}
+  .countdown b{display:block; font-family:'JetBrains Mono',monospace; font-size:clamp(24px,3vw,32px); font-weight:700; color:var(--amber); letter-spacing:-0.02em; margin-bottom:4px;}
+  .countdown span{font-size:12.8px; color:var(--muted-now); line-height:1.4; display:block; max-width:26ch;}
+  @media(max-width:480px){ .countdown{flex-direction:column; gap:16px;} }
   h1{font-size:clamp(32px,4.4vw,52px); margin-bottom:18px;}
   .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(17px,1.9vw,20px); color:var(--text-now); max-width:60ch; margin-bottom:24px; line-height:1.6;}
@@ -518,7 +525,7 @@
       <a href="#faq">Fragen</a>
     </div>
     <div class="nav-actions">
-      <a href="#fcard" class="nav-cta">Unverbindlich anfragen</a>
+      <a href="#fcard" class="nav-cta">Anfragen</a>
       <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menü öffnen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -541,9 +548,27 @@
 
   <div class="wrap">
     <div class="hero-inner" data-rev>
+      <div class="alert-pill">⚠ Ein PDF ist keine E-Rechnung.</div>
       <span class="kick" style="color:var(--amber);">Warum Sie jetzt handeln müssen</span>
       <h1>Schadensersatz. Verärgerte Kunden. Ein <span class="accent">Bußgeld</span> ist nicht ausgeschlossen.</h1>
       <p class="lead">Sie sitzen in der Mitte einer Kette: Sie stellen Rechnungen an Ihre Kunden und empfangen Rechnungen von Ihren Lieferanten — beide Richtungen sind betroffen. Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Kunden dadurch ein finanzieller Nachteil, haften Sie ihm gegenüber. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — ohne Übergangsfrist, unabhängig vom Umsatz.</p>
+
+      <div class="countdown" id="countdown">
+        <div><b id="cd1">–</b><span>Tage bis zur Ausstellungspflicht bei &gt;800.000&nbsp;€ Vorjahresumsatz (1.1.2027)</span></div>
+        <div><b id="cd2">–</b><span>Tage bis zur Ausstellungspflicht für alle anderen (1.1.2028)</span></div>
+      </div>
+      <script>
+        (function(){
+          function daysUntil(iso){
+            var ms = new Date(iso+'T00:00:00') - new Date();
+            return Math.max(0, Math.ceil(ms / 86400000));
+          }
+          var a = document.getElementById('cd1'), b = document.getElementById('cd2');
+          if (a) a.textContent = daysUntil('2027-01-01');
+          if (b) b.textContent = daysUntil('2028-01-01');
+        })();
+      </script>
+
       <div class="actions">
         <a href="#fcard" class="btn">
           Jetzt Risiko klären
