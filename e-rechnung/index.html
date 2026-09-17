@@ -292,6 +292,7 @@
   .fristen-table th{font-weight:600; color:var(--text-now); font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.04em; text-transform:uppercase; border-bottom:1px solid var(--line2-now);}
   .fristen-table td:first-child, .fristen-table th:first-child{color:var(--text-now); font-weight:500;}
   .fristen-table th.hl, .fristen-table td.hl{background:var(--lime-dim); color:var(--text-now); font-weight:600;}
+  .vergleich-table th:not(:first-child), .vergleich-table td:not(:first-child){text-align:center;}
 
   /* ===== COMPACT SOLUTION (3 Kernpunkte) ===== */
   .compact-solution{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
@@ -690,7 +691,7 @@
     </div>
 
     <div class="fristen-table-wrap" data-rev style="overflow-x:auto; margin-bottom:var(--s5);">
-      <table class="fristen-table">
+      <table class="fristen-table vergleich-table">
         <caption class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Vergleich der drei Lösungswege</caption>
         <thead>
           <tr><th scope="col">Kriterium</th><th scope="col">Weg 1<br>Nichts tun</th><th scope="col">Weg 2<br>Standardsoftware</th><th scope="col" class="hl">Word-Alternative<br>BüroKollege Add-on für Word</th></tr>
