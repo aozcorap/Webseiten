@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BüroKollege.de — 30 Tage kostenlos: Dein digitaler Mitarbeiter für Handwerksbetriebe</title>
-<meta name="description" content="Wir bauen dir kostenlos einen digitalen Mitarbeiter für deinen größten Zeitfresser. 30 Tage testen, keine Kosten, keine Kündigung. Für Handwerk und kleine Betriebe.">
-<meta property="og:title" content="30 Tage kostenlos: Dein digitaler Mitarbeiter für Handwerksbetriebe — BüroKollege.de">
-<meta property="og:description" content="E-Mails, WhatsApp und Rechnungen erledigt, bevor du abends dazu kommst. 30 Tage kostenlos testen — ohne Risiko.">
+<title>E-Rechnungspflicht 2027/2028 — Ihr Word-Layout bleibt, die Umstellung übernehmen wir | BüroKollege.de</title>
+<meta name="description" content="Ab 2027 bzw. 2028 müssen Sie E-Rechnungen ausstellen, empfangen müssen Sie sie schon seit 2025. BüroKollege macht Ihre Word-Rechnung automatisch konform — ohne Systemwechsel.">
+<meta property="og:title" content="E-Rechnungspflicht 2027/2028 — Word-Layout bleibt, BüroKollege übernimmt die Umstellung">
+<meta property="og:description" content="Vorsteuerabzug, Bußgeldrisiko, Kundenverlust: die E-Rechnungspflicht betrifft jeden B2B-Betrieb. So bleiben Sie konform, ohne Ihr Rechnungslayout aufzugeben.">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='7' fill='%23C4F82A'/%3E%3Cpath d='M6 12.5l4 4 8-8' stroke='%2307090D' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -279,6 +279,13 @@
   .split-bar{margin-top:var(--s5); border:1px solid var(--line-now); border-radius:18px; padding:34px; background:var(--bg-2);}
   @media(max-width:640px){ .split-bar{padding:24px 20px;} }
 
+  /* TABELLEN (Fristen, Vergleich) */
+  .fristen-table{width:100%; min-width:560px; border-collapse:collapse; font-size:14.5px;}
+  .fristen-table th, .fristen-table td{text-align:left; padding:14px 16px; border-bottom:1px solid var(--line-now); color:var(--muted-now); line-height:1.5;}
+  .fristen-table th{font-weight:600; color:var(--text-now); font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.04em; text-transform:uppercase; border-bottom:1px solid var(--line2-now);}
+  .fristen-table td:first-child, .fristen-table th:first-child{color:var(--text-now); font-weight:500;}
+  .fristen-table th.hl, .fristen-table td.hl{background:var(--lime-dim); color:var(--text-now); font-weight:600;}
+
   /* ===== COMPACT SOLUTION (3 Kernpunkte) ===== */
   .compact-solution{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
   @media(max-width:820px){ .compact-solution{grid-template-columns:1fr; gap:14px;} }
@@ -416,11 +423,6 @@
   .result-hero-inner{position:relative; z-index:1; max-width:600px;}
   .result-hero-inner h2{font-size:clamp(26px,3.8vw,42px); margin-bottom:16px;}
   .result-hero-inner > p{color:var(--muted-now); font-size:17px; line-height:1.65; margin-bottom:32px;}
-  .result-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  @media(max-width:520px){ .result-stats{grid-template-columns:1fr; gap:14px;} }
-  .result-stats > div{border-left:2px solid var(--lime); padding-left:15px;}
-  .result-stats b{display:block; font-size:clamp(22px,2.8vw,30px); font-weight:600; letter-spacing:-0.03em; margin-bottom:4px;}
-  .result-stats span{font-size:13.8px; color:var(--muted-now); line-height:1.45; display:block;}
 
   /* FORM */
   .form-wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:52px; align-items:start;}
@@ -510,13 +512,13 @@
       BüroKollege<span class="brand-suffix">.de</span>
     </a>
     <div class="nav-links" id="navMenu">
-      <a href="#problem">Das Problem</a>
+      <a href="#problem">Die Risiken</a>
+      <a href="#fristen">Die Fristen</a>
       <a href="#loesung">Die Lösung</a>
-      <a href="#ergebnis">Das Ergebnis</a>
-      <a href="#faq">Deine Frage</a>
+      <a href="#faq">Fragen</a>
     </div>
     <div class="nav-actions">
-      <a href="#fcard" class="nav-cta">30 Tage kostenlos</a>
+      <a href="#fcard" class="nav-cta">Unverbindlich anfragen</a>
       <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menü öffnen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -528,30 +530,30 @@
   <div class="hero-bg">
     <picture>
       <source media="(max-width:820px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-      <img src="./assets/hero-papierkram.jpg" alt="Mann sitzt abends erschöpft am Schreibtisch voller Rechnungen und Papiere, daneben ein Familienfoto" fetchpriority="high">
+      <img src="./assets/hero-papierkram.jpg" alt="[TODO: Kunde liefert — Foto passend zum Thema E-Rechnung/Papierkram]" fetchpriority="high">
     </picture>
     <div class="hero-bg-scrim"></div>
     <div class="hero-bg-cap">
-      <div class="k">21:40 Uhr — kennst du das?</div>
-      <p>Alle sind zuhause. Du sitzt noch am Papierkram.</p>
+      <div class="k">E-Rechnung 2027/2028</div>
+      <p>Beide Rechnungsrichtungen sind betroffen.</p>
     </div>
   </div>
 
   <div class="wrap">
     <div class="hero-inner" data-rev>
-      <span class="kick">Das Problem</span>
-      <h1>Kennst du das? Noch offene Mails, WhatsApp-Nachrichten, Angebote und Rechnungen?</h1>
-      <p class="lead">Ich schenke dir einen <span class="accent">digitalen Mitarbeiter</span>, der sich darum kümmert, damit du mehr Zeit für dich und deine Familie hast — ohne Risiko.</p>
+      <span class="kick">Warum Sie jetzt handeln müssen</span>
+      <h1>Sie sitzen in der Mitte einer Kette — und <span class="accent">beide Richtungen</span> sind betroffen.</h1>
+      <p class="lead">Sie stellen Rechnungen an Ihre Kunden, und Sie empfangen Rechnungen von Ihren Lieferanten. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — unabhängig vom Umsatz.</p>
       <div class="actions">
         <a href="#fcard" class="btn">
-          30 Tage kostenlos testen
+          Unverbindlich anfragen
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#loesung" class="btn-2">Wie funktioniert das?</a>
+        <a href="#fristen" class="btn-2">Welche Frist gilt für mich?</a>
       </div>
       <div class="micro">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Anfrage dauert 2 Minuten · wir melden uns <span class="accent">innerhalb von 24 Stunden</span>
+        E-Rechnung empfangen können: seit 1.1.2025 Pflicht für alle Unternehmen, keine Übergangsfrist
       </div>
     </div>
   </div>
@@ -559,78 +561,121 @@
 
 <div class="ticker stage-2">
   <div class="ticker-track">
-    <span>30 Tage kostenlos <i>///</i> Keine Zahlungsdaten <i>///</i> Keine Kündigung <i>///</i> Nichts Neues zu lernen <i>///</i> Du entscheidest, was rausgeht <i>///</i> Mehr Zeit für deine Familie <i>///</i></span>
-    <span>30 Tage kostenlos <i>///</i> Keine Zahlungsdaten <i>///</i> Keine Kündigung <i>///</i> Nichts Neues zu lernen <i>///</i> Du entscheidest, was rausgeht <i>///</i> Mehr Zeit für deine Familie <i>///</i></span>
+    <span>Empfangspflicht seit 1.1.2025 <i>///</i> Ausstellungspflicht ab 2027/2028 <i>///</i> Vorsteuerabzug-Risiko <i>///</i> Schadensersatzrisiko <i>///</i> Kundenverlust möglich <i>///</i> Word-Layout bleibt erhalten <i>///</i></span>
+    <span>Empfangspflicht seit 1.1.2025 <i>///</i> Ausstellungspflicht ab 2027/2028 <i>///</i> Vorsteuerabzug-Risiko <i>///</i> Schadensersatzrisiko <i>///</i> Kundenverlust möglich <i>///</i> Word-Layout bleibt erhalten <i>///</i></span>
   </div>
 </div>
 
 <div class="wrap">
 
-  <!-- PROBLEM + LÖSUNG -->
-  <section id="loesung" class="stage-1">
+  <!-- DIE 6 PAIN POINTS -->
+  <section id="risiken" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Die Lösung</span>
-      <h2>Darf ich vorstellen? Dein neuer digitaler Mitarbeiter.</h2>
-      <p>Dein digitaler Mitarbeiter übernimmt die Vorbereitung von E-Mails, WhatsApp-Nachrichten, Angeboten und Rechnungen.</p>
+      <span class="kick">Die 6 größten Pain Points</span>
+      <h2>Unabhängig vom eigenen Umsatz — diese Risiken bestehen für jeden B2B-Betrieb.</h2>
     </div>
 
-    <div class="pain">
-      <div data-rev>
-        <div class="panel">
-          <div class="panel-bar">
-            <span class="pd"></span><span class="pd"></span><span class="pd"></span>
-            <span class="panel-title">Postfach · Entwürfe</span>
-            <span class="panel-live"><span class="pulse"></span>3 BEREIT</span>
-          </div>
-          <div class="panel-body">
-            <div class="task ok">
-              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="task-txt"><b>Anfrage Martin K. — Steckdosen Keller</b><span>WhatsApp · Entwurf fertig</span></div>
-              <span class="chip go">Bereit</span>
-            </div>
-            <div class="task ok">
-              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="task-txt"><b>Angebot Fenster-Sanierung</b><span>E-Mail · Entwurf fertig</span></div>
-              <span class="chip go">Bereit</span>
-            </div>
-            <div class="task ok">
-              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div class="task-txt"><b>Zahlungserinnerung Rechnung #482</b><span>Mahnung · Entwurf fertig</span></div>
-              <span class="chip go">Bereit</span>
-            </div>
-            <div class="task">
-              <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg></div>
-              <div class="task-txt"><b>Anfrage Fliesenleger-Team</b><span>WhatsApp · wird vorbereitet</span></div>
-              <span class="chip wait">Läuft</span>
-            </div>
-          </div>
-          <div class="panel-foot"><span class="pf-label">Dein Vorteil:</span> Entwürfe kurz prüfen und freigeben, statt den ganzen Tag Unterbrechungen.</div>
-        </div>
+    <div class="objs" data-revs>
+      <div class="obj">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3>
+        <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Kunden dadurch ein finanzieller Nachteil (z. B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
       </div>
+      <div class="obj">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Kunde verliert den Vorsteuerabzug</h3>
+        <p>Sobald Ihre eigene Übergangsfrist abgelaufen ist und Ihre Rechnung nicht konform ist, streicht das Finanzamt Ihrem Kunden die Vorsteuer.</p>
+      </div>
+      <div class="obj">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ihr Kunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
+        <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen — oder er sucht sich einen Anbieter, der schon E-Rechnung kann.</p>
+      </div>
+      <div class="obj">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Zahlungsverzögerung</h3>
+        <p>Eine abgelehnte Rechnung verzögert die Zahlung. Skonto verfällt, Ihr Geld kommt später.</p>
+      </div>
+      <div class="obj">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Kundenverlust an die Konkurrenz</h3>
+        <p>Ein verärgerter Kunde wechselt zum Anbieter, der es richtig macht.</p>
+      </div>
+      <div class="obj">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Sie selbst verlieren den Vorsteuerabzug</h3>
+        <p>Dieselbe Falle, nur umgekehrt: Liefert Ihr Lieferant keine korrekte E-Rechnung, verlieren Sie die Vorsteuer. Und seit 1.1.2025 müssen Sie ohnehin E-Rechnungen empfangen und archivieren können — ohne Übergangsfrist, unabhängig vom eigenen Umsatz.</p>
+      </div>
+    </div>
 
-      <div class="cs-groups" data-revs>
-        <div class="cs-group">
-          <h3 class="cs-group-h">Darum kümmert sich dein digitaler Mitarbeiter</h3>
-          <div class="compact-solution">
-            <div class="cs-item">
-              <div class="cs-tag">Postfach &amp; WhatsApp</div>
-              <p>Er liest Anfragen, sucht Preise heraus und legt dir fertige Antworten in die Entwürfe.</p>
-            </div>
-            <div class="cs-item">
-              <div class="cs-tag">Angebote &amp; Rechnungen</div>
-              <p>Er bereitet Angebote vor, hakt bei offenen Anfragen nach und erstellt Zahlungserinnerungen.</p>
-            </div>
-          </div>
-        </div>
-        <div class="cs-group">
-          <h3 class="cs-group-h">Darum kümmerst du dich</h3>
-          <div class="compact-solution">
-            <div class="cs-item">
-              <div class="cs-tag">Deine Kontrolle</div>
-              <p>Nichts geht raus ohne dich. Er bereitet vor, du prüfst kurz und drückst auf Senden.</p>
-            </div>
-          </div>
-        </div>
+    <div class="split-bar" data-rev>
+      <h3>Die Kernbotschaft</h3>
+      <p>Bis zu Ihrer eigenen Frist (2027 bei über 800.000&nbsp;€ Vorjahresumsatz, 2028 für alle anderen) entscheiden Sie noch selbst über das Rechnungsformat. Danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß — mit Folgen für Sie und Ihren Kunden. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht, unabhängig vom Umsatz.</p>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <!-- FRISTEN -->
+  <section id="fristen" class="stage-1">
+    <div class="shead" data-rev>
+      <span class="kick">Die Fristen im Überblick</span>
+      <h2>Wer wann muss.</h2>
+    </div>
+    <div class="fristen-table-wrap" data-rev style="overflow-x:auto;">
+      <table class="fristen-table">
+        <caption class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Fristen für die E-Rechnungspflicht</caption>
+        <thead>
+          <tr><th scope="col">Was</th><th scope="col">Betroffene</th><th scope="col">Ab wann</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>E-Rechnung empfangen können</td><td>Alle Unternehmen</td><td>seit 1.1.2025 (keine Übergangsfrist)</td></tr>
+          <tr><td>E-Rechnung ausstellen müssen</td><td>Vorjahresumsatz &gt; 800.000&nbsp;€</td><td>ab 1.1.2027</td></tr>
+          <tr><td>E-Rechnung ausstellen müssen</td><td>Vorjahresumsatz ≤ 800.000&nbsp;€</td><td>ab 1.1.2028</td></tr>
+          <tr><td>PDF/Papier weiterhin zulässig</td><td>Nur mit Zustimmung des Empfängers</td><td>bis zur jeweils eigenen Frist</td></tr>
+          <tr><td>Ausstellung als E-Rechnung nicht nötig</td><td>Kleinunternehmer (§19 UStG, §34a UStDV)</td><td>dauerhaft befreit — Empfang trotzdem Pflicht</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <!-- LÖSUNGEN IM VERGLEICH -->
+  <section id="loesung" class="stage-1">
+    <div class="shead" data-rev>
+      <span class="kick">Die Lösungen — drei Wege im Vergleich</span>
+      <h2>Funktioniert, ohne Umstellung.</h2>
+    </div>
+
+    <div class="fristen-table-wrap" data-rev style="overflow-x:auto; margin-bottom:var(--s5);">
+      <table class="fristen-table">
+        <caption class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Vergleich der drei Lösungswege</caption>
+        <thead>
+          <tr><th scope="col">Kriterium</th><th scope="col">Weg 1<br>Nichts tun</th><th scope="col">Weg 2<br>Standardsoftware</th><th scope="col" class="hl">Weg 3<br>BüroKollege Add-on</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Word-Layout bleibt</td><td>✓</td><td>✗</td><td class="hl">✓</td></tr>
+          <tr><td>Umstellungsaufwand</td><td>–</td><td>Hoch</td><td class="hl">Gering</td></tr>
+          <tr><td>E-Rechnung konform</td><td>✗</td><td>✓</td><td class="hl">✓</td></tr>
+          <tr><td>Vorsteuerabzug-Risiko abgesichert</td><td>✗</td><td>✓</td><td class="hl">✓</td></tr>
+          <tr><td>Schadensersatz-/Bußgeldrisiko abgesichert</td><td>✗</td><td>✓</td><td class="hl">✓</td></tr>
+          <tr><td>Laufende Kosten</td><td>–</td><td>Ja</td><td class="hl">Ja</td></tr>
+          <tr><td>Risiko Kundenverlust abgesichert</td><td>✗</td><td>✓</td><td class="hl">✓</td></tr>
+          <tr><td>Fazit</td><td>Risiko bleibt, keine Lösung</td><td>Funktioniert, aber teuer/aufwändig</td><td class="hl">Funktioniert, ohne Umstellung</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="feats" data-revs>
+      <div class="feat">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+        <h3>Weg 1 — Nichts tun</h3>
+        <p>Risiko bleibt, keine Lösung.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+        <h3>Weg 2 — Umstieg auf Standardsoftware</h3>
+        <p>Komplettlösung inkl. Buchhaltung (z.&nbsp;B. Lexoffice, sevDesk, easybill). Rechnungslayout muss im neuen System komplett neu aufgebaut werden. Systemwechsel kostet Zeit: Gewöhnung, Schulungen, Einarbeitung. Laufende Softwarekosten.</p>
+      </div>
+      <div class="feat" style="border-color:var(--lime); box-shadow:0 0 0 1px var(--lime) inset;">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h3>Weg 3 — Empfehlung: BüroKollege Word-Add-on</h3>
+        <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung für Ihre Kunden. <b>BüroKollege übernimmt die gesamte Integration</b> — auch den Empfang und die Archivierung von Lieferanten-Rechnungen. Sie müssen nichts selbst konfigurieren.</p>
       </div>
     </div>
   </section>
@@ -643,14 +688,9 @@
     </div>
     <div class="wrap">
       <div class="result-hero-inner" data-rev>
-        <span class="kick">Das Ergebnis</span>
-        <h2>Wieder Zeit für die, die zuhause warten.</h2>
-        <p>Der Papierkram ist nicht weg — er macht nur nicht mehr deinen Abend kaputt. Du prüfst kurz, gibst frei, und der Feierabend gehört wieder deiner Familie.</p>
-        <div class="result-stats">
-          <div><b>2 Std.</b><span>weniger Büroarbeit am Tag</span></div>
-          <div><b>30 Tage</b><span>kostenlos ausprobieren</span></div>
-          <div><b>0 €</b><span>bis du dich entscheidest</span></div>
-        </div>
+        <span class="kick">Weg 3 — Empfehlung</span>
+        <h2>Funktioniert, ohne Umstellung.</h2>
+        <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung für Ihre Kunden. BüroKollege übernimmt die gesamte Integration — auch den Empfang und die Archivierung von Lieferanten-Rechnungen. Sie müssen nichts selbst konfigurieren.</p>
       </div>
     </div>
   </section>
@@ -659,25 +699,25 @@
   <!-- FAQ -->
   <section id="faq" class="stage-1">
     <div class="shead" data-rev>
-      <span class="kick">Deine Frage</span>
+      <span class="kick">Fragen</span>
       <h2>Kurz und ehrlich beantwortet</h2>
     </div>
     <div class="faq-list" data-revs>
       <details class="faq-item">
-        <summary>Muss ich dafür jemanden einstellen oder einen Vertrag unterschreiben?</summary>
-        <p>Nein. Das ist eine Software, kein neuer Mitarbeiter. 30 Tage kostenlos, ohne Zahlungsdaten, ohne Vertrag.</p>
+        <summary>Muss ich meine Rechnungen schon jetzt als E-Rechnung ausstellen?</summary>
+        <p>Nein, noch nicht zwingend. Bei über 800.000&nbsp;€ Vorjahresumsatz gilt die Pflicht ab 1.1.2027, für alle anderen ab 1.1.2028. Bis dahin ist PDF/Papier nur mit Zustimmung des Empfängers weiter zulässig.</p>
       </details>
       <details class="faq-item">
-        <summary>Was passiert nach den 30 Tagen?</summary>
-        <p>Der Test endet von selbst. Nur wenn du weitermachen willst, reden wir über Geld — sonst passiert gar nichts.</p>
+        <summary>Muss ich E-Rechnungen schon jetzt empfangen können?</summary>
+        <p>Ja. Seit 1.1.2025 müssen alle Unternehmen E-Rechnungen empfangen und archivieren können — ohne Übergangsfrist, unabhängig vom eigenen Umsatz.</p>
       </details>
       <details class="faq-item">
-        <summary>Muss ich mich mit Technik auskennen?</summary>
-        <p>Nein. Wir richten alles für dich ein. Du musst nichts installieren oder konfigurieren.</p>
+        <summary>Ich bin Kleinunternehmer — betrifft mich das trotzdem?</summary>
+        <p>Kleinunternehmer nach §19 UStG bzw. §34a UStDV sind von der Ausstellungspflicht dauerhaft befreit. Der Empfang bleibt trotzdem Pflicht.</p>
       </details>
       <details class="faq-item">
-        <summary>Geht wirklich nichts raus, ohne dass ich es sehe?</summary>
-        <p>Nein. Dein digitaler Mitarbeiter bereitet alles vor — du prüfst kurz und gibst die Freigabe.</p>
+        <summary>Muss ich mein Rechnungslayout aufgeben, um konform zu werden?</summary>
+        <p>Nein — mit dem BüroKollege Word-Add-on bleibt Ihr Word-Layout zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die passende E-Rechnung.</p>
       </details>
     </div>
   </section>
@@ -688,30 +728,30 @@
   <section id="test" class="stage-1">
     <div class="form-wrap">
       <div class="fside" data-rev>
-        <span class="kick">Dein kostenloser Test</span>
-        <h2>Welche Arbeit soll dir ab jetzt jemand abnehmen?</h2>
-        <p>Sag uns, was dich am meisten Zeit kostet. Wir melden uns <span class="accent">innerhalb von 24 Stunden</span> — ehrlich, ob wir helfen können oder eben nicht.</p>
+        <span class="kick">Unverbindlich anfragen</span>
+        <h2>Welche Frist betrifft Sie — und was brauchen Sie dafür?</h2>
+        <p>Sagen Sie uns kurz, wo Sie stehen. Wir melden uns <span class="accent">[TODO: Kunde liefert — Reaktionszeit für e-rechnung.de]</span> mit einer ehrlichen Einschätzung.</p>
         <div class="guarantee">
           <div class="g">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>Mehr Zeit für dich und deine Familie</b><p>Damit du abends wieder Zeit für die hast, die zuhause auf dich warten.</p></div>
+            <div><b>Ihr Word-Layout bleibt erhalten</b><p>Kein Systemwechsel, keine Neuaufbau Ihres Rechnungslayouts.</p></div>
           </div>
           <div class="g">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>Keine Zahlungsdaten, kein Vertrag</b><p>Nach 30 Tagen endet der Test von selbst — nur wenn du weitermachen willst, reden wir über Geld.</p></div>
+            <div><b>[TODO: Kunde liefert — Konditionen]</b><p>[TODO: Kunde liefert — Preis, Testphase o.ä. für dieses Angebot]</p></div>
           </div>
         </div>
       </div>
 
       <div class="fcard" id="fcard" data-rev>
-        <h3>Kostenlosen Test anfragen</h3>
+        <h3>Unverbindlich anfragen</h3>
         <p class="fsub">Dauert eine Minute. Felder mit <b>*</b> brauchen wir.</p>
 
         <div class="fstatus" id="fstatus" role="status" aria-live="polite"></div>
 
         <form id="testForm" action="https://formspree.io/f/mgogjnqz" method="POST" novalidate>
           <div class="field">
-            <label for="f-name">Dein Name <span class="req" aria-hidden="true">*</span></label>
+            <label for="f-name">Ihr Name <span class="req" aria-hidden="true">*</span></label>
             <div class="field-input">
               <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <input type="text" id="f-name" name="name" autocomplete="name" required aria-required="true" aria-describedby="e-name">
@@ -727,13 +767,13 @@
             <span class="ferr" id="e-mail" role="alert"></span>
           </div>
           <div class="field">
-            <label for="f-fresser">Was kostet dich am meisten Zeit? <span class="req" aria-hidden="true">*</span></label>
+            <label for="f-fresser">Was betrifft Sie am meisten? <span class="req" aria-hidden="true">*</span></label>
             <select id="f-fresser" name="zeitfresser" required aria-required="true" aria-describedby="e-fresser">
               <option value="">Bitte auswählen</option>
-              <option value="mails">E-Mails und Preisanfragen</option>
-              <option value="whatsapp">WhatsApp-Anfragen von Kunden</option>
-              <option value="angebote">Angeboten hinterhertelefonieren</option>
-              <option value="rechnungen">Offene Rechnungen und Mahnungen</option>
+              <option value="ausstellen">Ich muss bald E-Rechnungen ausstellen</option>
+              <option value="empfangen">Ich muss E-Rechnungen empfangen/archivieren können</option>
+              <option value="beides">Beides betrifft mich</option>
+              <option value="unsicher">Ich weiß noch nicht, welche Frist für mich gilt</option>
               <option value="anderes">Etwas anderes</option>
             </select>
             <span class="ferr" id="e-fresser" role="alert"></span>
@@ -766,11 +806,11 @@
           </div>
 
           <button type="submit" class="btn" id="sendBtn">
-            <span id="sendLabel">Kostenlosen Test anfragen</span>
+            <span id="sendLabel">Unverbindlich anfragen</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
 
-          <p class="flegal">Deine Angaben nutzen wir nur, um deine Anfrage zu beantworten. Keine Werbung, keine Weitergabe. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+          <p class="flegal">Ihre Angaben nutzen wir nur, um Ihre Anfrage zu beantworten. Keine Werbung, keine Weitergabe. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
         </form>
       </div>
     </div>
@@ -781,10 +821,10 @@
   <div class="wrap foot">
     <div class="foot-brand">
       <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-      <p>BüroKollege.de — Digitale Mitarbeiter für Handwerk und kleine Betriebe</p>
+      <p>BüroKollege.de — Digitale E-Rechnung für Handwerk und kleine Betriebe</p>
     </div>
     <div class="foot-links">
-      <a href="#fcard" class="foot-cta">30 Tage kostenlos testen</a>
+      <a href="#fcard" class="foot-cta">Unverbindlich anfragen</a>
       <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
@@ -848,12 +888,12 @@
   var label = document.getElementById('sendLabel');
 
   var rules = {
-    'f-name':    { err:'e-name',    msg:'Bitte trag deinen Namen ein.' },
-    'f-mail':    { err:'e-mail',    msg:'Bitte trag deine E-Mail-Adresse ein.',
+    'f-name':    { err:'e-name',    msg:'Bitte tragen Sie Ihren Namen ein.' },
+    'f-mail':    { err:'e-mail',    msg:'Bitte tragen Sie Ihre E-Mail-Adresse ein.',
                    check:function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); },
-                   checkMsg:'Diese E-Mail-Adresse sieht nicht richtig aus. Bitte prüf sie.' },
-    'f-fresser': { err:'e-fresser', msg:'Bitte wähl aus, was dich am meisten Zeit kostet.' },
-    'f-consent': { err:'e-consent', msg:'Bitte bestätige die Datenschutzerklärung.' }
+                   checkMsg:'Diese E-Mail-Adresse sieht nicht richtig aus. Bitte prüfen Sie sie.' },
+    'f-fresser': { err:'e-fresser', msg:'Bitte wählen Sie aus, was Sie am meisten betrifft.' },
+    'f-consent': { err:'e-consent', msg:'Bitte bestätigen Sie die Datenschutzerklärung.' }
   };
 
   function check(id){
@@ -895,7 +935,7 @@
       if (!check(id) && !first) first = document.getElementById(id);
     });
     if (first){
-      status.textContent = 'Bitte füll die markierten Felder aus.';
+      status.textContent = 'Bitte füllen Sie die markierten Felder aus.';
       status.className = 'fstatus bad on';
       first.focus();
       return;
@@ -910,20 +950,20 @@
       headers: { 'Accept': 'application/json' }
     }).then(function(res){
       btn.disabled = false;
-      label.textContent = 'Kostenlosen Test anfragen';
+      label.textContent = 'Unverbindlich anfragen';
       if (res.ok){
-        status.innerHTML = 'Danke! Deine Anfrage ist angekommen — wir melden uns innerhalb von 24 Stunden.';
+        status.innerHTML = 'Danke! Ihre Anfrage ist angekommen — wir melden uns bei Ihnen.';
         status.className = 'fstatus ok on';
         form.reset();
       } else {
-        status.innerHTML = 'Das hat leider nicht geklappt. Bitte schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
+        status.innerHTML = 'Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
         status.className = 'fstatus bad on';
       }
       status.scrollIntoView({ block:'center', behavior:'smooth' });
     }).catch(function(){
       btn.disabled = false;
-      label.textContent = 'Kostenlosen Test anfragen';
-      status.innerHTML = 'Das hat leider nicht geklappt. Bitte schreib uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
+      label.textContent = 'Unverbindlich anfragen';
+      status.innerHTML = 'Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an <a href="mailto:ahmet@ozcorapci.de" style="text-decoration:underline">ahmet@ozcorapci.de</a>.';
       status.className = 'fstatus bad on';
       status.scrollIntoView({ block:'center', behavior:'smooth' });
     });
