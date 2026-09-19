@@ -216,6 +216,8 @@
   h1{font-size:clamp(26px,3.6vw,42px); margin-bottom:18px;}
   .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(14.5px,1.5vw,16.5px); color:var(--text-now); max-width:62ch; margin-bottom:24px; line-height:1.6;}
+  .lead-short{display:none;}
+  @media(max-width:640px){ .lead-full{display:none;} .lead-short{display:block;} }
   .actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:16px;}
   .btn{background:var(--lime); color:#07090D; font-weight:600; font-size:16px; padding:17px 30px; border-radius:999px;
     display:inline-flex; align-items:center; gap:10px; transition:transform .18s, box-shadow .18s; border:none; cursor:pointer; font-family:inherit;}
@@ -396,6 +398,26 @@
   .obj-num{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#07090D; background:var(--lime); flex-shrink:0;
     width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-top:1px;}
   .obj p{color:var(--muted-now); font-size:15px; line-height:1.65;}
+
+  /* Mobile: Risiko- und Loesungskarten aufklappbar, damit weniger gescrollt werden muss. */
+  details.obj summary, details.feat summary{list-style:none; cursor:pointer;}
+  details.obj summary::-webkit-details-marker, details.feat summary::-webkit-details-marker{display:none;}
+  details.obj summary h3::after{content:'+'; margin-left:auto; padding-left:12px; font-size:20px; font-weight:400; color:var(--lime); flex-shrink:0; line-height:1;}
+  details.obj[open] summary h3::after{content:'\2212';}
+  details.feat summary{display:flex; align-items:center; gap:14px;}
+  details.feat summary::after{content:'+'; margin-left:auto; font-size:20px; font-weight:400; color:var(--lime); flex-shrink:0; line-height:1;}
+  details.feat[open] summary::after{content:'\2212';}
+  details.obj p, details.feat p{margin-top:11px;}
+  .table-collapsible summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:14px 18px; border:1px solid var(--line-now); border-radius:12px; background:rgba(255,255,255,0.02);}
+  .table-collapsible summary::-webkit-details-marker{display:none;}
+  .table-collapsible summary::after{content:'+'; margin-left:auto; font-size:20px; font-weight:400; color:var(--lime); line-height:1;}
+  .table-collapsible[open] summary::after{content:'\2212';}
+  .table-collapsible .fristen-table-wrap{margin-top:16px;}
+  @media(min-width:641px){
+    details.obj summary h3::after, details.feat summary::after, .table-collapsible summary::after{display:none;}
+    details.obj summary, details.feat summary, .table-collapsible summary{cursor:default; pointer-events:none;}
+    .table-collapsible summary{border:none; background:none; padding:0; display:none;}
+  }
 
   .kernbotschaft{text-align:center; max-width:780px; margin-left:auto; margin-right:auto; border-color:var(--line2-now);
     border-top:3px solid var(--lime); background:linear-gradient(180deg, rgba(196,248,42,0.06), var(--bg-2));}
@@ -603,7 +625,8 @@
       <div class="alert-pill">⚠ Eine PDF-Rechnung ist keine E-Rechnung.</div>
       <span class="kick" style="color:var(--amber);">Warum Sie JETZT handeln müssen</span>
       <h1>Ihnen drohen Schadensersatzansprüche, verärgerte Gewerbekunden — und ein <span class="accent">Bußgeld</span> ist nicht ausgeschlossen.</h1>
-      <p class="lead">Sie sitzen in der Mitte einer Kette: Sie stellen Rechnungen an Ihre Gewerbekunden und empfangen Rechnungen von Ihren Lieferanten — beide Richtungen sind betroffen. Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen und zum Wettbewerber wechseln, der bereits E-Rechnung kann. Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil, haften Sie ihm gegenüber. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — ohne Übergangsfrist, unabhängig vom Umsatz.</p>
+      <p class="lead lead-full">Sie sitzen in der Mitte einer Kette: Sie stellen Rechnungen an Ihre Gewerbekunden und empfangen Rechnungen von Ihren Lieferanten — beide Richtungen sind betroffen. Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen und zum Wettbewerber wechseln, der bereits E-Rechnung kann. Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil, haften Sie ihm gegenüber. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — ohne Übergangsfrist, unabhängig vom Umsatz.</p>
+      <p class="lead lead-short">Sie stellen Rechnungen an Kunden und empfangen von Lieferanten — beide Richtungen sind betroffen. Kunden können Ihre PDF-Rechnung schon jetzt ablehnen. Der Empfang einer E-Rechnung ist für Sie bereits Pflicht.</p>
 
       <script>
         (function(){
@@ -655,22 +678,22 @@
     </div>
 
     <div class="objs" data-revs>
-      <div class="obj">
-        <h3><span class="obj-num">01</span> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3>
+      <details class="obj">
+        <summary><h3><span class="obj-num">01</span> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3></summary>
         <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil (z.&nbsp;B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
-      </div>
-      <div class="obj">
-        <h3><span class="obj-num">02</span> Vorsteuerabzug-Risiko trifft beide Seiten</h3>
+      </details>
+      <details class="obj">
+        <summary><h3><span class="obj-num">02</span> Vorsteuerabzug-Risiko trifft beide Seiten</h3></summary>
         <p>Sobald die Übergangsfrist Ihres Gewerbekunden abgelaufen ist — z.&nbsp;B. weil er selbst über 800.000&nbsp;€ Vorjahresumsatz liegt und schon ab 2027 zur E-Rechnung verpflichtet ist —, kann er von Ihnen eine konforme E-Rechnung verlangen. Ist Ihre Rechnung dann nicht konform, streicht das Finanzamt ihm die Vorsteuer. Umgekehrt gilt dasselbe: Liefert Ihr Lieferant Ihnen keine korrekte E-Rechnung, verlieren Sie selbst die Vorsteuer.</p>
-      </div>
-      <div class="obj">
-        <h3><span class="obj-num">03</span> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3>
+      </details>
+      <details class="obj">
+        <summary><h3><span class="obj-num">03</span> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3></summary>
         <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen oder kurzfristig auf eine E-Rechnung umstellen — oder er sucht sich gleich einen Anbieter, der schon E-Rechnung kann.</p>
-      </div>
-      <div class="obj">
-        <h3><span class="obj-num">04</span> Zahlungsverzögerung und Kundenverlust</h3>
+      </details>
+      <details class="obj">
+        <summary><h3><span class="obj-num">04</span> Zahlungsverzögerung und Kundenverlust</h3></summary>
         <p>Eine abgelehnte Rechnung verzögert die Zahlung: Ihr Gewerbekunde zahlt oft erst, wenn eine korrekte E-Rechnung vorliegt, Skonto verfällt. Im schlimmsten Fall wechselt der verärgerte Kunde gleich ganz zum Anbieter, der es richtig macht.</p>
-      </div>
+      </details>
     </div>
   </section>
 </div>
@@ -708,22 +731,25 @@
       <h2>Rechnung in Standardsoftware oder weiterhin in Word erstellen.</h2>
     </div>
 
-    <div class="fristen-table-wrap" data-rev style="overflow-x:auto; margin-bottom:var(--s5);">
-      <table class="fristen-table vergleich-table">
-        <caption class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Vergleich der drei Lösungswege</caption>
-        <thead>
-          <tr><th scope="col">Kriterium</th><th scope="col">Weg 1<br>Nichts tun</th><th scope="col">Weg 2<br>Standardsoftware</th><th scope="col">Weg 3<br>Add-on für Word</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Word-Layout bleibt</td><td>✓</td><td>✗</td><td>✓</td></tr>
-          <tr><td>E-Rechnung konform</td><td>✗</td><td>✓</td><td>✓</td></tr>
-          <tr><td>Vorsteuerabzug-Risiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
-          <tr><td>Schadensersatz-/Bußgeldrisiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
-          <tr><td>Risiko Kundenverlust abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
-          <tr class="fazit-row"><td>Fazit</td><td>Risiko bleibt, keine Lösung</td><td>Funktioniert, aber aufwändig</td><td>Funktioniert, ohne Umstellung</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <details class="table-collapsible">
+      <summary>Vergleich anzeigen</summary>
+      <div class="fristen-table-wrap" data-rev style="overflow-x:auto; margin-bottom:var(--s5);">
+        <table class="fristen-table vergleich-table">
+          <caption class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Vergleich der drei Lösungswege</caption>
+          <thead>
+            <tr><th scope="col">Kriterium</th><th scope="col">Weg 1<br>Nichts tun</th><th scope="col">Weg 2<br>Standardsoftware</th><th scope="col">Weg 3<br>Add-on für Word</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Word-Layout bleibt</td><td>✓</td><td>✗</td><td>✓</td></tr>
+            <tr><td>E-Rechnung konform</td><td>✗</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Vorsteuerabzug-Risiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Schadensersatz-/Bußgeldrisiko abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Risiko Kundenverlust abgesichert</td><td>✗</td><td>✓</td><td>✓</td></tr>
+            <tr class="fazit-row"><td>Fazit</td><td>Risiko bleibt, keine Lösung</td><td>Funktioniert, aber aufwändig</td><td>Funktioniert, ohne Umstellung</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
 
     <div class="shead" id="wege-loesung" data-rev style="margin-top:var(--s5); scroll-margin-top:90px;">
       <span class="kick">Die Lösung</span>
@@ -732,16 +758,20 @@
     </div>
 
     <div class="feats feats-2" data-revs>
-      <div class="feat">
-        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-        <h3>Umstieg auf Standardsoftware</h3>
+      <details class="feat">
+        <summary>
+          <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+          <h3>Umstieg auf Standardsoftware</h3>
+        </summary>
         <p>Sie möchten auf eine Standardsoftware umsteigen (z.&nbsp;B. Lexoffice, sevDesk, easybill)? <b>Wir übernehmen die komplette Integration</b> für Sie — technische Anbindung, Vorbereitung und den gesamten Ablauf. Sie haben dabei keinen Zusatzaufwand.</p>
-      </div>
-      <div class="feat">
-        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <h3>Add-on für Word</h3>
+      </details>
+      <details class="feat">
+        <summary>
+          <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Add-on für Word</h3>
+        </summary>
         <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung für Ihre Kunden. <b>BüroKollege übernimmt die gesamte Integration</b> — auch den Empfang und die Archivierung von Lieferanten-Rechnungen. Sie müssen nichts selbst konfigurieren.</p>
-      </div>
+      </details>
     </div>
 
   </section>
@@ -995,6 +1025,24 @@
     });
   }, { threshold:0.4 });
   bars.forEach(function(b){ io.observe(b); });
+})();
+
+// Risiko-/Loesungskarten und Vergleichstabelle: auf Desktop immer offen,
+// auf Mobile per Klick aufklappbar. Native <details> kollabiert intern per
+// content-visibility, das laesst sich nicht zuverlaessig per CSS erzwingen -
+// deshalb wird das open-Attribut abhaengig von der Breite gesetzt.
+(function(){
+  var els = document.querySelectorAll('details.obj, details.feat, details.table-collapsible');
+  if (!els.length) return;
+  var mq = window.matchMedia('(min-width:641px)');
+  function sync(){
+    els.forEach(function(el){
+      if (mq.matches) el.setAttribute('open', '');
+      else el.removeAttribute('open');
+    });
+  }
+  sync();
+  mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
 })();
 
 // Mobiles Menü ein-/ausklappen
