@@ -5,8 +5,8 @@ declare(strict_types=1);
  * GET  ?monat=YYYY-MM   -> Stundeneintraege des eingeloggten Trainers fuer den Monat
  *                          + ob der Monat bereits abgerechnet ist (dann gesperrt).
  * POST {datum, stunden} -> Stunden fuer einen Tag speichern (stunden=0 loescht den Eintrag).
- *                          Nur volle Stunden, nur fuer nicht bereits abgerechnete Monate,
- *                          nicht fuer Tage in der Zukunft.
+ *                          Stunden werden auf Viertelstunden gerundet (z.B. 1,5), nur fuer
+ *                          nicht bereits abgerechnete Monate, nicht fuer Tage in der Zukunft.
  */
 
 error_reporting(E_ALL);
@@ -74,14 +74,17 @@ if ($method === 'GET') {
 if ($method === 'POST') {
     $input = json_decode((string) file_get_contents('php://input'), true);
     $datum = is_array($input) && isset($input['datum']) && is_string($input['datum']) ? $input['datum'] : '';
-    $stunden = is_array($input) && isset($input['stunden']) && is_numeric($input['stunden']) ? (int) $input['stunden'] : null;
+    $stundenRoh = is_array($input) && isset($input['stunden']) && is_numeric($input['stunden']) ? (float) $input['stunden'] : null;
 
     if (!Validation::dateValid($datum)) {
         respond(400, ['success' => false, 'message' => 'Ungueltiges Datum.']);
     }
-    if ($stunden === null || $stunden < 0 || $stunden > 24) {
-        respond(400, ['success' => false, 'message' => 'Bitte volle Stunden zwischen 0 und 24 eintragen.']);
+    if ($stundenRoh === null || $stundenRoh < 0 || $stundenRoh > 24) {
+        respond(400, ['success' => false, 'message' => 'Bitte Stunden zwischen 0 und 24 eintragen.']);
     }
+    // Auf Viertelstunden runden (0.25 ist in Binaerfloats exakt darstellbar,
+    // daher keine Rundungsfehler bei der spaeteren Summenbildung).
+    $stunden = round($stundenRoh * 4) / 4;
 
     $heute = new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin'));
     $tag = new DateTimeImmutable($datum);

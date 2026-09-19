@@ -122,7 +122,7 @@ final class TrainerStore
 
     // --- Stundeneintraege ------------------------------------------------
 
-    /** @return array<int, array{trainerId:int,datum:string,stunden:int,aktualisiertAm:string}> */
+    /** @return array<int, array{trainerId:int,datum:string,stunden:float,aktualisiertAm:string}> */
     public static function stundenFuerMonat(int $trainerId, string $monat): array
     {
         return JsonFileStore::withLock(self::stundenPath(), ['eintraege' => []], function (array $data) use ($trainerId, $monat) {
@@ -134,7 +134,7 @@ final class TrainerStore
     }
 
     /** Setzt/aktualisiert die Stunden fuer einen Tag. $stunden === 0 loescht den Eintrag. */
-    public static function stundenSpeichern(int $trainerId, string $datum, int $stunden): void
+    public static function stundenSpeichern(int $trainerId, string $datum, float $stunden): void
     {
         JsonFileStore::withLock(self::stundenPath(), ['eintraege' => []], function (array $data) use ($trainerId, $datum, $stunden) {
             $data['eintraege'] = array_values(array_filter($data['eintraege'], function ($eintrag) use ($trainerId, $datum) {
@@ -195,7 +195,7 @@ final class TrainerStore
     }
 
     /** Schliesst eine Reservierung nach erfolgreichem Mailversand ab. */
-    public static function abrechnungAbschliessen(int $trainerId, string $monat, int $stunden, float $betrag): void
+    public static function abrechnungAbschliessen(int $trainerId, string $monat, float $stunden, float $betrag): void
     {
         JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat, $stunden, $betrag) {
             foreach ($data['abrechnungen'] as &$abrechnung) {

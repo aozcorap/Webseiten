@@ -34,6 +34,12 @@ function respond(int $httpCode, array $payload): never
     JsonResponse::send($httpCode, $payload);
 }
 
+/** Formatiert Stunden mit Komma statt Punkt, ohne unnoetige Nachkommastellen (1 statt 1,00; 1,5 statt 1,50). */
+function formatStundenDe(float $stunden): string
+{
+    return rtrim(rtrim(number_format($stunden, 2, ',', ''), '0'), ',');
+}
+
 TrainerSession::start();
 $trainerId = TrainerSession::currentTrainerId();
 if ($trainerId === null) {
@@ -106,19 +112,19 @@ try {
         $zeilen = '';
         foreach ($eintraege as $eintrag) {
             $tagFormatiert = (new DateTimeImmutable($eintrag['datum']))->format('d.m.Y');
-            $zeilen .= '<tr><td style="padding:4px 12px 4px 0;">' . htmlspecialchars($tagFormatiert, ENT_QUOTES, 'UTF-8') . '</td><td style="padding:4px 0;">' . $eintrag['stunden'] . ' Std.</td></tr>';
+            $zeilen .= '<tr><td style="padding:4px 12px 4px 0;">' . htmlspecialchars($tagFormatiert, ENT_QUOTES, 'UTF-8') . '</td><td style="padding:4px 0;">' . formatStundenDe($eintrag['stunden']) . ' Std.</td></tr>';
         }
 
         $bodyHtml = sprintf(
             '<p>Hallo,</p>' .
             '<p><strong>%s</strong> rechnet die Trainerstunden fuer <strong>%s</strong> ab:</p>' .
             '<table style="border-collapse:collapse;">%s</table>' .
-            '<p><strong>Gesamt: %d Stunden × %s €/Std. = %s €</strong></p>' .
+            '<p><strong>Gesamt: %s Stunden × %s €/Std. = %s €</strong></p>' .
             '<p>Sportliche Gruesse,<br>Boxring Wetterau 1983 e.V. – Trainer-Zeiterfassung</p>',
             htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($monatsName, ENT_QUOTES, 'UTF-8'),
             $zeilen,
-            $stundenGesamt,
+            formatStundenDe($stundenGesamt),
             number_format(TRAINER_STUNDENSATZ, 2, ',', '.'),
             number_format($betrag, 2, ',', '.')
         );

@@ -144,7 +144,7 @@
   <div id="app-card" style="display:none;">
     <div class="bw-card">
       <h2>Stunden erfassen</h2>
-      <p class="hint">Auf einen Tag klicken und die Stunden eintragen. Nur volle Stunden. Der aktuelle Monat kann erfasst, aber erst im Folgemonat abgerechnet werden.</p>
+      <p class="hint">Auf einen Tag klicken und die Stunden eintragen (auch mit Kommastellen, z. B. 1,5). Der aktuelle Monat kann erfasst, aber erst im Folgemonat abgerechnet werden.</p>
 
       <div class="cal-header">
         <button type="button" class="cal-nav-btn" id="cal-prev" aria-label="Vorheriger Monat">←</button>
@@ -169,8 +169,8 @@
   <div class="modal-card">
     <h3 id="tag-modal-titel">Stunden eintragen</h3>
     <div class="bw-field" style="margin-bottom:0;">
-      <label for="tag-modal-stunden">Stunden (volle Zahl)</label>
-      <input type="number" id="tag-modal-stunden" min="0" max="24" step="1" placeholder="0">
+      <label for="tag-modal-stunden">Stunden (z. B. 1,5)</label>
+      <input type="number" id="tag-modal-stunden" min="0" max="24" step="0.25" inputmode="decimal" placeholder="0">
     </div>
     <div class="modal-actions">
       <button type="button" class="bw-submit secondary" id="tag-modal-abbrechen">Abbrechen</button>
@@ -226,6 +226,15 @@
   var MONATSNAMEN = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 
   function monatKey(jahr, monatNr){ return jahr + "-" + String(monatNr).padStart(2, "0"); }
+
+  /** Formatiert Stunden mit Komma statt Punkt, ohne unnoetige Nachkommastellen (1 statt 1,00; 1,5 statt 1,50). */
+  function formatStunden(stunden){
+    var text = stunden.toFixed(2);
+    if(text.indexOf(".") !== -1){
+      text = text.replace(/0+$/, "").replace(/\.$/, "");
+    }
+    return text.replace(".", ",");
+  }
 
   tabLogin.addEventListener("click", function(){
     tabLogin.classList.add("active");
@@ -375,12 +384,12 @@
       var klassen = "cal-day" + (isHeute ? " today" : "") + (wert > 0 ? " hat-std" : "");
       html += '<button type="button" class="' + klassen + '" data-datum="' + datum + '"' + (deaktiviert ? " disabled" : "") + '>' +
         '<span class="num">' + tag + '</span>' +
-        (wert > 0 ? '<span class="std">' + wert + ' Std.</span>' : '') +
+        (wert > 0 ? '<span class="std">' + formatStunden(wert) + ' Std.</span>' : '') +
         '</button>';
     }
 
     calGrid.innerHTML = html;
-    monatSumme.textContent = summe + " Std.";
+    monatSumme.textContent = formatStunden(summe) + " Std.";
 
     calGrid.querySelectorAll("button[data-datum]:not(:disabled)").forEach(function(btn){
       btn.addEventListener("click", function(){
@@ -416,7 +425,7 @@
   function speichereStunden(datum, roherWert){
     statusBox.className = "";
     statusBox.textContent = "";
-    var stunden = parseInt(roherWert, 10);
+    var stunden = parseFloat(String(roherWert).replace(",", "."));
     if(isNaN(stunden) || stunden < 0){ stunden = 0; }
     if(stunden > 24){ stunden = 24; }
     tagModalSpeichern.disabled = true;
@@ -475,7 +484,7 @@
           var datumAbgerechnet = a && a.abgerechnetAm ? new Date(a.abgerechnetAm).toLocaleDateString("de-DE") : "";
           abrechnungCard.innerHTML = '<div class="abrechnung-info">' +
             '<div class="badge">✓ Bereits abgerechnet</div>' +
-            '<div class="details">' + (a ? a.stunden : 0) + ' Std. · ' + (a ? a.betrag.toFixed(2).replace(".", ",") : "0,00") + ' € · abgerechnet am ' + datumAbgerechnet + '</div>' +
+            '<div class="details">' + formatStunden(a ? a.stunden : 0) + ' Std. · ' + (a ? a.betrag.toFixed(2).replace(".", ",") : "0,00") + ' € · abgerechnet am ' + datumAbgerechnet + '</div>' +
             '</div>';
         }
         abrechnenBtn.style.display = "none";
@@ -522,7 +531,7 @@
         statusBox.className = "show err";
         return;
       }
-      statusBox.textContent = "Abrechnung verschickt: " + result.data.stunden + " Std. · " + result.data.betrag.toFixed(2).replace(".", ",") + " €.";
+      statusBox.textContent = "Abrechnung verschickt: " + formatStunden(result.data.stunden) + " Std. · " + result.data.betrag.toFixed(2).replace(".", ",") + " €.";
       statusBox.className = "show ok";
       ladeMonat(monat);
     }).catch(function(){

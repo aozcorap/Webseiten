@@ -144,8 +144,9 @@ Account statt eines geteilten Passworts.
    E-Mail mit einem Bestätigen/Ablehnen-Link - ein Klick genügt, kein
    eigener Login nötig. Der Trainer bekommt danach eine Benachrichtigung per
    Mail.
-3. Freigeschaltete Trainer können sich einloggen und für jeden Tag volle
-   Trainingsstunden eintragen (auch für den laufenden Monat).
+3. Freigeschaltete Trainer können sich einloggen und für jeden Tag
+   Trainingsstunden eintragen, auch mit Kommastellen in Viertelstunden-
+   Schritten (z. B. 1,5 Std.; auch für den laufenden Monat).
 4. Abrechnen geht nur für einen bereits abgeschlossenen Vormonat, nie für
    den aktuellen Monat, und pro Monat nur einmal. Dabei geht eine E-Mail mit
    Tagesliste, Stunden-Summe und Betrag an den Kassenwart (`NOTIFY_EMAIL`),
