@@ -205,15 +205,6 @@
   .hero-video-col{position:relative;}
   .hero-video-media{position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--line-now); background:#000;}
   .hero-video-media video{display:block; width:100%; height:auto;}
-  .hero-video-info{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; margin-top:14px;}
-  .hero-bg-cap{text-align:left; max-width:56%;}
-  .hero-bg-cap .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--amber); text-transform:uppercase; margin-bottom:6px;}
-  .hero-bg-cap p{font-size:14px; font-weight:500; line-height:1.4; letter-spacing:-0.01em; color:var(--text-now);}
-  .hero-bg-countdown{text-align:right; flex-shrink:0;
-    border:1px solid rgba(255,157,61,0.4); border-radius:14px; background:rgba(255,157,61,0.06); padding:10px 16px;}
-  .hero-bg-countdown b{display:block; font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:var(--amber); letter-spacing:-0.01em; margin-bottom:2px;}
-  .hero-bg-countdown span{font-size:11px; color:var(--muted-now); line-height:1.35; display:block; max-width:190px;}
-  @media(max-width:520px){ .hero-video-info{gap:10px;} .hero-bg-cap{max-width:52%;} }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
   .alert-pill{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;
@@ -221,8 +212,6 @@
   h1{font-size:clamp(26px,3.6vw,42px); margin-bottom:18px;}
   .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(14.5px,1.5vw,16.5px); color:var(--text-now); max-width:62ch; margin-bottom:24px; line-height:1.6;}
-  .lead-short{display:none;}
-  @media(max-width:640px){ .lead-full{display:none;} .lead-short{display:block;} }
   .actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:16px;}
   .btn{background:var(--lime); color:#07090D; font-weight:600; font-size:16px; padding:17px 30px; border-radius:999px;
     display:inline-flex; align-items:center; gap:10px; transition:transform .18s, box-shadow .18s; border:none; cursor:pointer; font-family:inherit;}
@@ -617,48 +606,12 @@
           <source src="./assets/word-addon-demo.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="hero-video-info">
-        <div class="hero-bg-cap">
-          <div class="k">⚠ Empfangspflicht läuft bereits</div>
-          <p>Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen.</p>
-        </div>
-        <div class="hero-bg-countdown">
-          <b id="cd1" class="mono">–</b>
-          <span>bis zur Ausstellungspflicht bei &gt;800.000&nbsp;€ Vorjahresumsatz (1.1.2027)</span>
-        </div>
-      </div>
     </div>
     <div class="hero-inner" data-rev>
-      <div class="alert-pill">⚠ Eine PDF-Rechnung ist keine E-Rechnung.</div>
-      <span class="kick" style="color:var(--amber);">Warum Sie JETZT handeln müssen</span>
-      <h1>Ihnen drohen Schadensersatzansprüche, verärgerte Gewerbekunden — und ein <span class="accent">Bußgeld</span> ist nicht ausgeschlossen.</h1>
-      <p class="lead lead-full">Sie sitzen in der Mitte einer Kette: Sie stellen Rechnungen an Ihre Gewerbekunden und empfangen Rechnungen von Ihren Lieferanten — beide Richtungen sind betroffen. Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen und zum Wettbewerber wechseln, der bereits E-Rechnung kann. Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil, haften Sie ihm gegenüber. Der Empfang einer E-Rechnung ist für Sie schon jetzt Pflicht — ohne Übergangsfrist, unabhängig vom Umsatz.</p>
-      <p class="lead lead-short">Sie stellen Rechnungen an Kunden und empfangen von Lieferanten — beide Richtungen sind betroffen. Kunden können Ihre PDF-Rechnung schon jetzt ablehnen. Der Empfang einer E-Rechnung ist für Sie bereits Pflicht.</p>
-
-      <script>
-        (function(){
-          function pad(n){ return String(n).padStart(2,'0'); }
-          function format(ms){
-            if (ms <= 0) return '0 Tage 00:00:00';
-            var totalSec = Math.floor(ms/1000);
-            var days = Math.floor(totalSec / 86400);
-            var h = Math.floor((totalSec % 86400) / 3600);
-            var m = Math.floor((totalSec % 3600) / 60);
-            var s = totalSec % 60;
-            return days + ' Tage ' + pad(h) + ':' + pad(m) + ':' + pad(s);
-          }
-          var a = document.getElementById('cd1');
-          var t1 = new Date('2027-01-01T00:00:00') - 0;
-          function tick(){
-            var now = Date.now();
-            if (a) a.textContent = format(t1 - now);
-          }
-          tick();
-          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-            setInterval(tick, 1000);
-          }
-        })();
-      </script>
+      <div class="alert-pill">⚠ Ab 2027 zählt eine PDF-Rechnung nicht mehr als E-Rechnung.</div>
+      <span class="kick" style="color:var(--amber);">Betrifft jeden B2B-Betrieb</span>
+      <h1>Ihnen drohen Schadensersatzansprüche und verärgerte Kunden — Ihr Word-Layout müssen Sie dafür nicht aufgeben.</h1>
+      <p class="lead">Sie stellen Rechnungen an Ihre Gewerbekunden und empfangen welche von Ihren Lieferanten — beide Richtungen sind betroffen. Der Empfang ist bereits Pflicht, das Ausstellen folgt ab 2027 bzw. 2028.</p>
 
       <div class="actions">
         <a href="#fcard" class="btn">
@@ -669,7 +622,7 @@
       </div>
       <div class="micro">
         <svg style="color:var(--amber);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Empfang seit 1.1.2025 Pflicht für alle Unternehmen · Ausstellung ab 2027 bzw. 2028 Pflicht — danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß
+        Empfang bereits seit 1.1.2025 Pflicht · Ausstellen ab 2027 (&gt;800.000&nbsp;€ Umsatz) bzw. 2028 (alle anderen)
       </div>
     </div>
     </div>
@@ -688,19 +641,19 @@
     <div class="objs" data-revs>
       <details class="obj">
         <summary><h3><span class="obj-num">01</span> Schadensersatz möglich, Bußgeld rechtlich noch nicht geklärt</h3></summary>
-        <p>Verstoßen Sie schuldhaft gegen die Pflicht und entsteht Ihrem Gewerbekunden dadurch ein finanzieller Nachteil (z.&nbsp;B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
+        <p>Entsteht Ihrem Gewerbekunden durch einen schuldhaften Verstoß ein finanzieller Nachteil (z.&nbsp;B. verlorener Vorsteuerabzug), haften Sie ihm gegenüber. Ob zusätzlich ein Bußgeld nach §26a UStG droht, ist unter Steuerrechtlern umstritten.</p>
       </details>
       <details class="obj">
         <summary><h3><span class="obj-num">02</span> Vorsteuerabzug-Risiko trifft beide Seiten</h3></summary>
-        <p>Sobald die Übergangsfrist Ihres Gewerbekunden abgelaufen ist — z.&nbsp;B. weil er selbst über 800.000&nbsp;€ Vorjahresumsatz liegt und schon ab 2027 zur E-Rechnung verpflichtet ist —, kann er von Ihnen eine konforme E-Rechnung verlangen. Ist Ihre Rechnung dann nicht konform, streicht das Finanzamt ihm die Vorsteuer. Umgekehrt gilt dasselbe: Liefert Ihr Lieferant Ihnen keine korrekte E-Rechnung, verlieren Sie selbst die Vorsteuer.</p>
+        <p>Läuft die Übergangsfrist Ihres Gewerbekunden ab, kann er eine konforme E-Rechnung von Ihnen verlangen — ist Ihre Rechnung dann nicht konform, streicht ihm das Finanzamt die Vorsteuer. Umgekehrt verlieren Sie selbst die Vorsteuer, wenn Ihr Lieferant Ihnen keine korrekte E-Rechnung liefert.</p>
       </details>
       <details class="obj">
         <summary><h3><span class="obj-num">03</span> Ihr Gewerbekunde kann Ihre PDF-Rechnung ablehnen und zum Wettbewerber wechseln</h3></summary>
-        <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen oder kurzfristig auf eine E-Rechnung umstellen — oder er sucht sich gleich einen Anbieter, der schon E-Rechnung kann.</p>
+        <p>Er muss eine PDF-Rechnung nicht akzeptieren. Lehnt er ab, müssen Sie auf Papier ausweichen oder kurzfristig umstellen — oder er sucht sich gleich einen Anbieter, der schon E-Rechnung kann.</p>
       </details>
       <details class="obj">
         <summary><h3><span class="obj-num">04</span> Zahlungsverzögerung und Kundenverlust</h3></summary>
-        <p>Eine abgelehnte Rechnung verzögert die Zahlung: Ihr Gewerbekunde zahlt oft erst, wenn eine korrekte E-Rechnung vorliegt, Skonto verfällt. Im schlimmsten Fall wechselt der verärgerte Kunde gleich ganz zum Anbieter, der es richtig macht.</p>
+        <p>Eine abgelehnte Rechnung verzögert die Zahlung — Ihr Gewerbekunde zahlt oft erst, wenn eine korrekte E-Rechnung vorliegt, Skonto verfällt. Im schlimmsten Fall wechselt er gleich ganz zum Anbieter, der es richtig macht.</p>
       </details>
     </div>
   </section>
@@ -762,7 +715,7 @@
     <div class="shead" id="wege-loesung" data-rev style="margin-top:var(--s5); scroll-margin-top:90px;">
       <span class="kick">Die Lösung</span>
       <h2>Beide Wege ohne Zusatzaufwand für Sie.</h2>
-      <p>Ob Umstieg auf eine Standardsoftware oder Add-on für Word: BüroKollege übernimmt die komplette Integration, die technische Anbindung und den gesamten Ablauf. Sie müssen nichts selbst konfigurieren.</p>
+      <p>Ob Umstieg auf eine Standardsoftware oder Add-on für Word: <b>BüroKollege übernimmt die komplette Integration</b> und die technische Anbindung. Sie müssen nichts selbst konfigurieren.</p>
     </div>
 
     <div class="feats feats-2" data-revs>
@@ -771,14 +724,14 @@
           <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
           <h3>Umstieg auf Standardsoftware</h3>
         </summary>
-        <p>Sie möchten auf eine Standardsoftware umsteigen (z.&nbsp;B. Lexoffice, sevDesk, easybill)? <b>Wir übernehmen die komplette Integration</b> für Sie — technische Anbindung, Vorbereitung und den gesamten Ablauf. Sie haben dabei keinen Zusatzaufwand.</p>
+        <p>Sie steigen auf eine Standardsoftware um (z.&nbsp;B. Lexoffice, sevDesk, easybill) — mit vertrautem Rechnungswesen statt Word-Vorlage.</p>
       </details>
       <details class="feat">
         <summary>
           <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           <h3>Add-on für Word</h3>
         </summary>
-        <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung für Ihre Kunden. <b>BüroKollege übernimmt die gesamte Integration</b> — auch den Empfang und die Archivierung von Lieferanten-Rechnungen. Sie müssen nichts selbst konfigurieren.</p>
+        <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung — inklusive Empfang und Archivierung von Lieferanten-Rechnungen.</p>
       </details>
     </div>
 
