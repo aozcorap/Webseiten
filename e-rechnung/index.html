@@ -217,8 +217,20 @@
   .hero-inner{position:relative; z-index:1; max-width:640px;}
   .alert-pill{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;
     letter-spacing:-0.01em; color:#1A1005; background:linear-gradient(120deg,#FFB05C,var(--amber)); padding:9px 16px; border-radius:999px; margin-bottom:16px;}
-  h1{font-size:clamp(26px,3.6vw,42px); margin-bottom:18px;}
+  h1{font-size:clamp(26px,3.6vw,42px); margin-bottom:22px;}
   .lead{font-size:clamp(14.5px,1.5vw,16.5px); color:var(--text-now); max-width:62ch; margin-bottom:24px; line-height:1.6;}
+
+  /* Zwei-Szenarien-Split im Hero: Umsatzschwelle entscheidet, welches Risiko konkret greift. */
+  .risk-split{display:flex; align-items:stretch; gap:14px; margin-bottom:22px;}
+  .risk-case{flex:1; border:1px solid rgba(255,157,61,0.35); border-radius:14px; padding:18px 18px 20px; background:rgba(255,157,61,0.06); display:flex; flex-direction:column;}
+  .rc-tag{font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--amber); margin-bottom:8px;}
+  .rc-headline{font-size:21px; font-weight:700; letter-spacing:-0.02em; color:var(--text-now); margin-bottom:8px; line-height:1.2;}
+  .rc-sub{font-size:13.5px; color:var(--muted-now); line-height:1.5;}
+  .risk-split-or{align-self:center; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted2-now); flex-shrink:0;}
+  @media(max-width:520px){
+    .risk-split{flex-direction:column; gap:0;}
+    .risk-split-or{padding:8px 0; align-self:flex-start; margin-left:18px;}
+  }
   .actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:16px;}
   .btn{background:var(--lime); color:#07090D; font-weight:600; font-size:16px; padding:17px 30px; border-radius:999px;
     display:inline-flex; align-items:center; gap:10px; transition:transform .18s, box-shadow .18s; border:none; cursor:pointer; font-family:inherit;}
@@ -620,7 +632,22 @@
     <div class="hero-inner" data-rev>
       <div class="alert-pill">⚠ Ab 2027 zählt eine PDF-Rechnung nicht mehr als E-Rechnung.</div>
       <span class="kick" style="color:var(--amber);">Zwei Szenarien, ein Risiko</span>
-      <h1>Über 800.000&nbsp;€ Umsatz? Ab 1.1.2027 zur E-Rechnung verpflichtet. Darunter? Ihr Kunde lehnt die PDF-Rechnung ab — und zahlt nicht.</h1>
+      <h1>Ganz gleich, wie groß Ihr Betrieb ist — das Risiko trifft Sie so oder so.</h1>
+
+      <div class="risk-split" data-revs>
+        <div class="risk-case">
+          <span class="rc-tag">Über 800.000&nbsp;€ Umsatz</span>
+          <strong class="rc-headline">Pflicht ab 1.1.2027</strong>
+          <span class="rc-sub">E-Rechnung ausstellen — sonst ist Ihre Rechnung nicht mehr ordnungsgemäß.</span>
+        </div>
+        <span class="risk-split-or">oder</span>
+        <div class="risk-case">
+          <span class="rc-tag">Unter 800.000&nbsp;€ Umsatz</span>
+          <strong class="rc-headline">Kunde lehnt ab</strong>
+          <span class="rc-sub">Ihr Gewerbekunde akzeptiert die PDF-Rechnung nicht — die Zahlung bleibt aus.</span>
+        </div>
+      </div>
+
       <p class="lead">Verstößt Ihr Gewerbekunde schuldhaft gegen seine Pflicht und entsteht Ihnen dadurch ein finanzieller Nachteil, haftet er Ihnen gegenüber — und umgekehrt. Skonto verfällt, Zahlungen verzögern sich, im schlimmsten Fall wechselt der verärgerte Kunde zum Wettbewerber.</p>
 
       <div class="actions">
