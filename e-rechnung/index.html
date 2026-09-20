@@ -209,9 +209,8 @@
   /* Nur auf Mobile: eigener Anreiz vor dem Video, da es dort vor dem gesamten Text steht. */
   @media(max-width:820px){
     .hero-video-lead{display:block; margin-bottom:12px;}
-    .hero-video-lead .k{display:block; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:.04em; color:var(--amber); margin-bottom:6px;}
-    .hero-video-lead p{font-size:16.5px; font-weight:700; letter-spacing:-0.015em; color:var(--text-now); line-height:1.4; margin-bottom:8px;}
-    .hero-video-lead .cta{display:block; font-size:13.5px; font-weight:600; color:var(--lime);}
+    .hero-video-lead p{font-size:16px; font-weight:600; letter-spacing:-0.01em; color:var(--text-now); line-height:1.4;}
+    .hero-video-lead p .hl{color:var(--lime); font-weight:700;}
   }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
@@ -619,9 +618,7 @@
     <div class="hero-grid">
     <div class="hero-video-col" data-rev>
       <div class="hero-video-lead">
-        <span class="k">⚠ Das drohende Risiko</span>
-        <p>Ab 2027 bzw. 2028 reicht eine reine PDF-Rechnung nicht mehr — verliert Ihr Kunde dadurch den Vorsteuerabzug, haften Sie ihm gegenüber.</p>
-        <span class="cta">▶ Jetzt ansehen: die Lösung in einem Klick</span>
+        <p><b class="hl">Video zeigt</b>, warum Sie als Unternehmer in 2027 ein Risiko haben, wenn Sie weiterhin PDF-Rechnungen verschicken.</p>
       </div>
       <div class="hero-video-media">
         <video controls preload="metadata" poster="./assets/word-addon-demo-poster.jpg" width="1920" height="1080">
@@ -630,9 +627,34 @@
       </div>
     </div>
     <div class="hero-inner" data-rev>
-      <div class="alert-pill">⚠ Ab 2027 zählt eine PDF-Rechnung nicht mehr als E-Rechnung.</div>
-      <span class="kick" style="color:var(--amber);">Zwei Szenarien, ein Risiko</span>
-      <h1>Verschicken Sie 2027 noch PDF-Rechnungen an Ihre B2B-Kunden? Dann haben Sie ein Problem — ganz gleich, wie groß Ihr Betrieb ist.</h1>
+      <div class="alert-pill">⚠ <span>Noch <b id="cd1" class="mono">–</b> bis zur E-Rechnungspflicht</span></div>
+      <span class="kick" style="color:var(--amber);">Sie verschicken noch PDF-Rechnungen an Ihre B2B-Kunden?</span>
+      <h1>Dann haben Sie ab dem 1.1.2027 ein großes Problem …</h1>
+
+      <script>
+        (function(){
+          function pad(n){ return String(n).padStart(2,'0'); }
+          function format(ms){
+            if (ms <= 0) return '0 Tage 00:00:00';
+            var totalSec = Math.floor(ms/1000);
+            var days = Math.floor(totalSec / 86400);
+            var h = Math.floor((totalSec % 86400) / 3600);
+            var m = Math.floor((totalSec % 3600) / 60);
+            var s = totalSec % 60;
+            return days + ' Tage ' + pad(h) + ':' + pad(m) + ':' + pad(s);
+          }
+          var a = document.getElementById('cd1');
+          var t1 = new Date('2027-01-01T00:00:00') - 0;
+          function tick(){
+            var now = Date.now();
+            if (a) a.textContent = format(t1 - now);
+          }
+          tick();
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+            setInterval(tick, 1000);
+          }
+        })();
+      </script>
 
       <div class="risk-split" data-revs>
         <div class="risk-case">
