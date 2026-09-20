@@ -45,6 +45,13 @@ Redesign-Entwurf für die Website von CC Dienstleistungen (Serkan Çimen), Handw
 - Bilder sind lizenzfreie Platzhalter (Pexels), vor einem Launch durch eigene Fotos zu ersetzen
 - Details siehe [cc-dienstleistungen-friedberg.de/README.md](cc-dienstleistungen-friedberg.de/README.md), offene Punkte siehe [OFFENE-PUNKTE-cc-dienstleistungen-friedberg.md](OFFENE-PUNKTE-cc-dienstleistungen-friedberg.md)
 
+### [e-rechnung](e-rechnung/index.html)
+Lead-Gen-Landingpage "BüroKollege.de" zur E-Rechnungspflicht 2027/2028 — Word-Layout bleibt, BüroKollege übernimmt die Umstellung.
+
+- Kurz-URL für Marketing/Weitergabe (z. B. WhatsApp): **https://tinyurl.com/PDF-eRechnung** → https://aozcorap.github.io/Webseiten/e-rechnung/
+- Erklärvideo im Hero (Desktop: neben dem Text, Mobile: ganz oben vor allen Texten)
+- Formular sendet an Formspree; Auswahlfeld "Was betrifft Sie am meisten?" sendet den vollen Options-Text (nicht nur einen Kurzcode)
+
 ### [everlast-entwuerfe](everlast-entwuerfe/) & [everlast-ai-landingpage](everlast-ai-landingpage/)
 Vorstufen zu buerokollege-ai: drei Design-Entwürfe (dunkel/hell/kräftig) sowie eine erste, verworfene Überarbeitung. Nicht mehr aktiv gepflegt, siehe [.claude/STATE.md](.claude/STATE.md) für Details.
 
