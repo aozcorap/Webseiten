@@ -350,6 +350,13 @@
   .feat p{color:var(--muted-now); font-size:15px; line-height:1.6;}
   .feat p b{color:var(--lime); font-weight:700;}
 
+  /* VIDEO-DEMO */
+  .video-demo{margin-top:var(--s4); border:1px solid var(--line-now); border-radius:18px; padding:20px; background:linear-gradient(180deg, var(--surface), var(--bg-2));}
+  .video-demo-media{border-radius:12px; overflow:hidden; border:1px solid var(--line-now); background:#000;}
+  .video-demo-media video{display:block; width:100%; height:auto;}
+  .video-demo-cap{margin-top:16px; color:var(--muted-now); font-size:15px; line-height:1.6;}
+  @media(max-width:640px){ .video-demo{padding:14px; margin-top:var(--s3);} .video-demo-cap{font-size:14px; margin-top:12px;} }
+
   /* CASES */
   .cases{display:flex; flex-direction:column;}
   .case{display:grid; grid-template-columns:150px 1fr 1fr; gap:32px; padding:30px 0; border-top:1px solid var(--line-now); align-items:start;}
@@ -772,6 +779,15 @@
         </summary>
         <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung für Ihre Kunden. <b>BüroKollege übernimmt die gesamte Integration</b> — auch den Empfang und die Archivierung von Lieferanten-Rechnungen. Sie müssen nichts selbst konfigurieren.</p>
       </details>
+    </div>
+
+    <div class="video-demo" data-rev>
+      <div class="video-demo-media">
+        <video controls preload="metadata" poster="./assets/word-addon-demo-poster.jpg" width="1920" height="1080">
+          <source src="./assets/word-addon-demo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="video-demo-cap">So funktioniert das Word-Add-on: ausfüllen wie gewohnt, ein Klick — die Rechnung durchläuft automatisch zwei unabhängige Prüfungen (PDF/A-Prüfprogramm und KoSIT-Prüfprogramm) und liegt danach als PDF/A-3 mit eingebetteten ZUGFeRD-Daten vor.</p>
     </div>
 
   </section>
