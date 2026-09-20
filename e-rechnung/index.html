@@ -951,11 +951,11 @@
             <label for="f-fresser">Was betrifft Sie am meisten? <span class="req" aria-hidden="true">*</span></label>
             <select id="f-fresser" name="zeitfresser" required aria-required="true" aria-describedby="e-fresser">
               <option value="">Bitte auswählen</option>
-              <option value="ausstellen">Ich muss bald E-Rechnungen ausstellen</option>
-              <option value="empfangen">Ich muss E-Rechnungen empfangen/archivieren können</option>
-              <option value="beides">Beides betrifft mich</option>
-              <option value="unsicher">Ich weiß noch nicht, welche Frist für mich gilt</option>
-              <option value="anderes">Etwas anderes</option>
+              <option value="Ich muss bald E-Rechnungen ausstellen">Ich muss bald E-Rechnungen ausstellen</option>
+              <option value="Ich muss E-Rechnungen empfangen/archivieren können">Ich muss E-Rechnungen empfangen/archivieren können</option>
+              <option value="Beides betrifft mich">Beides betrifft mich</option>
+              <option value="Ich weiß noch nicht, welche Frist für mich gilt">Ich weiß noch nicht, welche Frist für mich gilt</option>
+              <option value="Etwas anderes">Etwas anderes</option>
             </select>
             <span class="ferr" id="e-fresser" role="alert"></span>
           </div>
@@ -1137,7 +1137,7 @@
   var fresserEl0 = document.getElementById('f-fresser');
   var anderesWrap = document.getElementById('f-anderes-wrap');
   fresserEl0.addEventListener('change', function(){
-    anderesWrap.hidden = fresserEl0.value !== 'anderes';
+    anderesWrap.hidden = fresserEl0.value !== 'Etwas anderes';
   });
 
   Object.keys(rules).forEach(function(id){
