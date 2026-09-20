@@ -194,21 +194,26 @@
   .hero{position:relative; padding:72px 0 76px; overflow:hidden;}
   @media(max-width:820px){ .hero{padding:32px 0 44px;} }
 
-  .hero.stage-1 .hero-bg{position:absolute !important; inset:0; z-index:0;}
-  .hero-bg img{position:absolute; top:0; right:0; width:62%; height:100%; object-fit:cover; object-position:center;
-    filter:brightness(0.55) saturate(0.85);}
-  .hero-bg-scrim{position:absolute; inset:0;
-    background:linear-gradient(90deg, var(--bg-now) 0%, var(--bg-now) 20%, rgba(7,9,13,0.78) 32%, rgba(7,9,13,0.5) 44%, rgba(7,9,13,0.28) 56%, rgba(7,9,13,0.28) 100%),
-      linear-gradient(0deg, rgba(7,9,13,0.6) 0%, transparent 30%);}
-  .hero-bg-cap{position:absolute; right:28px; bottom:26px; text-align:right; max-width:44%; z-index:1;}
-  .hero-bg-cap .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--lime); text-transform:uppercase; margin-bottom:7px; text-shadow:0 2px 10px rgba(0,0,0,0.6);}
-  .hero-bg-cap p{font-size:15px; font-weight:500; line-height:1.4; letter-spacing:-0.01em; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,0.7);}
-  .hero-bg-countdown{position:absolute; right:28px; top:26px; text-align:right; max-width:280px; z-index:1;
-    border:1px solid rgba(255,157,61,0.4); border-radius:14px; background:rgba(7,9,13,0.55); backdrop-filter:blur(6px); padding:14px 18px;}
-  .hero-bg-countdown b{display:block; font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:var(--amber); letter-spacing:-0.01em; margin-bottom:4px;}
-  .hero-bg-countdown span{font-size:12px; color:#E8ECEF; line-height:1.4; display:block; text-shadow:0 2px 10px rgba(0,0,0,0.6);}
-  /* Auf Mobile wirkt das Foto als abgetrennter Streifen statt als Hintergrund - lieber ganz weglassen. */
-  @media(max-width:820px){ .hero-bg{display:none;} }
+  /* Hero-Grid: Video zuerst im Markup (= zuoberst auf Mobile), auf Desktop
+     per order rechts neben den Text gestellt. */
+  .hero-grid{display:grid; grid-template-columns:1fr; gap:28px; position:relative; z-index:1;}
+  @media(min-width:821px){
+    .hero-grid{grid-template-columns:1.05fr 1fr; gap:48px; align-items:center;}
+    .hero-video-col{order:2;}
+    .hero-inner{order:1;}
+  }
+  .hero-video-col{position:relative;}
+  .hero-video-media{position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--line-now); background:#000;}
+  .hero-video-media video{display:block; width:100%; height:auto;}
+  .hero-video-info{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; margin-top:14px;}
+  .hero-bg-cap{text-align:left; max-width:56%;}
+  .hero-bg-cap .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--amber); text-transform:uppercase; margin-bottom:6px;}
+  .hero-bg-cap p{font-size:14px; font-weight:500; line-height:1.4; letter-spacing:-0.01em; color:var(--text-now);}
+  .hero-bg-countdown{text-align:right; flex-shrink:0;
+    border:1px solid rgba(255,157,61,0.4); border-radius:14px; background:rgba(255,157,61,0.06); padding:10px 16px;}
+  .hero-bg-countdown b{display:block; font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:var(--amber); letter-spacing:-0.01em; margin-bottom:2px;}
+  .hero-bg-countdown span{font-size:11px; color:var(--muted-now); line-height:1.35; display:block; max-width:190px;}
+  @media(max-width:520px){ .hero-video-info{gap:10px;} .hero-bg-cap{max-width:52%;} }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
   .alert-pill{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;
@@ -349,13 +354,6 @@
   .feat h3{font-size:19px; margin-bottom:10px;}
   .feat p{color:var(--muted-now); font-size:15px; line-height:1.6;}
   .feat p b{color:var(--lime); font-weight:700;}
-
-  /* VIDEO-DEMO */
-  .video-demo{margin-top:var(--s4); border:1px solid var(--line-now); border-radius:18px; padding:20px; background:linear-gradient(180deg, var(--surface), var(--bg-2));}
-  .video-demo-media{border-radius:12px; overflow:hidden; border:1px solid var(--line-now); background:#000;}
-  .video-demo-media video{display:block; width:100%; height:auto;}
-  .video-demo-cap{margin-top:16px; color:var(--muted-now); font-size:15px; line-height:1.6;}
-  @media(max-width:640px){ .video-demo{padding:14px; margin-top:var(--s3);} .video-demo-cap{font-size:14px; margin-top:12px;} }
 
   /* CASES */
   .cases{display:flex; flex-direction:column;}
@@ -611,23 +609,25 @@
 </nav>
 
 <section id="problem" class="hero stage-1">
-  <div class="hero-bg">
-    <picture>
-      <source media="(max-width:820px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-      <img src="./assets/hero-papierkram.jpg" alt="[TODO: Kunde liefert — Foto passend zum Thema E-Rechnung/Papierkram]" fetchpriority="high">
-    </picture>
-    <div class="hero-bg-scrim"></div>
-    <div class="hero-bg-countdown">
-      <b id="cd1" class="mono">–</b>
-      <span>bis zur Ausstellungspflicht bei &gt;800.000&nbsp;€ Vorjahresumsatz (1.1.2027)</span>
-    </div>
-    <div class="hero-bg-cap">
-      <div class="k" style="color:var(--amber);">⚠ Empfangspflicht läuft bereits</div>
-      <p>Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen.</p>
-    </div>
-  </div>
-
   <div class="wrap">
+    <div class="hero-grid">
+    <div class="hero-video-col" data-rev>
+      <div class="hero-video-media">
+        <video controls preload="metadata" poster="./assets/word-addon-demo-poster.jpg" width="1920" height="1080">
+          <source src="./assets/word-addon-demo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-video-info">
+        <div class="hero-bg-cap">
+          <div class="k">⚠ Empfangspflicht läuft bereits</div>
+          <p>Ihre Gewerbekunden können Ihre PDF-Rechnung schon jetzt ablehnen.</p>
+        </div>
+        <div class="hero-bg-countdown">
+          <b id="cd1" class="mono">–</b>
+          <span>bis zur Ausstellungspflicht bei &gt;800.000&nbsp;€ Vorjahresumsatz (1.1.2027)</span>
+        </div>
+      </div>
+    </div>
     <div class="hero-inner" data-rev>
       <div class="alert-pill">⚠ Eine PDF-Rechnung ist keine E-Rechnung.</div>
       <span class="kick" style="color:var(--amber);">Warum Sie JETZT handeln müssen</span>
@@ -671,6 +671,7 @@
         <svg style="color:var(--amber);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         Empfang seit 1.1.2025 Pflicht für alle Unternehmen · Ausstellung ab 2027 bzw. 2028 Pflicht — danach ist Ihre PDF-Rechnung nicht mehr ordnungsgemäß
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -779,15 +780,6 @@
         </summary>
         <p>Ihr Word-Layout bleibt zu 100&nbsp;% erhalten. Ein Klick erzeugt automatisch die E-Rechnung für Ihre Kunden. <b>BüroKollege übernimmt die gesamte Integration</b> — auch den Empfang und die Archivierung von Lieferanten-Rechnungen. Sie müssen nichts selbst konfigurieren.</p>
       </details>
-    </div>
-
-    <div class="video-demo" data-rev>
-      <div class="video-demo-media">
-        <video controls preload="metadata" poster="./assets/word-addon-demo-poster.jpg" width="1920" height="1080">
-          <source src="./assets/word-addon-demo.mp4" type="video/mp4">
-        </video>
-      </div>
-      <p class="video-demo-cap">So funktioniert das Word-Add-on: ausfüllen wie gewohnt, ein Klick — die Rechnung durchläuft automatisch zwei unabhängige Prüfungen (PDF/A-Prüfprogramm und KoSIT-Prüfprogramm) und liegt danach als PDF/A-3 mit eingebetteten ZUGFeRD-Daten vor.</p>
     </div>
 
   </section>
