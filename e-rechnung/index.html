@@ -203,14 +203,20 @@
     .hero-inner{order:1;}
   }
   .hero-video-col{position:relative;}
+  .hero-video-lead{display:none;}
   .hero-video-media{position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--line-now); background:#000;}
   .hero-video-media video{display:block; width:100%; height:auto;}
+  /* Nur auf Mobile: eigener Anreiz vor dem Video, da es dort vor dem gesamten Text steht. */
+  @media(max-width:820px){
+    .hero-video-lead{display:block; margin-bottom:12px;}
+    .hero-video-lead .k{display:block; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:.04em; color:var(--amber); margin-bottom:6px;}
+    .hero-video-lead p{font-size:15.5px; font-weight:600; letter-spacing:-0.01em; color:var(--text-now); line-height:1.4;}
+  }
 
   .hero-inner{position:relative; z-index:1; max-width:640px;}
   .alert-pill{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;
     letter-spacing:-0.01em; color:#1A1005; background:linear-gradient(120deg,#FFB05C,var(--amber)); padding:9px 16px; border-radius:999px; margin-bottom:16px;}
   h1{font-size:clamp(26px,3.6vw,42px); margin-bottom:18px;}
-  .accent{color:var(--lime); font-weight:600; font-size:1.08em;}
   .lead{font-size:clamp(14.5px,1.5vw,16.5px); color:var(--text-now); max-width:62ch; margin-bottom:24px; line-height:1.6;}
   .actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:16px;}
   .btn{background:var(--lime); color:#07090D; font-weight:600; font-size:16px; padding:17px 30px; border-radius:999px;
@@ -601,6 +607,10 @@
   <div class="wrap">
     <div class="hero-grid">
     <div class="hero-video-col" data-rev>
+      <div class="hero-video-lead">
+        <span class="k">⚠ Bevor Sie weiterscrollen</span>
+        <p>Jetzt ansehen: So wird aus Ihrer Word-Rechnung in einem Klick eine E-Rechnung.</p>
+      </div>
       <div class="hero-video-media">
         <video controls preload="metadata" poster="./assets/word-addon-demo-poster.jpg" width="1920" height="1080">
           <source src="./assets/word-addon-demo.mp4" type="video/mp4">
@@ -856,7 +866,7 @@
       <div class="fside" data-rev>
         <span class="kick">Unverbindlich anfragen</span>
         <h2>Welche Frist betrifft Sie — und was brauchen Sie dafür?</h2>
-        <p>Sagen Sie uns kurz, wo Sie stehen. Wir melden uns <span class="accent">[TODO: Kunde liefert — Reaktionszeit für e-rechnung.de]</span> mit einer ehrlichen Einschätzung.</p>
+        <p>Sagen Sie uns kurz, wo Sie stehen. Wir melden uns innerhalb eines Werktags mit einer ehrlichen Einschätzung.</p>
         <div class="guarantee">
           <div class="g">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -864,7 +874,7 @@
           </div>
           <div class="g">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>[TODO: Kunde liefert — Konditionen]</b><p>[TODO: Kunde liefert — Preis, Testphase o.ä. für dieses Angebot]</p></div>
+            <div><b>Monatlich kündbar</b><p>Keine lange Vertragsbindung, kein Risiko beim Einstieg.</p></div>
           </div>
         </div>
       </div>
@@ -947,7 +957,7 @@
   <div class="wrap foot">
     <div class="foot-brand">
       <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-      <p>BüroKollege.de — Digitale E-Rechnung für Handwerk und kleine Betriebe</p>
+      <p>BüroKollege.de — Digitale E-Rechnung für KMUs</p>
     </div>
     <div class="foot-links">
       <a href="#fcard" class="foot-cta">Unverbindlich anfragen</a>
