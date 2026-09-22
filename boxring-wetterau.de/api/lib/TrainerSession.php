@@ -15,6 +15,10 @@ final class TrainerSession
         if (session_status() === PHP_SESSION_ACTIVE) {
             return;
         }
+        // Eigener Cookie-Name, getrennt von AdminSession - siehe Kommentar
+        // dort (sonst teilen sich beide Bereiche ueber PHPSESSID dasselbe
+        // $_SESSION-Array und eine Rolle "erbt" die andere).
+        session_name('bw_trainer_sess');
         session_set_cookie_params([
             'lifetime' => 60 * 60 * 24 * 30, // 30 Tage - Trainer sollen nicht staendig neu einloggen muessen
             'path' => '/',

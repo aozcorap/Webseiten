@@ -74,6 +74,22 @@
   .modal-card h3{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:0.3px;margin:0 0 20px;}
   .modal-actions{display:flex;gap:10px;margin-top:20px;}
   .modal-actions .bw-submit{margin-top:0;}
+
+  .trainer-row{border-radius:14px;border:1px solid rgba(242,237,232,0.08);padding:18px 20px;margin-bottom:12px;}
+  .trainer-row .name{font-weight:700;font-size:15px;}
+  .trainer-row .email{font-size:13px;color:#c4bdb5;margin-top:2px;}
+  .trainer-row .meta{font-size:12px;color:#8f887f;margin-top:6px;}
+  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-left:8px;vertical-align:2px;}
+  .badge.pending{background:rgba(232,201,79,0.16);color:#e8c94f;}
+  .badge.aktiv{background:rgba(76,175,80,0.16);color:#8fd694;}
+  .badge.abgelehnt{background:rgba(232,57,79,0.16);color:#f2a4ae;}
+  .row-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .row-actions button{font-family:inherit;font-size:13px;font-weight:600;border-radius:999px;padding:8px 16px;cursor:pointer;border:1px solid rgba(242,237,232,0.3);background:none;color:#f2ede8;}
+  .row-actions button:hover:not(:disabled){border-color:#e8394f;color:#e8394f;}
+  .row-actions button:disabled{opacity:0.5;cursor:not-allowed;}
+  .row-actions button.gruen:hover:not(:disabled){border-color:#2e9e4f;color:#8fd694;}
+  .row-actions button.rot:hover:not(:disabled){border-color:#e8394f;color:#f2a4ae;}
+  .empty-hint{font-size:14px;color:#c4bdb5;}
 </style>
 </head>
 <body>
@@ -101,8 +117,8 @@
 
     <form id="login-form">
       <div class="bw-field">
-        <label for="l-email">E-Mail</label>
-        <input type="email" id="l-email" name="email" required autocomplete="username">
+        <label for="l-email">E-Mail (Trainer) oder Benutzername (Vorstand)</label>
+        <input type="text" id="l-email" name="email" required autocomplete="username">
       </div>
       <div class="bw-field" style="margin-bottom:0;">
         <label for="l-passwort">Passwort</label>
@@ -110,6 +126,28 @@
         <div class="bw-error" id="login-error"></div>
       </div>
       <button type="submit" class="bw-submit" id="login-submit" style="margin-top:20px;">Einloggen</button>
+      <button type="button" class="bw-submit secondary" id="show-vergessen-btn" style="margin-top:10px;">Passwort vergessen?</button>
+    </form>
+
+    <form id="vergessen-form" style="display:none;">
+      <p class="hint" style="margin-bottom:20px;">Gib deine E-Mail-Adresse ein - falls dafür ein Account existiert, bekommst du einen Link zum Zurücksetzen des Passworts.</p>
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="v-email">E-Mail</label>
+        <input type="email" id="v-email" name="email" required autocomplete="username">
+        <div class="bw-error" id="vergessen-error"></div>
+      </div>
+      <button type="submit" class="bw-submit" id="vergessen-submit" style="margin-top:20px;">Link anfordern</button>
+      <button type="button" class="bw-submit secondary" id="hide-vergessen-btn" style="margin-top:10px;">Zurück zum Login</button>
+    </form>
+
+    <form id="reset-form" style="display:none;">
+      <p class="hint" style="margin-bottom:20px;">Neues Passwort für deinen Trainer-Account vergeben.</p>
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="reset-passwort">Neues Passwort (mind. 8 Zeichen)</label>
+        <input type="password" id="reset-passwort" name="passwort" minlength="8" required autocomplete="new-password">
+        <div class="bw-error" id="reset-error"></div>
+      </div>
+      <button type="submit" class="bw-submit" id="reset-submit" style="margin-top:20px;">Passwort setzen</button>
     </form>
 
     <form id="register-form" style="display:none;">
@@ -163,6 +201,15 @@
       <button type="button" class="bw-submit" id="abrechnen-btn" style="margin-top:16px;display:none;">Monat abrechnen</button>
     </div>
   </div>
+
+  <div id="admin-card" style="display:none;">
+    <div class="bw-card">
+      <h2>Trainer-Verwaltung</h2>
+      <p class="hint">Übersicht aller registrierten Trainer-Accounts, Freigabe und Passwort-Reset.</p>
+      <div id="admin-status"></div>
+      <div id="trainer-liste"></div>
+    </div>
+  </div>
 </main>
 
 <div class="modal-overlay hidden" id="tag-modal">
@@ -185,7 +232,12 @@
 
   var authCard = document.getElementById("auth-card");
   var appCard = document.getElementById("app-card");
+  var adminCard = document.getElementById("admin-card");
   var logoutBtn = document.getElementById("logout-btn");
+  var adminStatusBox = document.getElementById("admin-status");
+  var trainerListe = document.getElementById("trainer-liste");
+  var aktuellerModus = null; // "trainer" | "admin"
+  var STATUS_LABEL = {pending: "Wartet auf Freigabe", aktiv: "Aktiv", abgelehnt: "Abgelehnt"};
 
   var tabLogin = document.getElementById("tab-login");
   var tabRegister = document.getElementById("tab-register");
@@ -195,6 +247,16 @@
   var loginSubmit = document.getElementById("login-submit");
   var registerError = document.getElementById("register-error");
   var registerSubmit = document.getElementById("register-submit");
+
+  var bwTabs = document.querySelector(".bw-tabs");
+  var showVergessenBtn = document.getElementById("show-vergessen-btn");
+  var hideVergessenBtn = document.getElementById("hide-vergessen-btn");
+  var vergessenForm = document.getElementById("vergessen-form");
+  var vergessenError = document.getElementById("vergessen-error");
+  var vergessenSubmit = document.getElementById("vergessen-submit");
+  var resetForm = document.getElementById("reset-form");
+  var resetError = document.getElementById("reset-error");
+  var resetSubmit = document.getElementById("reset-submit");
 
   var calTitle = document.getElementById("cal-title");
   var calGrid = document.getElementById("cal-grid");
@@ -250,8 +312,10 @@
   });
 
   function showLoggedIn(){
+    aktuellerModus = "trainer";
     authCard.style.display = "none";
     appCard.style.display = "block";
+    adminCard.style.display = "none";
     logoutBtn.style.display = "inline-block";
     if(aktuellesJahr === undefined){
       var heute = new Date();
@@ -261,40 +325,174 @@
     calNext.disabled = monatKey(aktuellesJahr, aktuellerMonatNr) >= aktuellerMonat;
     ladeMonat(monatKey(aktuellesJahr, aktuellerMonatNr));
   }
+  function showAdminLoggedIn(){
+    aktuellerModus = "admin";
+    authCard.style.display = "none";
+    appCard.style.display = "none";
+    adminCard.style.display = "block";
+    logoutBtn.style.display = "inline-block";
+    ladeTrainerListe();
+  }
   function showLoggedOut(){
+    aktuellerModus = null;
     authCard.style.display = "block";
     appCard.style.display = "none";
+    adminCard.style.display = "none";
     logoutBtn.style.display = "none";
   }
 
-  fetch("./api/trainer-session.php").then(function(res){ return res.json(); }).then(function(data){
-    if(data && data.loggedIn){ showLoggedIn(); }
-  }).catch(function(){});
+  function showVergessen(){
+    loginForm.style.display = "none";
+    vergessenForm.style.display = "block";
+    bwTabs.style.display = "none";
+  }
+  function showLogin(){
+    vergessenForm.style.display = "none";
+    resetForm.style.display = "none";
+    loginForm.style.display = "block";
+    bwTabs.style.display = "flex";
+  }
+  showVergessenBtn.addEventListener("click", showVergessen);
+  hideVergessenBtn.addEventListener("click", showLogin);
 
-  loginForm.addEventListener("submit", function(evt){
+  vergessenForm.addEventListener("submit", function(evt){
     evt.preventDefault();
-    loginError.classList.remove("show");
-    loginSubmit.disabled = true;
-    loginSubmit.textContent = "Wird geprüft …";
-    fetch("./api/trainer-login.php", {
+    vergessenError.classList.remove("show");
+    vergessenSubmit.disabled = true;
+    vergessenSubmit.textContent = "Wird gesendet …";
+    fetch("./api/trainer-passwort-vergessen.php", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        email: document.getElementById("l-email").value,
-        passwort: document.getElementById("l-passwort").value
-      })
+      body: JSON.stringify({email: document.getElementById("v-email").value})
     }).then(function(res){
       return res.json().then(function(data){ return {ok: res.ok, data: data}; });
     }).then(function(result){
-      loginSubmit.disabled = false;
-      loginSubmit.textContent = "Einloggen";
+      vergessenSubmit.disabled = false;
+      vergessenSubmit.textContent = "Link anfordern";
+      vergessenForm.reset();
+      vergessenError.className = "bw-error show";
+      vergessenError.style.color = result.ok && result.data && result.data.success ? "#8fd694" : "";
+      vergessenError.textContent = (result.data && result.data.message) || "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+    }).catch(function(){
+      vergessenSubmit.disabled = false;
+      vergessenSubmit.textContent = "Link anfordern";
+      vergessenError.style.color = "";
+      vergessenError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      vergessenError.classList.add("show");
+    });
+  });
+
+  var resetToken = new URLSearchParams(window.location.search).get("reset");
+  if(resetToken){
+    bwTabs.style.display = "none";
+    loginForm.style.display = "none";
+    resetForm.style.display = "block";
+  }
+
+  resetForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    resetError.classList.remove("show");
+    resetSubmit.disabled = true;
+    resetSubmit.textContent = "Wird gespeichert …";
+    fetch("./api/trainer-passwort-reset.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({token: resetToken, passwort: document.getElementById("reset-passwort").value})
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      resetSubmit.disabled = false;
+      resetSubmit.textContent = "Passwort setzen";
       if(result.ok && result.data && result.data.success){
+        window.history.replaceState({}, "", window.location.pathname);
+        resetForm.style.display = "none";
+        if(result.data.loggedIn){
+          showLoggedIn();
+        } else {
+          resetError.className = "bw-error show";
+          resetError.style.color = "#8fd694";
+          resetError.textContent = "Passwort gesetzt. Dein Account wartet aber noch auf Freigabe durch den Vorstand/Kassenwart - danach kannst du dich einloggen.";
+          bwTabs.style.display = "flex";
+          loginForm.style.display = "block";
+          loginForm.insertBefore(resetError, loginForm.firstChild);
+        }
+      } else {
+        resetError.textContent = (result.data && result.data.message) || "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+        resetError.classList.add("show");
+      }
+    }).catch(function(){
+      resetSubmit.disabled = false;
+      resetSubmit.textContent = "Passwort setzen";
+      resetError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      resetError.classList.add("show");
+    });
+  });
+
+  fetch("./api/trainer-session.php").then(function(res){ return res.json(); }).then(function(data){
+    if(data && data.loggedIn){ showLoggedIn(); return; }
+    fetch("./api/mitglied-session.php").then(function(res){ return res.json(); }).then(function(adminData){
+      if(adminData && adminData.loggedIn){ showAdminLoggedIn(); }
+    }).catch(function(){});
+  }).catch(function(){});
+
+  /** Versucht zuerst den Trainer-Login, bei falschem Passwort/unbekannter
+   * E-Mail zusaetzlich den Admin-Login (geteiltes Vorstand/Kassenwart-
+   * Passwort) - eine Login-Maske fuer beide Zugaenge, damit niemand
+   * zwischen zwei Seiten wechseln muss. */
+  loginForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    loginError.classList.remove("show");
+    var kennung = document.getElementById("l-email").value;
+    var passwort = document.getElementById("l-passwort").value;
+    loginSubmit.disabled = true;
+    loginSubmit.textContent = "Wird geprüft …";
+
+    fetch("./api/trainer-login.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: kennung, passwort: passwort})
+    }).then(function(res){
+      return res.json().then(function(data){ return {status: res.status, data: data}; });
+    }).then(function(trainerResult){
+      if(trainerResult.data && trainerResult.data.success){
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = "Einloggen";
         document.getElementById("l-passwort").value = "";
         showLoggedIn();
-      } else {
-        loginError.textContent = (result.data && result.data.message) || "E-Mail-Adresse oder Passwort falsch.";
-        loginError.classList.add("show");
+        return;
       }
+      // Bei JEDEM Trainer-Fehlschlag (nicht nur falschem Passwort) zusaetzlich
+      // den Admin-Login versuchen - auch wenn der Trainer-Account eindeutig
+      // pending/abgelehnt ist (Status 403). Sonst waere die Gesamt-Antwortzeit
+      // ein Seitenkanal: eine einzelne schnelle Antwort wuerde verraten, dass
+      // die eingegebene E-Mail zu einem pending/abgelehnten Trainer-Account
+      // gehoert, waehrend eine unbekannte E-Mail durch den zusaetzlichen
+      // Roundtrip spuerbar laenger braucht.
+      fetch("./api/mitglied-login.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({username: kennung, password: passwort})
+      }).then(function(res){
+        return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+      }).then(function(adminResult){
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = "Einloggen";
+        if(adminResult.ok && adminResult.data && adminResult.data.success){
+          document.getElementById("l-passwort").value = "";
+          showAdminLoggedIn();
+        } else if(trainerResult.status === 403){
+          loginError.textContent = trainerResult.data.message;
+          loginError.classList.add("show");
+        } else {
+          loginError.textContent = "E-Mail/Benutzername oder Passwort falsch.";
+          loginError.classList.add("show");
+        }
+      }).catch(function(){
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = "Einloggen";
+        loginError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+        loginError.classList.add("show");
+      });
     }).catch(function(){
       loginSubmit.disabled = false;
       loginSubmit.textContent = "Einloggen";
@@ -343,8 +541,135 @@
   });
 
   logoutBtn.addEventListener("click", function(){
-    fetch("./api/trainer-logout.php", {method: "POST"}).then(function(){ showLoggedOut(); }).catch(function(){ showLoggedOut(); });
+    var logoutUrl = aktuellerModus === "admin" ? "./api/mitglied-logout.php" : "./api/trainer-logout.php";
+    fetch(logoutUrl, {method: "POST"}).then(function(){ showLoggedOut(); }).catch(function(){ showLoggedOut(); });
   });
+
+  function escapeHtml(str){
+    var div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatDatumZeit(iso){
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString("de-DE") + " " + d.toLocaleTimeString("de-DE", {hour: "2-digit", minute: "2-digit"});
+  }
+
+  function zeigeAdminStatus(text, ok){
+    adminStatusBox.textContent = text;
+    adminStatusBox.className = "show " + (ok ? "ok" : "err");
+  }
+
+  function ladeTrainerListe(){
+    adminStatusBox.className = "";
+    adminStatusBox.textContent = "";
+    trainerListe.innerHTML = '<p class="empty-hint">Lädt …</p>';
+    fetch("./api/trainer-liste.php").then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
+    }).then(function(result){
+      if(result.status === 401){ showLoggedOut(); return; }
+      if(!result.ok || !result.data || !result.data.success){
+        trainerListe.innerHTML = "";
+        zeigeAdminStatus((result.data && result.data.message) || "Laden fehlgeschlagen.", false);
+        return;
+      }
+      renderTrainerListe(result.data.trainers);
+    }).catch(function(){
+      trainerListe.innerHTML = "";
+      zeigeAdminStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+    });
+  }
+
+  function renderTrainerListe(trainers){
+    if(trainers.length === 0){
+      trainerListe.innerHTML = '<p class="empty-hint">Noch keine Trainer registriert.</p>';
+      return;
+    }
+    trainerListe.innerHTML = "";
+    trainers.forEach(function(t){
+      var row = document.createElement("div");
+      row.className = "trainer-row";
+
+      var aktionen = "";
+      if(t.status === "pending"){
+        aktionen += '<button type="button" class="gruen" data-aktion="freischalten">Freischalten</button>';
+        aktionen += '<button type="button" class="rot" data-aktion="ablehnen">Ablehnen</button>';
+      }
+      if(t.status === "abgelehnt"){
+        aktionen += '<button type="button" class="gruen" data-aktion="freischalten">Doch freischalten</button>';
+      }
+      if(t.status === "aktiv"){
+        aktionen += '<button type="button" class="rot" data-aktion="sperren">Sperren</button>';
+      }
+      aktionen += '<button type="button" data-aktion="passwort-reset">Passwort-Reset-Mail senden</button>';
+
+      row.innerHTML =
+        '<div class="name">' + escapeHtml(t.vorname) + ' ' + escapeHtml(t.nachname) +
+          '<span class="badge ' + t.status + '">' + (STATUS_LABEL[t.status] || t.status) + '</span></div>' +
+        '<div class="email">' + escapeHtml(t.email) + '</div>' +
+        '<div class="meta">Registriert am ' + escapeHtml(formatDatumZeit(t.erstelltAm)) + '</div>' +
+        '<div class="row-actions">' + aktionen + '</div>';
+
+      row.querySelectorAll("button[data-aktion]").forEach(function(btn){
+        btn.addEventListener("click", function(){ handleAdminAktion(t, btn.dataset.aktion, btn); });
+      });
+
+      trainerListe.appendChild(row);
+    });
+  }
+
+  function handleAdminAktion(trainer, aktion, btn){
+    adminStatusBox.className = "";
+    adminStatusBox.textContent = "";
+
+    if(aktion === "passwort-reset"){
+      if(!confirm(trainer.vorname + " " + trainer.nachname + " eine E-Mail zum Passwort-Zurücksetzen schicken?")) return;
+      btn.disabled = true;
+      fetch("./api/trainer-passwort-vergessen.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email: trainer.email})
+      }).then(function(res){ return res.json(); }).then(function(){
+        btn.disabled = false;
+        zeigeAdminStatus("Passwort-Reset-Mail an " + trainer.email + " verschickt.", true);
+      }).catch(function(){
+        btn.disabled = false;
+        zeigeAdminStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+      });
+      return;
+    }
+
+    var neuerStatus = aktion === "freischalten" ? "aktiv" : "abgelehnt";
+    var bestaetigungstext = aktion === "freischalten"
+      ? trainer.vorname + " " + trainer.nachname + " jetzt freischalten?"
+      : aktion === "sperren"
+        ? trainer.vorname + " " + trainer.nachname + " sperren? Der Account kann sich danach nicht mehr einloggen."
+        : trainer.vorname + " " + trainer.nachname + " ablehnen?";
+    if(!confirm(bestaetigungstext)) return;
+
+    btn.disabled = true;
+    fetch("./api/trainer-status-setzen.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({id: trainer.id, status: neuerStatus})
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
+    }).then(function(result){
+      if(result.status === 401){ showLoggedOut(); return; }
+      if(!result.ok || !result.data || !result.data.success){
+        btn.disabled = false;
+        zeigeAdminStatus((result.data && result.data.message) || "Aktion fehlgeschlagen.", false);
+        return;
+      }
+      zeigeAdminStatus("Status aktualisiert.", true);
+      ladeTrainerListe();
+    }).catch(function(){
+      btn.disabled = false;
+      zeigeAdminStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+    });
+  }
 
   function anzahlTageImMonat(monat){
     var teile = monat.split("-");
