@@ -461,14 +461,13 @@
         showLoggedIn();
         return;
       }
-      if(trainerResult.status === 403){
-        // Account existiert, ist aber noch nicht freigeschaltet/wurde abgelehnt - eindeutige Antwort, kein Admin-Versuch noetig.
-        loginSubmit.disabled = false;
-        loginSubmit.textContent = "Einloggen";
-        loginError.textContent = trainerResult.data.message;
-        loginError.classList.add("show");
-        return;
-      }
+      // Bei JEDEM Trainer-Fehlschlag (nicht nur falschem Passwort) zusaetzlich
+      // den Admin-Login versuchen - auch wenn der Trainer-Account eindeutig
+      // pending/abgelehnt ist (Status 403). Sonst waere die Gesamt-Antwortzeit
+      // ein Seitenkanal: eine einzelne schnelle Antwort wuerde verraten, dass
+      // die eingegebene E-Mail zu einem pending/abgelehnten Trainer-Account
+      // gehoert, waehrend eine unbekannte E-Mail durch den zusaetzlichen
+      // Roundtrip spuerbar laenger braucht.
       fetch("./api/mitglied-login.php", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -481,6 +480,9 @@
         if(adminResult.ok && adminResult.data && adminResult.data.success){
           document.getElementById("l-passwort").value = "";
           showAdminLoggedIn();
+        } else if(trainerResult.status === 403){
+          loginError.textContent = trainerResult.data.message;
+          loginError.classList.add("show");
         } else {
           loginError.textContent = "E-Mail/Benutzername oder Passwort falsch.";
           loginError.classList.add("show");

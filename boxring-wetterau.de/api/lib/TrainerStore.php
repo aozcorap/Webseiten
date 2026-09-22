@@ -115,7 +115,7 @@ final class TrainerStore
         });
     }
 
-    /** Alle Trainer, neueste zuerst - fuer die Admin-Uebersicht (trainer-verwaltung.html). */
+    /** Alle Trainer, neueste zuerst - fuer die Admin-Uebersicht in trainer-zeiterfassung.html. */
     public static function alleTrainer(): array
     {
         return self::withTrainers(function (array $data) {

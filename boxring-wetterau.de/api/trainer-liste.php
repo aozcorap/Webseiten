@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-/** Liste aller Trainer-Accounts fuer die Admin-Uebersicht (trainer-verwaltung.html). */
+/** Liste aller Trainer-Accounts fuer die Admin-Uebersicht in trainer-zeiterfassung.html. */
 
 error_reporting(E_ALL);
 ini_set('display_errors', '0');

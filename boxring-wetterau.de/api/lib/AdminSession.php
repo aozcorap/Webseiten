@@ -17,6 +17,15 @@ final class AdminSession
         if (session_status() === PHP_SESSION_ACTIVE) {
             return;
         }
+        // Eigener Cookie-Name, getrennt von TrainerSession - sonst teilen sich
+        // beide Bereiche ueber den PHP-Standardnamen (PHPSESSID) dasselbe
+        // $_SESSION-Array (nur mit unterschiedlichen Keys). Seit trainer-
+        // zeiterfassung.html Trainer- UND Admin-Login auf derselben Seite
+        // anbietet (gemeinsam genutzte Traininsraum-Geraete!), wuerde das
+        // sonst dazu fuehren, dass ein danach eingeloggter Trainer die
+        // vorherige Admin-Session desselben Browsers "erbt" und Admin-
+        // Endpunkte ansprechen kann, ohne das Admin-Passwort zu kennen.
+        session_name('bw_admin_sess');
         session_set_cookie_params([
             'lifetime' => 60 * 60 * 8, // 8 Stunden - reicht fuer ein Training, nicht dauerhaft eingeloggt
             'path' => '/',
@@ -29,6 +38,7 @@ final class AdminSession
 
     public static function login(): void
     {
+        session_regenerate_id(true);
         $_SESSION[self::SESSION_KEY] = true;
     }
 

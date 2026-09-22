@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Setzt den Status eines Trainer-Accounts manuell (trainer-verwaltung.html) -
+ * Setzt den Status eines Trainer-Accounts manuell (Admin-Uebersicht in trainer-zeiterfassung.html) -
  * fuer Faelle, in denen der reguläre Genehmigen/Ablehnen-Link aus der
  * Registrierungsmail (trainer-genehmigen.php) nicht greift, z.B. weil die
  * Mail verpasst wurde oder ein Account nachtraeglich gesperrt werden soll.
