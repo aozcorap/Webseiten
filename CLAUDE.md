@@ -54,3 +54,27 @@ Gewohnheit.
 
 Zugangsdaten, API-Schluessel und personenbezogene Laufzeitdaten gehoeren nie
 ins Repo. Bestehende Ausnahmen stehen in `.gitignore` und bleiben dort.
+
+## Deployment-ZIPs
+
+**boxring-wetterau.de**: Das Hosting-Setup liegt unter `httpdocs/` bei
+`boxring-woelfersheim.de` (Alias, zeigt auf boxring-wetterau.de) -
+`httpdocs/` selbst ist bereits die Website-Wurzel, es gibt dort KEINEN
+Unterordner `boxring-wetterau.de/`. Eine Deployment-ZIP muss die Dateien
+deshalb direkt auf oberster Ebene enthalten (z.B. `index.html`,
+`api/...`), nicht in einem umschliessenden `boxring-wetterau.de/`-Ordner -
+sonst legt das Entpacken einen zusaetzlichen Unterordner an und neue
+Dateien landen nicht dort, wo der Server sie erwartet (siehe Issue vom
+22.09.2026: neue Trainer-Verwaltungsseite fehlte deshalb nach dem ersten
+Deployment-Versuch).
+
+Richtig bauen mit `git archive` (garantiert 1:1-Deckung mit dem
+committeten Stand, kein Risiko dass beim manuellen Zippen etwas fehlt):
+
+```
+git archive --format=zip -o deploy.zip HEAD:boxring-wetterau.de
+```
+
+Vor dem Ausliefern pruefen: `unzip -l deploy.zip | head` - die oberste
+Ebene muss direkt `index.html`, `api/`, `assets/` usw. zeigen, nicht
+`boxring-wetterau.de/index.html`.
