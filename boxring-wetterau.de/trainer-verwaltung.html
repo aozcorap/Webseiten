@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trainer-Verwaltung – Boxring Wetterau 1983 e.V.</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<meta name="theme-color" content="#e8394f">
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('./assets/fonts/anton-latin-400.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url('./assets/fonts/inter-latin-variable.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:#111110;color:#f2ede8;font-family:'Inter',sans-serif;overflow-x:hidden;}
+  a{color:#f2ede8;text-decoration:none;}
+  a:hover{color:#e8394f;}
+
+  .bw-card{background:#191817;border-radius:20px;border:1px solid rgba(242,237,232,0.06);padding:32px;margin-bottom:24px;}
+  .bw-card h2{font-family:'Anton',sans-serif;font-size:clamp(18px,3vw,24px);text-transform:uppercase;letter-spacing:0.3px;margin:0 0 6px;}
+  .bw-card p.hint{font-size:14px;color:#c4bdb5;margin:0 0 24px;line-height:1.6;}
+  .bw-field{margin-bottom:18px;}
+  label{display:block;font-size:13px;font-weight:600;color:#c4bdb5;margin-bottom:6px;}
+  input[type="text"],input[type="password"]{
+    width:100%;background:#111110;border:1px solid rgba(242,237,232,0.4);border-radius:10px;
+    padding:12px 14px;color:#f2ede8;font-size:16px;font-family:inherit;
+  }
+  input:focus{outline:none;border-color:#e8394f;box-shadow:0 0 0 3px rgba(232,57,79,0.18);}
+  .bw-error{font-size:13px;color:#e8394f;margin-top:6px;display:none;}
+  .bw-error.show{display:block;}
+  .bw-submit{width:100%;background:#e8394f;color:#fff;border:none;border-radius:999px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .bw-submit:hover{background:#d12f43;}
+  .bw-submit:disabled{opacity:0.5;cursor:not-allowed;}
+  .bw-logout{background:none;border:1px solid rgba(242,237,232,0.3);color:#c4bdb5;border-radius:999px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:inherit;}
+  .bw-logout:hover{border-color:#e8394f;color:#e8394f;}
+  #status{margin-top:16px;font-size:14px;line-height:1.6;padding:14px 16px;border-radius:10px;display:none;}
+  #status.show{display:block;}
+  #status.err{background:rgba(232,57,79,0.12);color:#f2a4ae;border:1px solid rgba(232,57,79,0.3);}
+  #status.ok{background:rgba(76,175,80,0.12);color:#8fd694;border:1px solid rgba(76,175,80,0.35);}
+
+  .trainer-row{border-radius:14px;border:1px solid rgba(242,237,232,0.08);padding:18px 20px;margin-bottom:12px;}
+  .trainer-row .name{font-weight:700;font-size:15px;}
+  .trainer-row .email{font-size:13px;color:#c4bdb5;margin-top:2px;}
+  .trainer-row .meta{font-size:12px;color:#8f887f;margin-top:6px;}
+  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-left:8px;vertical-align:2px;}
+  .badge.pending{background:rgba(232,201,79,0.16);color:#e8c94f;}
+  .badge.aktiv{background:rgba(76,175,80,0.16);color:#8fd694;}
+  .badge.abgelehnt{background:rgba(232,57,79,0.16);color:#f2a4ae;}
+  .row-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .row-actions button{font-family:inherit;font-size:13px;font-weight:600;border-radius:999px;padding:8px 16px;cursor:pointer;border:1px solid rgba(242,237,232,0.3);background:none;color:#f2ede8;}
+  .row-actions button:hover:not(:disabled){border-color:#e8394f;color:#e8394f;}
+  .row-actions button:disabled{opacity:0.5;cursor:not-allowed;}
+  .row-actions button.gruen:hover:not(:disabled){border-color:#2e9e4f;color:#8fd694;}
+  .row-actions button.rot:hover:not(:disabled){border-color:#e8394f;color:#f2a4ae;}
+  .empty-hint{font-size:14px;color:#c4bdb5;}
+</style>
+</head>
+<body>
+
+<header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px clamp(20px,4vw,48px);background:rgba(17,17,16,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(242,237,232,0.08);">
+  <a href="./index.html" style="display:flex;align-items:center;gap:12px;min-width:0;">
+    <img src="./assets/logo-white.svg" alt="Boxring Wetterau" style="width:clamp(44px,8vw,76px);height:clamp(44px,8vw,76px);flex-shrink:0;">
+    <div style="font-family:'Anton',sans-serif;line-height:1;letter-spacing:0.5px;white-space:nowrap;">
+      <div style="font-size:16px;">BOXRING</div>
+      <div style="font-size:16px;color:#e8394f;">WETTERAU</div>
+    </div>
+  </a>
+  <button type="button" class="bw-logout" id="logout-btn" style="display:none;">Ausloggen</button>
+</header>
+
+<main style="max-width:640px;margin:0 auto;padding:64px 24px 100px;">
+  <div style="font-family:'Anton',sans-serif;font-size:clamp(24px,6vw,40px);color:#e8394f;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;">Trainer-Verwaltung</div>
+  <p style="font-size:15px;color:#c4bdb5;line-height:1.7;margin:0 0 32px;">Nur für Vorstand/Kassenwart. Übersicht aller registrierten Trainer-Accounts der Zeiterfassung, Freigabe und Passwort-Reset.</p>
+
+  <div class="bw-card" id="login-card">
+    <h2>Login</h2>
+    <p class="hint">Mit dem Trainer-Zugang einloggen (gleicher Zugang wie Mitglied-Check).</p>
+    <form id="login-form">
+      <div class="bw-field">
+        <label for="f-username">Benutzername</label>
+        <input type="text" id="f-username" name="username" required autocomplete="username">
+      </div>
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="f-password">Passwort</label>
+        <input type="password" id="f-password" name="password" required autocomplete="current-password">
+        <div class="bw-error" id="login-error">Benutzername oder Passwort falsch.</div>
+      </div>
+      <button type="submit" class="bw-submit" id="login-submit" style="margin-top:20px;">Einloggen</button>
+    </form>
+  </div>
+
+  <div id="liste-card" style="display:none;">
+    <div id="status"></div>
+    <div id="trainer-liste"></div>
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  var loginCard = document.getElementById("login-card");
+  var listeCard = document.getElementById("liste-card");
+  var logoutBtn = document.getElementById("logout-btn");
+  var loginForm = document.getElementById("login-form");
+  var loginError = document.getElementById("login-error");
+  var loginSubmit = document.getElementById("login-submit");
+  var statusBox = document.getElementById("status");
+  var trainerListe = document.getElementById("trainer-liste");
+
+  var STATUS_LABEL = {pending: "Wartet auf Freigabe", aktiv: "Aktiv", abgelehnt: "Abgelehnt"};
+
+  function showLoggedIn(){
+    loginCard.style.display = "none";
+    listeCard.style.display = "block";
+    logoutBtn.style.display = "inline-block";
+    ladeListe();
+  }
+  function showLoggedOut(){
+    loginCard.style.display = "block";
+    listeCard.style.display = "none";
+    logoutBtn.style.display = "none";
+  }
+
+  fetch("./api/mitglied-session.php").then(function(res){ return res.json(); }).then(function(data){
+    if(data && data.loggedIn){ showLoggedIn(); }
+  }).catch(function(){});
+
+  loginForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    loginError.classList.remove("show");
+    loginSubmit.disabled = true;
+    loginSubmit.textContent = "Wird geprüft …";
+    fetch("./api/mitglied-login.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        username: document.getElementById("f-username").value,
+        password: document.getElementById("f-password").value
+      })
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      loginSubmit.disabled = false;
+      loginSubmit.textContent = "Einloggen";
+      if(result.ok && result.data && result.data.success){
+        document.getElementById("f-password").value = "";
+        showLoggedIn();
+      } else {
+        loginError.textContent = (result.data && result.data.message) || "Benutzername oder Passwort falsch.";
+        loginError.classList.add("show");
+      }
+    }).catch(function(){
+      loginSubmit.disabled = false;
+      loginSubmit.textContent = "Einloggen";
+      loginError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      loginError.classList.add("show");
+    });
+  });
+
+  logoutBtn.addEventListener("click", function(){
+    fetch("./api/mitglied-logout.php", {method: "POST"}).then(function(){ showLoggedOut(); }).catch(function(){ showLoggedOut(); });
+  });
+
+  function zeigeStatus(text, ok){
+    statusBox.textContent = text;
+    statusBox.className = "show " + (ok ? "ok" : "err");
+  }
+
+  function escapeHtml(str){
+    var div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatDatum(iso){
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString("de-DE") + " " + d.toLocaleTimeString("de-DE", {hour: "2-digit", minute: "2-digit"});
+  }
+
+  function ladeListe(){
+    statusBox.className = "";
+    statusBox.textContent = "";
+    trainerListe.innerHTML = '<p class="empty-hint">Lädt …</p>';
+    fetch("./api/trainer-liste.php").then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
+    }).then(function(result){
+      if(result.status === 401){ showLoggedOut(); return; }
+      if(!result.ok || !result.data || !result.data.success){
+        trainerListe.innerHTML = "";
+        zeigeStatus((result.data && result.data.message) || "Laden fehlgeschlagen.", false);
+        return;
+      }
+      renderListe(result.data.trainers);
+    }).catch(function(){
+      trainerListe.innerHTML = "";
+      zeigeStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+    });
+  }
+
+  function renderListe(trainers){
+    if(trainers.length === 0){
+      trainerListe.innerHTML = '<p class="empty-hint">Noch keine Trainer registriert.</p>';
+      return;
+    }
+    trainerListe.innerHTML = "";
+    trainers.forEach(function(t){
+      var row = document.createElement("div");
+      row.className = "trainer-row";
+
+      var aktionen = "";
+      if(t.status === "pending"){
+        aktionen += '<button type="button" class="gruen" data-aktion="freischalten">Freischalten</button>';
+        aktionen += '<button type="button" class="rot" data-aktion="ablehnen">Ablehnen</button>';
+      }
+      if(t.status === "abgelehnt"){
+        aktionen += '<button type="button" class="gruen" data-aktion="freischalten">Doch freischalten</button>';
+      }
+      if(t.status === "aktiv"){
+        aktionen += '<button type="button" class="rot" data-aktion="sperren">Sperren</button>';
+      }
+      aktionen += '<button type="button" data-aktion="passwort-reset">Passwort-Reset-Mail senden</button>';
+
+      row.innerHTML =
+        '<div class="name">' + escapeHtml(t.vorname) + ' ' + escapeHtml(t.nachname) +
+          '<span class="badge ' + t.status + '">' + (STATUS_LABEL[t.status] || t.status) + '</span></div>' +
+        '<div class="email">' + escapeHtml(t.email) + '</div>' +
+        '<div class="meta">Registriert am ' + escapeHtml(formatDatum(t.erstelltAm)) + '</div>' +
+        '<div class="row-actions">' + aktionen + '</div>';
+
+      row.querySelectorAll("button[data-aktion]").forEach(function(btn){
+        btn.addEventListener("click", function(){ handleAktion(t, btn.dataset.aktion, btn); });
+      });
+
+      trainerListe.appendChild(row);
+    });
+  }
+
+  function handleAktion(trainer, aktion, btn){
+    statusBox.className = "";
+    statusBox.textContent = "";
+
+    if(aktion === "passwort-reset"){
+      if(!confirm(trainer.vorname + " " + trainer.nachname + " eine E-Mail zum Passwort-Zurücksetzen schicken?")) return;
+      btn.disabled = true;
+      fetch("./api/trainer-passwort-vergessen.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email: trainer.email})
+      }).then(function(res){ return res.json(); }).then(function(){
+        btn.disabled = false;
+        zeigeStatus("Passwort-Reset-Mail an " + trainer.email + " verschickt.", true);
+      }).catch(function(){
+        btn.disabled = false;
+        zeigeStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+      });
+      return;
+    }
+
+    var neuerStatus = aktion === "freischalten" ? "aktiv" : aktion === "sperren" ? "abgelehnt" : "abgelehnt";
+    var bestaetigungstext = aktion === "freischalten"
+      ? trainer.vorname + " " + trainer.nachname + " jetzt freischalten?"
+      : aktion === "sperren"
+        ? trainer.vorname + " " + trainer.nachname + " sperren? Der Account kann sich danach nicht mehr einloggen."
+        : trainer.vorname + " " + trainer.nachname + " ablehnen?";
+    if(!confirm(bestaetigungstext)) return;
+
+    btn.disabled = true;
+    fetch("./api/trainer-status-setzen.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({id: trainer.id, status: neuerStatus})
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
+    }).then(function(result){
+      if(result.status === 401){ showLoggedOut(); return; }
+      if(!result.ok || !result.data || !result.data.success){
+        btn.disabled = false;
+        zeigeStatus((result.data && result.data.message) || "Aktion fehlgeschlagen.", false);
+        return;
+      }
+      zeigeStatus("Status aktualisiert.", true);
+      ladeListe();
+    }).catch(function(){
+      btn.disabled = false;
+      zeigeStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+    });
+  }
+})();
+</script>
+</body>
+</html>

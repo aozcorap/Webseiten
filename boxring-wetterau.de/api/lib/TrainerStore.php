@@ -115,6 +115,58 @@ final class TrainerStore
         });
     }
 
+    /** Alle Trainer, neueste zuerst - fuer die Admin-Uebersicht (trainer-verwaltung.html). */
+    public static function alleTrainer(): array
+    {
+        return self::withTrainers(function (array $data) {
+            $trainers = $data['trainers'];
+            usort($trainers, fn(array $a, array $b) => strcmp($b['erstelltAm'], $a['erstelltAm']));
+            return [null, $trainers];
+        });
+    }
+
+    public static function findTrainerByResetToken(string $token): ?array
+    {
+        return self::withTrainers(function (array $data) use ($token) {
+            foreach ($data['trainers'] as $trainer) {
+                if (!empty($trainer['resetToken']) && hash_equals($trainer['resetToken'], $token)) {
+                    return [null, $trainer];
+                }
+            }
+            return [null, null];
+        });
+    }
+
+    public static function setResetToken(int $id, string $token, string $expiry): void
+    {
+        self::withTrainers(function (array $data) use ($id, $token, $expiry) {
+            foreach ($data['trainers'] as &$trainer) {
+                if ($trainer['id'] === $id) {
+                    $trainer['resetToken'] = $token;
+                    $trainer['resetTokenExpiry'] = $expiry;
+                }
+            }
+            unset($trainer);
+            return [$data, null];
+        });
+    }
+
+    /** Setzt ein neues Passwort und macht das zugehoerige Reset-Token unbrauchbar. */
+    public static function setPassword(int $id, string $passwordHash): void
+    {
+        self::withTrainers(function (array $data) use ($id, $passwordHash) {
+            foreach ($data['trainers'] as &$trainer) {
+                if ($trainer['id'] === $id) {
+                    $trainer['passwordHash'] = $passwordHash;
+                    $trainer['resetToken'] = null;
+                    $trainer['resetTokenExpiry'] = null;
+                }
+            }
+            unset($trainer);
+            return [$data, null];
+        });
+    }
+
     private static function withTrainers(callable $mutator): mixed
     {
         return JsonFileStore::withLock(self::trainersPath(), ['nextId' => 1, 'trainers' => []], $mutator);

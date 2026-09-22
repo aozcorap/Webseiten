@@ -110,6 +110,28 @@
         <div class="bw-error" id="login-error"></div>
       </div>
       <button type="submit" class="bw-submit" id="login-submit" style="margin-top:20px;">Einloggen</button>
+      <button type="button" class="bw-submit secondary" id="show-vergessen-btn" style="margin-top:10px;">Passwort vergessen?</button>
+    </form>
+
+    <form id="vergessen-form" style="display:none;">
+      <p class="hint" style="margin-bottom:20px;">Gib deine E-Mail-Adresse ein - falls dafür ein Account existiert, bekommst du einen Link zum Zurücksetzen des Passworts.</p>
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="v-email">E-Mail</label>
+        <input type="email" id="v-email" name="email" required autocomplete="username">
+        <div class="bw-error" id="vergessen-error"></div>
+      </div>
+      <button type="submit" class="bw-submit" id="vergessen-submit" style="margin-top:20px;">Link anfordern</button>
+      <button type="button" class="bw-submit secondary" id="hide-vergessen-btn" style="margin-top:10px;">Zurück zum Login</button>
+    </form>
+
+    <form id="reset-form" style="display:none;">
+      <p class="hint" style="margin-bottom:20px;">Neues Passwort für deinen Trainer-Account vergeben.</p>
+      <div class="bw-field" style="margin-bottom:0;">
+        <label for="reset-passwort">Neues Passwort (mind. 8 Zeichen)</label>
+        <input type="password" id="reset-passwort" name="passwort" minlength="8" required autocomplete="new-password">
+        <div class="bw-error" id="reset-error"></div>
+      </div>
+      <button type="submit" class="bw-submit" id="reset-submit" style="margin-top:20px;">Passwort setzen</button>
     </form>
 
     <form id="register-form" style="display:none;">
@@ -196,6 +218,16 @@
   var registerError = document.getElementById("register-error");
   var registerSubmit = document.getElementById("register-submit");
 
+  var bwTabs = document.querySelector(".bw-tabs");
+  var showVergessenBtn = document.getElementById("show-vergessen-btn");
+  var hideVergessenBtn = document.getElementById("hide-vergessen-btn");
+  var vergessenForm = document.getElementById("vergessen-form");
+  var vergessenError = document.getElementById("vergessen-error");
+  var vergessenSubmit = document.getElementById("vergessen-submit");
+  var resetForm = document.getElementById("reset-form");
+  var resetError = document.getElementById("reset-error");
+  var resetSubmit = document.getElementById("reset-submit");
+
   var calTitle = document.getElementById("cal-title");
   var calGrid = document.getElementById("cal-grid");
   var calPrev = document.getElementById("cal-prev");
@@ -266,6 +298,93 @@
     appCard.style.display = "none";
     logoutBtn.style.display = "none";
   }
+
+  function showVergessen(){
+    loginForm.style.display = "none";
+    vergessenForm.style.display = "block";
+    bwTabs.style.display = "none";
+  }
+  function showLogin(){
+    vergessenForm.style.display = "none";
+    resetForm.style.display = "none";
+    loginForm.style.display = "block";
+    bwTabs.style.display = "flex";
+  }
+  showVergessenBtn.addEventListener("click", showVergessen);
+  hideVergessenBtn.addEventListener("click", showLogin);
+
+  vergessenForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    vergessenError.classList.remove("show");
+    vergessenSubmit.disabled = true;
+    vergessenSubmit.textContent = "Wird gesendet …";
+    fetch("./api/trainer-passwort-vergessen.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: document.getElementById("v-email").value})
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      vergessenSubmit.disabled = false;
+      vergessenSubmit.textContent = "Link anfordern";
+      vergessenForm.reset();
+      vergessenError.className = "bw-error show";
+      vergessenError.style.color = result.ok && result.data && result.data.success ? "#8fd694" : "";
+      vergessenError.textContent = (result.data && result.data.message) || "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+    }).catch(function(){
+      vergessenSubmit.disabled = false;
+      vergessenSubmit.textContent = "Link anfordern";
+      vergessenError.style.color = "";
+      vergessenError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      vergessenError.classList.add("show");
+    });
+  });
+
+  var resetToken = new URLSearchParams(window.location.search).get("reset");
+  if(resetToken){
+    bwTabs.style.display = "none";
+    loginForm.style.display = "none";
+    resetForm.style.display = "block";
+  }
+
+  resetForm.addEventListener("submit", function(evt){
+    evt.preventDefault();
+    resetError.classList.remove("show");
+    resetSubmit.disabled = true;
+    resetSubmit.textContent = "Wird gespeichert …";
+    fetch("./api/trainer-passwort-reset.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({token: resetToken, passwort: document.getElementById("reset-passwort").value})
+    }).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      resetSubmit.disabled = false;
+      resetSubmit.textContent = "Passwort setzen";
+      if(result.ok && result.data && result.data.success){
+        window.history.replaceState({}, "", window.location.pathname);
+        resetForm.style.display = "none";
+        if(result.data.loggedIn){
+          showLoggedIn();
+        } else {
+          resetError.className = "bw-error show";
+          resetError.style.color = "#8fd694";
+          resetError.textContent = "Passwort gesetzt. Dein Account wartet aber noch auf Freigabe durch den Vorstand/Kassenwart - danach kannst du dich einloggen.";
+          bwTabs.style.display = "flex";
+          loginForm.style.display = "block";
+          loginForm.insertBefore(resetError, loginForm.firstChild);
+        }
+      } else {
+        resetError.textContent = (result.data && result.data.message) || "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+        resetError.classList.add("show");
+      }
+    }).catch(function(){
+      resetSubmit.disabled = false;
+      resetSubmit.textContent = "Passwort setzen";
+      resetError.textContent = "Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.";
+      resetError.classList.add("show");
+    });
+  });
 
   fetch("./api/trainer-session.php").then(function(res){ return res.json(); }).then(function(data){
     if(data && data.loggedIn){ showLoggedIn(); }
