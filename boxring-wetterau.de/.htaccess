@@ -3,6 +3,16 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^boxring-wetterau\.de$ [NC]
 RewriteRule ^(.*)$ https://www.boxring-wetterau.de/$1 [R=301,L]
 
+# Alte WordPress-URLs (Search Console "Nicht gefunden (404)", 23.09.2026)
+# Seiten mit Gegenstueck auf der neuen Seite: dauerhaft weiterleiten
+RewriteRule ^impressum/?$ /impressum.html [R=301,L]
+RewriteRule ^uber-uns/?$ /#ueber-uns [R=301,NE,L]
+RewriteRule ^training/?$ /#training [R=301,NE,L]
+# Reste ohne Gegenstueck (Feed, Blog-Seiten, Theme-/Upload-Dateien): 410 Gone,
+# damit Google sie schneller aus dem Index entfernt als bei 404
+RewriteRule ^(wp-content|wp-includes|wp-admin|wp-json|feed|page|category|tag|author)(/|$) - [G,L]
+RewriteRule ^training/vereinssatzung_2008/?$ - [G,L]
+
 # Sicherheits-Header (siehe Issue #52)
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
