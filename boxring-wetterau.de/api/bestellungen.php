@@ -43,10 +43,11 @@ if ($method === 'GET' && $action === 'export') {
     header('Content-Disposition: attachment; filename="bestellungen-pivot.csv"');
     $out = fopen('php://output', 'w');
     fwrite($out, "\xEF\xBB\xBF"); // BOM, damit Excel Umlaute korrekt zeigt
-    fputcsv($out, ['Bestellnr.', 'Datum', 'Mitglied', 'E-Mail', 'Artikel', 'Größe', 'Farbe', 'Status'], ';');
+    fputcsv($out, ['Bestellnr.', 'Datum', 'Mitglied', 'E-Mail', 'Artikel', 'Größe', 'Farbe', 'Preis', 'Status'], ';');
     foreach ($orders as $order) {
         $status = ($order['status'] ?? '') === 'bezahlt' ? 'Bezahlt' : 'Offen';
         foreach (($order['items'] ?? []) as $item) {
+            $price = isset($item['price']) && is_numeric($item['price']) ? number_format((float) $item['price'], 2, ',', '') : '-';
             fputcsv($out, [
                 $order['id'] ?? '-',
                 $order['createdAt'] ?? '-',
@@ -55,6 +56,7 @@ if ($method === 'GET' && $action === 'export') {
                 $item['name'] ?? '-',
                 $item['size'] ?? '-',
                 $item['color'] ?? '-',
+                $price,
                 $status,
             ], ';');
         }

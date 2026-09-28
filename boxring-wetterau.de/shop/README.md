@@ -48,7 +48,7 @@ Abschnitt 9.
     Checkout angegeben hat.
   - Bestellungen löschen.
   - CSV-Export für eine Pivot-Auswertung: eine Zeile je bestelltem Artikel
-    mit Bestellnr., Datum, Mitglied, E-Mail und Zahlstatus.
+    mit Bestellnr., Datum, Mitglied, E-Mail, Preis und Zahlstatus.
 
 ## Preise
 
