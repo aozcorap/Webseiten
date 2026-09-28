@@ -47,8 +47,8 @@ Abschnitt 9.
     Überweisung"/"Bezahlt: Bar") — unabhängig davon, was der Kunde beim
     Checkout angegeben hat.
   - Bestellungen löschen.
-  - CSV-Export für den Reseller (eleven teamsports): aggregiert nach
-    Artikel/Größe/Farbe/Logo mit Stückzahl, nicht nach Kunde.
+  - CSV-Export für eine Pivot-Auswertung: eine Zeile je bestelltem Artikel
+    mit Bestellnr., Datum, Mitglied, E-Mail, Preis und Zahlstatus.
 
 ## Preise
 
