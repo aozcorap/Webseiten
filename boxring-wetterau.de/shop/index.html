@@ -484,8 +484,7 @@ body{
       </table>
     </div>
     <div class="admin-actions-row">
-      <button type="button" class="btn-add admin-export-btn" id="exportCsv">CSV für Reseller exportieren</button>
-      <button type="button" class="btn-add admin-export-btn" id="exportCsvPivot">CSV für Pivot-Tabelle exportieren</button>
+      <button type="button" class="btn-add admin-export-btn" id="exportCsv">CSV exportieren</button>
       <button type="button" class="btn-transfer" id="adminLogoutBtn">Abmelden</button>
     </div>
   </div>
@@ -999,9 +998,6 @@ async function deleteOrder(id){
 function exportOrdersCsv(){
   window.open("../api/bestellungen.php?action=export", "_blank");
 }
-function exportOrdersCsvPivot(){
-  window.open("../api/bestellungen.php?action=export-pivot", "_blank");
-}
 function showShopView(){
   document.getElementById("shopCatalog").style.display = "";
   document.getElementById("adminLogin").style.display = "none";
@@ -1097,7 +1093,6 @@ document.getElementById("navShop").addEventListener("click", e => {
 });
 window.addEventListener("hashchange", checkAdminAccess);
 document.getElementById("exportCsv").addEventListener("click", exportOrdersCsv);
-document.getElementById("exportCsvPivot").addEventListener("click", exportOrdersCsvPivot);
 document.getElementById("adminLogoutBtn").addEventListener("click", adminLogout);
 
 document.getElementById("adminLoginForm").addEventListener("submit", e => {

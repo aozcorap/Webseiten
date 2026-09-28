@@ -4,9 +4,8 @@ declare(strict_types=1);
 /**
  * Admin-Endpunkt fuer den Shop-Adminbereich (shop/index.html): liefert alle
  * gespeicherten Bestellungen, markiert eine Bestellung als bezahlt, loescht
- * eine Bestellung, oder liefert einen CSV-Export fuer den Reseller (eleven
- * teamsports) - aggregiert nach Artikel/Groesse/Farbe/Logo, da der Reseller
- * nur die Gesamtstueckzahl je Variante braucht, keine Kundennamen.
+ * eine Bestellung, oder liefert einen CSV-Export (eine Zeile je bestelltem
+ * Artikel) fuer eine eigene Pivot-Auswertung in Excel.
  *
  * Zugriff nur mit gueltiger ShopAdminSession (siehe shop-login.php) - hier
  * liegen echte Kunden-E-Mail-Adressen, das darf nicht ueber den Quelltext
@@ -36,55 +35,8 @@ $method = $_SERVER['REQUEST_METHOD'] ?? '';
 $action = $_GET['action'] ?? '';
 
 if ($method === 'GET' && $action === 'export') {
-    $orders = OrdersStore::all();
-
-    // Aggregation: Artikel + Groesse + Farbe + Logo -> Anzahl. Nur offene
-    // (noch nicht bezahlte) und bezahlte Bestellungen gleichermassen
-    // beruecksichtigt - der Reseller braucht die volle Stueckzahl, unabhaengig
-    // vom Zahlungsstatus.
-    $groups = [];
-    foreach ($orders as $order) {
-        foreach (($order['items'] ?? []) as $item) {
-            $key = implode('|', [$item['name'] ?? '-', $item['size'] ?? '-', $item['color'] ?? '-', !empty($item['hasLogo']) ? '1' : '0']);
-            if (!isset($groups[$key])) {
-                $groups[$key] = [
-                    'artikel' => $item['name'] ?? '-',
-                    'groesse' => $item['size'] ?? '-',
-                    'farbe' => $item['color'] ?? '-',
-                    'logo' => !empty($item['hasLogo']) ? 'Ja' : 'Nein',
-                    'anzahl' => 0,
-                ];
-            }
-            $groups[$key]['anzahl']++;
-        }
-    }
-
-    $sizeOrder = ['XS' => 0, 'S' => 1, 'M' => 2, 'L' => 3, 'XL' => 4, 'XXL' => 5, '116' => 6, '128' => 7, '140' => 8, '152' => 9, '164' => 10, '176' => 11];
-    $rows = array_values($groups);
-    usort($rows, function (array $a, array $b) use ($sizeOrder) {
-        return [
-            $a['artikel'], $sizeOrder[$a['groesse']] ?? 99, $a['farbe'], $a['logo'],
-        ] <=> [
-            $b['artikel'], $sizeOrder[$b['groesse']] ?? 99, $b['farbe'], $b['logo'],
-        ];
-    });
-
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename="bestellungen-eleven-teamsports.csv"');
-    $out = fopen('php://output', 'w');
-    fwrite($out, "\xEF\xBB\xBF"); // BOM, damit Excel Umlaute korrekt zeigt
-    fputcsv($out, ['Artikel', 'Größe', 'Farbe', 'Logo', 'Anzahl'], ';');
-    foreach ($rows as $row) {
-        fputcsv($out, [$row['artikel'], $row['groesse'], $row['farbe'], $row['logo'], $row['anzahl']], ';');
-    }
-    fclose($out);
-    exit;
-}
-
-if ($method === 'GET' && $action === 'export-pivot') {
     // Zeilenweiser Export (eine Zeile je bestelltem Artikel) fuer eine
-    // Pivot-Auswertung in Excel - im Gegensatz zum Reseller-Export oben mit
-    // Kundenbezug (Name, E-Mail) statt Aggregation nach Variante.
+    // Pivot-Auswertung in Excel.
     $orders = OrdersStore::all();
 
     header('Content-Type: text/csv; charset=utf-8');
