@@ -81,6 +81,36 @@ if ($method === 'GET' && $action === 'export') {
     exit;
 }
 
+if ($method === 'GET' && $action === 'export-pivot') {
+    // Zeilenweiser Export (eine Zeile je bestelltem Artikel) fuer eine
+    // Pivot-Auswertung in Excel - im Gegensatz zum Reseller-Export oben mit
+    // Kundenbezug (Name, E-Mail) statt Aggregation nach Variante.
+    $orders = OrdersStore::all();
+
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename="bestellungen-pivot.csv"');
+    $out = fopen('php://output', 'w');
+    fwrite($out, "\xEF\xBB\xBF"); // BOM, damit Excel Umlaute korrekt zeigt
+    fputcsv($out, ['Bestellnr.', 'Datum', 'Mitglied', 'E-Mail', 'Artikel', 'Größe', 'Farbe', 'Status'], ';');
+    foreach ($orders as $order) {
+        $status = ($order['status'] ?? '') === 'bezahlt' ? 'Bezahlt' : 'Offen';
+        foreach (($order['items'] ?? []) as $item) {
+            fputcsv($out, [
+                $order['id'] ?? '-',
+                $order['createdAt'] ?? '-',
+                $order['member'] ?? '-',
+                $order['email'] ?? '-',
+                $item['name'] ?? '-',
+                $item['size'] ?? '-',
+                $item['color'] ?? '-',
+                $status,
+            ], ';');
+        }
+    }
+    fclose($out);
+    exit;
+}
+
 if ($method === 'GET') {
     respondJson(200, ['success' => true, 'orders' => OrdersStore::all()]);
 }
