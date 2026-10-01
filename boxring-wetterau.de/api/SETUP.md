@@ -160,6 +160,14 @@ alle Trainer. Ab 10/2026 gilt ein Satz je Trainerrolle:
 Satz greift, entscheidet `stundensatzFuer()` in `trainer-abrechnen.php`
 anhand des abgerechneten Monats, nicht anhand des Abrechnungsdatums.
 
+Welche Rolle ("aushilfstrainer"/"haupttrainer") ein Trainer hat, steht als
+Feld `rolle` im Trainer-Account (neue Accounts starten als "haupttrainer")
+und wird in der Admin-Übersicht in `trainer-zeiterfassung.html` per Button
+umgestellt (`api/trainer-rolle-setzen.php`). Unabhängig davon bekommt nur
+`HAUPTTRAINER_EMAIL` die echte PDF-Rechnung statt der einfachen Text-Mail -
+es kann also mehrere Trainer mit Rolle "haupttrainer" geben, von denen nur
+einer rechnungsstellend ist.
+
 **Speicherung:** Bewusst keine eigene Datenbank - Accounts, Stunden und
 Abrechnungen liegen als JSON-Dateien in `api/data/` (durch `.htaccess` von
 außen gesperrt, siehe `api/data/.htaccess`). Der Ordner muss beim Deployment

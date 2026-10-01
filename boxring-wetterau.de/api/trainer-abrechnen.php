@@ -43,14 +43,18 @@ function formatStundenDe(float $stunden): string
 /**
  * Waehlt den Stundensatz fuer den abgerechneten Monat (nicht fuer den
  * Zeitpunkt der Abrechnung): bis einschliesslich 09/2026 galt ein
- * einheitlicher Satz, ab 10/2026 ein eigener Satz je Trainerrolle.
+ * einheitlicher Satz, ab 10/2026 ein eigener Satz je Trainerrolle
+ * (trainer['rolle'], per Admin-Uebersicht gesetzt - siehe
+ * trainer-rolle-setzen.php). Unabhaengig davon, ob der Trainer die PDF-
+ * Rechnung bekommt (das entscheidet allein HAUPTTRAINER_EMAIL) - es kann
+ * mehrere Trainer mit Rolle "haupttrainer" geben.
  */
-function stundensatzFuer(string $monat, bool $istHaupttrainer): float
+function stundensatzFuer(string $monat, string $rolle): float
 {
     if ($monat < '2026-10') {
         return TRAINER_STUNDENSATZ;
     }
-    return $istHaupttrainer ? TRAINER_STUNDENSATZ_HAUPTTRAINER : TRAINER_STUNDENSATZ_AUSHILFSTRAINER;
+    return $rolle === 'aushilfstrainer' ? TRAINER_STUNDENSATZ_AUSHILFSTRAINER : TRAINER_STUNDENSATZ_HAUPTTRAINER;
 }
 
 TrainerSession::start();
@@ -96,14 +100,16 @@ if (!TrainerStore::abrechnungReservieren($trainerId, $monat)) {
 }
 
 $name = $trainer['vorname'] . ' ' . $trainer['nachname'];
-$istHaupttrainer = strcasecmp($trainer['email'], HAUPTTRAINER_EMAIL) === 0;
-$stundensatz = stundensatzFuer($monat, $istHaupttrainer);
+// Bekommt die PDF-Rechnung statt der einfachen Text-Mail - unabhaengig von
+// der Abrechnungsrolle (trainer['rolle']), die nur den Stundensatz bestimmt.
+$bekommtPdfRechnung = strcasecmp($trainer['email'], HAUPTTRAINER_EMAIL) === 0;
+$stundensatz = stundensatzFuer($monat, $trainer['rolle'] ?? 'haupttrainer');
 $betrag = round($stundenGesamt * $stundensatz, 2);
 
 $monatsName = (new DateTimeImmutable($monat . '-01'))->format('m/Y');
 
 try {
-    if ($istHaupttrainer) {
+    if ($bekommtPdfRechnung) {
         // Haupttrainer ist umsatzsteuerpflichtig und bekommt eine echte
         // PDF-Rechnung statt der einfachen Text-Mail - nur an den
         // Kassenwart (er ist selbst der Rechnungssteller), CC an sich

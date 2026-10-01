@@ -238,6 +238,7 @@
   var trainerListe = document.getElementById("trainer-liste");
   var aktuellerModus = null; // "trainer" | "admin"
   var STATUS_LABEL = {pending: "Wartet auf Freigabe", aktiv: "Aktiv", abgelehnt: "Abgelehnt"};
+  var ROLLE_LABEL = {aushilfstrainer: "Aushilfstrainer (15 €/Std.)", haupttrainer: "Haupttrainer (22,50 €/Std.)"};
 
   var tabLogin = document.getElementById("tab-login");
   var tabRegister = document.getElementById("tab-register");
@@ -605,11 +606,14 @@
       }
       aktionen += '<button type="button" data-aktion="passwort-reset">Passwort-Reset-Mail senden</button>';
 
+      var andereRolle = t.rolle === "aushilfstrainer" ? "haupttrainer" : "aushilfstrainer";
+      aktionen += '<button type="button" data-aktion="rolle-wechseln" data-neue-rolle="' + andereRolle + '">Als ' + (ROLLE_LABEL[andereRolle] || andereRolle) + ' einstufen</button>';
+
       row.innerHTML =
         '<div class="name">' + escapeHtml(t.vorname) + ' ' + escapeHtml(t.nachname) +
           '<span class="badge ' + t.status + '">' + (STATUS_LABEL[t.status] || t.status) + '</span></div>' +
         '<div class="email">' + escapeHtml(t.email) + '</div>' +
-        '<div class="meta">Registriert am ' + escapeHtml(formatDatumZeit(t.erstelltAm)) + '</div>' +
+        '<div class="meta">Registriert am ' + escapeHtml(formatDatumZeit(t.erstelltAm)) + ' · ' + escapeHtml(ROLLE_LABEL[t.rolle] || t.rolle) + '</div>' +
         '<div class="row-actions">' + aktionen + '</div>';
 
       row.querySelectorAll("button[data-aktion]").forEach(function(btn){
@@ -634,6 +638,32 @@
       }).then(function(res){ return res.json(); }).then(function(){
         btn.disabled = false;
         zeigeAdminStatus("Passwort-Reset-Mail an " + trainer.email + " verschickt.", true);
+      }).catch(function(){
+        btn.disabled = false;
+        zeigeAdminStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
+      });
+      return;
+    }
+
+    if(aktion === "rolle-wechseln"){
+      var neueRolle = btn.dataset.neueRolle;
+      if(!confirm(trainer.vorname + " " + trainer.nachname + " als " + (ROLLE_LABEL[neueRolle] || neueRolle) + " einstufen? Gilt ab dem nächsten abgerechneten Monat.")) return;
+      btn.disabled = true;
+      fetch("./api/trainer-rolle-setzen.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({id: trainer.id, rolle: neueRolle})
+      }).then(function(res){
+        return res.json().then(function(data){ return {ok: res.ok, status: res.status, data: data}; });
+      }).then(function(result){
+        if(result.status === 401){ showLoggedOut(); return; }
+        if(!result.ok || !result.data || !result.data.success){
+          btn.disabled = false;
+          zeigeAdminStatus((result.data && result.data.message) || "Aktion fehlgeschlagen.", false);
+          return;
+        }
+        zeigeAdminStatus("Rolle aktualisiert.", true);
+        ladeTrainerListe();
       }).catch(function(){
         btn.disabled = false;
         zeigeAdminStatus("Da ist leider etwas schiefgelaufen. Bitte versuch es erneut.", false);
