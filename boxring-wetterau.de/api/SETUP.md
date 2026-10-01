@@ -132,6 +132,9 @@ veröffentlichen (siehe Abschnitt 3 oben - gleiche Vorgehensweise).
 
 ## 7. Trainer-Zeiterfassung
 
+**Schnelle Orientierung "welche Datei enthält was, wo ändere ich was":
+siehe `TRAINERABRECHNUNG-UEBERSICHT.md` in diesem Ordner.**
+
 Unter `https://www.boxring-wetterau.de/trainer-zeiterfassung.html` können
 sich Trainer mit eigenem Account (E-Mail + Passwort) registrieren, ihre
 Trainingsstunden eintragen und abgeschlossene Vormonate abrechnen. Anders als
