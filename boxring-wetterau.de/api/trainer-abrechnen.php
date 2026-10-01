@@ -40,6 +40,19 @@ function formatStundenDe(float $stunden): string
     return rtrim(rtrim(number_format($stunden, 2, ',', ''), '0'), ',');
 }
 
+/**
+ * Waehlt den Stundensatz fuer den abgerechneten Monat (nicht fuer den
+ * Zeitpunkt der Abrechnung): bis einschliesslich 09/2026 galt ein
+ * einheitlicher Satz, ab 10/2026 ein eigener Satz je Trainerrolle.
+ */
+function stundensatzFuer(string $monat, bool $istHaupttrainer): float
+{
+    if ($monat < '2026-10') {
+        return TRAINER_STUNDENSATZ;
+    }
+    return $istHaupttrainer ? TRAINER_STUNDENSATZ_HAUPTTRAINER : TRAINER_STUNDENSATZ_AUSHILFSTRAINER;
+}
+
 TrainerSession::start();
 $trainerId = TrainerSession::currentTrainerId();
 if ($trainerId === null) {
@@ -82,11 +95,12 @@ if (!TrainerStore::abrechnungReservieren($trainerId, $monat)) {
     respond(422, ['success' => false, 'message' => 'Dieser Monat wurde bereits abgerechnet.']);
 }
 
-$betrag = round($stundenGesamt * TRAINER_STUNDENSATZ, 2);
-
-$monatsName = (new DateTimeImmutable($monat . '-01'))->format('m/Y');
 $name = $trainer['vorname'] . ' ' . $trainer['nachname'];
 $istHaupttrainer = strcasecmp($trainer['email'], HAUPTTRAINER_EMAIL) === 0;
+$stundensatz = stundensatzFuer($monat, $istHaupttrainer);
+$betrag = round($stundenGesamt * $stundensatz, 2);
+
+$monatsName = (new DateTimeImmutable($monat . '-01'))->format('m/Y');
 
 try {
     if ($istHaupttrainer) {
@@ -125,7 +139,7 @@ try {
             htmlspecialchars($monatsName, ENT_QUOTES, 'UTF-8'),
             $zeilen,
             formatStundenDe($stundenGesamt),
-            number_format(TRAINER_STUNDENSATZ, 2, ',', '.'),
+            number_format($stundensatz, 2, ',', '.'),
             number_format($betrag, 2, ',', '.')
         );
 

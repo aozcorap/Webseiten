@@ -85,12 +85,20 @@ define('ADMIN_PASSWORD', 'HIER-EIGENES-PASSWORT-EINTRAGEN');
 // Bestaetigungslink in einer E-Mail an NOTIFY_EMAIL, kein separates Passwort
 // noetig. ---
 
-// Verguetung pro voller Trainingsstunde, gilt fuer alle Trainer gleich.
-// Fuer HAUPTTRAINER_EMAIL (siehe unten) gilt dieser Satz als BRUTTO inkl.
-// 19% MwSt. (er ist umsatzsteuerpflichtig, bekommt eine echte PDF-Rechnung
-// statt einer einfachen Text-Mail) - bei allen anderen Trainern ist es ein
-// einfacher Betrag ohne MwSt-Berechnung.
-define('TRAINER_STUNDENSATZ', 20.0);
+// Verguetung pro voller Trainingsstunde. Bis einschliesslich September 2026
+// gilt fuer alle Trainer derselbe Satz (TRAINER_STUNDENSATZ); ab Oktober
+// 2026 wird nach Trainerrolle unterschieden (siehe unten). Welcher Satz
+// greift, richtet sich nach dem ABGERECHNETEN Monat, nicht nach dem
+// Zeitpunkt der Abrechnung - trainer-abrechnen.php waehlt das selbst.
+//
+// Fuer HAUPTTRAINER_EMAIL (siehe unten) gilt der jeweils zutreffende Satz
+// als BRUTTO inkl. 19% MwSt. (er ist umsatzsteuerpflichtig, bekommt eine
+// echte PDF-Rechnung statt einer einfachen Text-Mail) - bei allen anderen
+// Trainern (Aushilfstrainer) ist es ein einfacher Betrag ohne
+// MwSt-Berechnung.
+define('TRAINER_STUNDENSATZ', 20.0); // galt bis einschliesslich 09/2026, fuer alle Trainer gleich
+define('TRAINER_STUNDENSATZ_AUSHILFSTRAINER', 15.0); // ab 10/2026
+define('TRAINER_STUNDENSATZ_HAUPTTRAINER', 22.50); // ab 10/2026, brutto
 
 // --- PDF-Rechnung fuer den Haupttrainer (RechnungBuilder.php) ---
 // E-Mail-Adresse des Haupttrainers - stimmt mit seinem Trainer-Account
