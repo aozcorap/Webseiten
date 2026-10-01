@@ -152,8 +152,21 @@ Account statt eines geteilten Passworts.
    Tagesliste, Stunden-Summe und Betrag an den Kassenwart (`NOTIFY_EMAIL`),
    mit Kopie an den Trainer selbst. Der Monat ist danach gesperrt.
 
-**Konfiguration:** `TRAINER_STUNDENSATZ` in `config.php` (Vergütung pro
-voller Stunde, aktuell 20,- € für alle Trainer gleich).
+**Konfiguration:** Vergütung pro voller Stunde in `config.php`. Bis
+einschließlich 09/2026 galt `TRAINER_STUNDENSATZ` (20,- €) einheitlich für
+alle Trainer. Ab 10/2026 gilt ein Satz je Trainerrolle:
+`TRAINER_STUNDENSATZ_AUSHILFSTRAINER` (15,- €) und
+`TRAINER_STUNDENSATZ_HAUPTTRAINER` (22,50 €, brutto - siehe unten). Welcher
+Satz greift, entscheidet `stundensatzFuer()` in `trainer-abrechnen.php`
+anhand des abgerechneten Monats, nicht anhand des Abrechnungsdatums.
+
+Welche Rolle ("aushilfstrainer"/"haupttrainer") ein Trainer hat, steht als
+Feld `rolle` im Trainer-Account (neue Accounts starten als "haupttrainer")
+und wird in der Admin-Übersicht in `trainer-zeiterfassung.html` per Button
+umgestellt (`api/trainer-rolle-setzen.php`). Unabhängig davon bekommt nur
+`HAUPTTRAINER_EMAIL` die echte PDF-Rechnung statt der einfachen Text-Mail -
+es kann also mehrere Trainer mit Rolle "haupttrainer" geben, von denen nur
+einer rechnungsstellend ist.
 
 **Speicherung:** Bewusst keine eigene Datenbank - Accounts, Stunden und
 Abrechnungen liegen als JSON-Dateien in `api/data/` (durch `.htaccess` von

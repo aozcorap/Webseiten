@@ -9,9 +9,10 @@ require_once __DIR__ . '/../vendor/fpdf/fpdf.php';
  * (202607_BRW) - eigenes einfaches Layout per FPDF, kein Formular-Overlay
  * noetig wie bei PdfFormBuilder.
  *
- * Der Haupttrainer ist (anders als die normalen Trainer) umsatzsteuerpflichtig:
- * TRAINER_STUNDENSATZ gilt bei ihm als Brutto-Stundensatz inkl. 19% MwSt.,
- * Netto/MwSt werden fuer die Rechnung daraus zurueckgerechnet.
+ * Der Haupttrainer ist (anders als die Aushilfstrainer) umsatzsteuerpflichtig:
+ * der jeweils gueltige Stundensatz (siehe stundensatzFuer() in
+ * trainer-abrechnen.php) gilt bei ihm als Brutto-Stundensatz inkl. 19%
+ * MwSt., Netto/MwSt werden fuer die Rechnung daraus zurueckgerechnet.
  */
 final class RechnungBuilder
 {

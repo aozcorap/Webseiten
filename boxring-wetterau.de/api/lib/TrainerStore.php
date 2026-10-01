@@ -90,6 +90,7 @@ final class TrainerStore
                 'email' => $email,
                 'passwordHash' => $passwordHash,
                 'status' => 'pending', // pending | aktiv | abgelehnt
+                'rolle' => 'haupttrainer', // aushilfstrainer | haupttrainer - Default, Admin stellt bei Bedarf auf Aushilfstrainer um
                 'approveToken' => $approveToken,
                 'approveTokenExpiry' => $approveTokenExpiry,
                 'erstelltAm' => (new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')))->format('c'),
@@ -108,6 +109,20 @@ final class TrainerStore
                     $trainer['status'] = $status;
                     $trainer['approveToken'] = null;
                     $trainer['approveTokenExpiry'] = null;
+                }
+            }
+            unset($trainer);
+            return [$data, null];
+        });
+    }
+
+    /** Legt fest, mit welchem Stundensatz ein Trainer abgerechnet wird (siehe stundensatzFuer() in trainer-abrechnen.php). */
+    public static function setTrainerRolle(int $id, string $rolle): void
+    {
+        self::withTrainers(function (array $data) use ($id, $rolle) {
+            foreach ($data['trainers'] as &$trainer) {
+                if ($trainer['id'] === $id) {
+                    $trainer['rolle'] = $rolle;
                 }
             }
             unset($trainer);

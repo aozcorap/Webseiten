@@ -34,6 +34,7 @@ $trainers = array_map(static function (array $trainer): array {
         'nachname' => $trainer['nachname'],
         'email' => $trainer['email'],
         'status' => $trainer['status'],
+        'rolle' => $trainer['rolle'] ?? 'haupttrainer',
         'erstelltAm' => $trainer['erstelltAm'],
     ];
 }, TrainerStore::alleTrainer());
