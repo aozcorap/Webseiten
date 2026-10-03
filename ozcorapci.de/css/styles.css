@@ -186,6 +186,7 @@ a { color: inherit; }
 .hero-roles li { border: var(--hairline) solid var(--secondary-1); color: var(--white); padding: var(--space-8) var(--space-16); font-size: var(--fs-small); }
 .frame { position: relative; margin: 0 var(--offset) var(--offset) 0; }
 .frame::before { content: ""; position: absolute; inset: var(--offset) calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--offset); background: var(--accent); z-index: 0; }
+.frame::after { content: ""; position: absolute; z-index: 0; top: calc(-1 * var(--space-40)); left: calc(-1 * var(--space-40)); width: 140px; height: 140px; background-image: radial-gradient(var(--white) 1.6px, transparent 1.8px); background-size: 14px 14px; }
 .frame img { position: relative; z-index: 1; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-none); }
 @media (max-width: 767px) {
   .hero-grid { grid-template-columns: 1fr; }
