@@ -11,85 +11,128 @@
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="css/styles.css?v=3">
+  <link rel="stylesheet" href="css/styles.css?v=4">
 </head>
 <body>
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
-  <header class="site-header dark">
-    <div class="container header-inner">
-      <a class="brand" href="#top">Ahmet Özcorapci</a>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a class="brand" href="#top">Ahmet Özcorapci</a>
+        <nav class="nav-menu" id="mainNav" aria-label="Hauptnavigation">
+          <a class="nav-link" href="#about">Über mich</a>
+          <a class="nav-link" href="#experience">Werdegang</a>
+          <a class="nav-link" href="#skills">Skills</a>
+          <a class="nav-link" href="#project">Projekt</a>
+          <a class="nav-link nav-contact" href="mailto:ahmet@ozcorapci.de">Kontakt</a>
+        </nav>
+      </div>
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav">Menü</button>
-      <nav class="nav" id="mainNav" aria-label="Hauptnavigation">
-        <a href="#about">Über mich</a>
-        <a href="#experience">Werdegang</a>
-        <a href="#skills">Skills</a>
-        <a href="#project">Projekt</a>
-        <a class="nav-cta" href="mailto:ahmet@ozcorapci.de">Kontakt</a>
-      </nav>
+      <div class="header-right">
+        <a class="btn btn-primary btn-small" href="mailto:ahmet@ozcorapci.de">Kontakt</a>
+      </div>
     </div>
   </header>
 
   <main id="main">
     <section class="hero dark" id="top">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <p class="eyebrow">Senior Program Manager</p>
-          <h1>Programmleitung mit technischem Tiefgang</h1>
-          <p class="lead">IT-Infrastruktur- und Cloud-Transformationen im Enterprise-Umfeld — von der Planung bis zur Stabilisierung im laufenden Betrieb.</p>
-          <ul class="hero-roles" aria-label="Schwerpunkte">
-            <li>Program Management</li>
-            <li>Cloud &amp; Infrastructure</li>
-            <li>AI / Python</li>
-          </ul>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="mailto:ahmet@ozcorapci.de">Kontakt aufnehmen</a>
-            <a class="btn btn-outline" href="assets/docs/CV_Ahmet_Oezcorapci.pdf" download>CV herunterladen</a>
-          </div>
-        </div>
-        <div class="hero-photo">
-          <div class="frame">
+      <div class="container">
+        <div class="hero-wrapper">
+          <div class="hero-left">
             <img src="assets/img/profilbild-freigestellt.webp" alt="Porträtfoto von Ahmet Özcorapci" width="1127" height="1396">
           </div>
+          <div class="hero-right">
+            <div class="subtitle-wrap"><p class="subtitle">Senior Program Manager</p></div>
+            <h1>Programmleitung mit technischem Tiefgang</h1>
+            <p class="lead">IT-Infrastruktur- und Cloud-Transformationen im Enterprise-Umfeld — von der Planung bis zur Stabilisierung im laufenden Betrieb.</p>
+            <div class="coach">
+              <div class="coach-divider" aria-hidden="true"></div>
+              <div>
+                <div class="coach-name">Ahmet Özcorapci</div>
+                <p class="coach-work">IT Infrastructure Transformation</p>
+              </div>
+            </div>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="mailto:ahmet@ozcorapci.de">Kontakt aufnehmen</a>
+              <a class="btn btn-secondary" href="#about">Über mich</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="stats" aria-label="Kennzahlen">
-      <div class="container stats-grid">
-        <div>
-          <div class="stat-num">1.600+</div>
-          <div class="label">Server</div>
-        </div>
-        <div>
-          <div class="stat-num">&gt;90</div>
-          <div class="label">Standorte</div>
-        </div>
-        <div>
-          <div class="stat-num">~3 Mio. €</div>
-          <div class="label">Budget</div>
+    <section class="results" aria-label="Kennzahlen">
+      <div class="container">
+        <div class="results-wrapper">
+          <h2 class="results-title">Kennzahlen</h2>
+          <div class="results-grid">
+            <div class="result"><div class="result-number">1.600<span class="accent-text">+</span></div><div class="label">Server</div></div>
+            <div class="result"><div class="result-number"><span class="accent-text">&gt;</span>90</div><div class="label">Standorte</div></div>
+            <div class="result"><div class="result-number">~3 Mio. <span class="accent-text">€</span></div><div class="label">Budget</div></div>
+          </div>
         </div>
       </div>
     </section>
+
+    <div class="rule" aria-hidden="true"></div>
 
     <section class="section" id="about">
-      <div class="container two-col">
-        <div>
-          <p class="eyebrow">Über mich</p>
-          <h2>Seit über zwei Jahrzehnten Infrastruktur und Transformation</h2>
-        </div>
-        <div class="about-text">
-          <p>Seit über zwei Jahrzehnten begleite ich IT-Infrastruktur- und Transformationsprojekte im Enterprise-Umfeld — von der Planung bis zur Stabilisierung im laufenden Betrieb. Aktuell verantworte ich bei dormakaba ein globales Infrastruktur- und Cloud-Transformationsprogramm mit klarer Steuerung, Entscheidungsfindung und Risikomanagement, ohne die operative Umsetzung selbst zu übernehmen. Meine Stärke liegt darin, komplexe Transformationen in einen stabilen, skalierbaren Betrieb unter realen Enterprise-Bedingungen zu überführen. Parallel dazu vertiefe ich mein technisches Verständnis praktisch: mit einem selbst entwickelten, KI-gestützten Softwareprojekt.</p>
-          <p class="about-meta">Dipl. Informatiker (Technische Hochschule Mittelhessen, 1990) · ITIL Foundation · PRINCE2 Foundation</p>
+      <div class="container">
+        <div class="about-wrapper">
+          <div class="about-left">
+            <div class="subtitle-wrap"><p class="subtitle">Über mich</p></div>
+            <h2>Seit über zwei Jahrzehnten Infrastruktur und Transformation</h2>
+            <p class="paragraph">Seit über zwei Jahrzehnten begleite ich IT-Infrastruktur- und Transformationsprojekte im Enterprise-Umfeld — von der Planung bis zur Stabilisierung im laufenden Betrieb. Aktuell verantworte ich bei dormakaba ein globales Infrastruktur- und Cloud-Transformationsprogramm mit klarer Steuerung, Entscheidungsfindung und Risikomanagement, ohne die operative Umsetzung selbst zu übernehmen. Meine Stärke liegt darin, komplexe Transformationen in einen stabilen, skalierbaren Betrieb unter realen Enterprise-Bedingungen zu überführen. Parallel dazu vertiefe ich mein technisches Verständnis praktisch: mit einem selbst entwickelten, KI-gestützten Softwareprojekt.</p>
+            <p class="about-meta">Dipl. Informatiker (Technische Hochschule Mittelhessen, 1990) · ITIL Foundation · PRINCE2 Foundation</p>
+            <a class="text-link" href="assets/docs/CV_Ahmet_Oezcorapci.pdf" download>CV herunterladen</a>
+          </div>
+          <div class="about-right">
+            <div class="frame">
+              <img src="assets/img/profilbild.jpg" alt="Ahmet Özcorapci im Porträt" width="1024" height="1024" loading="lazy">
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section band" id="experience">
+    <section class="section dark services" id="skills">
       <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Werdegang</p>
-          <h2>Vom Projektmanagement zur globalen Programmverantwortung</h2>
+        <span class="subtitle-plain">Skills</span>
+        <h2>Programmleitung und technisches Steuerungswissen</h2>
+        <div class="services-grid">
+          <article class="service">
+            <span class="service-no">01</span>
+            <h3>Programm- &amp; Projektmanagement</h3>
+            <p>Enterprise Scale, IT Governance, Risk &amp; Escalation Management, Service Transition &amp; Operations Stabilization, Vendor &amp; Provider Management</p>
+          </article>
+          <article class="service">
+            <span class="service-no">02</span>
+            <h3>IT-Infrastruktur</h3>
+            <p>Cloud &amp; Infrastructure Transformation (Azure / Hybrid IT), Netzwerk &amp; Connectivity, Unified Communications &amp; Plattformmigration</p>
+          </article>
+          <article class="service">
+            <span class="service-no">03</span>
+            <h3>Technisch &amp; AI</h3>
+            <p>Python, Claude Code / Anthropic API, Grundlagen moderner Daten- und KI-Use-Cases im Cloud-Kontext</p>
+          </article>
+          <article class="service">
+            <span class="service-no">04</span>
+            <h3>Stakeholder</h3>
+            <p>CIO Advisory &amp; Stakeholder Management, direkte Zusammenarbeit mit Senior Management</p>
+          </article>
+        </div>
+        <a class="btn btn-primary" href="mailto:ahmet@ozcorapci.de">Kontakt aufnehmen</a>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="split-head">
+          <div>
+            <div class="subtitle-wrap"><p class="subtitle">Werdegang</p></div>
+            <h2>Vom Projektmanagement zur globalen Programmverantwortung</h2>
+          </div>
           <p>Über 20 Jahre Erfahrung in Infrastruktur-, Plattform- und Transformationsprojekten.</p>
         </div>
         <ul class="jobs">
@@ -150,78 +193,74 @@
       </div>
     </section>
 
-    <section class="section dark" id="skills">
+    <section class="section section-flush" id="project">
       <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Skills</p>
-          <h2>Programmleitung und technisches Steuerungswissen</h2>
+        <div class="split-head">
+          <div>
+            <div class="subtitle-wrap"><p class="subtitle">Persönliches Projekt</p></div>
+            <h2>Trading-Bot</h2>
+          </div>
         </div>
-        <div class="skills-grid">
-          <article class="skill">
-            <span class="skill-no">01</span>
-            <h3>Programm- &amp; Projektmanagement</h3>
-            <p>Enterprise Scale, IT Governance, Risk &amp; Escalation Management, Service Transition &amp; Operations Stabilization, Vendor &amp; Provider Management</p>
-          </article>
-          <article class="skill">
-            <span class="skill-no">02</span>
-            <h3>IT-Infrastruktur</h3>
-            <p>Cloud &amp; Infrastructure Transformation (Azure / Hybrid IT), Netzwerk &amp; Connectivity, Unified Communications &amp; Plattformmigration</p>
-          </article>
-          <article class="skill">
-            <span class="skill-no">03</span>
-            <h3>Technisch &amp; AI</h3>
-            <p>Python, Claude Code / Anthropic API, Grundlagen moderner Daten- und KI-Use-Cases im Cloud-Kontext</p>
-          </article>
-          <article class="skill">
-            <span class="skill-no">04</span>
-            <h3>Stakeholder</h3>
-            <p>CIO Advisory &amp; Stakeholder Management, direkte Zusammenarbeit mit Senior Management</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="project">
-      <div class="container">
-        <div class="project-box">
-          <p class="eyebrow">Persönliches Projekt</p>
-          <h2>Trading-Bot</h2>
-          <p>Neben der Programmleitung bei dormakaba entwickle ich in Eigenregie einen automatisierten Trading-Bot — ein praktisches Projekt, um KI-gestützte Softwareentwicklung nicht nur zu steuern, sondern selbst zu betreiben.</p>
+        <article class="post">
+          <p class="post-meta">Python · Claude Code · Anthropic API</p>
+          <h3>Neben der Programmleitung bei dormakaba entwickle ich in Eigenregie einen automatisierten Trading-Bot</h3>
+          <p>Ein praktisches Projekt, um KI-gestützte Softwareentwicklung nicht nur zu steuern, sondern selbst zu betreiben.</p>
           <p>Umsetzung mit Claude Code und der Anthropic API in Python. Das Projekt ist der Ort, an dem ich Automatisierung, Datenverarbeitung und KI-gestützte Entwicklungs-Workflows praktisch erprobe — als direkte Ergänzung zu meiner steuernden Rolle in Cloud- und Infrastrukturprogrammen.</p>
-          <ul class="tags" aria-label="Technologien">
-            <li>Python</li>
-            <li>Claude Code</li>
-            <li>Anthropic API</li>
-          </ul>
           <p class="note">Weitere Details zu Architektur und Ergebnissen folgen in Kürze.</p>
-        </div>
+        </article>
       </div>
     </section>
 
     <section class="cta" id="contact">
-      <div class="container cta-pad">
+      <div class="container">
         <div class="cta-wrap">
-          <div class="cta-box dark">
-          <p class="eyebrow">Kontakt</p>
-          <h2>Interessiert an einem Austausch?</h2>
-          <p>Zu Programmleitung, IT-Transformation oder dem Trading-Bot-Projekt. Ich freue mich auf eine Nachricht.</p>
-          <div class="btn-row">
+          <div class="cta-box">
+            <span class="subtitle-plain">Kontakt</span>
+            <h2>Interessiert an einem Austausch?</h2>
+            <p>Zu Programmleitung, IT-Transformation oder dem Trading-Bot-Projekt. Ich freue mich auf eine Nachricht.</p>
             <a class="btn btn-primary" href="mailto:ahmet@ozcorapci.de">E-Mail schreiben</a>
-            <a class="btn btn-outline" href="https://www.linkedin.com/in/ahmet-özcorapci/" target="_blank" rel="noopener noreferrer">LinkedIn-Profil</a>
-          </div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-row">
-      <span>© 2026 Ahmet Özcorapci · Deutsch, Englisch, Türkisch</span>
-      <ul class="footer-links">
-        <li><a href="impressum.html">Impressum</a></li>
-        <li><a href="datenschutz.html">Datenschutz</a></li>
-      </ul>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html#top">Ahmet Özcorapci</a>
+          <p>Senior Program Manager — IT Infrastructure Transformation</p>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Seiten</h2>
+          <div class="rule-line"></div>
+          <ul>
+            <li><a href="index.html#about">Über mich</a></li>
+            <li><a href="index.html#experience">Werdegang</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#project">Projekt</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Kontakt</h2>
+          <div class="rule-line"></div>
+          <ul>
+            <li><a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a></li>
+            <li><a href="https://www.linkedin.com/in/ahmet-özcorapci/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="assets/docs/CV_Ahmet_Oezcorapci.pdf" download>CV herunterladen</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">Rechtliches</h2>
+          <div class="rule-line"></div>
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Ahmet Özcorapci · Deutsch, Englisch, Türkisch</div>
     </div>
   </footer>
 
