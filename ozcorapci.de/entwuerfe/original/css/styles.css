@@ -2,8 +2,8 @@
    Eckig, Schwarz/Weiss im Wechsel, ein Gelb, eine Schrift (DM Sans). */
 
 
-@font-face { font-family: "DM Sans"; src: url("../assets/fonts/dm-sans.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Herr Von Muellerhoff"; src: url("../assets/fonts/herr-von-muellerhoff.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("../../../assets/fonts/dm-sans.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Herr Von Muellerhoff"; src: url("../../../assets/fonts/herr-von-muellerhoff.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 
 :root {
   /* Farben */
@@ -336,7 +336,7 @@ a { color: inherit; }
 
 /* Projekt-Bild und Banner-Hintergrund */
 .post-image { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; margin-bottom: var(--space-32); border-radius: var(--radius-none); }
-.cta-box { background: var(--black) url("../assets/img/banner-skyline.jpg") center / cover no-repeat; }
+.cta-box { background: var(--black) url("../../../assets/img/banner-skyline.jpg") center / cover no-repeat; }
 .cta-box::before { content: ""; position: absolute; inset: 0; background: var(--black); opacity: 0.78; }
 .cta-box > * { position: relative; }
 
