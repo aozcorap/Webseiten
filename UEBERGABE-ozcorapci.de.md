@@ -205,6 +205,6 @@ OFFENE-PUNKTE-ozcorapci.de.md, UEBERGABE-ozcorapci.de.md   Doku
 
 ## 9. Stand dieser Übergabe
 
-Diese Datei und der Ordner `quellen-ozcorapci.de/` wurden zuletzt angelegt und
-liegen auf dem Branch `claude/lucid-ride-n7p88e`. Ob sie schon auf `master`
-gemergt sind, steht in der Antwort der Session (PR-Link).
+Diese Datei und der Ordner `quellen-ozcorapci.de/` sind mit PR #164 auf `master`
+gemergt (Branch `claude/lucid-ride-n7p88e`, nach dem Merge neu auf `master`
+aufzusetzen). Es liegt nichts Ungesichertes mehr lokal.
