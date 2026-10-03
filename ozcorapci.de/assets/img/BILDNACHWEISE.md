@@ -6,8 +6,8 @@ keine Namensnennung erforderlich). Quelle: https://unsplash.com/license
 | Datei | Unsplash-Foto-ID |
 |---|---|
 | strip-hochhaeuser.jpg | photo-1486406146926-c627a92ad1ab |
-| strip-besprechung.jpg | photo-1497366811353-6870744d04b2 |
-| strip-grossraum.jpg | photo-1504384308090-c894fdcc538d |
+| strip-meeting.jpg | photo-1542744173-8e7e53415bb0 |
+| strip-projektplan.jpg | photo-1611224923853-80b023f02d71 |
 | projekt-dashboard.jpg | photo-1551288049-bebda4e38f71 |
 | banner-skyline.jpg | photo-1486325212027-8081e485255e |
 
