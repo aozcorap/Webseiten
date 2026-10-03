@@ -5,10 +5,11 @@ Sammlung statischer Websites (reines HTML/CSS/JS, kein Framework).
 ## Projekte
 
 ### [ozcorapci.de](ozcorapci.de/index.html)
-Portfolio-Website, Sidebar-Layout, Dark Mode mit violettem Akzent.
+Persönliche Website (Senior Program Manager, IT-Infrastruktur und KI-Automatisierung). Live-Version: Schwarz/Gelb, DM Sans.
 
-- Design-Tokens, Struktur und Inhalte: [FRAMER-MIGRATION.md](ozcorapci.de/FRAMER-MIGRATION.md) (Konzept für einen möglichen Framer-Umzug, aktuell nicht umgesetzt)
-- Aktueller Stand: gepflegte, handgecodete Live-Version, keine Migration geplant
+- **Entwürfe:** Unter `ozcorapci.de/entwuerfe/` liegen `original/` (Kopie der Live-Seite) und `a/` (Petrol/Messing). **Entwurf A wird höchstwahrscheinlich die neue Hauptseite**, ist aber noch nicht übernommen. Details, Entscheidungen und offene Punkte: [OFFENE-PUNKTE-ozcorapci.de.md](OFFENE-PUNKTE-ozcorapci.de.md)
+- Bildnachweise: [ozcorapci.de/assets/img/BILDNACHWEISE.md](ozcorapci.de/assets/img/BILDNACHWEISE.md)
+- [FRAMER-MIGRATION.md](ozcorapci.de/FRAMER-MIGRATION.md): älteres Konzept für einen möglichen Framer-Umzug (beschreibt das frühere Sidebar-Layout), nicht umgesetzt und nicht mehr aktuell
 
 ### [boxring-wetterau.de](boxring-wetterau.de/index.html)
 Vereins-Website Boxring Wetterau 1983 e.V., dunkles Rot/Schwarz-Farbschema.
