@@ -14,4 +14,6 @@
     });
   }
 
+  var more = document.getElementById('moreJobs');
+  if (more && window.matchMedia('(min-width: 768px)').matches) { more.open = true; }
 })();
