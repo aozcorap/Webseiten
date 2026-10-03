@@ -1,6 +1,6 @@
 /* Design "Noir & Gold" — Aufbau und Masse nach dem Consultant-Template.
    Eckig, Schwarz/Weiss im Wechsel, ein Gelb, eine Schrift (DM Sans). */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Mrs+Saint+Delafield&display=swap");
 
 :root {
   /* Farben */
@@ -15,6 +15,8 @@
 
   /* Schrift */
   --font: "DM Sans", system-ui, sans-serif;
+  --font-signature: "Mrs Saint Delafield", cursive;
+  --fs-signature: 58px;
   --fs-h1: 57px;
   --fs-h2: 36px;
   --fs-h3: 24px;
@@ -62,6 +64,7 @@
     --fs-h1: 47px;
     --fs-stat: 51px;
     --fs-cta: 41px;
+    --fs-signature: 54px;
     --section: 120px;
     --hero-top: 160px;
     --hero-bottom: 0px;
@@ -80,6 +83,7 @@
 }
 @media (max-width: 479px) {
   :root {
+    --fs-signature: 48px;
     --fs-h1: 33px;
     --fs-h2: 26px;
     --fs-h3: 20px;
@@ -204,9 +208,11 @@ a { color: inherit; }
 .hero h1 { color: var(--white); }
 .hero .lead { color: var(--white); max-width: 549px; margin-bottom: var(--space-30); }
 .coach { display: flex; align-items: center; margin-bottom: var(--space-60); }
-.coach-divider { align-self: stretch; width: var(--hairline); margin: 0 33px 0 0; background: var(--paragraph); }
-.coach-name { color: var(--white); font-size: var(--fs-h3); font-weight: 700; line-height: 1.037; margin-bottom: var(--space-8); }
+.signature { margin-right: var(--space-24); color: var(--white); font-family: var(--font-signature); font-size: var(--fs-signature); line-height: 1; white-space: nowrap; letter-spacing: 0; transform: rotate(-4deg); }
+.coach-divider { align-self: stretch; width: var(--hairline); margin: 0 var(--space-24) 0 0; background: var(--paragraph); }
+.coach-name { white-space: nowrap; color: var(--white); font-size: var(--fs-h3); font-weight: 700; line-height: 1.037; margin-bottom: var(--space-8); }
 .coach-work { color: var(--white); line-height: 1.1; margin: 0; }
+@media (max-width: 767px) { .coach { flex-direction: column; align-items: flex-start; gap: var(--space-16); } .coach-divider { display: none; } .signature { margin-right: 0; } }
 @media (max-width: 991px) {
   .hero-wrapper { flex-direction: column; align-items: flex-start; }
   .hero-right { width: 100%; padding-bottom: var(--space-48); }
