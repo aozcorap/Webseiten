@@ -1,6 +1,6 @@
 /* Design "Noir & Gold" — Aufbau und Masse nach dem Consultant-Template.
    Eckig, Schwarz/Weiss im Wechsel, ein Gelb, eine Schrift (DM Sans). */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Mrs+Saint+Delafield&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Herr+Von+Muellerhoff&display=swap");
 
 :root {
   /* Farben */
@@ -15,7 +15,7 @@
 
   /* Schrift */
   --font: "DM Sans", system-ui, sans-serif;
-  --font-signature: "Mrs Saint Delafield", cursive;
+  --font-signature: "Herr Von Muellerhoff", cursive;
   --fs-signature: 58px;
   --fs-h1: 57px;
   --fs-h2: 36px;
@@ -336,3 +336,23 @@ a { color: inherit; }
 .cta-box { background: var(--black) url("../assets/img/banner-skyline.jpg") center / cover no-repeat; }
 .cta-box::before { content: ""; position: absolute; inset: 0; background: var(--black); opacity: 0.78; }
 .cta-box > * { position: relative; }
+
+/* Frühere Stationen */
+.earlier { list-style: none; margin: var(--space-16) 0 0; padding: 0; }
+.earlier li { margin-bottom: var(--space-16); max-width: 760px; }
+.earlier strong { color: var(--black); }
+
+/* KI-Projekte */
+.band { background: var(--neutral-100); }
+.ki-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-27); margin-bottom: var(--space-60); padding-bottom: var(--space-60); border-bottom: var(--hairline) solid var(--neutral-300); }
+.ki-number { color: var(--black); font-size: clamp(var(--space-40), 5.2vw, var(--fs-stat)); font-weight: 700; line-height: 0.925; letter-spacing: -0.04em; margin-bottom: var(--space-16); white-space: nowrap; }
+.accent-dark { color: var(--paragraph); font-weight: 500; }
+.ki-image { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; margin-bottom: var(--space-60); border-radius: var(--radius-none); }
+.ki-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-27); }
+.ki-card { background: var(--white); border: var(--hairline) solid var(--neutral-300); padding: var(--space-48) var(--space-40) var(--space-40); }
+.ki-no { margin: 0 0 var(--space-24); color: var(--black); font-weight: 700; letter-spacing: var(--ls-label); }
+.ki-no::after { content: ""; display: block; width: var(--space-16); height: var(--accent-line); margin-top: var(--space-8); background: var(--accent); }
+.ki-card h3 { margin-bottom: var(--space-16); }
+.ki-card p:last-child { margin: 0; }
+@media (max-width: 991px) { .ki-grid, .ki-stats { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 767px) { .ki-grid, .ki-stats { grid-template-columns: 1fr; } .ki-card { padding: var(--space-40) var(--space-24); } }
