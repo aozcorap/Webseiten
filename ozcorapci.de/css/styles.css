@@ -210,6 +210,11 @@ a { color: inherit; }
 .job h3 { margin-bottom: var(--space-8); }
 .job-role { margin-bottom: var(--space-24); font-weight: 600; color: var(--ink); line-height: 1.5; }
 .job p:last-child { margin-bottom: 0; max-width: 40em; }
+.job-points { list-style: none; margin: 0; padding: 0; max-width: 40em; }
+.job-points li { position: relative; margin-bottom: var(--space-16); padding-left: var(--space-24); }
+.job-points li::before { content: ""; position: absolute; left: 0; top: 0.85em; width: var(--space-8); height: var(--hairline); background: var(--brass-deep); }
+.job-points strong { color: var(--ink); }
+.hero-meta { margin: var(--space-24) 0 0; font-size: var(--fs-small); letter-spacing: 0.04em; color: var(--text-on-dark); }
 .job-stats { display: flex; flex-wrap: wrap; gap: var(--space-8); margin: 0 0 var(--space-24); padding: 0; list-style: none; }
 .badge { padding: 6px 14px; border: var(--hairline) solid var(--petrol); color: var(--petrol); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
 .job-more { list-style: none; }
