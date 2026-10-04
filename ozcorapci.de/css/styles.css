@@ -228,6 +228,17 @@ a { color: inherit; }
 .more[open] > summary::after { content: "−"; }
 .jobs-nested { border-top: 0; }
 .more-ki { margin-top: 0; }
+.flow svg { display: block; width: 100%; height: auto; }
+.flow-box { fill: var(--ghost); stroke: var(--line-dark); stroke-width: 1; }
+.flow-core { fill: var(--petrol); stroke: var(--brass); stroke-width: 1; }
+.flow-line { stroke: var(--brass); stroke-width: 1.5; fill: none; }
+.flow-arrow { fill: var(--brass); }
+.flow-label { fill: var(--brass); font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; }
+.flow-title { fill: var(--white); font-family: var(--font-display); font-size: 24px; }
+.flow-core-title { fill: var(--white); font-family: var(--font-display); font-size: 36px; }
+.flow-sub { fill: var(--text-on-dark); font-family: var(--font-body); font-size: 15px; }
+.flow-note { fill: var(--text-on-dark); font-family: var(--font-body); font-size: 11px; }
+.flow-mid { text-anchor: middle; }
 .more-ki > .ki-grid { margin-top: var(--space-32); }
 .earlier { list-style: none; margin: var(--space-16) 0 0; padding: 0; }
 .earlier li { max-width: 42em; padding: var(--space-16) 0; border-top: var(--hairline) solid var(--line); }
@@ -240,6 +251,7 @@ a { color: inherit; }
 .ki-stat { padding-top: var(--space-16); border-top: 2px solid var(--ink); }
 .ki-number { font-family: var(--font-display); font-size: var(--fs-stat); line-height: 1; color: var(--ink); white-space: nowrap; margin-bottom: var(--space-8); }
 .ki-image { width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center top; margin-bottom: var(--space-32); filter: saturate(0.8); }
+.flow.ki-image { margin: 0 0 var(--space-32); aspect-ratio: auto; filter: none; background: var(--ink); }
 .ki-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--hairline); background: var(--line); border: var(--hairline) solid var(--line); }
 .ki-card { background: var(--mist); padding: var(--space-24); transition: background var(--ease); }
 .ki-card:hover { background: var(--white); }
