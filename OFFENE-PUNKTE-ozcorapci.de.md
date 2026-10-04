@@ -47,8 +47,8 @@ aber als Kandidaten für die Hauptseite festhalten.
       und Bilder sind eigenständig, die Struktur nicht. Entweder Template-Lizenz
       klären oder die Struktur vor dem Go-Live eigenständiger machen. Keine
       Rechtsberatung, ein Anwalt kann das verbindlich einschätzen.
-- [ ] `entwuerfe/original/` ist die template-nahe Version und öffentlich
-      erreichbar. Nach der Entscheidung löschen.
+- [x] `entwuerfe/original/` (template-nahe Schwarz/Gelb-Version) am 2026-10-04
+      aus dem Repo gelöscht, bleibt in der Git-Historie.
 - [ ] Bilder sind Stockfotos (Unsplash) bzw. eine Montage (Gantt auf Laptop),
       siehe `ozcorapci.de/assets/img/BILDNACHWEISE.md`. Eigene Fotos
       (z. B. bei der Arbeit) würden die Wirkung steigern.
@@ -73,3 +73,9 @@ aber als Kandidaten für die Hauptseite festhalten.
 - Deployment: Push auf `master` startet `.github/workflows/pages.yml`, nach
   etwa einer Minute ist die Seite live. Unterordner mit `index.html` bekommen
   automatisch eine eigene URL.
+
+
+## Stand 2026-10-04: Domain live
+Die Seite läuft unter https://ozcorapci.de über das eigene Repository
+`aozcorap/ozcorapci.de` (GitHub Pages, Branch `main`). Änderungen dort machen;
+der Ordner `ozcorapci.de/` in diesem Repo ist nur noch eine Kopie.
