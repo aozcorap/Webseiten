@@ -16,6 +16,4 @@
   function onScroll() { if (header) { header.classList.toggle('scrolled', window.scrollY > 40); } }
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
-  var more = document.getElementById('moreJobs');
-  if (more && window.matchMedia('(min-width: 768px)').matches) { more.open = true; }
 })();
