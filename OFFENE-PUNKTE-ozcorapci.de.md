@@ -79,3 +79,5 @@ aber als Kandidaten für die Hauptseite festhalten.
 Die Seite läuft unter https://ozcorapci.de über das eigene Repository
 `aozcorap/ozcorapci.de` (GitHub Pages, Branch `main`). Änderungen dort machen;
 der Ordner `ozcorapci.de/` in diesem Repo ist nur noch eine Kopie.
+
+`entwuerfe/a/` ist am 2026-10-04 ebenfalls gelöscht (nur noch in der Git-Historie).

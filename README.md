@@ -5,9 +5,9 @@ Sammlung statischer Websites (reines HTML/CSS/JS, kein Framework).
 ## Projekte
 
 ### [ozcorapci.de](ozcorapci.de/index.html)
-Persönliche Website (Senior Program Manager, IT-Infrastruktur und KI-Automatisierung). Live-Version: Petrol/Messing (Instrument Serif, Inter). Die frühere Schwarz/Gelb-Version liegt gesichert unter `ozcorapci.de/entwuerfe/original/`.
+Persönliche Website (Senior Program Manager, IT-Infrastruktur und KI-Automatisierung). Live-Version: Petrol/Messing (Instrument Serif, Inter), erreichbar unter https://ozcorapci.de. Die Live-Seite wird aus dem eigenen Repository `aozcorap/ozcorapci.de` ausgeliefert (GitHub Pages); der Ordner hier ist nur noch eine Kopie. Frühere Entwürfe sind aus dem Repo gelöscht und nur noch in der Git-Historie.
 
-- **Entwürfe:** Unter `ozcorapci.de/entwuerfe/` liegen `original/` (Kopie der Live-Seite) und `a/` (Petrol/Messing). **Entwurf A wird höchstwahrscheinlich die neue Hauptseite**, ist aber noch nicht übernommen. Details, Entscheidungen und offene Punkte: [OFFENE-PUNKTE-ozcorapci.de.md](OFFENE-PUNKTE-ozcorapci.de.md)
+- Offene Punkte und Hintergrund: [OFFENE-PUNKTE-ozcorapci.de.md](OFFENE-PUNKTE-ozcorapci.de.md)
 - Bildnachweise: [ozcorapci.de/assets/img/BILDNACHWEISE.md](ozcorapci.de/assets/img/BILDNACHWEISE.md)
 - [FRAMER-MIGRATION.md](ozcorapci.de/FRAMER-MIGRATION.md): älteres Konzept für einen möglichen Framer-Umzug (beschreibt das frühere Sidebar-Layout), nicht umgesetzt und nicht mehr aktuell
 
