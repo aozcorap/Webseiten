@@ -16,6 +16,4 @@
   function onScroll() { if (header) { header.classList.toggle('scrolled', window.scrollY > 40); } }
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
-  var ki = document.querySelector('.more-ki');
-  if (ki && window.matchMedia('(min-width: 768px)').matches) { ki.open = true; }
 })();
