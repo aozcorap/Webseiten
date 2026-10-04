@@ -38,8 +38,9 @@ aber als Kandidaten für die Hauptseite festhalten.
   nächster Abschnitt).
 
 ## Offen
-- [ ] **Entscheidung:** Entwurf A auf die Hauptseite übernehmen (Inhaber
-      entscheidet, Zeitpunkt offen).
+- [x] Entwurf A ist seit 2026-10-04 die Hauptseite (Impressum und Datenschutz
+      im Petrol-Design). Die bisherige Schwarz/Gelb-Hauptseite ist unverändert
+      gesichert unter `entwuerfe/original/`; `entwuerfe/a/` bleibt zum Vergleich.
 - [ ] **IP-Risiko:** Die Struktur (Abschnittsfolge, Maße, Bildrahmen mit
       Versatzblock und Punktraster, Unterschrift-Block) lehnt sich eng an das
       Webflow-"Consultant"-Template (BRIX Templates) an. Farben, Schriften, Icons
