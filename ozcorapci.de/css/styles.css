@@ -172,6 +172,7 @@ a { color: inherit; }
 .about-left h2 { margin-bottom: var(--space-32); }
 .about-left .paragraph { margin-bottom: var(--space-24); }
 .about-meta { padding-top: var(--space-24); border-top: var(--hairline) solid var(--line); color: var(--ink); font-weight: 500; line-height: 1.55; }
+.about-meta + .about-meta { border-top: 0; padding-top: 0; }
 .about-right { flex: 0 0 min(540px, 42%); min-width: 0; }
 .frame { position: relative; isolation: isolate; margin: 40px 32px 32px 40px; }
 .frame img { width: 100%; aspect-ratio: 460 / 520; object-fit: cover; object-position: center top; background: var(--ink); }
