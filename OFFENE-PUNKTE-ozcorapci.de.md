@@ -81,3 +81,5 @@ Die Seite läuft unter https://ozcorapci.de über das eigene Repository
 der Ordner `ozcorapci.de/` in diesem Repo ist nur noch eine Kopie.
 
 `entwuerfe/a/` ist am 2026-10-04 ebenfalls gelöscht (nur noch in der Git-Historie).
+
+Am 2026-10-04 ist auch der Ordner `ozcorapci.de/` in diesem Repository gelöscht (Quelle: `aozcorap/ozcorapci.de`). Bildnachweise: `quellen-ozcorapci.de/BILDNACHWEISE.md`.

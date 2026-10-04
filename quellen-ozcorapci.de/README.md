@@ -1,7 +1,8 @@
 # Quellen für ozcorapci.de (nicht veröffentlicht)
 
-Dieser Ordner liegt bewusst außerhalb von `ozcorapci.de/`, damit er nicht über
-GitHub Pages ausgeliefert wird (der Workflow kopiert nur die Projektordner).
+Dieser Ordner wird nicht veröffentlicht. Die Live-Seite liegt im eigenen Repository
+`aozcorap/ozcorapci.de`; der frühere Ordner `ozcorapci.de/` in diesem Repository ist
+gelöscht. `BILDNACHWEISE.md` (Quellen der Stockfotos) liegt jetzt hier.
 
 - `gantt_light.svg`: Gantt-Diagramm für Entwurf A (Petrol/Messing)
 - `gantt_dark.svg`: Gantt-Diagramm für Hauptseite und Original (Schwarz/Gelb)

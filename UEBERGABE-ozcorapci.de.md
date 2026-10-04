@@ -1,6 +1,6 @@
 # Übergabe: ozcorapci.de (Stand 2026-10-03, Ende der Session)
 
-> **Überholt seit 2026-10-04:** Entwurf A ist die Hauptseite, die Ordner `entwuerfe/original/` und `entwuerfe/a/` sind gelöscht (nur in der Git-Historie), die Seite läuft unter https://ozcorapci.de aus dem Repository `aozcorap/ozcorapci.de` (GitHub Pages). Die Abschnitte unten beschreiben den Stand vom 2026-10-03.
+> **Überholt seit 2026-10-04:** Entwurf A ist die Hauptseite, die Ordner `entwuerfe/original/` und `entwuerfe/a/` sind gelöscht (nur in der Git-Historie), die Seite läuft unter https://ozcorapci.de aus dem Repository `aozcorap/ozcorapci.de` (GitHub Pages). Der Ordner `ozcorapci.de/` in diesem Repository ist ebenfalls gelöscht. Die Abschnitte unten beschreiben den Stand vom 2026-10-03.
 
 Dieses Dokument reicht, um in einer neuen Session ohne Rückfragen
 weiterzumachen. Zuerst lesen: dieses Dokument, dann `CLAUDE.md` (Projektregeln)
