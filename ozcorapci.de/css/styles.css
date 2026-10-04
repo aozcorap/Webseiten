@@ -37,7 +37,7 @@
   --fs-body: 17px;
   --fs-small: 14px;
   --fs-label: 12px;
-  --fs-stat: clamp(32px, 3.4vw, 50px);
+  --fs-stat: clamp(26px, 2.4vw, 34px);
   --fs-signature: clamp(44px, 4.4vw, 64px);
 
   --space-8: 8px;
@@ -235,15 +235,15 @@ a { color: inherit; }
 
 /* KI-Projekte */
 .band { background: var(--mist); }
-.ki-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-32); margin-bottom: var(--space-64); }
-.ki-stat { padding-top: var(--space-24); border-top: 2px solid var(--ink); }
-.ki-number { font-family: var(--font-display); font-size: var(--fs-stat); line-height: 1; color: var(--ink); white-space: nowrap; margin-bottom: var(--space-16); }
-.ki-image { width: 100%; aspect-ratio: 21 / 8; object-fit: cover; margin-bottom: var(--space-64); filter: saturate(0.8); }
+.ki-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-32); margin-bottom: var(--space-32); }
+.ki-stat { padding-top: var(--space-16); border-top: 2px solid var(--ink); }
+.ki-number { font-family: var(--font-display); font-size: var(--fs-stat); line-height: 1; color: var(--ink); white-space: nowrap; margin-bottom: var(--space-8); }
+.ki-image { width: 100%; aspect-ratio: 16 / 5; object-fit: cover; object-position: center top; margin-bottom: var(--space-32); filter: saturate(0.8); }
 .ki-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--hairline); background: var(--line); border: var(--hairline) solid var(--line); }
-.ki-card { background: var(--mist); padding: var(--space-48) var(--space-32); transition: background var(--ease); }
+.ki-card { background: var(--mist); padding: var(--space-24); transition: background var(--ease); }
 .ki-card:hover { background: var(--white); }
-.ki-no { margin: 0 0 var(--space-32); font-family: var(--font-display); font-size: 24px; color: var(--brass-deep); }
-.ki-card h3 { margin-bottom: var(--space-16); font-size: clamp(24px, 2vw, 30px); }
+.ki-no { margin: 0 0 var(--space-16); font-family: var(--font-display); font-size: 20px; color: var(--brass-deep); }
+.ki-card h3 { margin-bottom: var(--space-8); font-size: clamp(20px, 1.6vw, 24px); }
 .ki-card p:last-child { margin: 0; font-size: 16px; }
 
 /* Kontakt-Banner */
@@ -278,10 +278,9 @@ a { color: inherit; }
 /* Tablet und Handy */
 @media (max-width: 991px) {
   .split-head { flex-direction: column; align-items: flex-start; gap: var(--space-24); margin-bottom: var(--space-48); }
-  .ki-grid { grid-template-columns: 1fr 1fr; }
   .ki-stats { grid-template-columns: 1fr; gap: var(--space-24); }
   .ki-stat { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-16); }
-  .ki-number { margin: 0; font-size: 36px; }
+  .ki-number { margin: 0; font-size: 28px; }
   .ki-stat .label { text-align: right; }
 }
 @media (max-width: 767px) {
@@ -314,7 +313,7 @@ a { color: inherit; }
   .ki-image { display: none; }
   .ki-stat { display: block; }
   .ki-stat .label { text-align: left; }
-  .ki-number { font-size: 34px; margin-bottom: var(--space-8); }
+  .ki-number { font-size: 28px; margin-bottom: var(--space-8); }
   .ki-grid.swipe { background: transparent; border: 0; }
   .ki-grid.swipe > .ki-card { background: var(--white); border: var(--hairline) solid var(--line); padding: var(--space-32) var(--space-24); }
   .ki-no { margin-bottom: var(--space-16); }
