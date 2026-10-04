@@ -217,6 +217,8 @@ a { color: inherit; }
 .more > summary::after { content: "+"; font-family: var(--font-display); font-size: 30px; line-height: 1; letter-spacing: 0; }
 .more[open] > summary::after { content: "−"; }
 .jobs-nested { border-top: 0; }
+.more-ki { margin-top: 0; }
+.more-ki > .ki-grid { margin-top: var(--space-32); }
 .earlier { list-style: none; margin: var(--space-16) 0 0; padding: 0; }
 .earlier li { max-width: 42em; padding: var(--space-16) 0; border-top: var(--hairline) solid var(--line); }
 .earlier li:first-child { border-top: 0; }
