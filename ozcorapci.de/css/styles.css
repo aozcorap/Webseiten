@@ -57,7 +57,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); }
 html.nav-open { overflow: hidden; }
 html.nav-open .header { height: 100vh; height: 100dvh; align-items: flex-start; backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--ink-deep); transition: none; }
 html.nav-open .header-content { height: var(--header-h); }
@@ -240,7 +240,7 @@ a { color: inherit; }
 .ki-col > summary { display: block; list-style: none; cursor: default; }
 .ki-col > summary::-webkit-details-marker { display: none; }
 .ki-no { display: block; margin: 0 0 var(--space-16); font-family: var(--font-display); font-size: 20px; color: var(--brass-deep); }
-.ki-number { display: block; margin: 0 0 var(--space-8); font-family: var(--font-display); font-size: var(--fs-stat); line-height: 1; color: var(--ink); white-space: nowrap; }
+.ki-number { display: block; margin: 0 0 var(--space-8); font-family: var(--font-display); font-size: var(--fs-stat); font-weight: 400; line-height: 1; color: var(--ink); white-space: nowrap; }
 .ki-unit { display: block; margin: 0 0 var(--space-24); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--petrol); }
 .ki-col h3 { margin-bottom: var(--space-8); font-size: clamp(20px, 1.6vw, 24px); }
 .ki-tag { margin: 0 0 var(--space-8); font-size: var(--fs-small); font-weight: 600; color: var(--ink); }
