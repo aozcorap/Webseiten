@@ -243,6 +243,7 @@ a { color: inherit; }
 .ki-number { display: block; margin: 0 0 var(--space-8); font-family: var(--font-display); font-size: var(--fs-stat); font-weight: 400; line-height: 1; color: var(--ink); white-space: nowrap; }
 .ki-unit { display: block; margin: 0 0 var(--space-24); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--petrol); }
 .ki-col h3 { margin-bottom: var(--space-8); font-size: clamp(20px, 1.6vw, 24px); }
+.thin-glyph { -webkit-text-stroke: 0.018em currentColor; }
 .ki-tag { margin: 0 0 var(--space-8); font-size: var(--fs-small); font-weight: 600; color: var(--ink); }
 .ki-body p:last-child { margin: 0; font-size: 16px; }
 
