@@ -16,4 +16,12 @@
   function onScroll() { if (header) { header.classList.toggle('scrolled', window.scrollY > 40); } }
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+  var kiCols = document.querySelectorAll('.ki-col');
+  var wide = window.matchMedia('(min-width: 768px)');
+  function syncKi() { kiCols.forEach(function (d) { d.open = wide.matches; }); }
+  syncKi();
+  if (wide.addEventListener) { wide.addEventListener('change', syncKi); }
+  kiCols.forEach(function (d) {
+    d.querySelector('summary').addEventListener('click', function (e) { if (wide.matches) { e.preventDefault(); } });
+  });
 })();
