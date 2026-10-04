@@ -13,4 +13,4 @@ keine Namensnennung erforderlich). Quelle: https://unsplash.com/license
 
 Die Fotos sind Symbolbilder und zeigen keine Referenzprojekte.
 
-KI-Abschnitt der Hauptseite: schematische Grafik (Inline-SVG, eigene Gestaltung, kein Foto). Beschriftungen stammen aus den Projektkarten der Seite.
+KI-Abschnitt der Hauptseite: kein Bild, nur drei Projektspalten.
