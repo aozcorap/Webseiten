@@ -17,6 +17,7 @@ final class ShopAdminSession
         if (session_status() === PHP_SESSION_ACTIVE) {
             return;
         }
+        session_name('bw_shop_sess');
         session_set_cookie_params([
             'lifetime' => 60 * 60 * 8,
             'path' => '/',
@@ -29,6 +30,7 @@ final class ShopAdminSession
 
     public static function login(): void
     {
+        session_regenerate_id(true);
         $_SESSION[self::SESSION_KEY] = true;
     }
 

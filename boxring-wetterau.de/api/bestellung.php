@@ -25,6 +25,7 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/Mailer.php';
 require_once __DIR__ . '/lib/OrdersStore.php';
+require_once __DIR__ . '/lib/RateLimit.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -57,6 +58,11 @@ if (!empty($input['website'])) {
     respond(200, ['success' => true]);
 }
 
+// Rate-Limit pro IP: schuetzt SMTP-Konto und Postfaecher vor Massenmissbrauch.
+if (!RateLimit::hit('bestellung', 10, 3600)) {
+    respond(429, ['success' => false, 'message' => 'Zu viele Anfragen. Bitte versuch es spaeter erneut.']);
+}
+
 $name = Validation::clean(isset($input['name']) && is_string($input['name']) ? $input['name'] : null);
 $email = Validation::clean(isset($input['email']) && is_string($input['email']) ? $input['email'] : null);
 $paymentMethod = Validation::clean(isset($input['paymentMethod']) && is_string($input['paymentMethod']) ? $input['paymentMethod'] : null);
@@ -74,6 +80,8 @@ if (!in_array($paymentMethod, ['ueberweisung', 'bar'], true)) {
 }
 if (empty($items)) {
     $errors[] = 'Bestellung enthaelt keine Artikel.';
+} elseif (count($items) > 50) {
+    $errors[] = 'Zu viele Artikel in einer Bestellung.';
 }
 
 $cleanItems = [];

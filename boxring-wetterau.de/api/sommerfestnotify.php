@@ -34,6 +34,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/Mailer.php';
+require_once __DIR__ . '/lib/RateLimit.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -66,11 +67,16 @@ if (!empty($input['website'])) {
     respond(200, ['success' => true]);
 }
 
+// Rate-Limit pro IP: schuetzt SMTP-Konto und Postfaecher vor Massenmissbrauch.
+if (!RateLimit::hit('sommerfest', 10, 3600)) {
+    respond(429, ['success' => false, 'message' => 'Zu viele Anfragen. Bitte versuch es spaeter erneut.']);
+}
+
 $name = Validation::clean(isset($input['name']) && is_string($input['name']) ? $input['name'] : null) ?? 'Sommerfest-Anmeldung';
-$personen = isset($input['personen']) ? (int) $input['personen'] : 1;
-$kinder = isset($input['kinder']) ? (int) $input['kinder'] : 0;
+$personen = isset($input['personen']) ? max(1, min(50, (int) $input['personen'])) : 1;
+$kinder = isset($input['kinder']) ? max(0, min(50, (int) $input['kinder'])) : 0;
 $vegetarisch = !empty($input['vegetarisch']);
-$vegPersonen = isset($input['vegPersonen']) ? (int) $input['vegPersonen'] : 0;
+$vegPersonen = isset($input['vegPersonen']) ? max(0, min(50, (int) $input['vegPersonen'])) : 0;
 $salat = !empty($input['salat']);
 $kuchen = !empty($input['kuchen']);
 $anmerkung = Validation::clean(isset($input['anmerkung']) && is_string($input['anmerkung']) ? $input['anmerkung'] : null);

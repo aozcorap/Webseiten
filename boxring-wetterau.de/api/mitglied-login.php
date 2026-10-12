@@ -13,6 +13,7 @@ ini_set('display_errors', '0');
 header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/lib/AdminSession.php';
+require_once __DIR__ . '/lib/RateLimit.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -31,17 +32,24 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
+if (!RateLimit::allowed('login-admin', 10, 900)) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'message' => 'Zu viele Fehlversuche. Bitte in 15 Minuten erneut versuchen.']);
+    exit;
+}
+
 $input = json_decode((string) file_get_contents('php://input'), true);
 $username = is_array($input) && isset($input['username']) && is_string($input['username']) ? $input['username'] : '';
 $password = is_array($input) && isset($input['password']) && is_string($input['password']) ? $input['password'] : '';
 
 if ($username === '' || $password === '' || !hash_equals(ADMIN_USERNAME, $username) || !hash_equals(ADMIN_PASSWORD, $password)) {
-    // Kleine kuenstliche Verzoegerung gegen simples Erraten per Skript.
+    RateLimit::hit('login-admin', 10, 900);
     usleep(500_000);
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Benutzername oder Passwort falsch.']);
     exit;
 }
 
+RateLimit::clear('login-admin');
 AdminSession::login();
 echo json_encode(['success' => true]);

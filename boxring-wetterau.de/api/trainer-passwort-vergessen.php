@@ -17,6 +17,7 @@ require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/TrainerStore.php';
 require_once __DIR__ . '/lib/Mailer.php';
 require_once __DIR__ . '/lib/JsonResponse.php';
+require_once __DIR__ . '/lib/RateLimit.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -40,6 +41,11 @@ $input = json_decode((string) file_get_contents('php://input'), true);
 $email = is_array($input) && isset($input['email']) && is_string($input['email']) ? Validation::clean($input['email']) : null;
 
 $genericSuccess = ['success' => true, 'message' => 'Falls ein Trainer-Account mit dieser E-Mail-Adresse existiert, wurde soeben ein Link zum Zuruecksetzen des Passworts verschickt.'];
+
+// Rate-Limit: Antwort bleibt generisch (kein Hinweis, ob die Adresse existiert).
+if (!RateLimit::hit('pw-vergessen', 5, 3600)) {
+    respond(200, $genericSuccess);
+}
 
 if ($email === null || !Validation::emailValid($email)) {
     respond(200, $genericSuccess);

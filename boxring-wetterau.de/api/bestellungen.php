@@ -26,6 +26,13 @@ function respondJson(int $httpCode, array $payload): void
     exit;
 }
 
+/** Entschaerft Zellen, die Excel/Sheets als Formel ausfuehren wuerden (=, +, -, @, Tab, CR). */
+function csvSafe(mixed $value): string
+{
+    $text = (string) $value;
+    return $text !== '' && strpbrk($text[0], "=+-@\t\r") !== false ? "'" . $text : $text;
+}
+
 ShopAdminSession::start();
 if (!ShopAdminSession::isLoggedIn()) {
     respondJson(401, ['success' => false, 'message' => 'Nicht angemeldet.']);
@@ -49,13 +56,13 @@ if ($method === 'GET' && $action === 'export') {
         foreach (($order['items'] ?? []) as $item) {
             $price = isset($item['price']) && is_numeric($item['price']) ? number_format((float) $item['price'], 2, ',', '') : '-';
             fputcsv($out, [
-                $order['id'] ?? '-',
-                $order['createdAt'] ?? '-',
-                $order['member'] ?? '-',
-                $order['email'] ?? '-',
-                $item['name'] ?? '-',
-                $item['size'] ?? '-',
-                $item['color'] ?? '-',
+                csvSafe($order['id'] ?? '-'),
+                csvSafe($order['createdAt'] ?? '-'),
+                csvSafe($order['member'] ?? '-'),
+                csvSafe($order['email'] ?? '-'),
+                csvSafe($item['name'] ?? '-'),
+                csvSafe($item['size'] ?? '-'),
+                csvSafe($item['color'] ?? '-'),
                 $price,
                 $status,
             ], ';');

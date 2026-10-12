@@ -17,6 +17,7 @@ require_once __DIR__ . '/lib/Validation.php';
 require_once __DIR__ . '/lib/TrainerStore.php';
 require_once __DIR__ . '/lib/Mailer.php';
 require_once __DIR__ . '/lib/JsonResponse.php';
+require_once __DIR__ . '/lib/RateLimit.php';
 
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
@@ -44,6 +45,11 @@ if (!is_array($input)) {
 // Honeypot: Bots fuellen versteckte Felder aus, echte Nutzer nie.
 if (!empty($input['website'])) {
     respond(200, ['success' => true]);
+}
+
+// Rate-Limit pro IP: schuetzt SMTP-Konto und Postfaecher vor Massenmissbrauch.
+if (!RateLimit::hit('trainer-register', 3, 3600)) {
+    respond(429, ['success' => false, 'message' => 'Zu viele Anfragen. Bitte versuch es spaeter erneut.']);
 }
 
 $vorname = Validation::clean(isset($input['vorname']) && is_string($input['vorname']) ? $input['vorname'] : null);
