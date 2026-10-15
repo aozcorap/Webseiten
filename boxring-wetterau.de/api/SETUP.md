@@ -181,9 +181,12 @@ außen gesperrt, siehe `api/data/.htaccess`). Der Ordner muss beim Deployment
 mit hochgeladen und beschreibbar sein (Standard-Dateiberechtigungen reichen
 i. d. R.).
 
-**Hinweis:** Für den Haupttrainer ist perspektivisch eine PDF-Rechnung statt
-der einfachen Abrechnungs-Mail geplant - das ist noch nicht umgesetzt, aktuell
-läuft jeder Trainer (inkl. Haupttrainer) über den oben beschriebenen Weg.
+**Hinweis:** Der Trainer mit `HAUPTTRAINER_EMAIL` bekommt statt der
+einfachen Abrechnungs-Mail eine PDF-Rechnung (`lib/RechnungBuilder.php`). Alle
+Konstanten dafür, sowie `TRAINER_STUNDENSATZ` (bis 09/2026) und die Sätze
+je Rolle (ab 10/2026), müssen in `config.php` stehen - fehlt eine, bricht die
+Abrechnung ohne Hinweis in der App ab (Details: OFFENE-PUNKTE-boxring-
+wetterau.md, Abschnitt "Trainer-Abrechnung: September 2026").
 
 ## 8. Sommerfest-Benachrichtigungsmail
 
