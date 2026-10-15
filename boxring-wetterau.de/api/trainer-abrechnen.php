@@ -99,6 +99,16 @@ if (!TrainerStore::abrechnungReservieren($trainerId, $monat)) {
     respond(422, ['success' => false, 'message' => 'Dieser Monat wurde bereits abgerechnet.']);
 }
 
+// Bricht PHP mittendrin ab (Zeitlimit, Fatal Error), laeuft der catch unten nie.
+// Dann die Reservierung hier freigeben, sonst haengt der Monat auf "wird verschickt".
+$abrechnungFertig = false;
+register_shutdown_function(static function () use (&$abrechnungFertig, $trainerId, $monat): void {
+    if (!$abrechnungFertig) {
+        error_log('trainer-abrechnen.php: Abbruch vor Abschluss, Reservierung ' . $trainerId . '/' . $monat . ' wird freigegeben');
+        TrainerStore::abrechnungStornieren($trainerId, $monat);
+    }
+});
+
 $name = $trainer['vorname'] . ' ' . $trainer['nachname'];
 // Bekommt die PDF-Rechnung statt der einfachen Text-Mail - unabhaengig von
 // der Abrechnungsrolle (trainer['rolle']), die nur den Stundensatz bestimmt.
@@ -162,9 +172,16 @@ try {
     error_log('trainer-abrechnen.php: Mail fehlgeschlagen: ' . $e->getMessage());
     // Reservierung wieder aufheben, damit der Trainer es erneut versuchen kann statt dauerhaft ausgesperrt zu sein.
     TrainerStore::abrechnungStornieren($trainerId, $monat);
+    $abrechnungFertig = true;
     respond(500, ['success' => false, 'message' => 'Abrechnung konnte nicht verschickt werden. Bitte versuch es erneut oder melde dich direkt unter ' . NOTIFY_EMAIL . '.']);
 }
 
-TrainerStore::abrechnungAbschliessen($trainerId, $monat, $stundenGesamt, $betrag);
+// Mail ist raus: ab hier darf die Reservierung nicht mehr freigegeben werden (sonst Doppelabrechnung).
+$abrechnungFertig = true;
+try {
+    TrainerStore::abrechnungAbschliessen($trainerId, $monat, $stundenGesamt, $betrag);
+} catch (Throwable $e) {
+    error_log('trainer-abrechnen.php: Abschluss nicht gespeichert (Mail wurde verschickt): ' . $e->getMessage());
+}
 
 respond(200, ['success' => true, 'stunden' => $stundenGesamt, 'betrag' => $betrag]);

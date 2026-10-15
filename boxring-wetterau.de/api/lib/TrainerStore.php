@@ -226,11 +226,30 @@ final class TrainerStore
         return JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat) {
             foreach ($data['abrechnungen'] as $abrechnung) {
                 if ($abrechnung['trainerId'] === $trainerId && $abrechnung['monat'] === $monat) {
-                    return [null, $abrechnung];
+                    // Verwaiste Reservierung (Skript abgebrochen) gilt als nicht vorhanden,
+                    // sonst bleibt der Monat dauerhaft auf "wird verschickt" haengen.
+                    return [null, self::reservierungVerwaist($abrechnung) ? null : $abrechnung];
                 }
             }
             return [null, null];
         });
+    }
+
+    /** Wie lange eine Reservierung hoechstens "laeuft", bevor sie als verwaist gilt (Sekunden). */
+    private const RESERVIERUNG_MAX_SEKUNDEN = 300;
+
+    /** True, wenn die Reservierung nie abgeschlossen wurde und aelter als RESERVIERUNG_MAX_SEKUNDEN ist (oder keinen Zeitstempel hat, Altbestand). */
+    private static function reservierungVerwaist(array $abrechnung): bool
+    {
+        if ($abrechnung['abgerechnetAm'] !== null) {
+            return false;
+        }
+        $reserviertAm = $abrechnung['reserviertAm'] ?? null;
+        if (!is_string($reserviertAm)) {
+            return true;
+        }
+        $zeit = strtotime($reserviertAm);
+        return $zeit === false || (time() - $zeit) > self::RESERVIERUNG_MAX_SEKUNDEN;
     }
 
     /**
@@ -247,7 +266,14 @@ final class TrainerStore
         return JsonFileStore::withLock(self::abrechnungenPath(), ['abrechnungen' => []], function (array $data) use ($trainerId, $monat) {
             foreach ($data['abrechnungen'] as $abrechnung) {
                 if ($abrechnung['trainerId'] === $trainerId && $abrechnung['monat'] === $monat) {
-                    return [null, false];
+                    if (!self::reservierungVerwaist($abrechnung)) {
+                        return [null, false];
+                    }
+                    // Verwaiste Reservierung entfernen und neu reservieren.
+                    $data['abrechnungen'] = array_values(array_filter($data['abrechnungen'], static function ($a) use ($trainerId, $monat) {
+                        return !($a['trainerId'] === $trainerId && $a['monat'] === $monat);
+                    }));
+                    break;
                 }
             }
             $data['abrechnungen'][] = [
@@ -256,6 +282,7 @@ final class TrainerStore
                 'stunden' => null,
                 'betrag' => null,
                 'abgerechnetAm' => null, // null = Reservierung laeuft noch, Mail wird gerade verschickt
+                'reserviertAm' => (new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')))->format('c'),
             ];
             return [$data, true];
         });

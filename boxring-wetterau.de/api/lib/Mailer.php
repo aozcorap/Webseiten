@@ -41,6 +41,7 @@ final class Mailer
             $mail->Password = SMTP_PASS;
             $mail->SMTPSecure = SMTP_SECURE; // 'tls' oder 'ssl'
             $mail->CharSet = 'UTF-8';
+            $mail->Timeout = 20; // Sekunden; Standard waere 300 und liesse PHP vorher abbrechen
 
             $mail->setFrom($fromEmail ?? SMTP_FROM_EMAIL, $fromName ?? SMTP_FROM_NAME);
             $mail->addAddress($toEmail, $toName);
