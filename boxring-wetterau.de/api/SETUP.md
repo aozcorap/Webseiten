@@ -152,8 +152,12 @@ Account statt eines geteilten Passworts.
    Schritten (z. B. 1,5 Std.; auch für den laufenden Monat).
 4. Abrechnen geht nur für einen bereits abgeschlossenen Vormonat, nie für
    den aktuellen Monat, und pro Monat nur einmal. Dabei geht eine E-Mail mit
-   Tagesliste, Stunden-Summe und Betrag an den Kassenwart (`NOTIFY_EMAIL`),
-   mit Kopie an den Trainer selbst. Der Monat ist danach gesperrt.
+   Tagesliste, Stunden-Summe und Betrag (beim Haupttrainer als PDF-Rechnung)
+   an den Kassenwart (`NOTIFY_EMAIL`) und den Trainer selbst (beide im "An"),
+   mit Kopie an `CONTACT_EMAIL` (Kontakt@). Absender ist das SMTP-Login-
+   Postfach (`SMTP_USER`), Reply-To der Kassenwart. Der Monat ist danach
+   gesperrt. Haengt ein Abrechnungsversuch (Skript abgebrochen), wird die
+   Reservierung nach 5 Minuten automatisch freigegeben.
 
 **Konfiguration:** Vergütung pro voller Stunde in `config.php`. Bis
 einschließlich 09/2026 galt `TRAINER_STUNDENSATZ` (20,- €) einheitlich für
