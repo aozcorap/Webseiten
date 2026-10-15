@@ -57,6 +57,29 @@ function stundensatzFuer(string $monat, string $rolle): float
     return $rolle === 'aushilfstrainer' ? TRAINER_STUNDENSATZ_AUSHILFSTRAINER : TRAINER_STUNDENSATZ_HAUPTTRAINER;
 }
 
+/**
+ * Empfaenger der Abrechnungsmail: Kassenwart (NOTIFY_EMAIL) und der Trainer
+ * selbst im 'An', Kontakt@ (CONTACT_EMAIL) in CC. Doppelte Adressen werden
+ * entfernt (z. B. wenn der Trainer selbst der Kassenwart ist).
+ *
+ * @return array{0: string, 1: array<int,string>, 2: array<int,string>} [An-Hauptempfaenger, weitere An, CC]
+ */
+function abrechnungsEmpfaenger(string $trainerEmail): array
+{
+    $gesehen = [mb_strtolower(NOTIFY_EMAIL) => true];
+    $weitereAn = [];
+    if (!isset($gesehen[mb_strtolower($trainerEmail)])) {
+        $weitereAn[] = $trainerEmail;
+        $gesehen[mb_strtolower($trainerEmail)] = true;
+    }
+    $cc = [];
+    $kontakt = defined('CONTACT_EMAIL') ? CONTACT_EMAIL : 'Kontakt@boxring-wetterau.de';
+    if (!isset($gesehen[mb_strtolower($kontakt)])) {
+        $cc[] = $kontakt;
+    }
+    return [NOTIFY_EMAIL, $weitereAn, $cc];
+}
+
 TrainerSession::start();
 $trainerId = TrainerSession::currentTrainerId();
 if ($trainerId === null) {
@@ -117,13 +140,13 @@ $stundensatz = stundensatzFuer($monat, $trainer['rolle'] ?? 'haupttrainer');
 $betrag = round($stundenGesamt * $stundensatz, 2);
 
 $monatsName = (new DateTimeImmutable($monat . '-01'))->format('m/Y');
+[$empfaenger, $weitereAn, $ccKontakt] = abrechnungsEmpfaenger($trainer['email']);
 
 try {
     if ($bekommtPdfRechnung) {
         // Haupttrainer ist umsatzsteuerpflichtig und bekommt eine echte
-        // PDF-Rechnung statt der einfachen Text-Mail - nur an den
-        // Kassenwart (er ist selbst der Rechnungssteller), CC an sich
-        // selbst fuer die eigene Buchhaltung.
+        // PDF-Rechnung statt der einfachen Text-Mail - an Kassenwart und
+        // Trainer selbst (An), Kontakt@ in CC.
         $rechnungPdf = RechnungBuilder::build([
             'monat' => $monat,
             'stunden' => $stundenGesamt,
@@ -131,12 +154,14 @@ try {
             'rechnungsdatum' => new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin')),
         ]);
         Mailer::send(
-            NOTIFY_EMAIL,
+            $empfaenger,
             'Kassenwart',
             'Rechnung Trainerstunden ' . $monatsName . ' – ' . $name,
             '<p>Hallo,</p><p>im Anhang die Rechnung für die Trainerstunden ' . htmlspecialchars($monatsName, ENT_QUOTES, 'UTF-8') . '.</p><p>Sportliche Grüße,<br>' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</p>',
             ['name' => 'Rechnung', 'content' => $rechnungPdf, 'filename' => 'Rechnung-' . str_replace('-', '', $monat) . '_BRW.pdf'],
-            [$trainer['email']]
+            $ccKontakt,
+            $weitereAn,
+            SMTP_USER // Absender = Login-Postfach, damit Absender nie gleich Empfaenger ist
         );
     } else {
         $zeilen = '';
@@ -160,12 +185,14 @@ try {
         );
 
         Mailer::send(
-            NOTIFY_EMAIL,
+            $empfaenger,
             'Kassenwart',
             'Trainerabrechnung ' . $monatsName . ' – ' . $name,
             $bodyHtml,
             null,
-            [$trainer['email']]
+            $ccKontakt,
+            $weitereAn,
+            SMTP_USER // Absender = Login-Postfach, damit Absender nie gleich Empfaenger ist
         );
     }
 } catch (Throwable $e) {

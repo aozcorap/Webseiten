@@ -46,7 +46,7 @@ try {
         null,
         [],
         [],
-        null,
+        SMTP_USER, // wie die echte Abrechnung: Absender = Login-Postfach
         null,
         null,
         null,
@@ -69,7 +69,7 @@ $protokoll = preg_replace('/^(.*(?:CLIENT -> SERVER: ))([A-Za-z0-9+\/=]{8,})\s*$
 JsonResponse::send(200, [
     'success' => true,
     'empfaenger' => MAIL_TEST_EMPFAENGER,
-    'absender' => SMTP_FROM_EMAIL,
+    'absender' => SMTP_USER,
     'smtpHost' => SMTP_HOST,
     'protokoll' => $protokoll,
 ]);
