@@ -29,7 +29,8 @@ final class Mailer
         ?string $fromEmail = null,
         ?string $fromName = null,
         ?string $replyToEmail = null,
-        ?string $replyToName = null
+        ?string $replyToName = null,
+        ?callable $debugSink = null
     ): void {
         $mail = new PHPMailer(true);
         try {
@@ -41,6 +42,12 @@ final class Mailer
             $mail->Password = SMTP_PASS;
             $mail->SMTPSecure = SMTP_SECURE; // 'tls' oder 'ssl'
             $mail->CharSet = 'UTF-8';
+            if ($debugSink !== null) {
+                $mail->SMTPDebug = 2; // Client+Server-Dialog, nur fuer den Admin-Test
+                $mail->Debugoutput = static function (string $str) use ($debugSink): void {
+                    $debugSink($str);
+                };
+            }
             $mail->Timeout = 20; // Sekunden; Standard waere 300 und liesse PHP vorher abbrechen
 
             $mail->setFrom($fromEmail ?? SMTP_FROM_EMAIL, $fromName ?? SMTP_FROM_NAME);

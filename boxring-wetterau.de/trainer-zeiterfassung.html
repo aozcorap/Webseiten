@@ -209,6 +209,12 @@
       <div id="admin-status"></div>
       <div id="trainer-liste"></div>
     </div>
+    <div class="bw-card">
+      <h2>Mailversand testen</h2>
+      <p class="hint">Schickt eine Testmail NUR an ahmet@ozcorapci.de (keine Mail an Kassenwart oder Trainer) und zeigt unten den SMTP-Dialog des Servers.</p>
+      <button type="button" id="mail-test-btn">Testmail senden</button>
+      <pre id="mail-test-ergebnis" style="white-space:pre-wrap;word-break:break-word;font-size:12px;margin-top:12px;"></pre>
+    </div>
   </div>
 </main>
 
@@ -562,6 +568,21 @@
     adminStatusBox.textContent = text;
     adminStatusBox.className = "show " + (ok ? "ok" : "err");
   }
+
+  var mailTestBtn = document.getElementById("mail-test-btn");
+  var mailTestErgebnis = document.getElementById("mail-test-ergebnis");
+  mailTestBtn.addEventListener("click", function(){
+    mailTestBtn.disabled = true;
+    mailTestErgebnis.textContent = "Wird gesendet …";
+    fetch("./api/mail-test.php", {method: "POST"}).then(function(res){
+      return res.json().then(function(data){ return {ok: res.ok, data: data}; });
+    }).then(function(result){
+      var d = result.data || {};
+      mailTestErgebnis.textContent = (result.ok && d.success ? "ANGENOMMEN von " + d.smtpHost + " an " + d.empfaenger + " (Absender " + d.absender + ")" : "FEHLER: " + (d.message || "unbekannt")) + "\n\n" + (d.protokoll || "");
+    }).catch(function(){
+      mailTestErgebnis.textContent = "Anfrage fehlgeschlagen (kein gueltiges Ergebnis vom Server).";
+    }).then(function(){ mailTestBtn.disabled = false; });
+  });
 
   function ladeTrainerListe(){
     adminStatusBox.className = "";
