@@ -113,6 +113,73 @@ auf die Live-Funktion. **Merke für künftige ZIP-Deploys:** Immer den Inhalt
 des ZIP direkt in den Zielordner entpacken, nicht das ZIP als neuen
 Unterordner behandeln.
 
+## Trainer-Abrechnung: September 2026 hing, Mails fehlten (behoben 2026-10-15)
+**Symptom:** Trainer sahen beim Abrechnen "Da ist leider etwas schiefgelaufen",
+danach dauerhaft "Abrechnung wird verschickt …". Beim Kassenwart und den
+Trainern kam keine Mail an. In `api/data/abrechnungen.json` standen drei
+Einträge für 2026-09 (Trainer-IDs 4, 5, 7) mit `abgerechnetAm: null`.
+
+**Ursache (belegt):** In der echten `api/config.php` fehlte die Konstante
+`TRAINER_STUNDENSATZ` (20,0 €, gilt für alle Monate bis einschließlich
+09/2026). `trainer-abrechnen.php` liest sie in `stundensatzFuer()` nach der
+Reservierung des Monats und vor dem Mailversand. Fehlt sie, bricht PHP mit
+einem Fatal Error ab (HTTP 500, leerer Body, daher die generische Meldung
+in der App), und die Reservierung blieb stehen. Es ging also **keine** Mail
+raus. Ein Problem des Mailwegs gab es nicht: Die Testmail kam an, die
+Abrechnungsmail an Mansur ebenfalls. Reproduziert mit einer Kopie des Codes
+und einer Config ohne die Konstante.
+
+**Behoben durch:**
+- Konstante in der Server-`config.php` ergänzt (Zeile
+  `define('TRAINER_STUNDENSATZ', 20.0);`).
+- Code (PR #196): Verwaiste Reservierungen (ohne Abschluss, älter als
+  5 Minuten oder ohne Zeitstempel) gelten als nicht vorhanden und werden beim
+  nächsten Abrechnen ersetzt; Shutdown-Handler gibt die Reservierung bei
+  Abbruch frei; SMTP-Timeout 20 s statt 300 s.
+- Danach haben Mansur und Magamed September abgerechnet; Mansurs Mail ist
+  angekommen. Joshua (9,5 Std.) stand zuletzt noch aus.
+
+**Pflicht-Konstanten in `api/config.php`** (Vorlage: `config.sample.php`),
+alle gegen den Code geprüft und nach der Korrektur vorhanden:
+`SMTP_HOST/PORT/SECURE/USER/PASS`, `SMTP_FROM_EMAIL/NAME`, `NOTIFY_EMAIL`,
+`CONTACT_EMAIL`, `TRAINER_STUNDENSATZ` (bis 09/2026),
+`TRAINER_STUNDENSATZ_AUSHILFSTRAINER` (15,0) und
+`TRAINER_STUNDENSATZ_HAUPTTRAINER` (22,50, brutto) ab 10/2026,
+`HAUPTTRAINER_EMAIL` plus `HAUPTTRAINER_NAME/STRASSE/PLZ_ORT/ORT/BANKNAME/
+IBAN/BIC/STEUERNUMMER` und `VEREIN_RECHNUNGSNAME/STRASSE/ORT` für die
+PDF-Rechnung. Fehlt eine davon, stürzt die Abrechnung ohne Hinweis in der
+App ab; die Ursache steht nur im PHP-`error_log`. Bewusst keine
+Konstanten-Vorabprüfung im Code eingebaut (Entscheidung des Nutzers).
+
+**Empfänger seit PR #197:** An: Kassenwart (`NOTIFY_EMAIL`) und der Trainer
+selbst, CC: `CONTACT_EMAIL` (Kontakt@), auch bei der PDF-Rechnung. Absender
+ist das SMTP-Login-Postfach (`SMTP_USER`, aktuell
+kontakt@boxring-woelfersheim.de), Reply-To der Kassenwart. Nur
+`HAUPTTRAINER_EMAIL` bekommt die PDF-Rechnung.
+
+**Admin-Mailtest:** Im Admin-Login von `trainer-zeiterfassung.html` (Benutzer-
+name + Admin-Passwort aus `config.php`, nicht die Trainer-E-Mail) gibt es die
+Karte "Mailversand testen". Sie schickt eine Testmail nur an
+ahmet@ozcorapci.de (fest im Code) und zeigt den SMTP-Dialog
+(`api/mail-test.php`). Passwort wird in der Ausgabe ausgeblendet.
+
+**Offen / Risiko:**
+- [ ] Der Kassenwart hat noch nicht bestätigt, dass Mansurs und Magameds
+      Abrechnungsmail in seinem Postfach liegt (`Kassenwart@` ist ein
+      eigenes Postfach, keine Weiterleitung). Beim Nutzer kam sie über
+      Kontakt@ an.
+- [ ] Erste Oktober-Abrechnung (ab 01.11.2026) ist ungetestet im Betrieb:
+      erstmals Rollen-Sätze und erstmals Ahmets PDF-Rechnung auf dem Server
+      (`RechnungBuilder` lief live noch nie; technisch mit Testdaten erzeugt,
+      Layout nicht geprüft). Zur ersten Abrechnung jemanden bereitstehen
+      lassen.
+- [ ] Joshua: September (9,5 Std., 190 €) ggf. noch nicht abgerechnet.
+- Ältere Monate (Ahmet 08/09, Mansur 08) liefen ohne Fehler; kein erneuter
+  Versand nötig (Nutzer bestätigt: Probleme nur im September).
+- Die echte `config.php` enthält Zugangsdaten und wurde in einer Session
+  hochgeladen: SMTP-Passwort, Shop-Admin und Admin-Zugang (aktuell
+  Benutzername = Passwort) ändern.
+
 ## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-17, Go-Live)
 - [ ] Trainer-Zugangsdaten für `mitglied-check.html` (`brw-trainer` /
       `brw-trainer`) sind bewusst simpel gewählt - bei Bedarf in
