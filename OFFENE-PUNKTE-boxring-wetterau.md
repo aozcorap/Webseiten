@@ -177,14 +177,26 @@ ahmet@ozcorapci.de (fest im Code) und zeigt den SMTP-Dialog
 - Ältere Monate (Ahmet 08/09, Mansur 08) liefen ohne Fehler; kein erneuter
   Versand nötig (Nutzer bestätigt: Probleme nur im September).
 - Die echte `config.php` enthält Zugangsdaten und wurde in einer Session
-  hochgeladen: SMTP-Passwort, Shop-Admin und Admin-Zugang (aktuell
-  Benutzername = Passwort) ändern.
+  hochgeladen: SMTP-Passwort und Shop-Admin-Passwort ändern. Zum
+  Admin-Zugang siehe nächster Abschnitt (bewusst akzeptiert).
 
 ## Online-Mitgliedsanmeldung – offene Punkte (Stand 2026-08-17, Go-Live)
-- [ ] Trainer-Zugangsdaten für `mitglied-check.html` (`brw-trainer` /
-      `brw-trainer`) sind bewusst simpel gewählt - bei Bedarf in
-      `api/config.php` (`ADMIN_USERNAME`/`ADMIN_PASSWORD`) durch etwas
-      Sichereres ersetzen.
+- [x] Admin-Zugang (`ADMIN_USERNAME`/`ADMIN_PASSWORD` in `api/config.php`):
+      **Bewusst akzeptiertes Restrisiko (Entscheidung des Nutzers,
+      2026-10-16).** Stand: Das Passwort ist schwach (Benutzername und
+      Passwort sind gleich, nicht wie hier früher dokumentiert). Dieser eine
+      Zugang öffnet sowohl den Mitglied-Check (`mitglied-check.html`) als
+      auch die Trainer-Verwaltung in `trainer-zeiterfassung.html`
+      (Trainer freischalten/sperren, Rolle und damit Stundensatz ändern,
+      Passwort-Reset-Mails, Admin-Mailtest); der Code prüft überall nur
+      `AdminSession::isLoggedIn()`. Begründung für das Akzeptieren: Das
+      Admin-Passwort kennt laut Nutzer niemand außer dem Vorstand. Offen
+      bleibt, dass ein schwaches Passwort erratbar ist (nur 0,5 s Wartezeit
+      pro Fehlversuch, keine Sperre). Falls sich das ändert (Passwort wird
+      weitergegeben oder verdächtige Rollenänderung): Passwort in der
+      `config.php` ändern, ohne Deploy; sauberer wäre ein getrennter
+      Trainer-Zugang nur für die Mitgliedersuche. Keine Zugangsdaten in
+      dieser Datei dokumentieren.
 
 **Entschieden/erledigt beim Go-Live (2026-08-17):**
 - Willkommensmail-Absender auf Kassenwart@ umgestellt, CC bleibt Kontakt@,
