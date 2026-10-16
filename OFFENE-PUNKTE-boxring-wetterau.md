@@ -50,8 +50,8 @@
       boxring-wetterau.de soll Hauptdomain werden, boxring-woelfersheim.de
       wird 301-Weiterleitung dorthin (Nachricht an Hoster wurde bereits formuliert
       und vom Nutzer verschickt)
-- [ ] Rezensionen aktiv einsammeln - LÄUFT (Stand 2026-10-16: werden laut
-      Nutzer eingesammelt; offen, bis die Zielmenge erreicht ist). Ursprünglich:
+- [x] ERLEDIGT (Stand 2026-10-16, laut Nutzer): Rezensionen aktiv einsammeln.
+      Ursprünglich:
       letzter offener GBP-Punkt, größter noch
       ungenutzter Ranking-Hebel für die Umkreissuche/Local Pack): Text für
       Rezensions-Anfrage wurde formuliert (WhatsApp-Vorlage), Zielgruppe
@@ -140,7 +140,9 @@ und einer Config ohne die Konstante.
   nächsten Abrechnen ersetzt; Shutdown-Handler gibt die Reservierung bei
   Abbruch frei; SMTP-Timeout 20 s statt 300 s.
 - Danach haben Mansur und Magamed September abgerechnet; Mansurs Mail ist
-  angekommen. Joshua (9,5 Std.) stand zuletzt noch aus.
+  angekommen. Joshua (9,5 Std.) hat laut Nutzer ebenfalls abgerechnet
+  (Stand 2026-10-16); damit sind alle drei hängenden September-Abrechnungen
+  erledigt.
 
 **Pflicht-Konstanten in `api/config.php`** (Vorlage: `config.sample.php`),
 alle gegen den Code geprüft und nach der Korrektur vorhanden:
@@ -176,7 +178,7 @@ ahmet@ozcorapci.de (fest im Code) und zeigt den SMTP-Dialog
       (`RechnungBuilder` lief live noch nie; technisch mit Testdaten erzeugt,
       Layout nicht geprüft). Zur ersten Abrechnung jemanden bereitstehen
       lassen.
-- [ ] Joshua: September (9,5 Std., 190 €) ggf. noch nicht abgerechnet.
+- [x] Joshua: September (9,5 Std., 190 €) abgerechnet (laut Nutzer, 2026-10-16).
 - Ältere Monate (Ahmet 08/09, Mansur 08) liefen ohne Fehler; kein erneuter
   Versand nötig (Nutzer bestätigt: Probleme nur im September).
 - Die echte `config.php` enthält Zugangsdaten und wurde in einer Session
