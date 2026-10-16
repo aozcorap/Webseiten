@@ -170,18 +170,18 @@ try {
     $whatsappHinweis = '';
     if (defined('WHATSAPP_GROUP_INVITE_URL') && WHATSAPP_GROUP_INVITE_URL !== '') {
         $whatsappUrl = htmlspecialchars(WHATSAPP_GROUP_INVITE_URL, ENT_QUOTES, 'UTF-8');
-        $whatsappHinweis = '<p>Damit du nichts verpasst, komm gerne auch direkt in unsere WhatsApp-Gruppe: ' .
+        $whatsappHinweis = '<p>Damit du nichts verpasst, kannst du auch unserer WhatsApp-Gruppe beitreten: ' .
             '<a href="' . $whatsappUrl . '">' . $whatsappUrl . '</a></p>';
     }
 
     $bodyHtml = sprintf(
         '<p>Hallo %s,</p>' .
-        '<p>herzlich willkommen im Boxring Wetterau 1983 e.V.! Wir freuen uns sehr, dass du jetzt Teil unseres Vereins bist.</p>' .
-        '<p>Im Anhang findest du dein ausgefülltes Aufnahmeformular als PDF – bitte einmal in Ruhe gegenprüfen, ob alle Angaben stimmen.</p>' .
-        '<p>Eine Sache noch in eigener Sache: Die einmalige Aufnahmegebühr von 20,- Euro wird zusammen mit deinem ersten ' .
-        'Mitgliedsbeitrag automatisch per SEPA-Lastschrift von dem angegebenen Konto eingezogen.</p>' .
+        '<p>herzlich willkommen im Boxring Wetterau 1983 e.V.! Schön, dass du dabei bist.</p>' .
+        '<p>Im Anhang findest du dein ausgefülltes Aufnahmeformular als PDF. Bitte schau kurz drüber, ob alle Angaben stimmen.</p>' .
+        '<p>Zur Aufnahmegebühr: Die einmalige Gebühr von 20,- Euro buchen wir zusammen mit deinem ersten ' .
+        'Mitgliedsbeitrag per SEPA-Lastschrift von dem angegebenen Konto ab. Das läuft automatisch.</p>' .
         '%s' .
-        '<p>Bei Fragen melde dich jederzeit gerne unter <a href="mailto:%s">%s</a>.</p>' .
+        '<p>Bei Fragen schreib einfach an <a href="mailto:%s">%s</a>.</p>' .
         '<p>Wir freuen uns auf dich im Training!</p>' .
         '<p>Sportliche Grüße,<br>Boxring Wetterau 1983 e.V.</p>',
         htmlspecialchars($data['vorname'], ENT_QUOTES, 'UTF-8'),
