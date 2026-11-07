@@ -35,6 +35,8 @@ jobs:
           cp -r cc-dienstleistungen-friedberg.de/. _site/cc-dienstleistungen-friedberg.de/
           mkdir -p _site/e-rechnung
           cp -r e-rechnung/. _site/e-rechnung/
+          mkdir -p _site/ki-test-steuerkanzleien
+          cp -r ki-test-steuerkanzleien/. _site/ki-test-steuerkanzleien/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

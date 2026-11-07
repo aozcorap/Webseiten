@@ -53,6 +53,13 @@ Lead-Gen-Landingpage "BüroKollege.de" zur E-Rechnungspflicht 2027/2028 — Word
 - Erklärvideo im Hero (Desktop: neben dem Text, Mobile: ganz oben vor allen Texten)
 - Formular sendet an Formspree; Auswahlfeld "Was betrifft Sie am meisten?" sendet den vollen Options-Text (nicht nur einen Kurzcode)
 
+### [ki-test-steuerkanzleien](ki-test-steuerkanzleien/index.html)
+Landingpage "8 Wochen KI kostenfrei testen" für drei Steuerkanzleien (eigenes Angebot von Ahmet Özcorapci, kein Kundenprojekt). Live: https://aozcorap.github.io/Webseiten/ki-test-steuerkanzleien/
+
+- Entwurf, `noindex`: gelb markierte Stellen (`class="todo"`) sind offen (Konditionen nach den 8 Wochen, EU-Hosting, AV-Vertrag, Speicherdauer, rechtliche Prüfung von Impressum und Datenschutz)
+- Lokale Schriften und Bilder, Formular öffnet das E-Mail-Programm (kein Endpunkt)
+- Weitere Unterlagen (Inhaltsvorschlag, Anzeigenvorschau, Versionen) liegen im Repo `aozcorap/AI-Positionierung`, Ordner `projects/16_pilot_landingpage/`
+
 ### [everlast-entwuerfe](everlast-entwuerfe/) & [everlast-ai-landingpage](everlast-ai-landingpage/)
 Vorstufen zu buerokollege-ai: drei Design-Entwürfe (dunkel/hell/kräftig) sowie eine erste, verworfene Überarbeitung. Nicht mehr aktiv gepflegt, siehe [.claude/STATE.md](.claude/STATE.md) für Details.
 
