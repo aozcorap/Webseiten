@@ -69,10 +69,11 @@ if (!empty($input['website'])) {
 $name = Validation::clean(isset($input['name']) && is_string($input['name']) ? $input['name'] : null) ?? 'Weihnachtsfeier-Anmeldung';
 $anmerkung = Validation::clean(isset($input['anmerkung']) && is_string($input['anmerkung']) ? $input['anmerkung'] : null);
 $pfand = '5,00 €';
+$zahlung = (isset($input['zahlungswunsch']) && $input['zahlungswunsch'] === 'Bar') ? 'bar' : 'PayPal';
 
 $zeilen = [
     'Name: ' . $name,
-    'Pfand (PayPal): ' . $pfand,
+    'Pfand: ' . $pfand . ' (' . $zahlung . ')',
 ];
 if ($anmerkung !== null) {
     $zeilen[] = 'Anmerkung: ' . $anmerkung;

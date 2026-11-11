@@ -15,3 +15,7 @@ Berry-Mail), Burger-Buffet. Eigenes Erscheinungsbild (Rot/Grün statt Orange).
 - Ankunft "ab 18:00 Uhr" – Berry nennt 19:00 als frühesten Einlass. Klären.
 - Anfahrt Auto/ÖPNV fehlt (nicht erfunden).
 - Admin-Zugang und offene DB-Policies wie beim Sommerfest (siehe dortiges README).
+
+## Zahlung
+Teilnehmer wählen im Formular PayPal oder Bar (Spalte `zahlungswunsch`). Bei Bar öffnet sich kein PayPal-Tab. Der Pfand-Status (Offen/Bar/PayPal) wird weiterhin im Admin gepflegt.
+Admin: Link „Admin-Login“ unten auf der Seite.
