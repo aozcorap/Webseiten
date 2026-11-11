@@ -67,17 +67,11 @@ if (!empty($input['website'])) {
 }
 
 $name = Validation::clean(isset($input['name']) && is_string($input['name']) ? $input['name'] : null) ?? 'Weihnachtsfeier-Anmeldung';
-$personen = isset($input['personen']) ? (int) $input['personen'] : 1;
-$kinder = isset($input['kinder']) ? (int) $input['kinder'] : 0;
-$vegetarisch = !empty($input['vegetarisch']);
-$vegPersonen = isset($input['vegPersonen']) ? (int) $input['vegPersonen'] : 0;
 $anmerkung = Validation::clean(isset($input['anmerkung']) && is_string($input['anmerkung']) ? $input['anmerkung'] : null);
-$pfand = number_format($personen * 5, 2, ',', '.') . ' €';
+$pfand = '5,00 €';
 
 $zeilen = [
     'Name: ' . $name,
-    'Personen: ' . $personen . ' (davon ' . $kinder . ' Kinder unter 12)',
-    'Vegetarisch: ' . ($vegetarisch ? 'ja (' . $vegPersonen . ' Personen)' : 'nein'),
     'Pfand (PayPal): ' . $pfand,
 ];
 if ($anmerkung !== null) {

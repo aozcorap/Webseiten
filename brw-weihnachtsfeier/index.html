@@ -56,7 +56,9 @@
 
   /* ---------- Hero ---------- */
   .top{padding:clamp(36px,8vw,72px) 0 clamp(28px,5vw,40px);position:relative;z-index:1;}
-  .hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;}
+  .hero-row > div:first-child{min-width:0;}
+  @media (max-width:520px){.hero-row{flex-wrap:wrap;}}
   .kicker{font-family:'Anton',sans-serif;font-size:clamp(22px,4vw,34px);letter-spacing:0.5px;text-transform:uppercase;color:var(--ink);margin-bottom:2px;}
   h1.title{
     font-size:clamp(36px,8vw,64px);line-height:0.9;margin:2px 0 14px;
@@ -66,7 +68,7 @@
     filter:drop-shadow(2px 3px 0 rgba(23,16,8,0.08));
   }
   .invite-pill{
-    display:inline-flex;align-items:center;background:var(--ink);color:#fff;
+    display:flex;width:fit-content;align-items:center;background:var(--ink);color:#fff;
     font-size:12.5px;font-weight:700;letter-spacing:0.6px;padding:9px 18px;
     border-radius:999px;margin-bottom:16px;box-shadow:var(--shadow);
   }
@@ -319,27 +321,6 @@
           <input type="text" id="name" name="name" required autocomplete="name">
         </div>
 
-        <div class="row2">
-          <div class="field">
-            <label for="personen">Personen (inkl. Mitglied)</label>
-            <input type="number" id="personen" name="personen" min="1" value="1" required>
-          </div>
-          <div class="field">
-            <label for="kinder">Davon Kinder unter 12</label>
-            <input type="number" id="kinder" name="kinder" min="0" value="0">
-          </div>
-        </div>
-
-        <h2 style="margin-top:8px;">Verpflegung</h2>
-        <label class="checkline">
-          <input type="checkbox" id="vegetarisch" name="vegetarisch">
-          Vegetarische Verpflegung gewünscht
-        </label>
-        <div class="field" style="margin-top:12px;">
-          <label for="vegPersonen">Falls ja, für wie viele Person(en)?</label>
-          <input type="number" id="vegPersonen" name="vegPersonen" min="0" value="0">
-        </div>
-
         <div class="field" style="margin-top:18px;">
           <label for="nachricht">Anmerkung (optional)</label>
           <textarea id="nachricht" name="nachricht" rows="3"></textarea>
@@ -349,7 +330,7 @@
         <div class="pfand">
           <div class="k">Pfand (wird bei Teilnahme zurückerstattet)</div>
           <div class="pfand-amount" id="pfandAmount">5,00 €</div>
-          <p>Pro angemeldeter Person werden <strong>5,00 €</strong> als verbindliche Teilnahmebestätigung fällig – zahlbar per PayPal. Der Betrag wird bei tatsächlicher Teilnahme an der Weihnachtsfeier vollständig zurückerstattet; eine Rückerstattung erfolgt ausschließlich bei persönlicher Teilnahme am Veranstaltungstag.</p>
+          <p>Pro Mitglied werden <strong>5,00 €</strong> als verbindliche Teilnahmebestätigung fällig – zahlbar per PayPal. Der Betrag wird bei tatsächlicher Teilnahme an der Weihnachtsfeier vollständig zurückerstattet; eine Rückerstattung erfolgt ausschließlich bei persönlicher Teilnahme am Veranstaltungstag.</p>
           <button type="submit" id="paypalBtn" class="btn-paypal">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M7.4 20.6H4.7a.6.6 0 0 1-.6-.7l2.3-14.6a.9.9 0 0 1 .9-.7h5.9c2.8 0 4.7 1.5 4.4 4.1-.4 3.4-2.8 5-6 5H9.4l-1 6.9zM17.9 9c-.3 2.3-2 3.4-4.4 3.4h-1.7l.8-5.3h1.9c1.6 0 2.7.6 3.4 1.9z"></path></svg>
             <span id="paypalBtnLabel">Anmelden und Pfand mit PayPal bezahlen (5,00 €)</span>
@@ -377,6 +358,9 @@
 
           <dt>Web</dt>
           <dd><a href="https://berrybowling.de" rel="noopener">berrybowling.de</a></dd>
+
+          <dt>Route</dt>
+          <dd><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Berry+Bowling+Center,+Dieselstra%C3%9Fe+1,+61169+Friedberg" rel="noopener">Route in Google Maps planen</a></dd>
         </dl>
         <div class="map">
           <iframe src="https://www.google.com/maps?q=Berry+Bowling+Center,+Dieselstra%C3%9Fe+1,+61169+Friedberg&output=embed" title="Anfahrt Weihnachtsfeier, Berry Bowling Center, Friedberg" loading="lazy"></iframe>
@@ -440,16 +424,6 @@
             <input type="text" id="a_name" required>
           </div>
           <div class="field">
-            <label for="a_personen">Personen (inkl. Mitglied)</label>
-            <input type="number" id="a_personen" min="1" value="1" required>
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="a_kinder">Davon Kinder unter 12</label>
-            <input type="number" id="a_kinder" min="0" value="0">
-          </div>
-          <div class="field">
             <label for="a_pfandArt">Pfand-Status</label>
             <select id="a_pfandArt">
               <option value="Offen">Offen</option>
@@ -458,7 +432,6 @@
             </select>
           </div>
         </div>
-        <label class="checkline"><input type="checkbox" id="a_vegetarisch"> Vegetarische Verpflegung</label>
         <div class="field" style="margin-top:12px;">
           <label for="a_anmerkung">Anmerkung (optional)</label>
           <textarea id="a_anmerkung" rows="2"></textarea>
@@ -472,9 +445,6 @@
 
       <div class="admin-stats">
         <div class="stat"><div class="k">Anmeldungen</div><div class="v" id="statAnmeldungen">0</div></div>
-        <div class="stat"><div class="k">Personen gesamt</div><div class="v" id="statPersonen">0</div></div>
-        <div class="stat"><div class="k">Erwachsene (Ü12)</div><div class="v" id="statErwachsene">0</div></div>
-        <div class="stat"><div class="k">Kinder (U12)</div><div class="v" id="statKinder">0</div></div>
       </div>
 
       <div class="table-card">
@@ -484,9 +454,6 @@
               <tr>
                 <th>Datum</th>
                 <th>Name</th>
-                <th>Personen</th>
-                <th>Kinder</th>
-                <th>Vegetarisch</th>
                 <th>Pfand</th>
                 <th>Anmerkung</th>
                 <th></th>
@@ -510,7 +477,6 @@
 (function(){
   var form = document.getElementById('weihnachtsfeierForm');
   var status = document.getElementById('status');
-  var personenInput = document.getElementById('personen');
   var pfandAmount = document.getElementById('pfandAmount');
   var paypalBtn = document.getElementById('paypalBtn');
   var paypalBtnLabel = document.getElementById('paypalBtnLabel');
@@ -535,10 +501,6 @@
       },
       body: JSON.stringify({
         name: data.name,
-        personen: data.personen,
-        kinder: data.kinder,
-        vegetarisch: data.vegetarisch,
-        veg_personen: data.vegPersonen,
         anmerkung: data.anmerkung || null,
         // Status startet als "Offen": das Öffnen der PayPal-Seite ist keine
         // Zahlungsbestätigung (Zahlung kann fehlschlagen) - der Vorstand
@@ -564,21 +526,10 @@
   // die zahlende Person "Geld an Freunde & Familie senden" wählen – gebührenfrei.
   // Die vollständigen Anmeldedaten stehen ohnehin in Supabase, daher reicht hier
   // nur der Betrag.
-  function buildPaypalUrl(data){
-    var n = data.personen;
-    var amount = (n * 5).toFixed(2);
-    return 'https://www.paypal.me/' + PAYPAL_ME + '/' + amount + 'EUR';
+  var PFAND = '5.00';
+  function buildPaypalUrl(){
+    return 'https://www.paypal.me/' + PAYPAL_ME + '/' + PFAND + 'EUR';
   }
-
-  function updatePfand(){
-    var n = parseInt(personenInput.value, 10);
-    if (!n || n < 1) n = 1;
-    var total = (n * 5).toFixed(2).replace('.', ',');
-    pfandAmount.textContent = total + ' €';
-    paypalBtnLabel.textContent = 'Anmelden und Pfand mit PayPal bezahlen (' + total + ' €)';
-  }
-  personenInput.addEventListener('input', updatePfand);
-  updatePfand();
 
   var submitting = false;
 
@@ -589,25 +540,16 @@
     paypalBtn.disabled = true;
 
     var name = document.getElementById('name').value.trim();
-    var personen = personenInput.value;
-    var kinder = document.getElementById('kinder').value;
-    var vegetarisch = document.getElementById('vegetarisch').checked;
-    var vegPersonen = document.getElementById('vegPersonen').value;
     var nachricht = document.getElementById('nachricht').value.trim();
     var pfand = pfandAmount.textContent;
-    var n = parseInt(personen, 10) || 1;
 
     var anmeldungData = {
       name: name || 'Weihnachtsfeier-Anmeldung',
-      personen: n,
-      kinder: parseInt(kinder, 10) || 0,
-      vegetarisch: vegetarisch,
-      vegPersonen: parseInt(vegPersonen, 10) || 0,
       anmerkung: nachricht
     };
 
     // PayPal-Fenster muss synchron im Klick-Handler geöffnet werden, sonst blocken Popup-Blocker.
-    window.open(buildPaypalUrl(anmeldungData), '_blank', 'noopener');
+    window.open(buildPaypalUrl(), '_blank', 'noopener');
 
     status.innerHTML = 'Die PayPal-Bezahlseite öffnet sich in einem neuen Tab (' + pfand + '). Deine Anmeldung wird gerade eingetragen …';
 
@@ -661,9 +603,6 @@
             id: r.id,
             datum: new Date(r.created_at).toLocaleDateString('de-DE'),
             name: r.name,
-            personen: r.personen,
-            kinder: r.kinder,
-            vegetarisch: r.vegetarisch,
             anmerkung: r.anmerkung,
             pfandBezahlt: r.pfand_art !== 'Offen',
             pfandBetrag: r.pfand_betrag,
@@ -773,7 +712,7 @@
           + (a.pfandBezahlt
               ? '<span class="yes">' + esc(a.pfandBetrag) + '</span>'
               : '<span class="pfand-open">Offen</span>')
-          + '<select class="pfand-select" data-id="' + esc(a.id) + '" data-personen="' + esc(a.personen) + '">'
+          + '<select class="pfand-select" data-id="' + esc(a.id) + '">'
           + ['Offen', 'Bar', 'PayPal'].map(function(opt){
               return '<option value="' + opt + '"' + (opt === currentArt ? ' selected' : '') + '>' + (opt === 'Offen' ? 'Offen' : opt + ' bezahlt') + '</option>';
             }).join('')
@@ -782,9 +721,6 @@
         return '<tr>'
           + '<td>' + esc(a.datum) + '</td>'
           + '<td class="name">' + esc(a.name) + '</td>'
-          + '<td>' + esc(a.personen) + '</td>'
-          + '<td>' + esc(a.kinder) + '</td>'
-          + '<td>' + (a.vegetarisch ? '<span class="yes">Ja</span>' : '<span class="no">Nein</span>') + '</td>'
           + '<td>' + pfandCell + '</td>'
           + '<td>' + esc(a.anmerkung || '–') + '</td>'
           + '<td><button type="button" class="btn-outline delete-btn" data-id="' + esc(a.id) + '" data-name="' + esc(a.name) + '" style="padding:6px 12px;font-size:12px;">Löschen</button></td>'
@@ -792,13 +728,7 @@
       }).join('');
     }
 
-    var personenGesamt = ANMELDUNGEN.reduce(function(sum, a){ return sum + (parseInt(a.personen, 10) || 0); }, 0);
-    var kinderGesamt = ANMELDUNGEN.reduce(function(sum, a){ return sum + (parseInt(a.kinder, 10) || 0); }, 0);
-    var erwachseneGesamt = personenGesamt - kinderGesamt;
     document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
-    document.getElementById('statPersonen').textContent = personenGesamt;
-    document.getElementById('statErwachsene').textContent = erwachseneGesamt;
-    document.getElementById('statKinder').textContent = kinderGesamt;
     document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
   }
 
@@ -806,9 +736,8 @@
     var select = e.target.closest('.pfand-select');
     if (!select) return;
     var id = select.getAttribute('data-id');
-    var personen = parseInt(select.getAttribute('data-personen'), 10) || 1;
     var pfandArt = select.value;
-    var pfandBetrag = pfandArt === 'Offen' ? null : (personen * 5).toFixed(2).replace('.', ',') + ' €';
+    var pfandBetrag = pfandArt === 'Offen' ? null : '5,00 €';
 
     select.disabled = true;
     fetch(SUPABASE_URL + '/rest/v1/anmeldungen?id=eq.' + encodeURIComponent(id), {
@@ -863,9 +792,8 @@
   addForm.addEventListener('submit', function(e){
     e.preventDefault();
     var addStatus = document.getElementById('addStatus');
-    var personen = parseInt(document.getElementById('a_personen').value, 10) || 1;
     var pfandArt = document.getElementById('a_pfandArt').value;
-    var pfandBetrag = pfandArt === 'Offen' ? null : (personen * 5).toFixed(2).replace('.', ',') + ' €';
+    var pfandBetrag = pfandArt === 'Offen' ? null : '5,00 €';
 
     addStatus.textContent = 'Speichere …';
     fetch(SUPABASE_URL + '/rest/v1/anmeldungen', {
@@ -878,10 +806,6 @@
       },
       body: JSON.stringify({
         name: document.getElementById('a_name').value.trim(),
-        personen: personen,
-        kinder: parseInt(document.getElementById('a_kinder').value, 10) || 0,
-        vegetarisch: document.getElementById('a_vegetarisch').checked,
-        veg_personen: 0,
         anmerkung: document.getElementById('a_anmerkung').value.trim() || null,
         pfand_betrag: pfandBetrag,
         pfand_art: pfandArt
