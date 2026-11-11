@@ -516,12 +516,12 @@
   var paypalBtnLabel = document.getElementById('paypalBtnLabel');
   var PAYPAL_ME = 'ahmetozc';
 
-  // Supabase-Projekt (Weihnachtsfeier, noch anzulegen): öffentliches Formular darf nur einfügen
+  // Supabase-Projekt "brw-weihnachtsfeier": öffentliches Formular darf nur einfügen
   // (Row Level Security, Policy "Anmeldungen: oeffentlich einfuegen"), der
   // "publishable key" ist absichtlich öffentlich (kein Geheimnis wie ein GitHub-Token
   // – die eigentliche Absicherung passiert über die Datenbank-Policy, nicht den Key).
-  var SUPABASE_URL = ''; // [TODO: eigenes Supabase-Projekt für die Weihnachtsfeier]
-  var SUPABASE_KEY = ''; // [TODO]
+  var SUPABASE_URL = 'https://oyvsbuynoyhawtzrutbs.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_blzab8RXEVG_dMbv8KW7mg_D6dCXm-K';
 
   function createAnmeldung(data){
     if (!SUPABASE_URL) return Promise.reject(new Error('Supabase nicht konfiguriert'));
@@ -628,8 +628,8 @@
 
   // Anmeldungen leben in Supabase (Tabelle "anmeldungen"). Das Formular schreibt
   // automatisch beim Absenden, der Admin-Bereich liest live – kein manuelles Pflegen.
-  var SUPABASE_URL = ''; // [TODO: eigenes Supabase-Projekt für die Weihnachtsfeier]
-  var SUPABASE_KEY = ''; // [TODO]
+  var SUPABASE_URL = 'https://oyvsbuynoyhawtzrutbs.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_blzab8RXEVG_dMbv8KW7mg_D6dCXm-K';
   var ANMELDUNGEN = [];
   var lastLoaded = null;
   var pollTimer = null;
