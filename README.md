@@ -24,6 +24,11 @@ Anmeldeseite für das Sommerfest des Boxring Wetterau 1983 e.V., im Farb-/Font-S
 - Formular sendet noch nicht an einen echten Endpunkt (mailto-Fallback)
 - Details: siehe [brw-sommerfest/README.md](brw-sommerfest/README.md)
 
+### [brw-weihnachtsfeier](brw-weihnachtsfeier/index.html)
+Anmeldeseite für die Weihnachtsfeier (Freitag, 11.12.2026, Berry Bowling Center) – nur für Mitglieder, Klon des Sommerfest-Konzepts mit eigenem Weihnachts-Look.
+
+- Details: siehe [brw-weihnachtsfeier/README.md](brw-weihnachtsfeier/README.md)
+
 ### [aralia-ballroom.de](aralia-ballroom.de/index.html)
 Interaktiver Redesign-Entwurf für die reale Website des Aralia Ballroom (Florstadt) — Pitch-Grundlage für ein Kundengespräch, kein Produktivsystem.
 
