@@ -12,7 +12,7 @@ Berry-Mail), Burger-Buffet. Eigenes Erscheinungsbild (Rot/Grün statt Orange).
   Tabelle `anmeldungen`, Keepalive per pg_cron alle 5 Tage. Policies wie beim
   Sommerfest offen für den publishable key (Admin-Passwort nur clientseitig).
 - Benachrichtigungsmail über `boxring-wetterau.de/api/weihnachtsfeiernotify.php` – muss auf boxring-wetterau.de deployt werden.
-- Ankunft "ab 18:00 Uhr" – Berry nennt 19:00 als frühesten Einlass. Klären.
+- Beginn "ab 18:30 Uhr" (von Ahmet vorgegeben) – Berry nannte 19:00 als frühesten Einlass. Klären.
 - Anfahrt Auto/ÖPNV fehlt (nicht erfunden).
 - Admin-Zugang und offene DB-Policies wie beim Sommerfest (siehe dortiges README).
 
