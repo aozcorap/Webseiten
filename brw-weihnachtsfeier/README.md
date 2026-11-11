@@ -1,0 +1,16 @@
+# Weihnachtsfeier 2026 – Anmeldung
+
+Klon von `../brw-sommerfest/` (gleiches Konzept: Formular, 5 € Pfand pro Person
+per PayPal oder bar, Admin-Overlay). Termin: Freitag, 11.12.2026, Berry Bowling
+Center, Dieselstraße 1, 61169 Friedberg. Bowling 20:00–22:00 Uhr (Option A der
+Berry-Mail), Burger-Buffet. Eigenes Erscheinungsbild (Rot/Grün statt Orange).
+
+## Offen
+- **Supabase:** `SUPABASE_URL`/`SUPABASE_KEY` sind leer (bewusst, damit nicht in
+  die Sommerfest-Datenbank geschrieben wird). Eigenes Projekt/Tabelle `anmeldungen`
+  ohne Spalten `salat`/`kuchen` anlegen, Werte eintragen. Ohne das speichert
+  das Formular nicht (Fehlermeldung mit E-Mail-Hinweis).
+- Keine Benachrichtigungsmail (Sommerfest-Endpoint bewusst nicht übernommen).
+- Ankunft "ab 18:00 Uhr" – Berry nennt 19:00 als frühesten Einlass. Klären.
+- Anfahrt Auto/ÖPNV fehlt (nicht erfunden).
+- Admin-Zugang und offene DB-Policies wie beim Sommerfest (siehe dortiges README).
