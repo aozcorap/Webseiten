@@ -1,5 +1,7 @@
 # Weihnachtsfeier 2026 – Anmeldung
 
+Live: https://aozcorap.github.io/Webseiten/brw-weihnachtsfeier/
+
 Klon von `../brw-sommerfest/` (gleiches Konzept: Formular, 5 € Pfand pro Person
 per PayPal oder bar, Admin-Overlay). Termin: Freitag, 11.12.2026, Berry Bowling
 Center, Dieselstraße 1, 61169 Friedberg. Bowling 20:00–22:00 Uhr (Option A der
