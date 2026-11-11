@@ -550,6 +550,15 @@
     });
   }
 
+  // Info-Mail an den Vorstand (fire and forget, blockiert die Anmeldung nicht).
+  function notifyByMail(data){
+    fetch('https://www.boxring-wetterau.de/api/weihnachtsfeiernotify.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function(){});
+  }
+
   // PayPal.me statt klassischem "Jetzt kaufen"-Button (_xclick): der lief als
   // Waren-/Dienstleistungszahlung und hat Gebühren berechnet. Über PayPal.me kann
   // die zahlende Person "Geld an Freunde & Familie senden" wählen – gebührenfrei.
@@ -605,6 +614,7 @@
     createAnmeldung(anmeldungData).then(function(res){
       if (res.ok) {
         status.innerHTML = 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+        notifyByMail(anmeldungData);
       } else {
         status.innerHTML = 'Die PayPal-Seite ist offen, aber die Anmeldung konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
         submitting = false;
