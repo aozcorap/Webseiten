@@ -67,25 +67,17 @@ if (!empty($input['website'])) {
 }
 
 $name = Validation::clean(isset($input['name']) && is_string($input['name']) ? $input['name'] : null) ?? 'Weihnachtsfeier-Anmeldung';
-$anmerkung = Validation::clean(isset($input['anmerkung']) && is_string($input['anmerkung']) ? $input['anmerkung'] : null);
-$pfand = '5,00 €';
-$zahlung = (isset($input['zahlungswunsch']) && $input['zahlungswunsch'] === 'Bar') ? 'bar' : 'PayPal';
 
-$zeilen = [
-    'Name: ' . $name,
-    'Pfand: ' . $pfand . ' (' . $zahlung . ')',
-];
-if ($anmerkung !== null) {
-    $zeilen[] = 'Anmerkung: ' . $anmerkung;
+// Nur bei Barzahlung wird eine Mail verschickt (PayPal: keine Mail).
+if (!isset($input['zahlungswunsch']) || $input['zahlungswunsch'] !== 'Bar') {
+    respond(200, ['success' => true]);
 }
 
-$bodyHtml = '<p>Neue Weihnachtsfeier-Anmeldung:</p><p>' . implode('<br>', array_map(
-    fn(string $z): string => htmlspecialchars($z, ENT_QUOTES, 'UTF-8'),
-    $zeilen
-)) . '</p><p>Details und Pfand-Status wie gewohnt im Admin-Bereich der Weihnachtsfeier-Seite.</p>';
+$bodyHtml = '<p>Neue Weihnachtsfeier-Anmeldung (Barzahlung):</p><p>'
+    . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</p>';
 
 try {
-    Mailer::send(CONTACT_EMAIL, 'Boxring Wetterau 1983 e.V.', 'Neue Weihnachtsfeier-Anmeldung: ' . $name, $bodyHtml);
+    Mailer::send('kontakt@boxring-wetterau.de', 'Boxring Wetterau 1983 e.V.', 'Weihnachtsfeier-Anmeldung (bar): ' . $name, $bodyHtml);
     respond(200, ['success' => true]);
 } catch (Throwable $e) {
     error_log('weihnachtsfeiernotify.php: Mail fehlgeschlagen: ' . $e->getMessage());
