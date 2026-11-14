@@ -93,7 +93,32 @@ if ($data['geburtstag'] !== null && !Validation::dateValid($data['geburtstag']))
     }
 }
 
-if ($data['kuendigung_gelesen'] !== 'ja' || $data['satzung_anerkannt'] !== 'ja' || $data['sepa_bestaetigt'] !== 'ja' || $data['datenschutz_gelesen'] !== 'ja') {
+// Minderjaehrige (< 18 am Unterschriftsdatum): Kontoinhaber ist immer der/die
+// Erziehungsberechtigte, nie das Kind. Serverseitig erzwungen, weil die
+// Client-Pruefung umgehbar ist und PDF + Google-Sheet aus $data gespeist werden.
+if ($data['geburtstag'] !== null && Validation::dateValid($data['geburtstag'])) {
+    $stichtagMj = ($data['unterschrift_datum'] !== null && Validation::dateValid($data['unterschrift_datum']))
+        ? new DateTimeImmutable($data['unterschrift_datum'])
+        : new DateTimeImmutable();
+    $alterMj = $stichtagMj->diff(new DateTimeImmutable($data['geburtstag']))->y;
+    if ($alterMj < 18) {
+        if ($data['erziehungsberechtigter'] === null) {
+            $errors[] = 'Bei Minderjaehrigen ist der Name des/der Erziehungsberechtigten Pflicht.';
+        } else {
+            $data['kontoinhaber_gleich_antragsteller'] = 'nein';
+            $data['kontoinhaber_name'] = $data['erziehungsberechtigter'];
+            // Adresse des Kontoinhabers: Eingabe uebernehmen, sonst Adresse des Kindes.
+            if ($data['kontoinhaber_strasse'] === null) {
+                $data['kontoinhaber_strasse'] = trim(($data['strasse'] ?? '') . ' ' . ($data['hausnummer'] ?? ''));
+            }
+            if ($data['kontoinhaber_ort'] === null) {
+                $data['kontoinhaber_ort'] = trim(($data['plz'] ?? '') . ' ' . ($data['ort'] ?? ''));
+            }
+        }
+    }
+}
+
+if ($data['kuendigung_gelesen'] !== 'ja' ||$data['satzung_anerkannt'] !== 'ja' || $data['sepa_bestaetigt'] !== 'ja' || $data['datenschutz_gelesen'] !== 'ja') {
     $errors[] = 'Bitte alle Pflicht-Bestaetigungen ankreuzen.';
 }
 
