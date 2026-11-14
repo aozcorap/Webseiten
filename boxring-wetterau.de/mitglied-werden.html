@@ -167,9 +167,10 @@
       </div>
 
       <div class="bw-field" style="margin-bottom:0;">
-        <label for="f-erzieher">Name des/der Erziehungsberechtigten</label>
-        <p style="font-size:13px;color:#8f887f;margin:0 0 8px;">Nur ausfüllen, wenn das neue Mitglied unter 18 Jahre alt ist.</p>
+        <label for="f-erzieher">Name des/der Erziehungsberechtigten <span class="req" id="f-erzieher-req" style="display:none;">*</span></label>
+        <p style="font-size:13px;color:#8f887f;margin:0 0 8px;">Nur ausfüllen, wenn das neue Mitglied unter 18 Jahre alt ist. Bei Minderjährigen ist der/die Erziehungsberechtigte Kontoinhaber/in für das SEPA-Mandat und unterschreibt Antrag und Mandat.</p>
         <input type="text" id="f-erzieher" name="erziehungsberechtigter" placeholder="Vorname Nachname">
+        <div class="bw-error">Bei Minderjährigen bitte den Namen des/der Erziehungsberechtigten angeben.</div>
       </div>
     </div>
 
@@ -225,7 +226,7 @@
       <h2>SEPA-Lastschriftmandat</h2>
       <p class="hint">Die Aufnahme setzt die Erteilung einer Einzugsermächtigung voraus. Der Mitgliedsbeitrag wird jährlich am 01.03. eingezogen. Zahlungsempfänger: Boxring Wetterau Friedberg 1983 e.V., Hospitalgasse 36d, 61169 Friedberg. Gläubiger-Identifikationsnummer: DE28ZZZ00001372209.</p>
 
-      <div class="bw-checkbox">
+      <div class="bw-checkbox" id="f-kontoinhaber-gleich-box">
         <input type="checkbox" id="f-kontoinhaber-gleich" name="kontoinhaber_gleich_antragsteller" value="ja" checked>
         <label for="f-kontoinhaber-gleich">Kontoinhaber/in ist identisch mit der oben genannten Person.</label>
       </div>
@@ -234,6 +235,7 @@
         <div class="bw-field">
           <label for="f-ki-name">Name und Vorname des Kontoinhabers <span class="req">*</span></label>
           <input type="text" id="f-ki-name" name="kontoinhaber_name">
+          <p id="f-ki-name-hint" style="display:none;font-size:13px;color:#8f887f;margin:6px 0 0;">Bei Minderjährigen: Kontoinhaber/in ist der/die Erziehungsberechtigte (wird oben übernommen).</p>
           <div class="bw-error">Bitte Name und Vorname angeben.</div>
         </div>
         <div class="bw-row">
@@ -417,6 +419,49 @@
   }
   kontoGleich.addEventListener("change", syncKontoinhaber);
   syncKontoinhaber();
+
+  // Minderjaehrige: Erziehungsberechtigte/r ist Pflicht und immer Kontoinhaber/in.
+  var erzieherInput = document.getElementById("f-erzieher");
+  var erzieherReq = document.getElementById("f-erzieher-req");
+  var kontoGleichBox = document.getElementById("f-kontoinhaber-gleich-box");
+  var kiName = document.getElementById("f-ki-name");
+  var kiStrasse = document.getElementById("f-ki-strasse");
+  var kiOrt = document.getElementById("f-ki-ort");
+  var kiNameHint = document.getElementById("f-ki-name-hint");
+  var istMinderjaehrig = false;
+  var wasMinderjaehrig = false;
+  function syncMinderjaehrig(){
+    var stichtag = datumInput.value || new Date().toISOString().slice(0, 10);
+    var minder = !!geburtstagInput.value
+      && geburtstagValid(geburtstagInput.value, stichtag)
+      && alterAmStichtag(geburtstagInput.value, stichtag) < 18;
+    istMinderjaehrig = minder;
+    erzieherInput.required = minder;
+    erzieherReq.style.display = minder ? "inline" : "none";
+    kontoGleichBox.style.display = minder ? "none" : "";
+    kiNameHint.style.display = minder ? "block" : "none";
+    kiName.readOnly = minder;
+    if(minder){
+      kontoGleich.checked = false;
+      kiName.value = erzieherInput.value;
+      if(!kiStrasse.value) kiStrasse.value = (document.getElementById("f-strasse").value + " " + document.getElementById("f-hausnr").value).trim();
+      if(!kiOrt.value) kiOrt.value = (document.getElementById("f-plz").value + " " + document.getElementById("f-ort").value).trim();
+    } else if(wasMinderjaehrig){
+      kontoGleich.checked = true;
+      kiName.value = "";
+      kiStrasse.value = "";
+      kiOrt.value = "";
+    }
+    wasMinderjaehrig = minder;
+    syncKontoinhaber();
+  }
+  geburtstagInput.addEventListener("change", syncMinderjaehrig);
+  datumInput.addEventListener("change", syncMinderjaehrig);
+  erzieherInput.addEventListener("input", function(){ if(istMinderjaehrig) kiName.value = erzieherInput.value; });
+  ["f-strasse","f-hausnr","f-plz","f-ort"].forEach(function(id){
+    document.getElementById(id).addEventListener("blur", function(){ if(istMinderjaehrig) syncMinderjaehrig(); });
+  });
+  syncMinderjaehrig();
 
   function showFieldError(input, message){
     input.classList.add("bw-invalid");
