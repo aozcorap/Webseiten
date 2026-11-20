@@ -171,6 +171,8 @@
 
   #status{margin-top:14px;font-size:13.5px;line-height:1.6;color:var(--text-muted);}
   #status a{text-decoration:underline;}
+  #status .ok-box{margin-top:2px;padding:16px 18px;background:var(--surface-alt);border:2px solid var(--tree-dark);border-radius:12px;color:var(--text);font-size:16px;line-height:1.5;}
+  #status .ok-box strong.ok-title{display:block;font-size:18px;color:var(--tree-dark);margin-bottom:6px;}
 
   /* ---------- Wegbeschreibung ---------- */
   .weg dt{font-size:12.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin:14px 0 4px;}
@@ -652,9 +654,15 @@
 
     createAnmeldung(anmeldungData).then(function(res){
       if (res.ok) {
-        status.innerHTML = bar
-          ? 'Anmeldung eingetragen. Bitte übergib die ' + pfand + ' bar persönlich.'
-          : 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+        if (bar) {
+          status.innerHTML = '<div class="ok-box"><strong class="ok-title">✓ Du bist angemeldet!</strong>'
+            + 'Deine Anmeldung ist eingetragen. <strong>Noch offen:</strong> Das Pfand (' + pfand + ') zahlst du bar. '
+            + 'Bitte melde dich dafür bei Ahmet und übergib ihm die ' + pfand + ' persönlich: '
+            + '<a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>. Erst dann gilt dein Pfand als bezahlt.</div>';
+          status.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+        } else {
+          status.innerHTML = 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+        }
         notifyByMail(anmeldungData);
       } else {
         status.innerHTML = '' + (bar ? 'Die Anmeldung' : 'Die PayPal-Seite ist offen, aber die Anmeldung') + ' konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
