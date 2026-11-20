@@ -171,6 +171,10 @@
 
   #status{margin-top:14px;font-size:13.5px;line-height:1.6;color:var(--text-muted);}
   #status a{text-decoration:underline;}
+  #status .ok-box{margin-top:2px;padding:16px 18px;background:var(--surface-alt);border:2px solid var(--tree-dark);border-radius:12px;color:var(--text);font-size:16px;line-height:1.5;}
+  #status .err-box{margin-top:2px;padding:16px 18px;background:var(--surface);border:2px solid var(--accent);border-radius:12px;color:var(--text);font-size:16px;line-height:1.5;}
+  #status .err-box strong.err-title{display:block;font-size:18px;color:var(--accent);margin-bottom:6px;}
+  #status .ok-box strong.ok-title{display:block;font-size:18px;color:var(--tree-dark);margin-bottom:6px;}
 
   /* ---------- Wegbeschreibung ---------- */
   .weg dt{font-size:12.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin:14px 0 4px;}
@@ -625,6 +629,15 @@
 
   var submitting = false;
 
+  // Auffällige Fehlermeldung (nicht klein/grau), mit Weg zur Rückmeldung per Mail.
+  function showError(bar){
+    status.innerHTML = '<div class="err-box"><strong class="err-title">Anmeldung nicht gespeichert!</strong>'
+      + (bar ? 'Deine Anmeldung' : 'Die PayPal-Seite ist offen, aber deine Anmeldung')
+      + ' konnte nicht automatisch gespeichert werden. <strong>Bitte melde dich per E-Mail:</strong> '
+      + '<a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a></div>';
+    status.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if (submitting) return;
@@ -652,17 +665,23 @@
 
     createAnmeldung(anmeldungData).then(function(res){
       if (res.ok) {
-        status.innerHTML = bar
-          ? 'Anmeldung eingetragen. Bitte übergib die ' + pfand + ' bar persönlich.'
-          : 'Anmeldung eingetragen. Bitte schließe die Bezahlung bei PayPal in dem neuen Tab ab (' + pfand + ').';
+        if (bar) {
+          status.innerHTML = '<div class="ok-box"><strong class="ok-title">✓ Du bist angemeldet!</strong>'
+            + 'Deine Anmeldung ist eingetragen. <strong>Noch offen:</strong> Das Pfand (' + pfand + ') zahlst du bar. '
+            + 'Bitte übergib die ' + pfand + ' persönlich an Ahmet. Erst dann gilt dein Pfand als bezahlt.</div>';
+        } else {
+          status.innerHTML = '<div class="ok-box"><strong class="ok-title">✓ Du bist angemeldet!</strong>'
+            + '<strong>Noch offen:</strong> Bitte schließe die Bezahlung (' + pfand + ') bei PayPal in dem neuen Tab ab. Erst dann gilt dein Pfand als bezahlt.</div>';
+        }
+        status.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
         notifyByMail(anmeldungData);
       } else {
-        status.innerHTML = '' + (bar ? 'Die Anmeldung' : 'Die PayPal-Seite ist offen, aber die Anmeldung') + ' konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
+        showError(bar);
         submitting = false;
         paypalBtn.disabled = false;
       }
     }).catch(function(){
-      status.innerHTML = '' + (bar ? 'Die Anmeldung' : 'Die PayPal-Seite ist offen, aber die Anmeldung') + ' konnte nicht automatisch gespeichert werden. Bitte melde dich zusätzlich per E-Mail: <a href="mailto:ahmet@ozcorapci.de">ahmet@ozcorapci.de</a>.';
+      showError(bar);
       submitting = false;
       paypalBtn.disabled = false;
     });
