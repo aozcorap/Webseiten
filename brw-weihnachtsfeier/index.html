@@ -34,6 +34,8 @@
     --tree-dark:#25704A;
     --trunk:#6B4423;
     --bauble:#D23440;
+    --paid:#1B6B37;
+    --paid-soft:rgba(27,107,55,0.12);
   }
 
   *{box-sizing:border-box;}
@@ -243,7 +245,7 @@
 
   .table-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;}
   .table-scroll{overflow-x:auto;}
-  #dataTable{width:100%;border-collapse:collapse;min-width:760px;}
+  #dataTable{width:100%;border-collapse:collapse;min-width:640px;}
   #dataTable th,#dataTable td{text-align:left;padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);white-space:nowrap;}
   #dataTable th{background:var(--surface-alt);color:var(--text-dim);text-transform:uppercase;font-size:10.5px;letter-spacing:0.7px;font-weight:700;}
   #dataTable tr:last-child td{border-bottom:none;}
@@ -253,6 +255,49 @@
   .pfand-open{color:var(--accent-hover);font-weight:700;}
   .pfand-cell{display:flex;flex-direction:column;gap:4px;}
   .pfand-select{font-size:11.5px;padding:3px 6px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);}
+
+  /* Bezahlt-Schalter, Filter, Export */
+  .pay-switch{
+    display:inline-flex;align-items:center;gap:10px;background:none;border:0;padding:4px 0;
+    cursor:pointer;font:inherit;font-size:13px;font-weight:700;color:var(--text);
+  }
+  .pay-switch .track{
+    width:46px;height:26px;border-radius:999px;background:var(--border-strong);position:relative;
+    transition:background .15s;flex:none;
+  }
+  .pay-switch .track::after{
+    content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+    background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s;
+  }
+  .pay-switch[aria-checked="true"] .track{background:var(--paid);}
+  .pay-switch[aria-checked="true"] .track::after{transform:translateX(20px);}
+  .pay-switch:focus-visible,.filter-btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .pay-switch:disabled{opacity:.5;cursor:wait;}
+  .pay-switch[aria-checked="true"] .lbl{color:var(--paid);}
+  .pay-switch[aria-checked="false"] .lbl{color:var(--accent-hover);}
+  .pay-badge{display:none;font-size:13px;font-weight:700;padding:3px 12px;border-radius:999px;}
+  .pay-badge.paid{background:var(--paid-soft);color:var(--paid);}
+  .pay-badge.open{background:var(--accent-soft);color:var(--accent-hover);}
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .filter-btn{
+    background:var(--surface-alt);color:var(--text);border:1px solid var(--border-strong);
+    border-radius:999px;padding:8px 16px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  }
+  .filter-btn[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink);}
+  .export-note{font-size:12.5px;color:var(--text-dim);margin:0 0 14px;}
+  /* Screenshot-Ansicht: nur Name + Status, keine Bedienelemente, keine Anmerkungen */
+  #adminDashboard.share-mode #dataTable{min-width:0;}
+  #adminDashboard.share-mode #dataTable th:nth-child(3),
+  #adminDashboard.share-mode #dataTable td:nth-child(3),
+  #adminDashboard.share-mode #dataTable th:nth-child(4),
+  #adminDashboard.share-mode #dataTable td:nth-child(4),
+  #adminDashboard.share-mode #dataTable th:nth-child(5),
+  #adminDashboard.share-mode #dataTable td:nth-child(5),
+  #adminDashboard.share-mode #dataTable th:nth-child(6),
+  #adminDashboard.share-mode #dataTable td:nth-child(6),
+  #adminDashboard.share-mode .no-share{display:none;}
+  #adminDashboard.share-mode .pay-switch{display:none;}
+  #adminDashboard.share-mode .pay-badge{display:inline-block;}
 
   .empty{padding:44px 24px;text-align:center;}
   .empty .big{font-size:36px;margin-bottom:8px;}
@@ -524,17 +569,32 @@
 
       <div class="admin-stats">
         <div class="stat"><div class="k">Anmeldungen</div><div class="v" id="statAnmeldungen">0</div></div>
+        <div class="stat"><div class="k">Bezahlt</div><div class="v" id="statBezahlt">0</div></div>
+        <div class="stat"><div class="k">Noch offen</div><div class="v" id="statOffen">0</div></div>
+        <div class="stat"><div class="k">Eingenommen</div><div class="v" id="statSumme">0 €</div></div>
       </div>
+
+      <div class="filter-bar no-share" role="group" aria-label="Filter nach Zahlungsstatus">
+        <button type="button" class="filter-btn" data-filter="alle" aria-pressed="true">Alle</button>
+        <button type="button" class="filter-btn" data-filter="offen" aria-pressed="false">Nur offen</button>
+        <button type="button" class="filter-btn" data-filter="bezahlt" aria-pressed="false">Nur bezahlt</button>
+      </div>
+      <div class="filter-bar">
+        <button type="button" class="btn-outline" id="shareModeBtn" aria-pressed="false">Screenshot-Ansicht</button>
+        <button type="button" class="btn-outline no-share" id="copyOpenBtn">Offene Zahlungen kopieren</button>
+        <button type="button" class="btn-outline no-share" id="csvBtn">CSV-Export</button>
+      </div>
+      <p class="export-note no-share" id="exportNote">„Screenshot-Ansicht“ blendet Datum, Anmerkungen und Bedienelemente aus. Der Filter wird übernommen.</p>
 
       <div class="table-card">
         <div class="table-scroll">
           <table id="dataTable">
             <thead>
               <tr>
-                <th>Datum</th>
                 <th>Name</th>
-                <th>Zahlung</th>
                 <th>Pfand</th>
+                <th>Zahlung</th>
+                <th>Datum</th>
                 <th>Anmerkung</th>
                 <th></th>
               </tr>
@@ -544,8 +604,8 @@
         </div>
         <div class="empty" id="emptyState">
           <div class="big">📋</div>
-          <div style="font-weight:700;color:var(--ink);">Noch keine Anmeldungen</div>
-          <p>Sobald sich Mitglieder über das Formular anmelden, erscheinen sie hier.</p>
+          <div style="font-weight:700;color:var(--ink);">Keine Einträge</div>
+          <p>Keine Anmeldungen in dieser Ansicht. Neue Anmeldungen über das Formular erscheinen hier automatisch.</p>
         </div>
       </div>
       <div class="updated-note" id="updatedNote"></div>
@@ -700,6 +760,8 @@
   var SUPABASE_URL = 'https://oyvsbuynoyhawtzrutbs.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_blzab8RXEVG_dMbv8KW7mg_D6dCXm-K';
   var ANMELDUNGEN = [];
+  var PFAND_EURO = 5;
+  var currentFilter = 'alle';
   var lastLoaded = null;
   var pollTimer = null;
 
@@ -818,45 +880,108 @@
     var table = document.getElementById('dataTable');
     var empty = document.getElementById('emptyState');
 
-    if (!ANMELDUNGEN.length) {
+    var visible = ANMELDUNGEN.filter(function(a){
+      if (currentFilter === 'offen') return !a.pfandBezahlt;
+      if (currentFilter === 'bezahlt') return a.pfandBezahlt;
+      return true;
+    });
+
+    if (!visible.length) {
+      body.innerHTML = '';
       table.style.display = 'none';
       empty.style.display = 'block';
     } else {
       table.style.display = '';
       empty.style.display = 'none';
-      body.innerHTML = ANMELDUNGEN.map(function(a){
-        var currentArt = a.pfandArt || 'Offen';
-        var pfandCell = '<div class="pfand-cell">'
-          + (a.pfandBezahlt
-              ? '<span class="yes">' + esc(a.pfandBetrag) + '</span>'
-              : '<span class="pfand-open">Offen</span>')
-          + '<select class="pfand-select" data-id="' + esc(a.id) + '">'
-          + ['Offen', 'Bar', 'PayPal'].map(function(opt){
-              return '<option value="' + opt + '"' + (opt === currentArt ? ' selected' : '') + '>' + (opt === 'Offen' ? 'Offen' : opt + ' bezahlt') + '</option>';
-            }).join('')
-          + '</select>'
-          + '</div>';
+      body.innerHTML = visible.map(function(a){
+        var art = a.pfandArt && a.pfandArt !== 'Offen' ? a.pfandArt : '';
+        var label = a.pfandBezahlt ? 'Bezahlt' + (art ? ' (' + art + ')' : '') : 'Offen';
+        var pfandCell = '<button type="button" class="pay-switch" role="switch" aria-checked="' + (a.pfandBezahlt ? 'true' : 'false') + '"'
+          + ' aria-label="' + esc(a.name) + ': bezahlt" data-id="' + esc(a.id) + '" data-wunsch="' + esc(a.zahlungswunsch || '') + '">'
+          + '<span class="track" aria-hidden="true"></span><span class="lbl">' + esc(label) + '</span></button>'
+          + '<span class="pay-badge ' + (a.pfandBezahlt ? 'paid' : 'open') + '">' + esc(label) + '</span>';
         return '<tr>'
-          + '<td>' + esc(a.datum) + '</td>'
           + '<td class="name">' + esc(a.name) + '</td>'
-          + '<td>' + esc(a.zahlungswunsch || '–') + '</td>'
           + '<td>' + pfandCell + '</td>'
+          + '<td>' + esc(a.zahlungswunsch || '–') + '</td>'
+          + '<td>' + esc(a.datum) + '</td>'
           + '<td>' + esc(a.anmerkung || '–') + '</td>'
           + '<td><button type="button" class="btn-outline delete-btn" data-id="' + esc(a.id) + '" data-name="' + esc(a.name) + '" style="padding:6px 12px;font-size:12px;">Löschen</button></td>'
           + '</tr>';
       }).join('');
     }
 
+    var paid = ANMELDUNGEN.filter(function(a){ return a.pfandBezahlt; }).length;
     document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
+    document.getElementById('statBezahlt').textContent = paid;
+    document.getElementById('statOffen').textContent = ANMELDUNGEN.length - paid;
+    document.getElementById('statSumme').textContent = (paid * PFAND_EURO) + ' €';
     document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
   }
 
-  document.getElementById('dataBody').addEventListener('change', function(e){
-    var select = e.target.closest('.pfand-select');
+  // Filter, Screenshot-Ansicht, Export
+  var filterBar = document.querySelector('.filter-bar');
+  filterBar.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    currentFilter = btn.getAttribute('data-filter');
+    Array.prototype.forEach.call(filterBar.querySelectorAll('.filter-btn'), function(b){
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+    });
+    renderTable();
+  });
+
+  var shareBtn = document.getElementById('shareModeBtn');
+  shareBtn.addEventListener('click', function(){
+    var on = !dashboard.classList.contains('share-mode');
+    dashboard.classList.toggle('share-mode', on);
+    shareBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    shareBtn.textContent = on ? 'Zurück zur Bearbeitung' : 'Screenshot-Ansicht';
+  });
+
+  function download(filename, text, type){
+    var blob = new Blob([text], { type: type });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+
+  document.getElementById('csvBtn').addEventListener('click', function(){
+    function cell(v){ return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
+    var lines = [['Name', 'Status', 'Bezahlt per', 'Zahlungswunsch', 'Angemeldet am', 'Anmerkung'].map(cell).join(';')];
+    ANMELDUNGEN.forEach(function(a){
+      lines.push([a.name, a.pfandBezahlt ? 'Bezahlt' : 'Offen', a.pfandBezahlt ? a.pfandArt : '', a.zahlungswunsch, a.datum, a.anmerkung].map(cell).join(';'));
+    });
+    // BOM, damit Excel die Umlaute richtig anzeigt
+    download('weihnachtsfeier-zahlungen.csv', '﻿' + lines.join('\r\n'), 'text/csv;charset=utf-8');
+  });
+
+  document.getElementById('copyOpenBtn').addEventListener('click', function(){
+    var btn = this;
+    var open = ANMELDUNGEN.filter(function(a){ return !a.pfandBezahlt; });
+    var text = open.length
+      ? 'Weihnachtsfeier Boxring Wetterau – noch offen (' + PFAND_EURO + ' € Pfand pro Person):\n'
+        + open.map(function(a){ return '• ' + a.name; }).join('\n')
+      : 'Weihnachtsfeier Boxring Wetterau: Alle Pfandbeträge sind bezahlt.';
+    function done(ok){
+      btn.textContent = ok ? 'Kopiert ✓' : 'Kopieren nicht möglich';
+      setTimeout(function(){ btn.textContent = 'Offene Zahlungen kopieren'; }, 2500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+    } else { done(false); }
+  });
+
+  document.getElementById('dataBody').addEventListener('click', function(e){
+    var select = e.target.closest('.pay-switch');
     if (!select) return;
     var id = select.getAttribute('data-id');
-    var pfandArt = select.value;
-    var pfandBetrag = pfandArt === 'Offen' ? null : '5,00 €';
+    var nowPaid = select.getAttribute('aria-checked') !== 'true';
+    var wunsch = select.getAttribute('data-wunsch');
+    var pfandArt = nowPaid ? (wunsch === 'PayPal' ? 'PayPal' : 'Bar') : 'Offen';
+    var pfandBetrag = pfandArt === 'Offen' ? null : PFAND_EURO + ',00 €';
 
     select.disabled = true;
     fetch(SUPABASE_URL + '/rest/v1/anmeldungen?id=eq.' + encodeURIComponent(id), {
