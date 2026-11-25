@@ -425,6 +425,11 @@
         </div>
 
         <div class="field" style="margin-top:18px;">
+          <label for="personen">Anzahl Personen (inkl. dir)</label>
+          <input type="number" id="personen" name="personen" min="1" max="20" value="1" inputmode="numeric" required>
+        </div>
+
+        <div class="field" style="margin-top:18px;">
           <label for="nachricht">Anmerkung (optional)</label>
           <textarea id="nachricht" name="nachricht" rows="3"></textarea>
         </div>
@@ -663,6 +668,7 @@
         name: data.name,
         zahlungswunsch: data.zahlungswunsch,
         anmerkung: data.anmerkung || null,
+        personen: data.personen || 1,
         // Status startet als "Offen": das Öffnen der PayPal-Seite ist keine
         // Zahlungsbestätigung (Zahlung kann fehlschlagen) - der Vorstand
         // stellt den Status im Admin-Bereich nachträglich auf Bar/PayPal um,
@@ -732,6 +738,7 @@
     var anmeldungData = {
       name: name || 'Weihnachtsfeier-Anmeldung',
       anmerkung: nachricht,
+      personen: Math.min(20, Math.max(1, parseInt(document.getElementById('personen').value, 10) || 1)),
       zahlungswunsch: zahlart
     };
 
@@ -951,14 +958,13 @@
 
     var paidList = ANMELDUNGEN.filter(function(a){ return a.pfandBezahlt; });
     var paid = paidList.length;
-    var paidPersons = paidList.reduce(function(sum, a){ return sum + a.personen; }, 0);
     var allPersons = ANMELDUNGEN.reduce(function(sum, a){ return sum + a.personen; }, 0);
     document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
     document.getElementById('statPersonen').textContent = allPersons;
     document.getElementById('statBezahlt').textContent = paid;
     document.getElementById('statOffen').textContent = ANMELDUNGEN.length - paid;
-    document.getElementById('statSumme').textContent = (paidPersons * PFAND_EURO) + ' €';
-    document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
+    document.getElementById('statSumme').textContent = (paid * PFAND_EURO) + ' €';
+    document.getElementById('updatedNote').textContent = 'Version 25.11. mit Personen/Notiz · Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
   }
 
   // Filter, Screenshot-Ansicht, Export
@@ -1004,8 +1010,8 @@
     var btn = this;
     var open = ANMELDUNGEN.filter(function(a){ return !a.pfandBezahlt; });
     var text = open.length
-      ? 'Weihnachtsfeier Boxring Wetterau – noch offen (' + PFAND_EURO + ' € Pfand pro Person):\n'
-        + open.map(function(a){ return '• ' + a.name + (a.personen > 1 ? ' (' + a.personen + ' Personen = ' + (a.personen * PFAND_EURO) + ' €)' : ''); }).join('\n')
+      ? 'Weihnachtsfeier Boxring Wetterau – noch offen (' + PFAND_EURO + ' € Pfand pro Mitglied):\n'
+        + open.map(function(a){ return '• ' + a.name + (a.personen > 1 ? ' (' + a.personen + ' Personen)' : ''); }).join('\n')
       : 'Weihnachtsfeier Boxring Wetterau: Alle Pfandbeträge sind bezahlt.';
     function done(ok){
       btn.textContent = ok ? 'Kopiert ✓' : 'Kopieren nicht möglich';
