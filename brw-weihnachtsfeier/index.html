@@ -285,19 +285,28 @@
   }
   .filter-btn[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink);}
   .export-note{font-size:12.5px;color:var(--text-dim);margin:0 0 14px;}
-  /* Screenshot-Ansicht: nur Name + Status, keine Bedienelemente, keine Anmerkungen */
+  /* Screenshot-Ansicht: nur Name, Personen + Status, keine Bedienelemente, keine Anmerkungen/Notizen */
   #adminDashboard.share-mode #dataTable{min-width:0;}
-  #adminDashboard.share-mode #dataTable th:nth-child(3),
-  #adminDashboard.share-mode #dataTable td:nth-child(3),
   #adminDashboard.share-mode #dataTable th:nth-child(4),
   #adminDashboard.share-mode #dataTable td:nth-child(4),
   #adminDashboard.share-mode #dataTable th:nth-child(5),
   #adminDashboard.share-mode #dataTable td:nth-child(5),
   #adminDashboard.share-mode #dataTable th:nth-child(6),
   #adminDashboard.share-mode #dataTable td:nth-child(6),
+  #adminDashboard.share-mode #dataTable th:nth-child(7),
+  #adminDashboard.share-mode #dataTable td:nth-child(7),
+  #adminDashboard.share-mode #dataTable th:nth-child(8),
+  #adminDashboard.share-mode #dataTable td:nth-child(8),
   #adminDashboard.share-mode .no-share{display:none;}
   #adminDashboard.share-mode .pay-switch{display:none;}
   #adminDashboard.share-mode .pay-badge{display:inline-block;}
+
+  #dataTable td.num{text-align:center;font-weight:700;color:var(--ink);}
+  #dataTable td.notiz{white-space:normal;min-width:160px;max-width:260px;}
+  #dataTable tr.edit-row td{white-space:normal;background:var(--surface-alt);}
+  .edit-grid{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:start;}
+  .edit-grid label{display:block;font-size:12px;font-weight:700;margin-bottom:4px;color:var(--ink);}
+  @media (max-width:560px){.edit-grid{grid-template-columns:1fr;}}
 
   .empty{padding:44px 24px;text-align:center;}
   .empty .big{font-size:36px;margin-bottom:8px;}
@@ -557,6 +566,14 @@
           <select id="a_zahlart"><option value="Bar">Bar</option><option value="PayPal">PayPal</option></select>
         </div>
         <div class="field" style="margin-top:12px;">
+          <label for="a_personen">Anzahl Personen</label>
+          <input type="number" id="a_personen" min="1" max="20" value="1" required>
+        </div>
+        <div class="field" style="margin-top:12px;">
+          <label for="a_notiz">Interne Notiz (optional, nur im Admin sichtbar)</label>
+          <textarea id="a_notiz" rows="2"></textarea>
+        </div>
+        <div class="field" style="margin-top:12px;">
           <label for="a_anmerkung">Anmerkung (optional)</label>
           <textarea id="a_anmerkung" rows="2"></textarea>
         </div>
@@ -569,6 +586,7 @@
 
       <div class="admin-stats">
         <div class="stat"><div class="k">Anmeldungen</div><div class="v" id="statAnmeldungen">0</div></div>
+        <div class="stat"><div class="k">Personen gesamt</div><div class="v" id="statPersonen">0</div></div>
         <div class="stat"><div class="k">Bezahlt</div><div class="v" id="statBezahlt">0</div></div>
         <div class="stat"><div class="k">Noch offen</div><div class="v" id="statOffen">0</div></div>
         <div class="stat"><div class="k">Eingenommen</div><div class="v" id="statSumme">0 €</div></div>
@@ -592,10 +610,12 @@
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Personen</th>
                 <th>Pfand</th>
                 <th>Zahlung</th>
                 <th>Datum</th>
                 <th>Anmerkung</th>
+                <th>Notiz</th>
                 <th></th>
               </tr>
             </thead>
@@ -764,6 +784,7 @@
   var currentFilter = 'alle';
   var lastLoaded = null;
   var pollTimer = null;
+  var editingId = null; // solange eine Zeile bearbeitet wird, kein Auto-Refresh
 
   function loadAnmeldungen(){
     return fetch(SUPABASE_URL + '/rest/v1/anmeldungen?select=*&order=created_at.asc', {
@@ -784,6 +805,8 @@
             name: r.name,
             zahlungswunsch: r.zahlungswunsch,
             anmerkung: r.anmerkung,
+            personen: r.personen || 1,
+            notiz: r.notiz,
             pfandBezahlt: r.pfand_art !== 'Offen',
             pfandBetrag: r.pfand_betrag,
             pfandArt: r.pfand_art
@@ -865,6 +888,7 @@
   }
 
   function render(showLoading){
+    if (editingId) return;
     var updatedNote = document.getElementById('updatedNote');
     if (showLoading) updatedNote.textContent = 'Lade Anmeldungen …';
 
@@ -900,22 +924,40 @@
           + ' aria-label="' + esc(a.name) + ': bezahlt" data-id="' + esc(a.id) + '" data-wunsch="' + esc(a.zahlungswunsch || '') + '">'
           + '<span class="track" aria-hidden="true"></span><span class="lbl">' + esc(label) + '</span></button>'
           + '<span class="pay-badge ' + (a.pfandBezahlt ? 'paid' : 'open') + '">' + esc(label) + '</span>';
-        return '<tr>'
+        var btnStyle = ' style="padding:6px 12px;font-size:12px;"';
+        var row = '<tr>'
           + '<td class="name">' + esc(a.name) + '</td>'
+          + '<td class="num">' + esc(a.personen) + '</td>'
           + '<td>' + pfandCell + '</td>'
           + '<td>' + esc(a.zahlungswunsch || '–') + '</td>'
           + '<td>' + esc(a.datum) + '</td>'
           + '<td>' + esc(a.anmerkung || '–') + '</td>'
-          + '<td><button type="button" class="btn-outline delete-btn" data-id="' + esc(a.id) + '" data-name="' + esc(a.name) + '" style="padding:6px 12px;font-size:12px;">Löschen</button></td>'
+          + '<td class="notiz">' + esc(a.notiz || '–') + '</td>'
+          + '<td><button type="button" class="btn-outline edit-btn" data-id="' + esc(a.id) + '" aria-label="' + esc(a.name) + ' bearbeiten"' + btnStyle + '>Bearbeiten</button> '
+          + '<button type="button" class="btn-outline delete-btn" data-id="' + esc(a.id) + '" data-name="' + esc(a.name) + '"' + btnStyle + '>Löschen</button></td>'
           + '</tr>';
+        if (editingId === a.id) {
+          row += '<tr class="edit-row"><td colspan="8"><div class="edit-grid">'
+            + '<div><label for="e_personen">Personen</label><input type="number" id="e_personen" min="1" max="20" value="' + esc(a.personen) + '"></div>'
+            + '<div><label for="e_notiz">Interne Notiz</label><textarea id="e_notiz" rows="2">' + esc(a.notiz || '') + '</textarea></div>'
+            + '</div><div style="display:flex;gap:10px;margin-top:12px;">'
+            + '<button type="button" class="btn-outline save-edit-btn" data-id="' + esc(a.id) + '">Speichern</button>'
+            + '<button type="button" class="btn-outline cancel-edit-btn">Abbrechen</button></div>'
+            + '<div class="edit-status" style="margin-top:8px;font-size:13px;"></div></td></tr>';
+        }
+        return row;
       }).join('');
     }
 
-    var paid = ANMELDUNGEN.filter(function(a){ return a.pfandBezahlt; }).length;
+    var paidList = ANMELDUNGEN.filter(function(a){ return a.pfandBezahlt; });
+    var paid = paidList.length;
+    var paidPersons = paidList.reduce(function(sum, a){ return sum + a.personen; }, 0);
+    var allPersons = ANMELDUNGEN.reduce(function(sum, a){ return sum + a.personen; }, 0);
     document.getElementById('statAnmeldungen').textContent = ANMELDUNGEN.length;
+    document.getElementById('statPersonen').textContent = allPersons;
     document.getElementById('statBezahlt').textContent = paid;
     document.getElementById('statOffen').textContent = ANMELDUNGEN.length - paid;
-    document.getElementById('statSumme').textContent = (paid * PFAND_EURO) + ' €';
+    document.getElementById('statSumme').textContent = (paidPersons * PFAND_EURO) + ' €';
     document.getElementById('updatedNote').textContent = 'Zuletzt aktualisiert: ' + lastLoaded.toLocaleTimeString('de-DE') + ' Uhr (aktualisiert automatisch alle 15 Sek.)';
   }
 
@@ -950,9 +992,9 @@
 
   document.getElementById('csvBtn').addEventListener('click', function(){
     function cell(v){ return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
-    var lines = [['Name', 'Status', 'Bezahlt per', 'Zahlungswunsch', 'Angemeldet am', 'Anmerkung'].map(cell).join(';')];
+    var lines = [['Name', 'Personen', 'Status', 'Bezahlt per', 'Zahlungswunsch', 'Angemeldet am', 'Anmerkung', 'Notiz'].map(cell).join(';')];
     ANMELDUNGEN.forEach(function(a){
-      lines.push([a.name, a.pfandBezahlt ? 'Bezahlt' : 'Offen', a.pfandBezahlt ? a.pfandArt : '', a.zahlungswunsch, a.datum, a.anmerkung].map(cell).join(';'));
+      lines.push([a.name, a.personen, a.pfandBezahlt ? 'Bezahlt' : 'Offen', a.pfandBezahlt ? a.pfandArt : '', a.zahlungswunsch, a.datum, a.anmerkung, a.notiz].map(cell).join(';'));
     });
     // BOM, damit Excel die Umlaute richtig anzeigt
     download('weihnachtsfeier-zahlungen.csv', '﻿' + lines.join('\r\n'), 'text/csv;charset=utf-8');
@@ -963,7 +1005,7 @@
     var open = ANMELDUNGEN.filter(function(a){ return !a.pfandBezahlt; });
     var text = open.length
       ? 'Weihnachtsfeier Boxring Wetterau – noch offen (' + PFAND_EURO + ' € Pfand pro Person):\n'
-        + open.map(function(a){ return '• ' + a.name; }).join('\n')
+        + open.map(function(a){ return '• ' + a.name + (a.personen > 1 ? ' (' + a.personen + ' Personen = ' + (a.personen * PFAND_EURO) + ' €)' : ''); }).join('\n')
       : 'Weihnachtsfeier Boxring Wetterau: Alle Pfandbeträge sind bezahlt.';
     function done(ok){
       btn.textContent = ok ? 'Kopiert ✓' : 'Kopieren nicht möglich';
@@ -1023,6 +1065,49 @@
     });
   });
 
+  // Bearbeiten: Personenzahl und interne Notiz je Anmeldung
+  document.getElementById('dataBody').addEventListener('click', function(e){
+    var editBtn = e.target.closest('.edit-btn');
+    if (editBtn) {
+      editingId = editBtn.getAttribute('data-id');
+      renderTable();
+      var f = document.getElementById('e_personen');
+      if (f) f.focus();
+      return;
+    }
+    if (e.target.closest('.cancel-edit-btn')) {
+      editingId = null;
+      render(false);
+      return;
+    }
+    var saveBtn = e.target.closest('.save-edit-btn');
+    if (!saveBtn) return;
+    var id = saveBtn.getAttribute('data-id');
+    var st = document.querySelector('.edit-status');
+    var personen = parseInt(document.getElementById('e_personen').value, 10);
+    if (!(personen >= 1 && personen <= 20)) { st.textContent = 'Bitte 1 bis 20 Personen eintragen.'; return; }
+    var notiz = document.getElementById('e_notiz').value.trim();
+    saveBtn.disabled = true;
+    st.textContent = 'Speichere …';
+    fetch(SUPABASE_URL + '/rest/v1/anmeldungen?id=eq.' + encodeURIComponent(id), {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ personen: personen, notiz: notiz || null })
+    }).then(function(res){
+      if (!res.ok) throw new Error('Fehler beim Speichern');
+      editingId = null;
+      render(false);
+    }).catch(function(){
+      st.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
+      saveBtn.disabled = false;
+    });
+  });
+
   var addForm = document.getElementById('addAnmeldungForm');
   document.getElementById('addAnmeldungBtn').addEventListener('click', function(){
     addForm.style.display = addForm.style.display === 'none' ? 'block' : 'none';
@@ -1052,6 +1137,8 @@
         name: document.getElementById('a_name').value.trim(),
         zahlungswunsch: document.getElementById('a_zahlart').value,
         anmerkung: document.getElementById('a_anmerkung').value.trim() || null,
+        personen: Math.min(20, Math.max(1, parseInt(document.getElementById('a_personen').value, 10) || 1)),
+        notiz: document.getElementById('a_notiz').value.trim() || null,
         pfand_betrag: pfandBetrag,
         pfand_art: pfandArt
       })
